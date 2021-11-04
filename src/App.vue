@@ -1,14 +1,24 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <Header />
+  <router-view />
+  <Footer />
 </template>
+
+<script>
+import Header from "./components/Partials/Header.vue";
+import Footer from "./components/Partials/Footer.vue";
+export default {
+  name: "Home",
+  components: {
+    Header,
+    Footer,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
