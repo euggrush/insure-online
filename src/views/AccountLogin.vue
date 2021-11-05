@@ -1,53 +1,92 @@
 <template>
-  <div class="container">
-    <form class="form-signin">
-      <img
-        class="mb-4"
-        src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-        alt=""
-        width="72"
-        height="72"
-      />
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input
-        type="email"
-        id="inputEmail"
-        class="form-control"
-        placeholder="Email address"
-        required=""
-        autofocus=""
-      />
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="inputPassword"
-        class="form-control"
-        placeholder="Password"
-        required=""
-      />
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
+  <section class="container">
+    <form class="simple-login-container" @submit.prevent="login">
+      <h2>Login Form</h2>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <input
+            v-model="username"
+            type="text"
+            class="form-control"
+            placeholder="Username"
+          />
+        </div>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Sign in
-      </button>
-      <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Enter your Password"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <input
+            type="submit"
+            class="btn btn-block btn-login"
+            placeholder="Enter your Password"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#">Download Best Theme</a>
+        </div>
+      </div>
     </form>
-  </div>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  name: `Login`,
+  data() {
+    return {
+      username: ``,
+      password: ``,
+    };
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('LOGIN', { 
+          username: this.username,
+          password: this.password
+         })
+        .then(() => {
+          alert(`GOOD`);
+        })
+        // .catch((err) => {
+        //   if (err.response.status == `401`) {
+        //     alert(`The email or password you entered is not valid. Please try again.`);
+        //   }
+        //   if (err.response.status == `500`) {
+        //     alert(`Please, check your Internet connection or try again later.`);
+        //   }
+        // })
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+.simple-login-container {
+  width: 300px;
+  max-width: 100%;
+  margin: 50px auto;
+}
+.simple-login-container h2 {
+  text-align: center;
+  font-size: 20px;
+}
+
+.simple-login-container .btn-login {
+  background-color: $mainBlue;
+  color: #fff;
+}
+a {
+  color: #fff;
 }
 </style>

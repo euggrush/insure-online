@@ -1,5 +1,5 @@
 <template>
-<section class="container-fluid reg-wrap">
+<section class="container-fluid reg-wrap pt-5 pb-5">
   <div class="signup-form">
     <form action="/examples/actions/confirmation.php" method="post">
       <h2>Sign Up</h2>
@@ -66,7 +66,7 @@
       </div>
     </form>
     <div class="hint-text">
-      Already have an account? <a href="#">Login here</a>
+      Already have an account? <router-link to="/login">Login here</router-link>
     </div>
   </div>
 </section>
@@ -80,7 +80,7 @@ export default {};
 
 .reg-wrap {
   color: #fff;
-	background: #3598dc;
+	background: $mainBlue;
 }
 .form-control {
   height: 41px;
@@ -97,8 +97,7 @@ export default {};
 }
 .signup-form {
   width: 400px;
-  margin: 30px auto;
-  outline: solid 3px red;
+  margin: 0 auto;
 }
 .signup-form form {
   color: #999;
@@ -131,7 +130,7 @@ export default {};
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  background: #3598dc;
+  background: $mainBlue;
   border: none;
   min-width: 140px;
 }
