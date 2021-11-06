@@ -1,22 +1,23 @@
 <template>
-<section class="container-fluid reg-wrap pt-5 pb-5">
-  <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
-      <h2>Sign Up</h2>
-      <p>Please fill in this form to create an account!</p>
-      <hr />
-      <div class="form-group">
-        <div class="row">
-          <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              name="first_name"
-              placeholder="First Name"
-              required="required"
-            />
-          </div>
-          <div class="col">
+  <section class="container-fluid reg-wrap pt-5 pb-5">
+    <div class="signup-form">
+      <form autocomplete="off" @submit.prevent="signUp">
+        <h2>Sign Up</h2>
+        <p>Please fill in this form to create an account!</p>
+        <hr />
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <input
+                v-model="username"
+                type="text"
+                class="form-control"
+                name="username"
+                placeholder="Username"
+                required="required"
+              />
+            </div>
+            <!-- <div class="col">
             <input
               type="text"
               class="form-control"
@@ -24,28 +25,30 @@
               placeholder="Last Name"
               required="required"
             />
+          </div> -->
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <input
-          type="email"
-          class="form-control"
-          name="email"
-          placeholder="Email"
-          required="required"
-        />
-      </div>
-      <div class="form-group">
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Password"
-          required="required"
-        />
-      </div>
-      <div class="form-group">
+        <div class="form-group">
+          <input
+            v-model="email"
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="Email"
+            required="required"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            v-model="password"
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Password"
+            required="required"
+          />
+        </div>
+        <!-- <div class="form-group">
         <input
           type="password"
           class="form-control"
@@ -53,34 +56,59 @@
           placeholder="Confirm Password"
           required="required"
         />
+      </div> -->
+        <div class="form-group">
+          <label class="form-check-label"
+            ><input type="checkbox" required="required" /> I accept the
+            <a href="#">Terms of Use</a> &amp;
+            <a href="#">Privacy Policy</a></label
+          >
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+        </div>
+      </form>
+      <div class="hint-text">
+        Already have an account?
+        <router-link to="/login">Login here</router-link>
       </div>
-      <div class="form-group">
-        <label class="form-check-label"
-          ><input type="checkbox" required="required" /> I accept the
-          <a href="#">Terms of Use</a> &amp;
-          <a href="#">Privacy Policy</a></label
-        >
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
-      </div>
-    </form>
-    <div class="hint-text">
-      Already have an account? <router-link to="/login">Login here</router-link>
     </div>
-  </div>
-</section>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  name: `SignUp`,
+  data() {
+    return {
+      username: ``,
+      password: ``,
+      email: ``,
+    };
+  },
+  methods: {
+    signUp() {
+      this.$store
+        .dispatch(`REGISTRATION`, {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+        })
+        .then(() => {
+          alert(`GOOD`);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 .reg-wrap {
   color: #fff;
-	background: $mainBlue;
+  background: $mainBlue;
 }
 .form-control {
   height: 41px;

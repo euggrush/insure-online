@@ -46,6 +46,9 @@ export const store = new Vuex.Store({
         logout(state) {
             state.status = ''
             state.token = ''
+        },
+        SET_REGISTRATION(state, payload) {
+            state.user = payload;
         }
     },
     actions: {
@@ -88,6 +91,9 @@ export const store = new Vuex.Store({
                 resolve()
             })
         },
-
+        REGISTRATION: async (context, payload) => {
+            let {data} = await Axios.post(`https://get-online.online/api/accounts`, payload);
+            context.commit('SET_REGISTRATION', data);
+        },
     },
 });
