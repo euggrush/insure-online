@@ -21,7 +21,7 @@
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <router-link class="nav-link" to="/our-products">Our Products</router-link>
         </li>
         <li class="nav-item">
           <button

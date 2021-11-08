@@ -13,12 +13,15 @@ let ls = new SecureLS({
     encryptionSecret: "Your key"
 });
 
+import {BASE_URL} from '../constants';
+
 export const store = new Vuex.Store({
     state: {
         status: ``,
         token: ``,
         user: ``,
-        my_role: ``
+        my_role: ``,
+        product_categories: []
     },
     plugins: [
         createLogger(),
@@ -51,6 +54,9 @@ export const store = new Vuex.Store({
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
+        },
+        SET_PRODUCT_CATEGORIES(state, payload) {
+            state.product_categories = payload;
         }
     },
     actions: {
@@ -59,7 +65,7 @@ export const store = new Vuex.Store({
         }, payload) {
             return new Promise((resolve, reject) => {
                 Axios({
-                        url: `https://get-online.online/api/authorization`,
+                        url: `${BASE_URL}/api/authorization`,
                         data: payload,
                         method: `POST`
                     })
@@ -91,8 +97,12 @@ export const store = new Vuex.Store({
             })
         },
         REGISTRATION: async (context, payload) => {
-            let {data} = await Axios.post(`https://get-online.online/api/accounts`, payload);
+            let {data} = await Axios.post(`${BASE_URL}/api/accounts`, payload);
             context.commit('SET_REGISTRATION', data);
+        },
+        GET_PRODUCT_CATEGORIES: async (context, payload) => {
+            let {data} = await Axios.get(`${BASE_URL}/api/categories`);
+            context.commit('SET_PRODUCT_CATEGORIES', data);
         },
     },
 });
