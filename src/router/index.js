@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import AccountLogin from '../views/AccountLogin.vue'
 import AccountRegistration from '../views/AccountRegistration'
-import AccountPage from '../views/AccountPage'
-import AdminPanel from '../views/AdminPanel'
+import AccountPage from '../views/UserPage/UserPage'
+import AdminPanel from '../views/AdminPanel/AdminPanel'
 
 const routes = [
   {

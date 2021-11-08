@@ -1,6 +1,6 @@
 <template>
-    <div>
-
+    <div class="container">
+        Admin Panel
     </div>
 </template>
 

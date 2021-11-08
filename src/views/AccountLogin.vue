@@ -6,9 +6,11 @@
         <div class="col-md-12 form-group">
           <input
             v-model="username"
+            name="username"
             type="text"
             class="form-control"
             placeholder="Username"
+            autocomplete="off"
           />
         </div>
       </div>
@@ -16,9 +18,11 @@
         <div class="col-md-12 form-group">
           <input
             v-model="password"
+            name="password"
             type="password"
             placeholder="Enter your Password"
             class="form-control"
+            autocomplete="off"
           />
         </div>
       </div>
@@ -51,21 +55,29 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch('LOGIN', { 
+      this.$store
+        .dispatch("LOGIN", {
           username: this.username,
-          password: this.password
-         })
-        .then(() => {
-          alert(`GOOD`);
+          password: this.password,
         })
-        // .catch((err) => {
-        //   if (err.response.status == `401`) {
-        //     alert(`The email or password you entered is not valid. Please try again.`);
-        //   }
-        //   if (err.response.status == `500`) {
-        //     alert(`Please, check your Internet connection or try again later.`);
-        //   }
-        // })
+        .then(() => {
+          let myRole = this.$store.state.my_role;
+          if (myRole === `admin`) {
+            this.$router.push(`/admin-panel`);
+          } else {
+            this.$router.push(`/my-account`);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == `401`) {
+            alert(
+              `The email or password you entered is not valid. Please try again.`
+            );
+          }
+          if (err.response.status == `500`) {
+            alert(`Please, check your Internet connection or try again later.`);
+          }
+        });
     },
   },
 };

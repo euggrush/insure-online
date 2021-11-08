@@ -15,9 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <router-link to="/login" class="nav-link"
-            >Login</router-link
-          >
+          <router-link to="/login" class="nav-link">Login</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/signup">Registration</router-link>
@@ -26,7 +24,13 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <button
+            class="nav-link border-0 bg-transparent"
+            type="button"
+            @click="logout"
+          >
+            Logout
+          </button>
         </li>
       </ul>
     </div>
@@ -34,7 +38,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Header",
+
+  methods: {
+    logout() {
+      this.$store
+        .dispatch("LOGOUT")
+        .then(() => this.$router.push("/"))
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
 
 <style lang="sass" scoped>

@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import Vuex from 'vuex';
 import Axios from 'axios';
+import { createLogger } from 'vuex';
 
 import createPersistedState from "vuex-persistedstate";
 
@@ -14,13 +15,15 @@ let ls = new SecureLS({
 
 export const store = new Vuex.Store({
     state: {
-        status: '',
-        token: '',
-        user: []
+        status: ``,
+        token: ``,
+        user: ``,
+        my_role: ``
     },
     plugins: [
+        createLogger(),
         createPersistedState({
-            paths: ['is_admin', 'token'],
+            paths: ['my_role', 'token'],
             storage: {
                 getItem: (key) => ls.get(key),
                 setItem: (key, value) =>
@@ -32,20 +35,19 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
-        auth_request(state) {
-            state.status = 'loading'
-        },
-        auth_success(state, token, payload) {
+        auth_success(state, payload) {
             state.status = 'success'
-            state.token = token
-            state.user.push(payload);
+            state.token = payload.token
+            state.user = payload.user;
+            state.my_role = payload.role;
         },
         auth_error(state) {
             state.status = 'error'
         },
         logout(state) {
-            state.status = ''
-            state.token = ''
+            state.status = ``;
+            state.token = ``;
+            state.user = ``;
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
@@ -56,24 +58,21 @@ export const store = new Vuex.Store({
             commit
         }, payload) {
             return new Promise((resolve, reject) => {
-                commit('auth_request')
                 Axios({
                         url: `https://get-online.online/api/authorization`,
                         data: payload,
-                        method: 'POST'
+                        method: `POST`
                     })
                     .then(resp => {
 
-                        const token = resp.data.token
-                        const id = resp.data.accountId
-                        const user = resp.data
-                        // const isAdmin = resp.data.account.isAdmin || false
+                        const token = resp.data.token;
+                        const user = resp.data;
+                        const role = resp.data.role;
 
-                        // commit('SET_ADMIN', isAdmin)
+                        Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                        commit('auth_success', {token, user, role});
 
-                        Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-                        commit('auth_success', token, user)
-                        resolve(resp)
+                        resolve(resp);
                     })
                     .catch(err => {
                         commit('auth_error')
