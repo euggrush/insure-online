@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
         token: ``,
         user: ``,
         my_role: ``,
-        product_categories: []
+        product_categories: [],
     },
     plugins: [
         createLogger(),
