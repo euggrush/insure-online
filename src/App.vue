@@ -17,8 +17,14 @@ export default {
 </script>
 
 <style lang="scss">
-
+html {
+  height: 100vh;
+}
+body {
+  height: 100vh;
+}
 #app {
+  height: 100vh;
   font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

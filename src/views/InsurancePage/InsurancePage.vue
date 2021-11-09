@@ -1,25 +1,25 @@
 <template>
-    <div class="conteiner">
-        <div v-for="(category, index) in categoriesList" :key="index">
-            {{ category.categoryName }}
-        </div>
-    </div>
+  <section class="container">
+    <h3>Insurance categories:</h3>
+    <p v-for="(category, index) in categoriesList" :key="index">
+      {{ category.categoryName }}
+    </p>
+  </section>
 </template>
 
 <script>
-    export default {
-        name: `InsurancePage`,
-        computed: {
-            categoriesList() {
-                return this.$store.state.product_categories.categories;
-            }
-        },
-        mounted() {
-            this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
-        }
-    }
+export default {
+  name: `InsurancePage`,
+  computed: {
+    categoriesList() {
+      return this.$store.state.product_categories.categories;
+    },
+  },
+  mounted() {
+    this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -25,7 +25,7 @@
             >Our Products</router-link
           >
         </li>
-        <li v-if="isLoggedIn" class="nav-item">
+        <li class="nav-item">
           <button
             class="nav-link border-0 bg-transparent"
             type="button"
@@ -42,11 +42,6 @@
 <script>
 export default {
   name: "Header",
-  computed: {
-  isLoggedIn() {
-    return localStorage.getItem(`token`);
-  }
-},
   methods: {
     logout() {
       this.$store

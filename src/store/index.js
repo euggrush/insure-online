@@ -74,7 +74,6 @@ export const store = new Vuex.Store({
                         const token = resp.data.token;
                         const user = resp.data;
                         const role = resp.data.role;
-                        localStorage.setItem(`token`, token);
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                         commit('auth_success', {token, user, role});
 
@@ -91,7 +90,6 @@ export const store = new Vuex.Store({
         }) {
             return new Promise((resolve, reject) => {
                 commit('logout')
-                localStorage.removeItem(`token`);
                 delete Axios.defaults.headers.common['Authorization']
                 resolve()
             })
