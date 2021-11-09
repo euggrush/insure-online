@@ -22,6 +22,7 @@ export const store = new Vuex.Store({
         user: ``,
         my_role: ``,
         product_categories: [],
+        users_array: []
     },
     plugins: [
         createLogger(),
@@ -54,9 +55,13 @@ export const store = new Vuex.Store({
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
+            state.my_role = payload.role;
         },
         SET_PRODUCT_CATEGORIES(state, payload) {
             state.product_categories = payload;
+        },
+        SET_USERS_ARRAY(state, payload) {
+            state.users_array = payload;
         }
     },
     actions: {
@@ -101,6 +106,10 @@ export const store = new Vuex.Store({
         GET_PRODUCT_CATEGORIES: async (context, payload) => {
             let {data} = await Axios.get(`${BASE_URL}/api/categories`);
             context.commit('SET_PRODUCT_CATEGORIES', data);
+        },
+        GET_USERS: async (context, payload) => {
+            let {data} = await Axios.get(`${BASE_URL}/api/accounts`);
+            context.commit('SET_USERS_ARRAY', data);
         },
     },
 });
