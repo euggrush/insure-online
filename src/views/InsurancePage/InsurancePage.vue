@@ -1,9 +1,15 @@
 <template>
   <section class="container">
     <h3>Insurance categories:</h3>
-    <p v-for="(category, index) in categoriesList" :key="index">
-      {{ category.categoryName }}
-    </p>
+    <ul class="list-group">
+      <li
+        v-for="(category, index) in categoriesList"
+        :key="index"
+        class="list-group-item"
+      >
+        {{ category.categoryName }}
+      </li>
+    </ul>
   </section>
 </template>
 

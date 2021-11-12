@@ -25,7 +25,7 @@
             >Our Products</router-link
           >
         </li>
-        <li class="nav-item">
+        <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
             class="nav-link border-0 bg-transparent"
             type="button"

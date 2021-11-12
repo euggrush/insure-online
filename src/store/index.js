@@ -2,7 +2,9 @@
 /* eslint-disable no-unused-vars */
 import Vuex from 'vuex';
 import Axios from 'axios';
-import { createLogger } from 'vuex';
+import {
+    createLogger
+} from 'vuex';
 
 import createPersistedState from "vuex-persistedstate";
 
@@ -13,7 +15,9 @@ let ls = new SecureLS({
     encryptionSecret: "Your key"
 });
 
-import {BASE_URL} from '../constants';
+import {
+    BASE_URL
+} from '../constants';
 
 export const store = new Vuex.Store({
     state: {
@@ -27,7 +31,7 @@ export const store = new Vuex.Store({
     plugins: [
         createLogger(),
         createPersistedState({
-            paths: ['my_role', 'token'],
+            paths: ['my_role', 'token', 'user', 'status'],
             storage: {
                 getItem: (key) => ls.get(key),
                 setItem: (key, value) =>
@@ -52,6 +56,7 @@ export const store = new Vuex.Store({
             state.status = ``;
             state.token = ``;
             state.user = ``;
+            state.my_role = ``;
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
@@ -80,7 +85,11 @@ export const store = new Vuex.Store({
                         const user = resp.data;
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                        commit('auth_success', {token, user, role});
+                        commit('auth_success', {
+                            token,
+                            user,
+                            role
+                        });
 
                         resolve(resp);
                     })
@@ -100,15 +109,24 @@ export const store = new Vuex.Store({
             })
         },
         REGISTRATION: async (context, payload) => {
-            let {data} = await Axios.post(`${BASE_URL}/api/accounts`, payload);
+            let {
+                data
+            } = await Axios.post(`${BASE_URL}/api/accounts`, payload);
             context.commit('SET_REGISTRATION', data);
         },
         GET_PRODUCT_CATEGORIES: async (context, payload) => {
-            let {data} = await Axios.get(`${BASE_URL}/api/categories`);
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/categories`);
             context.commit('SET_PRODUCT_CATEGORIES', data);
         },
+        CREATE_PRODUCT_CATEGORIY: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/api/categories`, payload);
+        },
         GET_USERS: async (context, payload) => {
-            let {data} = await Axios.get(`${BASE_URL}/api/accounts`);
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/accounts`);
             context.commit('SET_USERS_ARRAY', data);
         },
     },
