@@ -1,9 +1,13 @@
 <template>
-  <section class="container accounts-list-wrapper">
-    <p>Users</p>
-    <ul>
-      <li v-for="(user, index) in usersList" :key="index">
-        {{ user }}
+  <section class="container categories-list-wrapper">
+    <h3>Accounts:</h3>
+    <ul class="list-group">
+      <li
+        v-for="(account, index) in accountsList"
+        :key="index"
+        class="list-group-item"
+      >
+        {{ account.accountId }}
       </li>
     </ul>
   </section>
@@ -11,9 +15,8 @@
 
 <script>
 export default {
-  name: `AccountsList`,
   computed: {
-    usersList() {
+    accountsList() {
       return this.$store.state.users_array.accounts;
     },
   },
@@ -24,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.accounts-list-wrapper {
+.categories-list-wrapper {
   outline: solid 4px red;
 }
 </style>

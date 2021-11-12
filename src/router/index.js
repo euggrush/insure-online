@@ -43,7 +43,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
       adminAuth: true,
-      residentAuth: true
+      residentAuth: false
     }
   }
 ]

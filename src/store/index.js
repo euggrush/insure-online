@@ -85,6 +85,7 @@ export const store = new Vuex.Store({
                         const user = resp.data;
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
                         commit('auth_success', {
                             token,
                             user,
@@ -123,7 +124,7 @@ export const store = new Vuex.Store({
         CREATE_PRODUCT_CATEGORIY: async (context, payload) => {
             await Axios.post(`${BASE_URL}/api/categories`, payload);
         },
-        GET_USERS: async (context, payload) => {
+        GET_USERS: async (context) => {
             let {
                 data
             } = await Axios.get(`${BASE_URL}/api/accounts`);

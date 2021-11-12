@@ -49,19 +49,21 @@
 
     <section class="border mt-5">
       <AccountsList v-if="isAccounts" />
+      <CategoriesList v-if="isCategories" />
     </section>
   </section>
 </template>
 
 <script>
 import AccountsList from "../AdminPanel/AccountsList.vue";
+import CategoriesList from "../AdminPanel/CategoriesList.vue"
 export default {
   name: `AdminPanel`,
-  components: { AccountsList },
+  components: { AccountsList, CategoriesList },
   data() {
     return {
-      isAccounts: true,
-      isCategories: false,
+      isAccounts: false,
+      isCategories: true,
       isProducts: false,
       isSubProducts: false,
       isEstimations: false,
