@@ -7,7 +7,7 @@
         :key="index"
         class="list-group-item"
       >
-        {{ account.accountId }}
+        {{ account.username }}
       </li>
     </ul>
   </section>
