@@ -43,7 +43,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
       adminAuth: true,
-      residentAuth: true
+      residentAuth: false
     }
   }
 ]
@@ -55,7 +55,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    if (!localStorage.getItem(`token`)) {
+    if (store.state.token === ``) {
       next('/')
     } else if (to.meta.adminAuth) {
       if (store.state.my_role === `admin`) {

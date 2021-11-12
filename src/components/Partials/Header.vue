@@ -21,9 +21,11 @@
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <router-link class="nav-link" to="/our-products"
+            >Our Products</router-link
+          >
         </li>
-        <li class="nav-item">
+        <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
             class="nav-link border-0 bg-transparent"
             type="button"
@@ -40,7 +42,6 @@
 <script>
 export default {
   name: "Header",
-
   methods: {
     logout() {
       this.$store

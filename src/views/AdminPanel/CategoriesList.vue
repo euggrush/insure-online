@@ -1,6 +1,6 @@
 <template>
-  <section class="container">
-    <h3>Insurance categories:</h3>
+  <section class="container categories-list-wrapper">
+    <h3>Categories:</h3>
     <ul class="list-group">
       <li
         v-for="(category, index) in categoriesList"
@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  name: `InsurancePage`,
   computed: {
     categoriesList() {
       return this.$store.state.product_categories.categories;
@@ -28,4 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.categories-list-wrapper {
+  outline: solid 4px purple;
+}
 </style>
