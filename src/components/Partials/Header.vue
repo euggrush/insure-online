@@ -14,10 +14,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
+        <li v-if="this.$store.state.status === ''" class="nav-item active">
           <router-link to="/login" class="nav-link">Login</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="this.$store.state.status === ''" class="nav-item">
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
         <li class="nav-item">

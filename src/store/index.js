@@ -121,7 +121,7 @@ export const store = new Vuex.Store({
             } = await Axios.get(`${BASE_URL}/api/categories`);
             context.commit('SET_PRODUCT_CATEGORIES', data);
         },
-        CREATE_PRODUCT_CATEGORIY: async (context, payload) => {
+        CREATE_PRODUCT_CATEGORY: async (context, payload) => {
             await Axios.post(`${BASE_URL}/api/categories`, payload);
         },
         GET_USERS: async (context) => {
@@ -129,6 +129,9 @@ export const store = new Vuex.Store({
                 data
             } = await Axios.get(`${BASE_URL}/api/accounts`);
             context.commit('SET_USERS_ARRAY', data);
+        },
+        MODIFY_USER: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/api/accounts`, payload);
         },
     },
 });

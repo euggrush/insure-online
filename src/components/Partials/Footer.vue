@@ -1,7 +1,6 @@
 <template>
-  <footer class="footer">
-    <div class="container">
-    </div>
+  <footer class="footer border">
+    <div class="container text-center">FOOTER</div>
   </footer>
 </template>
 
@@ -10,4 +9,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+footer {
+  min-height: 3em;
+}
 </style>
