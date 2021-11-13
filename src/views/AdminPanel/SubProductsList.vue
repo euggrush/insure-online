@@ -55,6 +55,28 @@
         </div>
       </li>
     </ul>
+    <!-- CREATE NEW PRODUCT -->
+<p class="mt-5">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+    Create product
+  </button>
+</p>
+<div class="collapse" id="collapseExample1">
+  <div class="card card-body">
+    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+  </div>
+</div>
+<!-- CHANGE PRODUCT -->
+<p class="mt-5">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+    Change product
+  </button>
+</p>
+<div class="collapse" id="collapseExample2">
+  <div class="card card-body">
+    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+  </div>
+</div>
   </section>
 </template>
 

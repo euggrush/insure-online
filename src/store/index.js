@@ -147,6 +147,9 @@ export const store = new Vuex.Store({
             } = await Axios.get(`${BASE_URL}/api/mainProducts`);
             context.commit('SET_MAIN_PRODUCTS', data);
         },
+        CREATE_MAIN_PRODUCT: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/api/mainProducts`, payload);
+        },
         GET_SUB_PRODUCTS: async (context) => {
             let {
                 data
