@@ -29,7 +29,7 @@
         :class="{ active: isSubProducts }"
         @click="showSubProducts"
       >
-        Sub-products
+        Products options
       </button>
       <button
         class="nav-link"

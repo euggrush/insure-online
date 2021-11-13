@@ -26,7 +26,9 @@ export const store = new Vuex.Store({
         user: ``,
         my_role: ``,
         product_categories: [],
-        users_array: []
+        users_array: [],
+        main_products: [],
+        sub_products: []
     },
     plugins: [
         createLogger(),
@@ -67,6 +69,12 @@ export const store = new Vuex.Store({
         },
         SET_USERS_ARRAY(state, payload) {
             state.users_array = payload;
+        },
+        SET_MAIN_PRODUCTS(state, payload) {
+            state.main_products = payload;
+        },
+        SET_SUB_PRODUCTS(state, payload) {
+            state.sub_products = payload;
         }
     },
     actions: {
@@ -121,7 +129,7 @@ export const store = new Vuex.Store({
             } = await Axios.get(`${BASE_URL}/api/categories`);
             context.commit('SET_PRODUCT_CATEGORIES', data);
         },
-        CREATE_PRODUCT_CATEGORIY: async (context, payload) => {
+        CREATE_PRODUCT_CATEGORY: async (context, payload) => {
             await Axios.post(`${BASE_URL}/api/categories`, payload);
         },
         GET_USERS: async (context) => {
@@ -129,6 +137,24 @@ export const store = new Vuex.Store({
                 data
             } = await Axios.get(`${BASE_URL}/api/accounts`);
             context.commit('SET_USERS_ARRAY', data);
+        },
+        MODIFY_USER: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/api/accounts`, payload);
+        },
+        GET_MAIN_PRODUCTS: async (context) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/mainProducts`);
+            context.commit('SET_MAIN_PRODUCTS', data);
+        },
+        CREATE_MAIN_PRODUCT: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/api/mainProducts`, payload);
+        },
+        GET_SUB_PRODUCTS: async (context) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/subProducts`);
+            context.commit('SET_SUB_PRODUCTS', data);
         },
     },
 });
