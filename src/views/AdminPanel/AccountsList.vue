@@ -1,5 +1,10 @@
 <template>
   <section class="container categories-list-wrapper">
+    <!-- SEARCH -->
+    <div class="search">
+      <input type="text" placeholder="Search.." />
+    </div>
+    <!-- ACCOUNTS RENDER -->
     <h3 class="mt-3">Accounts:</h3>
     <ul class="list-group mt-3">
       <li
@@ -32,83 +37,47 @@
         <form class="account-change-form mt-3 p-3">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username:</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="username"
-            />
+            <input type="text" class="form-control" v-model="username" />
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Password:</label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="password"
-            />
+            <input type="password" class="form-control" v-model="password" />
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email:</label>
-            <input
-              type="email"
-              class="form-control"
-              v-model="email"
-            />
+            <input type="email" class="form-control" v-model="email" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >First name:</label
             >
-            <input
-              type="text"
-              class="form-control"
-              v-model="firstName"
-            />
+            <input type="text" class="form-control" v-model="firstName" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Last name:</label
             >
-            <input
-              type="text"
-              class="form-control"
-              v-model="lastName"
-            />
+            <input type="text" class="form-control" v-model="lastName" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Age:</label>
-            <input
-              type="number"
-              class="form-control"
-              v-model="age"
-            />
+            <input type="number" class="form-control" v-model="age" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Address:</label
             >
-            <input
-              type="text"
-              class="form-control"
-              v-model="address"
-            />
+            <input type="text" class="form-control" v-model="address" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Phone:</label>
-            <input
-              type="tel"
-              class="form-control"
-              v-model="phoneNumber"
-            />
+            <input type="tel" class="form-control" v-model="phoneNumber" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Cellphone:</label
             >
-            <input
-              type="tel"
-              class="form-control"
-              v-model="cellphone"
-            />
+            <input type="tel" class="form-control" v-model="cellphone" />
           </div>
           <button type="submit" class="btn btn-primary mt-5">Submit</button>
         </form>
@@ -217,7 +186,7 @@ export default {
       age: ``,
       address: ``,
       cellphone: ``,
-      phoneNumber: ``
+      phoneNumber: ``,
     };
   },
   computed: {
@@ -233,8 +202,8 @@ export default {
       this.$store.dispatch(`MODIFY_USER`, {
         username: this.username,
         password: this.password,
-        email: this.email
-      })
+        email: this.email,
+      });
     },
     pickAccount(account, index) {
       this.pickedAccountIndex = index;

@@ -6,16 +6,30 @@
         v-for="(category, index) in categoriesList"
         :key="index"
         class="list-group-item"
+        :class="{ active: index === pickedCategoryIndex }"
+        @click="pickCategory(category, index)"
       >
         {{ category.categoryName }}
       </li>
     </ul>
+    <section v-if="isProductListOpen" class="container border mt-5">
+      <p>Products of this category:</p>
+      <button type="button" class="btn btn-primary btn-lg">Get quote</button>
+
+    </section>
   </section>
 </template>
 
 <script>
 export default {
   name: `InsurancePage`,
+  data() {
+    return {
+      pickedCategoryIndex: ``,
+      pickedCategoryInfo: [],
+      isProductListOpen: false,
+    };
+  },
   computed: {
     categoriesList() {
       return this.$store.state.product_categories.categories;
@@ -24,8 +38,18 @@ export default {
   mounted() {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
+  methods: {
+    pickCategory(category, index) {
+      this.pickedCategoryIndex = index;
+      this.pickedCategoryInfo = category;
+      this.isProductListOpen = true;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+li {
+  cursor: pointer;
+}
 </style>

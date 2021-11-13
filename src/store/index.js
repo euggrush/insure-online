@@ -26,7 +26,9 @@ export const store = new Vuex.Store({
         user: ``,
         my_role: ``,
         product_categories: [],
-        users_array: []
+        users_array: [],
+        main_products: [],
+        sub_products: []
     },
     plugins: [
         createLogger(),
@@ -67,6 +69,12 @@ export const store = new Vuex.Store({
         },
         SET_USERS_ARRAY(state, payload) {
             state.users_array = payload;
+        },
+        SET_MAIN_PRODUCTS(state, payload) {
+            state.main_products = payload;
+        },
+        SET_SUB_PRODUCTS(state, payload) {
+            state.sub_products = payload;
         }
     },
     actions: {
@@ -132,6 +140,18 @@ export const store = new Vuex.Store({
         },
         MODIFY_USER: async (context, payload) => {
             await Axios.post(`${BASE_URL}/api/accounts`, payload);
+        },
+        GET_MAIN_PRODUCTS: async (context) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/mainProducts`);
+            context.commit('SET_MAIN_PRODUCTS', data);
+        },
+        GET_SUB_PRODUCTS: async (context) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/api/subProducts`);
+            context.commit('SET_SUB_PRODUCTS', data);
         },
     },
 });
