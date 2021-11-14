@@ -56,27 +56,108 @@
       </li>
     </ul>
     <!-- CREATE NEW PRODUCT -->
-<p class="mt-5">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-    Create product
-  </button>
-</p>
-<div class="collapse" id="collapseExample1">
-  <div class="card card-body">
-    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-  </div>
-</div>
-<!-- CHANGE PRODUCT -->
-<p class="mt-5">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
-    Change product
-  </button>
-</p>
-<div class="collapse" id="collapseExample2">
-  <div class="card card-body">
-    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-  </div>
-</div>
+    <p class="mt-5">
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample1"
+        aria-expanded="false"
+        aria-controls="collapseExample1"
+      >
+        Create product option
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample1">
+      <div class="card card-body">
+        <!-- MAIN PRODUCTS LIST -->
+
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          @change="selectMainProduct($event)"
+          required
+        >
+          <option disabled :selected="!isMainProductSelected">
+            Choose product that you want add option
+          </option>
+          <option
+            v-for="(product, index) in productsList"
+            :key="index"
+            :value="product.mainProductId"
+          >
+            {{ product.mainProductName
+            }}<span> (Category: {{ product.categoryName }})</span>
+          </option>
+        </select>
+        <form class="mt-1" @submit.prevent="createSubProduct">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="subProductName"
+              required
+              :disabled="isBtnDisabled"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="subProductDescription"
+              :disabled="isBtnDisabled"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              required
+              :disabled="isBtnDisabled"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="isBtnDisabled"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- CHANGE PRODUCT -->
+    <p class="mt-5">
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample2"
+        aria-expanded="false"
+        aria-controls="collapseExample2"
+      >
+        Change product option
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample2">
+      <div class="card card-body">
+        Some placeholder content for the collapse component. This panel is
+        hidden by default but revealed when the user activates the relevant
+        trigger.
+      </div>
+    </div>
   </section>
 </template>
 
@@ -90,21 +171,55 @@ export default {
       pickedSubProductId: ``,
       productNewName: ``,
       isBtnDisabled: true,
+      isMainProductSelected: false,
+      mainProductId: ``,
+      subProductName: ``,
+      subProductDescription: ``,
+      cost: ``,
     };
   },
   computed: {
     subProductsList() {
       return this.$store.state.sub_products.subProducts;
     },
+    productsList() {
+      return this.$store.state.main_products.mainProducts;
+    },
   },
   mounted() {
     this.$store.dispatch(`GET_SUB_PRODUCTS`);
+    this.$store.dispatch(`GET_MAIN_PRODUCTS`);
   },
   methods: {
     pickSubProduct(subProduct, index) {
       this.pickedSubProductIndex = index;
       this.pickedSubProductInfo = subProduct;
       this.isBtnDisabled = false;
+    },
+    createSubProduct() {
+      this.$store
+        .dispatch(`CREATE_SUB_PRODUCT`, {
+          mainProductId: this.mainProductId,
+          subProductName: this.subProductName,
+          subProductDescription: this.subProductDescription,
+          cost: this.cost,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_SUB_PRODUCTS`);
+          this.subProductName = ``;
+          this.subProductDescription = ``;
+          this.cost = ``;
+          this.isBtnDisabled = true;
+          this.isMainProductSelected = false;
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+    selectMainProduct(event) {
+      this.mainProductId = event.target.value;
+      this.isBtnDisabled = false;
+      this.isMainProductSelected = true;
     },
   },
 };

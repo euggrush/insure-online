@@ -187,7 +187,6 @@ export default {
     pickProduct(product, index) {
       this.pickedProductIndex = index;
       this.pickedProductInfo = product;
-      this.isBtnDisabled = false;
     },
     createProduct() {
       this.$store
