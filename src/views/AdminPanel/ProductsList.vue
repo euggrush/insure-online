@@ -146,9 +146,70 @@
     </p>
     <div class="collapse" id="collapseExample2">
       <div class="card card-body">
-        Some placeholder content for the collapse component. This panel is
-        hidden by default but revealed when the user activates the relevant
-        trigger.
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          @change="selectProductToChange($event)"
+          required
+        >
+          <option disabled :selected="!isProductToChangeSelected">
+            Choose product to change
+          </option>
+          <option
+            v-for="(product, index) in productsList"
+            :key="index"
+            :value="product.mainProductId"
+          >
+            {{ product.mainProductName }}
+            <span> (Category related to: {{ product.categoryName }}) </span>
+          </option>
+        </select>
+        <form class="mt-1" @submit.prevent="changeProduct">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductName"
+              required
+              :disabled="isBtnDisabled"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductDescription"
+              :disabled="isBtnDisabled"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              required
+              :disabled="isBtnDisabled"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="isBtnDisabled"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -169,6 +230,8 @@ export default {
       mainProductDescription: ``,
       cost: ``,
       isCategorySelected: false,
+      isProductToChangeSelected: false,
+      mainProductId: ``,
     };
   },
   computed: {
@@ -212,6 +275,31 @@ export default {
       this.productCategoryId = event.target.value;
       this.isBtnDisabled = false;
       this.isCategorySelected = true;
+    },
+    selectProductToChange(event) {
+      this.mainProductId = event.target.value;
+      this.isBtnDisabled = false;
+      this.isProductToChangeSelected = true;
+    },
+    changeProduct() {
+      this.$store
+        .dispatch(`CREATE_MAIN_PRODUCT`, {
+          mainProductId: this.mainProductId,
+          mainProductName: this.mainProductName,
+          mainProductDescription: this.mainProductDescription,
+          cost: this.cost,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.mainProductName = ``;
+          this.mainProductDescription = ``;
+          this.cost = ``;
+          this.isBtnDisabled = true;
+          this.isProductToChangeSelected = false;
+        })
+        .catch((error) => {
+          alert(error);
+        });
     },
   },
 };

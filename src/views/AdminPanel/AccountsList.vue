@@ -34,7 +34,7 @@
 
     <div class="collapse" id="collapseExample1">
       <div class="card card-body">
-        <form class="account-change-form mt-3 p-3">
+        <form class="account-change-form mt-3 p-3" @submit.prevent="createAccount">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username:</label>
             <input type="text" class="form-control" v-model="username" />
@@ -199,11 +199,23 @@ export default {
   },
   methods: {
     createAccount() {
-      this.$store.dispatch(`MODIFY_USER`, {
-        username: this.username,
-        password: this.password,
-        email: this.email,
-      });
+      this.$store
+        .dispatch(`MODIFY_USER`, {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          age: this.age,
+          address: this.address,
+          cellphone: this.cellphone,
+          phoneNumber: this.phoneNumber,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_USERS`);
+        }).catch((error) => {
+          alert(error);
+        })
     },
     pickAccount(account, index) {
       this.pickedAccountIndex = index;
