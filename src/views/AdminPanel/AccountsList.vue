@@ -229,10 +229,10 @@ export default {
 li {
   cursor: pointer;
 }
-.categories-list-wrapper {
-  outline: solid 4px red;
-}
-.account-change-form {
-  outline: solid 4px orange;
-}
+// .categories-list-wrapper {
+//   outline: solid 4px red;
+// }
+// .account-change-form {
+//   outline: solid 4px orange;
+// }
 </style>

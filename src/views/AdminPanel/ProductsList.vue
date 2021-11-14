@@ -14,14 +14,6 @@
           <div class="row">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's category:</span
-              >
-              <span class="d-block">
-                {{ product.categoryName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
                 >Product's name:</span
               >
               <span class="d-block">
@@ -42,6 +34,14 @@
               >
               <span class="d-block">
                 {{ product.mainProductCost }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Product's category:</span
+              >
+              <span class="d-block">
+                {{ product.categoryName }}
               </span>
             </div>
           </div>
@@ -174,7 +174,7 @@
               class="form-control"
               v-model="mainProductName"
               required
-              :disabled="isBtnDisabled"
+              :disabled="isChangeBtnDisabled"
             />
           </div>
           <div class="mb-3">
@@ -185,7 +185,7 @@
               type="text"
               class="form-control"
               v-model="mainProductDescription"
-              :disabled="isBtnDisabled"
+              :disabled="isChangeBtnDisabled"
               required
             />
           </div>
@@ -198,14 +198,14 @@
               class="form-control"
               v-model="cost"
               required
-              :disabled="isBtnDisabled"
+              :disabled="isChangeBtnDisabled"
             />
           </div>
 
           <button
             type="submit"
             class="btn btn-primary"
-            :disabled="isBtnDisabled"
+            :disabled="isChangeBtnDisabled"
           >
             Submit
           </button>
@@ -226,6 +226,7 @@ export default {
       productCategoryId: ``,
       productNewName: ``,
       isBtnDisabled: true,
+      isChangeBtnDisabled: true,
       mainProductName: ``,
       mainProductDescription: ``,
       cost: ``,
@@ -278,7 +279,7 @@ export default {
     },
     selectProductToChange(event) {
       this.mainProductId = event.target.value;
-      this.isBtnDisabled = false;
+      this.isChangeBtnDisabled = false;
       this.isProductToChangeSelected = true;
     },
     changeProduct() {
@@ -294,7 +295,7 @@ export default {
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;
-          this.isBtnDisabled = true;
+          this.isChangeBtnDisabled = true;
           this.isProductToChangeSelected = false;
         })
         .catch((error) => {
@@ -309,7 +310,7 @@ export default {
 li {
   cursor: pointer;
 }
-.products-list-wrapper {
-  outline: solid 4px yellow;
-}
+// .products-list-wrapper {
+//   outline: solid 4px yellow;
+// }
 </style>

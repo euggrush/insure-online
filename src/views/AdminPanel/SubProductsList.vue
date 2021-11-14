@@ -29,6 +29,14 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
+                >Option's cost:</span
+              >
+              <span class="d-block">
+                {{ subProduct.subProductCost }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
                 >Option's related product:</span
               >
               <span class="d-block">
@@ -41,14 +49,6 @@
               >
               <span class="d-block">
                 {{ subProduct.categoryName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Option's cost:</span
-              >
-              <span class="d-block">
-                {{ subProduct.subProductCost }}
               </span>
             </div>
           </div>
@@ -226,7 +226,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.subproducts-list-wrapper {
-  outline: solid 4px blue;
-}
+// .subproducts-list-wrapper {
+//   outline: solid 4px blue;
+// }
 </style>

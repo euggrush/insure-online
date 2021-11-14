@@ -145,7 +145,7 @@ export default {
 li {
   cursor: pointer;
 }
-.categories-list-wrapper {
-  outline: solid 4px purple;
-}
+// .categories-list-wrapper {
+//   outline: solid 4px purple;
+// }
 </style>

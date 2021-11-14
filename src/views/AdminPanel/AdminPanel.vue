@@ -47,7 +47,7 @@
       </button>
     </nav>
 
-    <section class="border mt-5">
+    <section class="mt-5">
       <AccountsList v-if="isAccounts" />
       <CategoriesList v-if="isCategories" />
       <ProductsList v-if="isProducts" />
