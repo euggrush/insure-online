@@ -153,9 +153,72 @@
     </p>
     <div class="collapse" id="collapseExample2">
       <div class="card card-body">
-        Some placeholder content for the collapse component. This panel is
-        hidden by default but revealed when the user activates the relevant
-        trigger.
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          @change="selectSubProduct($event)"
+          required
+        >
+          <option disabled :selected="!isSubProductSelected">
+            Choose product option that you want to change
+          </option>
+          <option
+            v-for="(subProduct, index) in subProductsList"
+            :key="index"
+            :value="subProduct.subProductId"
+          >
+            {{ subProduct.subProductName
+            }}<span>
+              (Product related to: {{ subProduct.mainProductName }})</span
+            >
+          </option>
+        </select>
+        <form class="mt-1" @submit.prevent="changeSubProduct">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="subProductName"
+              required
+              :disabled="isChangeBtnDisabled"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="subProductDescription"
+              :disabled="isChangeBtnDisabled"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product option cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              required
+              :disabled="isChangeBtnDisabled"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="isChangeBtnDisabled"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -172,8 +235,11 @@ export default {
       productNewName: ``,
       isBtnDisabled: true,
       isMainProductSelected: false,
+      isSubProductSelected: false,
+      isChangeBtnDisabled: true,
       mainProductId: ``,
       subProductName: ``,
+      subProductId: ``,
       subProductDescription: ``,
       cost: ``,
     };
@@ -220,6 +286,31 @@ export default {
       this.mainProductId = event.target.value;
       this.isBtnDisabled = false;
       this.isMainProductSelected = true;
+    },
+    selectSubProduct(event) {
+      this.subProductId = event.target.value;
+      this.isChangeBtnDisabled = false;
+      this.isSubProductSelected = true;
+    },
+    changeSubProduct() {
+      this.$store
+        .dispatch(`CREATE_SUB_PRODUCT`, {
+          subProductId: this.subProductId,
+          subProductName: this.subProductName,
+          subProductDescription: this.subProductDescription,
+          cost: this.cost,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_SUB_PRODUCTS`);
+          this.subProductName = ``;
+          this.subProductDescription = ``;
+          this.cost = ``;
+          this.isChangeBtnDisabled = true;
+          this.isSubProductSelected = false;
+        })
+        .catch((error) => {
+          alert(error);
+        });
     },
   },
 };
