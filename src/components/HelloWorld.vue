@@ -15,15 +15,12 @@
           Find out how we're continuing to be there for you, at home and on the
           road.
         </p>
-        <router-link class="btn btn-primary" to="/our-products">Quote online now</router-link>
+        <router-link class="btn btn-primary" to="/our-products"
+          >Quote online now</router-link
+        >
       </div>
     </div>
-    <!-- Call to Action-->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-      <div class="card-body">
-        <p class="text-white m-0">Saving you money and saving the day</p>
-      </div>
-    </div>
+
     <!-- Content Row-->
     <div class="row gx-4 gx-lg-5">
       <div class="col-md-4 mb-5">
@@ -64,12 +61,7 @@
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
-};
+export default {};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

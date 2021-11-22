@@ -120,7 +120,10 @@ export default {
 <style lang="scss" scoped>
 .reg-wrap {
   color: #fff;
-  background: $mainBlue;
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .form-control {
   height: 41px;

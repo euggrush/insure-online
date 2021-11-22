@@ -1,9 +1,9 @@
 <template>
   <section class="container categories-list-wrapper">
     <!-- SEARCH -->
-    <div class="search">
+    <!-- <div class="search">
       <input type="text" placeholder="Search.." />
-    </div>
+    </div> -->
     <!-- ACCOUNTS RENDER -->
     <h3 class="mt-3">Accounts:</h3>
     <ul class="list-group mt-3">

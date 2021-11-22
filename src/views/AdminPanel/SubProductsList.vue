@@ -1,7 +1,7 @@
 <template>
   <section class="container subproducts-list-wrapper">
-    <h3>Products options:</h3>
-    <ul class="list-group">
+    <h3 class="mt-3">Products options:</h3>
+    <ul class="list-group mt-3">
       <li
         v-for="(subProduct, index) in subProductsList"
         :key="index"

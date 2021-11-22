@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="admin-panel container-fluid pt-1">
     <h2 class="text-center mt-5">Admin Panel</h2>
     <nav class="nav nav-pills nav-justified mt-5">
       <button
@@ -31,7 +31,7 @@
       >
         Products options
       </button>
-      <button
+      <!-- <button
         class="nav-link"
         :class="{ active: isEstimations }"
         @click="showEstimations"
@@ -44,10 +44,10 @@
         @click="showOrders"
       >
         Orders
-      </button>
+      </button> -->
     </nav>
 
-    <section class="mt-5">
+    <section class="mt-1">
       <AccountsList v-if="isAccounts" />
       <CategoriesList v-if="isCategories" />
       <ProductsList v-if="isProducts" />
@@ -139,4 +139,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.admin-panel {
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border: solid 2px red;
+}
 </style>
