@@ -1,8 +1,8 @@
 <template>
   <section class="container products-list-wrapper">
     <!-- PRODUCTS RENDER -->
-    <h3>Products:</h3>
-    <ul class="list-group">
+    <h3 class="mt-3">Products:</h3>
+    <ul class="list-group mt-3">
       <li
         v-for="(product, index) in productsList"
         :key="index"

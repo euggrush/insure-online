@@ -1,5 +1,5 @@
 <template>
-  <section class="admin-panel container-fluid pt-1">
+  <section class="admin-panel container-fluid pt-1 pb-5">
     <h2 class="text-center mt-5">Admin Panel</h2>
     <nav class="nav nav-pills nav-justified mt-5">
       <button
@@ -143,7 +143,6 @@ export default {
   background-image: url($mainBg);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
-  border: solid 2px red;
+  background-size: cover;
 }
 </style>

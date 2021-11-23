@@ -6,8 +6,6 @@
       justify-content-around
       align-items-center
       bg-secondary
-      mt-5
-      fixed-bottom
     "
   >
     <a href="#" class="link-light text-decoration-none"
