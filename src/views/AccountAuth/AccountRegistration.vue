@@ -65,7 +65,7 @@
           >
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+          <button type="submit" class="btn btn-info btn-lg">Sign Up</button>
         </div>
       </form>
       <div class="hint-text">
@@ -173,7 +173,6 @@ export default {
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  background: $mainBlue;
   border: none;
   min-width: 140px;
 }

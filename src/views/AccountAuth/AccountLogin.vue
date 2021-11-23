@@ -133,7 +133,6 @@ export default {
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  background: $mainBlue;
   border: none;
   min-width: 140px;
 }
