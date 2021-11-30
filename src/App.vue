@@ -17,14 +17,11 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  min-height: 100vh;
-}
 body {
-  min-height: 100vh;
   background-color: $bgLight;
 }
 #app {
+  min-height: 100vh;
   font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

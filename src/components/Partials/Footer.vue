@@ -23,6 +23,5 @@ export default {};
 <style lang="scss" scoped>
 footer {
   min-height: 2em;
-  opacity: 0.8;
 }
 </style>
