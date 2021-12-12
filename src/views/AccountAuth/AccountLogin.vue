@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid reg-wrap pt-5 pb-5">
+  <section class="container-fluid reg-wrap bg-dark pt-5 pb-5">
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="login">
         <h2>Login</h2>
@@ -62,14 +62,7 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.response.status == `401`) {
-            alert(
-              `The email or password you entered is not valid. Please try again.`
-            );
-          }
-          if (err.response.status == `500`) {
-            alert(`Please, check your Internet connection or try again later.`);
-          }
+          alert(err);
         });
     },
   },
@@ -78,8 +71,12 @@ export default {
 
 <style lang="scss" scoped>
 .reg-wrap {
+  min-height: calc(100vh - 7em);
   color: #fff;
-  background: $mainBlue;
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .form-control {
   height: 41px;
@@ -129,7 +126,6 @@ export default {
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  background: $mainBlue;
   border: none;
   min-width: 140px;
 }

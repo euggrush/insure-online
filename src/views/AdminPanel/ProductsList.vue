@@ -1,8 +1,8 @@
 <template>
   <section class="container products-list-wrapper">
     <!-- PRODUCTS RENDER -->
-    <h3>Products:</h3>
-    <ul class="list-group">
+    <h3 class="mt-3">Products:</h3>
+    <ul class="list-group mt-3">
       <li
         v-for="(product, index) in productsList"
         :key="index"
@@ -12,14 +12,6 @@
       >
         <div class="container">
           <div class="row">
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Product's category:</span
-              >
-              <span class="d-block">
-                {{ product.categoryName }}
-              </span>
-            </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product's name:</span
@@ -42,6 +34,14 @@
               >
               <span class="d-block">
                 {{ product.mainProductCost }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Product's category:</span
+              >
+              <span class="d-block">
+                {{ product.categoryName }}
               </span>
             </div>
           </div>
@@ -146,9 +146,70 @@
     </p>
     <div class="collapse" id="collapseExample2">
       <div class="card card-body">
-        Some placeholder content for the collapse component. This panel is
-        hidden by default but revealed when the user activates the relevant
-        trigger.
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          @change="selectProductToChange($event)"
+          required
+        >
+          <option disabled :selected="!isProductToChangeSelected">
+            Choose product to change
+          </option>
+          <option
+            v-for="(product, index) in productsList"
+            :key="index"
+            :value="product.mainProductId"
+          >
+            {{ product.mainProductName }}
+            <span> (Category related to: {{ product.categoryName }}) </span>
+          </option>
+        </select>
+        <form class="mt-1" @submit.prevent="changeProduct">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductName"
+              required
+              :disabled="isChangeBtnDisabled"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductDescription"
+              :disabled="isChangeBtnDisabled"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              required
+              :disabled="isChangeBtnDisabled"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="isChangeBtnDisabled"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -165,10 +226,13 @@ export default {
       productCategoryId: ``,
       productNewName: ``,
       isBtnDisabled: true,
+      isChangeBtnDisabled: true,
       mainProductName: ``,
       mainProductDescription: ``,
       cost: ``,
       isCategorySelected: false,
+      isProductToChangeSelected: false,
+      mainProductId: ``,
     };
   },
   computed: {
@@ -187,7 +251,6 @@ export default {
     pickProduct(product, index) {
       this.pickedProductIndex = index;
       this.pickedProductInfo = product;
-      this.isBtnDisabled = false;
     },
     createProduct() {
       this.$store
@@ -214,6 +277,31 @@ export default {
       this.isBtnDisabled = false;
       this.isCategorySelected = true;
     },
+    selectProductToChange(event) {
+      this.mainProductId = event.target.value;
+      this.isChangeBtnDisabled = false;
+      this.isProductToChangeSelected = true;
+    },
+    changeProduct() {
+      this.$store
+        .dispatch(`CREATE_MAIN_PRODUCT`, {
+          mainProductId: this.mainProductId,
+          mainProductName: this.mainProductName,
+          mainProductDescription: this.mainProductDescription,
+          cost: this.cost,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.mainProductName = ``;
+          this.mainProductDescription = ``;
+          this.cost = ``;
+          this.isChangeBtnDisabled = true;
+          this.isProductToChangeSelected = false;
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
   },
 };
 </script>
@@ -222,7 +310,7 @@ export default {
 li {
   cursor: pointer;
 }
-.products-list-wrapper {
-  outline: solid 4px yellow;
-}
+// .products-list-wrapper {
+//   outline: solid 4px yellow;
+// }
 </style>

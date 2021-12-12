@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container-fluid our-products">
     <h3>Insurance categories:</h3>
     <ul class="list-group">
       <li
@@ -15,7 +15,6 @@
     <section v-if="isProductListOpen" class="container border mt-5">
       <p>Products of this category:</p>
       <button type="button" class="btn btn-primary btn-lg">Get quote</button>
-
     </section>
   </section>
 </template>
@@ -51,5 +50,12 @@ export default {
 <style lang="scss" scoped>
 li {
   cursor: pointer;
+}
+.our-products {
+  min-height: calc(100vh - 7em);
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 </style>

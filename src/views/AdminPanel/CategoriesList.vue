@@ -1,7 +1,7 @@
 <template>
   <section class="container categories-list-wrapper">
-    <h3>Categories:</h3>
-    <ul class="list-group">
+    <h3 class="mt-3">Categories:</h3>
+    <ul class="list-group mt-3">
       <li
         v-for="(category, index) in categoriesList"
         :key="index"
@@ -145,7 +145,7 @@ export default {
 li {
   cursor: pointer;
 }
-.categories-list-wrapper {
-  outline: solid 4px purple;
-}
+// .categories-list-wrapper {
+//   outline: solid 4px purple;
+// }
 </style>

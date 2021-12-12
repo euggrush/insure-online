@@ -65,7 +65,7 @@
           >
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+          <button type="submit" class="btn btn-info btn-lg">Sign Up</button>
         </div>
       </form>
       <div class="hint-text">
@@ -103,14 +103,7 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.response.status == `401`) {
-            alert(
-              `The email or password you entered is not valid. Please try again.`
-            );
-          }
-          if (err.response.status == `500`) {
-            alert(`Please, check your Internet connection or try again later.`);
-          }
+          alert(err);
         });
     },
   },
@@ -119,8 +112,12 @@ export default {
 
 <style lang="scss" scoped>
 .reg-wrap {
+  min-height: calc(100vh - 7em);
   color: #fff;
-  background: $mainBlue;
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .form-control {
   height: 41px;
@@ -170,7 +167,6 @@ export default {
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  background: $mainBlue;
   border: none;
   min-width: 140px;
 }

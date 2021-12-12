@@ -1,1 +1,1 @@
-export const BASE_URL = `https://get-online.online`;
+export const BASE_URL = `https://mobosecurity.com/api`;

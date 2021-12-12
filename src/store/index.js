@@ -83,7 +83,7 @@ export const store = new Vuex.Store({
         }, payload) {
             return new Promise((resolve, reject) => {
                 Axios({
-                        url: `${BASE_URL}/api/authorization`,
+                        url: `${BASE_URL}/authorization`,
                         data: payload,
                         method: `POST`
                     })
@@ -120,41 +120,44 @@ export const store = new Vuex.Store({
         REGISTRATION: async (context, payload) => {
             let {
                 data
-            } = await Axios.post(`${BASE_URL}/api/accounts`, payload);
+            } = await Axios.post(`${BASE_URL}/accounts`, payload);
             context.commit('SET_REGISTRATION', data);
         },
         GET_PRODUCT_CATEGORIES: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/api/categories`);
+            } = await Axios.get(`${BASE_URL}/categories`);
             context.commit('SET_PRODUCT_CATEGORIES', data);
         },
         CREATE_PRODUCT_CATEGORY: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/api/categories`, payload);
+            await Axios.post(`${BASE_URL}/categories`, payload);
         },
         GET_USERS: async (context) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/api/accounts`);
+            } = await Axios.get(`${BASE_URL}/accounts`);
             context.commit('SET_USERS_ARRAY', data);
         },
         MODIFY_USER: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/api/accounts`, payload);
+            await Axios.post(`${BASE_URL}/accounts`, payload);
         },
         GET_MAIN_PRODUCTS: async (context) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/api/mainProducts`);
+            } = await Axios.get(`${BASE_URL}/mainProducts`);
             context.commit('SET_MAIN_PRODUCTS', data);
         },
         CREATE_MAIN_PRODUCT: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/api/mainProducts`, payload);
+            await Axios.post(`${BASE_URL}/mainProducts`, payload);
         },
         GET_SUB_PRODUCTS: async (context) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/api/subProducts`);
+            } = await Axios.get(`${BASE_URL}/subProducts`);
             context.commit('SET_SUB_PRODUCTS', data);
+        },
+        CREATE_SUB_PRODUCT: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/subProducts`, payload);
         },
     },
 });

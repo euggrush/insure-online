@@ -17,18 +17,15 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  height: 100vh;
-}
 body {
-  height: 100vh;
+  background-color: $bgLight;
 }
 #app {
-  height: 100vh;
+  min-height: 100vh;
   font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $color;
+  color: $colorDark;
 }
 
 #nav {
@@ -36,11 +33,15 @@ body {
 
   a {
     font-weight: bold;
-    color: $color;
+    color: $colorDark;
 
     &.router-link-exact-active {
       color: #42b983;
     }
   }
+}
+.btn-primary {
+  background-color: $mainBlue;
+  border: none;
 }
 </style>

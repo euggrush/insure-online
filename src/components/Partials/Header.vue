@@ -1,6 +1,15 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
-    <router-link class="navbar-brand" to="/">Navbar</router-link>
+  <nav
+    class="
+      navbar navbar-expand-lg navbar-light
+      container-fluid
+      fs-5
+      fw-bold
+    "
+  >
+    <router-link class="navbar-brand" to="/"
+      ><img src="../../assets/logo.png" width="50" height="50" alt="logo"
+    /></router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -14,10 +23,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li v-if="this.$store.state.status === ''" class="nav-item active">
+        <li v-if="this.$store.state.status === '' || this.$store.state.status === 'error'" class="nav-item active">
           <router-link to="/login" class="nav-link">Login</router-link>
         </li>
-        <li v-if="this.$store.state.status === ''" class="nav-item">
+        <li v-if="this.$store.state.status === '' || this.$store.state.status === 'error'" class="nav-item">
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
         <li class="nav-item">
@@ -27,7 +36,7 @@
         </li>
         <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
-            class="nav-link border-0 bg-transparent"
+            class="nav-link border-0 bg-transparent fs-5 fw-bold"
             type="button"
             @click="logout"
           >
@@ -42,6 +51,11 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      currentPage: window.location.pathname,
+    };
+  },
   methods: {
     logout() {
       this.$store
@@ -53,5 +67,9 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+.navbar {
+  height: 4em;
+  opacity: 0.8;
+}
 </style>

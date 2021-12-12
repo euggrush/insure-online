@@ -2,13 +2,17 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
-import {store} from '../store/index.js'
+import {
+  store
+} from '../store/index.js'
 import Home from '../views/Home.vue'
 import AccountLogin from '../views/AccountAuth/AccountLogin.vue'
 import AccountRegistration from '../views/AccountAuth/AccountRegistration.vue'
 import AccountPage from '../views/UserPage/UserPage.vue'
 import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
 import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
+import NotFound from '../components/Errors/404.vue';
+
 
 const routes = [{
     path: '/login',
@@ -45,7 +49,15 @@ const routes = [{
       adminAuth: true,
       residentAuth: false
     }
-  }
+  },
+  {
+    path: '/404',
+    component: NotFound
+  },
+  {
+    path: "/:catchAll(.*)",
+    redirect: '/404'
+  },
 ]
 
 const router = createRouter({

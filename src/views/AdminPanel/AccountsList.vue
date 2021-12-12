@@ -1,9 +1,9 @@
 <template>
   <section class="container categories-list-wrapper">
     <!-- SEARCH -->
-    <div class="search">
+    <!-- <div class="search">
       <input type="text" placeholder="Search.." />
-    </div>
+    </div> -->
     <!-- ACCOUNTS RENDER -->
     <h3 class="mt-3">Accounts:</h3>
     <ul class="list-group mt-3">
@@ -34,7 +34,7 @@
 
     <div class="collapse" id="collapseExample1">
       <div class="card card-body">
-        <form class="account-change-form mt-3 p-3">
+        <form class="account-change-form mt-3 p-3" @submit.prevent="createAccount">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username:</label>
             <input type="text" class="form-control" v-model="username" />
@@ -199,11 +199,23 @@ export default {
   },
   methods: {
     createAccount() {
-      this.$store.dispatch(`MODIFY_USER`, {
-        username: this.username,
-        password: this.password,
-        email: this.email,
-      });
+      this.$store
+        .dispatch(`MODIFY_USER`, {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          age: this.age,
+          address: this.address,
+          cellphone: this.cellphone,
+          phoneNumber: this.phoneNumber,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_USERS`);
+        }).catch((error) => {
+          alert(error);
+        })
     },
     pickAccount(account, index) {
       this.pickedAccountIndex = index;
@@ -217,10 +229,10 @@ export default {
 li {
   cursor: pointer;
 }
-.categories-list-wrapper {
-  outline: solid 4px red;
-}
-.account-change-form {
-  outline: solid 4px orange;
-}
+// .categories-list-wrapper {
+//   outline: solid 4px red;
+// }
+// .account-change-form {
+//   outline: solid 4px orange;
+// }
 </style>

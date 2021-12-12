@@ -1,9 +1,9 @@
 <template>
-  <section class="container">
-    <h2 class="text-center mt-5">Admin Panel</h2>
+  <section class="admin-panel container-fluid pt-1 pb-5">
+    <h1 class="text-center text-white fw-bold mt-5">Admin Panel</h1>
     <nav class="nav nav-pills nav-justified mt-5">
       <button
-        class="nav-link"
+        class="nav-link fs-5 fw-bold"
         :class="{ active: isAccounts }"
         aria-current="page"
         @click="showAccounts"
@@ -11,27 +11,27 @@
         Accounts
       </button>
       <button
-        class="nav-link"
+        class="nav-link fs-5 fw-bold"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
         Categories
       </button>
       <button
-        class="nav-link"
+        class="nav-link fs-5 fw-bold"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
         Products
       </button>
       <button
-        class="nav-link"
+        class="nav-link fs-5 fw-bold"
         :class="{ active: isSubProducts }"
         @click="showSubProducts"
       >
         Products options
       </button>
-      <button
+      <!-- <button
         class="nav-link"
         :class="{ active: isEstimations }"
         @click="showEstimations"
@@ -44,10 +44,10 @@
         @click="showOrders"
       >
         Orders
-      </button>
+      </button> -->
     </nav>
 
-    <section class="border mt-5">
+    <section class="mt-1">
       <AccountsList v-if="isAccounts" />
       <CategoriesList v-if="isCategories" />
       <ProductsList v-if="isProducts" />
@@ -139,4 +139,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.admin-panel {
+  background-color: $bgOrange;
+  background-image: url($mainBg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.nav-link {
+  color: $colorWhite;
+}
+.nav-link.active {
+  color: $colorWhite;
+  background-color: $colorDark;
+  border-radius: 50px;
+}
 </style>
