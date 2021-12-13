@@ -1,5 +1,5 @@
 <template>
-  <section class="container categories-list-wrapper">
+  <section class="container categories-list-wrapper position-relative">
     <!-- SEARCH -->
     <!-- <div class="search">
       <input type="text" placeholder="Search.." />
@@ -10,11 +10,22 @@
       <li
         v-for="(account, index) in accountsList"
         :key="index"
-        class="list-group-item"
+        class="list-group-item d-flex justify-content-between"
         :class="{ active: index === pickedAccountIndex }"
         @click="pickAccount(account, index)"
       >
-        {{ account.username }}
+        <span
+          >{{ account.firstName || "John" }}&nbsp;{{
+            account.lastName || "Doe"
+          }}</span
+        >
+        <button
+          type="button"
+          class="btn btn-info btn-sm"
+          @click="showAccountInfo(account, index)"
+        >
+          View Account Info
+        </button>
       </li>
     </ul>
 
@@ -34,7 +45,10 @@
 
     <div class="collapse" id="collapseExample1">
       <div class="card card-body">
-        <form class="account-change-form mt-3 p-3" @submit.prevent="createAccount">
+        <form
+          class="account-change-form mt-3 p-3"
+          @submit.prevent="createAccount"
+        >
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username:</label>
             <input type="text" class="form-control" v-model="username" />
@@ -83,97 +97,39 @@
         </form>
       </div>
     </div>
-
-    <!-- CHANGE ACCOUNT  -->
-
-    <div>
+    <!-- MODAL ACCOUNT INFO -->
+    <div
+      v-if="isInfo"
+      class="
+        position-absolute
+        top-50
+        start-50
+        translate-middle
+        w-100
+        h-100
+        bg-light
+        account-modal
+      "
+    >
       <button
-        class="btn btn-primary mt-5"
+        @click="closeAccountModal"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample2"
-        aria-expanded="false"
-        aria-controls="collapseExample2"
-      >
-        Change account
-      </button>
+        class="btn-close position-absolute top-0 end-0 m-3"
+        aria-label="Close"
+      ></button>
+      <AccountInfo :accountInfo="pickedAccountInfo" />
     </div>
-    <div class="collapse" id="collapseExample2">
-      <div class="card card-body">
-        <form class="account-change-form mt-3 p-3">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Username:</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="pickedAccountInfo.username"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >First name:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="pickedAccountInfo.firstName"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Last name:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="pickedAccountInfo.lastName"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Age:</label>
-            <input
-              type="number"
-              class="form-control"
-              v-model="pickedAccountInfo.age"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Address:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="pickedAccountInfo.address"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Phone:</label>
-            <input
-              type="tel"
-              class="form-control"
-              v-model="pickedAccountInfo.phoneNumber"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Cellphone:</label
-            >
-            <input
-              type="tel"
-              class="form-control"
-              v-model="pickedAccountInfo.cellphone"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary mt-5">Submit</button>
-        </form>
-      </div>
-    </div>
+
+    <!-- MODAL ACCOUNT INFO END -->
   </section>
 </template>
 
 <script>
+import AccountInfo from "./AccountInfo.vue";
 export default {
+  components: {
+    AccountInfo,
+  },
   data() {
     return {
       pickedAccountIndex: ``,
@@ -187,6 +143,7 @@ export default {
       address: ``,
       cellphone: ``,
       phoneNumber: ``,
+      isInfo: false,
     };
   },
   computed: {
@@ -213,13 +170,24 @@ export default {
         })
         .then(() => {
           this.$store.dispatch(`GET_USERS`);
-        }).catch((error) => {
-          alert(error);
         })
+        .catch((error) => {
+          alert(error);
+        });
     },
     pickAccount(account, index) {
       this.pickedAccountIndex = index;
       this.pickedAccountInfo = account;
+    },
+    showAccountInfo(account, index) {
+      this.isInfo = true;
+      this.pickedAccountInfo = account;
+      this.pickedAccountIndex = ``;
+
+      console.log(index);
+    },
+    closeAccountModal() {
+      this.isInfo = false;
     },
   },
 };
@@ -228,6 +196,9 @@ export default {
 <style lang="scss" scoped>
 li {
   cursor: pointer;
+}
+.account-modal {
+  z-index: 2;
 }
 // .categories-list-wrapper {
 //   outline: solid 4px red;

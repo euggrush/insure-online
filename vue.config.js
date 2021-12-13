@@ -1,6 +1,6 @@
 const path = require('path')
 module.exports = {
-  publicPath: '/insure-online/',
+  // publicPath: '/insure-online/',
   pluginOptions: {
     'style-resources-loader': {
       'preProcessor': 'scss',
