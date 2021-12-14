@@ -40,8 +40,14 @@ body {
     }
   }
 }
-.btn-primary {
-  background-color: $mainBlue;
-  border: none;
+.btn-info {
+  color: $colorWhite;
 }
+// .btn-primary {
+//   background-color: $mainBlue;
+//   border: none;
+// }
+// .faded {
+//   opacity: 0.1;
+// }
 </style>

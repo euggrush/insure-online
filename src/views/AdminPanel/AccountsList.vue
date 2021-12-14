@@ -38,6 +38,7 @@
         data-bs-target="#collapseExample1"
         aria-expanded="false"
         aria-controls="collapseExample1"
+        :disabled="isBthDisabled"
       >
         Create account
       </button>
@@ -106,7 +107,6 @@
         start-50
         translate-middle
         w-100
-        h-100
         bg-light
         account-modal
       "
@@ -144,6 +144,7 @@ export default {
       cellphone: ``,
       phoneNumber: ``,
       isInfo: false,
+      isBthDisabled: false
     };
   },
   computed: {
@@ -183,11 +184,13 @@ export default {
       this.isInfo = true;
       this.pickedAccountInfo = account;
       this.pickedAccountIndex = ``;
+      this.isBthDisabled = true;
 
       console.log(index);
     },
     closeAccountModal() {
       this.isInfo = false;
+      this.isBthDisabled = false;
     },
   },
 };
