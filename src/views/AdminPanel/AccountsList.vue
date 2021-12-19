@@ -24,7 +24,7 @@
           class="btn btn-info btn-sm"
           @click="showAccountInfo(account, index)"
         >
-          View Account Info
+          Account Info
         </button>
       </li>
     </ul>
@@ -103,9 +103,9 @@
       v-if="isInfo"
       class="
         position-absolute
-        top-50
+        top-0
         start-50
-        translate-middle
+        translate-middle-x
         w-100
         bg-light
         account-modal
@@ -117,7 +117,7 @@
         class="btn-close position-absolute top-0 end-0 m-3"
         aria-label="Close"
       ></button>
-      <AccountInfo :accountInfo="pickedAccountInfo" />
+      <AccountInfo :accountId="pickedAccountInfo.accountId" />
     </div>
 
     <!-- MODAL ACCOUNT INFO END -->
@@ -144,7 +144,7 @@ export default {
       cellphone: ``,
       phoneNumber: ``,
       isInfo: false,
-      isBthDisabled: false
+      isBthDisabled: false,
     };
   },
   computed: {
@@ -153,7 +153,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_USERS`);
+    this.$store.dispatch(`GET_USERS`, ``);
   },
   methods: {
     createAccount() {
@@ -170,7 +170,7 @@ export default {
           phoneNumber: this.phoneNumber,
         })
         .then(() => {
-          this.$store.dispatch(`GET_USERS`);
+          this.$store.dispatch(`GET_USERS`, ``);
         })
         .catch((error) => {
           alert(error);
@@ -191,6 +191,7 @@ export default {
     closeAccountModal() {
       this.isInfo = false;
       this.isBthDisabled = false;
+      this.$store.dispatch(`GET_USERS`, ``);
     },
   },
 };

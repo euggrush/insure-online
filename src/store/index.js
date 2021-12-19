@@ -132,10 +132,10 @@ export const store = new Vuex.Store({
         CREATE_PRODUCT_CATEGORY: async (context, payload) => {
             await Axios.post(`${BASE_URL}/categories`, payload);
         },
-        GET_USERS: async (context) => {
+        GET_USERS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/accounts`);
+            } = await Axios.get(`${BASE_URL}/accounts${payload}`);
             context.commit('SET_USERS_ARRAY', data);
         },
         MODIFY_USER: async (context, payload) => {
@@ -154,10 +154,13 @@ export const store = new Vuex.Store({
             let {
                 data
             } = await Axios.get(`${BASE_URL}/subProducts`);
-            context.commit('SET_SUB_PRODUCTS', data);
+            context.commit(`SET_SUB_PRODUCTS`, data);
         },
         CREATE_SUB_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/subProducts`, payload);
         },
+        CREATE_VEHICLE: async (content, payload) => {
+            await Axios.post(`${BASE_URL}/vehicles`, payload);
+        }
     },
 });
