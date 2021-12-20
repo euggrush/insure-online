@@ -1,5 +1,5 @@
 <template>
-  <section class="container p-3">
+  <section class="container">
     <h3>Account Details:</h3>
     <span class="fw-bold text-decoration-underline">Client ID: </span>
     <span>&nbsp;{{ accountInfo.clientIdNumber }}</span> <br />
@@ -49,7 +49,7 @@
         aria-expanded="false"
         aria-controls="collapseWidthExample"
       >
-        <span>Add new vehicle</span>
+        <span>Add vehicle</span>
       </button>
     </p>
     <!-- CREATE VEHICLE FORN -->
@@ -76,7 +76,7 @@
                 type="text"
                 class="form-control"
                 id="exampleInputPassword1"
-                v-model="vehicleInfo.reg_number"
+                v-model="vehicleInfo.regNumber"
               />
             </div>
             <div class="mb-3">
@@ -107,7 +107,7 @@
                 type="text"
                 class="form-control"
                 id="exampleInputPassword1"
-                v-model="vehicleInfo.retail_value"
+                v-model="vehicleInfo.retailValue"
               />
             </div>
             <div class="mb-3">
@@ -118,7 +118,7 @@
                 type="text"
                 class="form-control"
                 id="exampleInputPassword1"
-                v-model="vehicleInfo.tracking_device"
+                v-model="vehicleInfo.trackingDevice"
               />
             </div>
             <div class="mb-3">
@@ -129,7 +129,7 @@
                 type="text"
                 class="form-control"
                 id="exampleInputPassword1"
-                v-model="vehicleInfo.use_case"
+                v-model="vehicleInfo.useCase"
               />
             </div>
 
@@ -142,9 +142,9 @@
     <ul
       v-for="(vehicle, index) in accountInfo.vehicles"
       :key="index"
-      class="list-group mt-3"
+      class="list-group mt-3 position-relative"
     >
-      <li class="list-group-item">
+      <li class="list-group-item" v-if="vehicle.deleted == false">
         <span class="fw-bold text-decoration-underline"
           >Vehicle make and model:</span
         >
@@ -165,12 +165,128 @@
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>
         <span>&nbsp;{{ vehicle.useCase }}</span> <br />
-        <button type="button" class="btn btn-secondary mt-3 me-3">
+        <button
+          type="button"
+          class="btn btn-secondary mt-3 me-3"
+          @click="openEditVehicle(vehicle, index)"
+        >
           Edit vehicle
         </button>
-        <button type="button" class="btn btn-danger mt-3">Remove vehicle</button>
-
+        <button type="button" class="btn btn-danger mt-3">
+          Remove vehicle
+        </button>
       </li>
+      <!-- EDIT VEHICLE FORM -->
+      <form
+        class="
+          position-absolute
+          top-0
+          start-0
+          w-100
+          h-100
+          bg-light
+          border
+          d-flex
+          flex-column
+          justify-content-between
+          align-items-end
+          p-3
+        "
+        v-if="isEdit == vehicle.vehicleId"
+        @submit.prevent="editVehicle(vehicle, index)"
+      >
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          @click="closeEdit()"
+        ></button>
+        <div class="container p-0">
+          <div class="row row-cols-auto">
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Vehicle make and model:
+              </span>
+              <input
+                class="form-control form-control-sm col"
+                type="text"
+                :placeholder="vehicleInfo.details"
+                v-model="vehicleInfo.details"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Vehicle license plate nunber:
+              </span>
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                :placeholder="vehicleInfo.regNumber"
+                v-model="vehicleInfo.regNumber"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Vehicle VIN:
+              </span>
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                :placeholder="vehicleInfo.vin"
+                v-model="vehicleInfo.vin"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Engine size:
+              </span>
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                :placeholder="vehicleInfo.engine"
+                v-model="vehicleInfo.engine"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Retail value:
+              </span>
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                :placeholder="vehicleInfo.retailValue"
+                v-model="vehicleInfo.retailValue"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg">
+                Tracking device:
+              </span>
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                :placeholder="vehicleInfo.trackingDevice"
+                v-model="vehicleInfo.trackingDevice"
+              />
+            </label>
+            <label class="col mt-3">
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Use case:</span
+              >
+
+              <input
+                class="form-control form-control-sm"
+                type="text"
+                placeholder="Use case..."
+                v-model="vehicleInfo.useCase"
+              />
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <!-- EDIT VEHICLE FORM END -->
     </ul>
   </section>
 </template>
@@ -179,15 +295,16 @@
 export default {
   data() {
     return {
+      isEdit: false,
       vehicleInfo: {
         userId: this.accountId,
         details: ``,
-        reg_number: ``,
+        regNumber: ``,
         vin: ``,
         engine: ``,
-        retail_value: ``,
-        tracking_device: ``,
-        use_case: ``,
+        retailValue: ``,
+        trackingDevice: ``,
+        useCase: ``,
       },
     };
   },
@@ -211,9 +328,35 @@ export default {
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          this.vehicleInfo = ``
+          (this.vehicleInfo = ``)
         )
         .catch((error) => alert(error));
+    },
+    openEditVehicle(vehicle, index) {
+      this.isEdit = vehicle.vehicleId;
+      console.log(index);
+    },
+    closeEdit() {
+      this.isEdit = false;
+    },
+    editVehicle(vehicle, index) {
+      const changeVehicleObj = {
+        vehicleId: vehicle.vehicleId,
+        userId: this.vehicleInfo.userId,
+        details: this.vehicleInfo.details,
+        regNumber: this.vehicleInfo.regNumber,
+        vin: this.vehicleInfo.vin,
+        retailValue: this.vehicleInfo.retailValue,
+        trackingDevice: this.vehicleInfo.trackingDevice,
+        useCase: this.vehicleInfo.useCase,
+      };
+      this.$store
+        .dispatch(`CREATE_VEHICLE`, changeVehicleObj)
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          (this.isEdit = false)
+        );
+      console.log(index);
     },
   },
 };

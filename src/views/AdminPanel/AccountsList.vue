@@ -1,5 +1,5 @@
 <template>
-  <section class="container categories-list-wrapper position-relative">
+  <section class="container categories-list-wrapper">
     <!-- SEARCH -->
     <!-- <div class="search">
       <input type="text" placeholder="Search.." />
@@ -11,7 +11,7 @@
         v-for="(account, index) in accountsList"
         :key="index"
         class="list-group-item d-flex justify-content-between"
-        :class="{ active: index === pickedAccountIndex }"
+        :class="{ active: index == pickedAccountIndex }"
         @click="pickAccount(account, index)"
       >
         <span
@@ -102,19 +102,17 @@
     <div
       v-if="isInfo"
       class="
-        position-absolute
-        top-0
-        start-50
-        translate-middle-x
         w-100
         bg-light
         account-modal
+        p-3
+        position-relative
       "
     >
       <button
         @click="closeAccountModal"
         type="button"
-        class="btn-close position-absolute top-0 end-0 m-3"
+        class="btn-close float-end"
         aria-label="Close"
       ></button>
       <AccountInfo :accountId="pickedAccountInfo.accountId" />
@@ -202,12 +200,17 @@ li {
   cursor: pointer;
 }
 .account-modal {
-  z-index: 2;
+  margin-top: -11.5em;
+  // z-index: 3;
 }
 // .categories-list-wrapper {
+//   min-height: 100%;
 //   outline: solid 4px red;
 // }
 // .account-change-form {
 //   outline: solid 4px orange;
 // }
+.active {
+  z-index: 0;
+}
 </style>
