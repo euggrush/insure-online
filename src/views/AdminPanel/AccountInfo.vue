@@ -172,7 +172,11 @@
         >
           Edit vehicle
         </button>
-        <button type="button" class="btn btn-danger mt-3">
+        <button
+          @click="removePopup(vehicle, index)"
+          type="button"
+          class="btn btn-danger mt-3"
+        >
           Remove vehicle
         </button>
       </li>
@@ -210,8 +214,8 @@
               <input
                 class="form-control form-control-sm col"
                 type="text"
-                :placeholder="vehicleInfo.details"
-                v-model="vehicleInfo.details"
+                :placeholder="changeVehicleObj.details"
+                v-model="changeVehicleObj.details"
               />
             </label>
             <label class="col mt-3">
@@ -221,8 +225,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                :placeholder="vehicleInfo.regNumber"
-                v-model="vehicleInfo.regNumber"
+                :placeholder="changeVehicleObj.regNumber"
+                v-model="changeVehicleObj.regNumber"
               />
             </label>
             <label class="col mt-3">
@@ -232,8 +236,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                :placeholder="vehicleInfo.vin"
-                v-model="vehicleInfo.vin"
+                :placeholder="changeVehicleObj.vin"
+                v-model="changeVehicleObj.vin"
               />
             </label>
             <label class="col mt-3">
@@ -243,8 +247,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                :placeholder="vehicleInfo.engine"
-                v-model="vehicleInfo.engine"
+                :placeholder="changeVehicleObj.engine"
+                v-model="changeVehicleObj.engine"
               />
             </label>
             <label class="col mt-3">
@@ -254,8 +258,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                :placeholder="vehicleInfo.retailValue"
-                v-model="vehicleInfo.retailValue"
+                :placeholder="changeVehicleObj.retailValue"
+                v-model="changeVehicleObj.retailValue"
               />
             </label>
             <label class="col mt-3">
@@ -265,8 +269,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                :placeholder="vehicleInfo.trackingDevice"
-                v-model="vehicleInfo.trackingDevice"
+                :placeholder="changeVehicleObj.trackingDevice"
+                v-model="changeVehicleObj.trackingDevice"
               />
             </label>
             <label class="col mt-3">
@@ -277,8 +281,8 @@
               <input
                 class="form-control form-control-sm"
                 type="text"
-                placeholder="Use case..."
-                v-model="vehicleInfo.useCase"
+                :placeholder="changeVehicleObj.useCase"
+                v-model="changeVehicleObj.useCase"
               />
             </label>
           </div>
@@ -287,6 +291,45 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       <!-- EDIT VEHICLE FORM END -->
+      <!-- REMOVE VEHICLE -->
+      <div
+        class="modal-content position-absolute top-50 start-50 translate-middle"
+        v-if="isRemovePopup == vehicle.vehicleId"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title">Remove vehicle?</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="closeRemovePopup"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            <span class="fw-bold">{{ vehicle.details }}</span> will be removed.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            @click="closeRemovePopup"
+          >
+            Close
+          </button>
+          <button
+            @click="removeVehicle(vehicle, index)"
+            type="button"
+            class="btn btn-primary"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+      <!-- REMOVE VEHICLE END -->
     </ul>
   </section>
 </template>
@@ -296,6 +339,7 @@ export default {
   data() {
     return {
       isEdit: false,
+      isRemovePopup: false,
       vehicleInfo: {
         userId: this.accountId,
         details: ``,
@@ -306,6 +350,7 @@ export default {
         trackingDevice: ``,
         useCase: ``,
       },
+      changeVehicleObj: {},
     };
   },
   props: {
@@ -333,6 +378,17 @@ export default {
         .catch((error) => alert(error));
     },
     openEditVehicle(vehicle, index) {
+      this.changeVehicleObj = {
+        vehicleId: vehicle.vehicleId,
+        userId: this.accountId,
+        details: vehicle.details,
+        regNumber: vehicle.regNumber,
+        vin: vehicle.vin,
+        engine: vehicle.engine,
+        retailValue: vehicle.retailValue,
+        trackingDevice: vehicle.trackingDevice,
+        useCase: vehicle.useCase,
+      };
       this.isEdit = vehicle.vehicleId;
       console.log(index);
     },
@@ -340,21 +396,32 @@ export default {
       this.isEdit = false;
     },
     editVehicle(vehicle, index) {
-      const changeVehicleObj = {
-        vehicleId: vehicle.vehicleId,
-        userId: this.vehicleInfo.userId,
-        details: this.vehicleInfo.details,
-        regNumber: this.vehicleInfo.regNumber,
-        vin: this.vehicleInfo.vin,
-        retailValue: this.vehicleInfo.retailValue,
-        trackingDevice: this.vehicleInfo.trackingDevice,
-        useCase: this.vehicleInfo.useCase,
-      };
       this.$store
-        .dispatch(`CREATE_VEHICLE`, changeVehicleObj)
+        .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.isEdit = false)
+          (this.isEdit = false),
+          (this.vehicleInfo = {})
+        );
+      console.log(index);
+    },
+    removePopup(vehicle, index) {
+      this.isRemovePopup = vehicle.vehicleId;
+      console.log(index);
+    },
+    closeRemovePopup() {
+      this.isRemovePopup = false;
+    },
+    removeVehicle(vehicle, index) {
+      this.$store
+        .dispatch(`CREATE_VEHICLE`, {
+          vehicleId: vehicle.vehicleId,
+          userId: this.accountId,
+          deleted: true,
+        })
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          (this.isRemovePopup = false)
         );
       console.log(index);
     },
