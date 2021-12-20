@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container" :key="componentKey">
     <h3>Account Details:</h3>
     <span class="fw-bold text-decoration-underline">Client ID: </span>
     <span>&nbsp;{{ accountInfo.clientIdNumber }}</span> <br />
@@ -38,9 +38,164 @@
     <span class="fw-bold text-decoration-underline">Claims history: </span>
     <span>&nbsp;{{ accountInfo.claimsHistory }}</span> <br />
     <span class="fw-bold text-decoration-underline">Rating: </span>
-    <span>&nbsp;{{ accountInfo.rating }}</span>
-    <h4 class="mt-3">Vehicles information:</h4>
+    <span>&nbsp;{{ accountInfo.rating }}</span> <br />
     <p>
+      <button
+        class="btn btn-primary mt-3"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseWidthExample1"
+        aria-expanded="false"
+        aria-controls="collapseWidthExample1"
+      >
+        Change account information
+      </button>
+    </p>
+    <div>
+      <div class="collapse collapse-horizontal" id="collapseWidthExample1">
+        <form
+          @submit.prevent="changeAccount()"
+          class="card card-body"
+          style="width: 300px"
+        >
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >First name:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.firstName"
+              v-model="changeUserObj.firstName"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Last name:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.lastName"
+              v-model="changeUserObj.lastName"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Date of birth:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.age"
+              v-model="changeUserObj.age"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Address:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.address"
+              v-model="changeUserObj.address"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Cellphone:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.cellphone"
+              v-model="changeUserObj.cellphone"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Home phone:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.phoneNumber"
+              v-model="changeUserObj.phoneNumber"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Marital Status:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.maritalStatus"
+              v-model="changeUserObj.maritalStatus"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Country Of Residence:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.countryOfResidence"
+              v-model="changeUserObj.countryOfResidence"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Previous Insurer:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.previousInsurer"
+              v-model="changeUserObj.previousInsurer"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Year of issue driver license:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.yearOfIssueDriverLicense"
+              v-model="changeUserObj.yearOfIssueDriverLicense"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Overnight parking vehicle:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.overnightParkingVehicle"
+              v-model="changeUserObj.overnightParkingVehicle"
+            />
+          </label>
+          <label>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Claims history:</span
+            >
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="accountInfo.claimsHistory"
+              v-model="changeUserObj.claimsHistory"
+            />
+          </label>
+          <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+      </div>
+    </div>
+    <h4 class="mt-3">Vehicles information:</h4>
+    <p class="m-0 p-0">
       <button
         class="btn btn-primary"
         type="button"
@@ -139,12 +294,13 @@
       </div>
     </div>
     <!-- CREATE VEHICLE FORN END -->
-    <ul
-      v-for="(vehicle, index) in accountInfo.vehicles"
-      :key="index"
-      class="list-group mt-3 position-relative"
-    >
-      <li class="list-group-item" v-if="vehicle.deleted == false">
+    <ul class="list-group position-relative">
+      <li
+        v-for="(vehicle, index) in accountInfo.vehicles"
+        :key="index"
+        class="list-group-item mt-3"
+        v-show="vehicle.deleted == false"
+      >
         <span class="fw-bold text-decoration-underline"
           >Vehicle make and model:</span
         >
@@ -179,157 +335,164 @@
         >
           Remove vehicle
         </button>
-      </li>
-      <!-- EDIT VEHICLE FORM -->
-      <form
-        class="
-          position-absolute
-          top-0
-          start-0
-          w-100
-          h-100
-          bg-light
-          border
-          d-flex
-          flex-column
-          justify-content-between
-          align-items-end
-          p-3
-        "
-        v-if="isEdit == vehicle.vehicleId"
-        @submit.prevent="editVehicle(vehicle, index)"
-      >
-        <button
-          type="button"
-          class="btn-close"
-          aria-label="Close"
-          @click="closeEdit()"
-        ></button>
-        <div class="container p-0">
-          <div class="row row-cols-auto">
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Vehicle make and model:
-              </span>
-              <input
-                class="form-control form-control-sm col"
-                type="text"
-                :placeholder="changeVehicleObj.details"
-                v-model="changeVehicleObj.details"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Vehicle license plate nunber:
-              </span>
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.regNumber"
-                v-model="changeVehicleObj.regNumber"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Vehicle VIN:
-              </span>
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.vin"
-                v-model="changeVehicleObj.vin"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Engine size:
-              </span>
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.engine"
-                v-model="changeVehicleObj.engine"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Retail value:
-              </span>
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.retailValue"
-                v-model="changeVehicleObj.retailValue"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg">
-                Tracking device:
-              </span>
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.trackingDevice"
-                v-model="changeVehicleObj.trackingDevice"
-              />
-            </label>
-            <label class="col mt-3">
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Use case:</span
-              >
-
-              <input
-                class="form-control form-control-sm"
-                type="text"
-                :placeholder="changeVehicleObj.useCase"
-                v-model="changeVehicleObj.useCase"
-              />
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <!-- EDIT VEHICLE FORM END -->
-      <!-- REMOVE VEHICLE -->
-      <div
-        class="modal-content position-absolute top-50 start-50 translate-middle"
-        v-if="isRemovePopup == vehicle.vehicleId"
-      >
-        <div class="modal-header">
-          <h5 class="modal-title">Remove vehicle?</h5>
+        <!-- EDIT VEHICLE FORM -->
+        <form
+          class="
+            position-absolute
+            top-0
+            start-0
+            w-100
+            h-100
+            bg-light
+            border
+            d-flex
+            flex-column
+            justify-content-between
+            align-items-end
+            p-3
+          "
+          v-if="isEdit == vehicle.vehicleId"
+          @submit.prevent="editVehicle(vehicle, index)"
+        >
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
             aria-label="Close"
-            @click="closeRemovePopup"
+            @click="closeEdit()"
           ></button>
+          <div class="container p-0">
+            <div class="row row-cols-auto">
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Vehicle make and model:
+                </span>
+                <input
+                  class="form-control form-control-sm col"
+                  type="text"
+                  :placeholder="changeVehicleObj.details"
+                  v-model="changeVehicleObj.details"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Vehicle license plate nunber:
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.regNumber"
+                  v-model="changeVehicleObj.regNumber"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Vehicle VIN:
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.vin"
+                  v-model="changeVehicleObj.vin"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Engine size:
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.engine"
+                  v-model="changeVehicleObj.engine"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Retail value:
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.retailValue"
+                  v-model="changeVehicleObj.retailValue"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Tracking device:
+                </span>
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.trackingDevice"
+                  v-model="changeVehicleObj.trackingDevice"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg"
+                  >Use case:</span
+                >
+
+                <input
+                  class="form-control form-control-sm"
+                  type="text"
+                  :placeholder="changeVehicleObj.useCase"
+                  v-model="changeVehicleObj.useCase"
+                />
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <!-- EDIT VEHICLE FORM END -->
+        <!-- REMOVE VEHICLE -->
+        <div
+          class="
+            modal-content
+            position-absolute
+            top-50
+            start-50
+            translate-middle
+          "
+          v-if="isRemovePopup == vehicle.vehicleId"
+        >
+          <div class="modal-header">
+            <h5 class="modal-title">Remove vehicle?</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="closeRemovePopup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <span class="fw-bold">{{ vehicle.details }}</span> will be
+              removed.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="closeRemovePopup"
+            >
+              Close
+            </button>
+            <button
+              @click="removeVehicle(vehicle, index)"
+              type="button"
+              class="btn btn-primary"
+            >
+              Save changes
+            </button>
+          </div>
         </div>
-        <div class="modal-body">
-          <p>
-            <span class="fw-bold">{{ vehicle.details }}</span> will be removed.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            @click="closeRemovePopup"
-          >
-            Close
-          </button>
-          <button
-            @click="removeVehicle(vehicle, index)"
-            type="button"
-            class="btn btn-primary"
-          >
-            Save changes
-          </button>
-        </div>
-      </div>
-      <!-- REMOVE VEHICLE END -->
+        <!-- REMOVE VEHICLE END -->
+      </li>
     </ul>
   </section>
 </template>
@@ -338,6 +501,7 @@
 export default {
   data() {
     return {
+      componentKey: 0,
       isEdit: false,
       isRemovePopup: false,
       vehicleInfo: {
@@ -351,6 +515,20 @@ export default {
         useCase: ``,
       },
       changeVehicleObj: {},
+      changeUserObj: {
+        firstName: ``,
+        lastName: ``,
+        age: ``,
+        address: ``,
+        cellphone: ``,
+        phoneNumber: ``,
+        maritalStatus: ``,
+        countryOfResidence: ``,
+        previousInsurer: ``,
+        yearOfIssueDriverLicense: ``,
+        overnightParkingVehicle: ``,
+        claimsHistory: ``,
+      },
     };
   },
   props: {
@@ -368,6 +546,30 @@ export default {
     this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
   },
   methods: {
+    forceRerender() {
+      this.componentKey += 1;
+    },
+    changeAccount() {
+      this.$store
+        .dispatch(`MODIFY_USER`, {
+          accountId: this.accountId,
+          firstName: this.changeUserObj.firstName,
+          lastName: this.changeUserObj.lastName,
+          age: this.changeUserObj.age,
+          address: this.changeUserObj.address,
+          cellphone: this.changeUserObj.cellphone,
+          phoneNumber: this.changeUserObj.phoneNumber,
+          maritalStatus: this.changeUserObj.maritalStatus,
+          countryOfResidence: this.changeUserObj.countryOfResidence,
+          previousInsurer: this.changeUserObj.previousInsurer,
+          yearOfIssueDriverLicense: this.changeUserObj.yearOfIssueDriverLicense,
+          overnightParkingVehicle: this.changeUserObj.overnightParkingVehicle,
+          claimsHistory: this.changeUserObj.claimsHistory,
+        })
+        .then(alert(`This account has updated!`))
+        .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
+        .catch((err) => alert(err));
+    },
     createVehicle() {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)

@@ -1,11 +1,13 @@
 <template>
   <section class="container categories-list-wrapper">
-    <!-- SEARCH -->
-    <!-- <div class="search">
-      <input type="text" placeholder="Search.." />
-    </div> -->
     <!-- ACCOUNTS RENDER -->
-    <h3 class="mt-3">Accounts:</h3>
+    <div class="d-flex justify-content-between">
+      <h3 class="mt-3">Accounts:</h3>
+      <!-- SEARCH -->
+      <div class="search mt-3">
+        <input type="text" placeholder="Search.." />
+      </div>
+    </div>
     <ul class="list-group mt-3">
       <li
         v-for="(account, index) in accountsList"
@@ -101,13 +103,7 @@
     <!-- MODAL ACCOUNT INFO -->
     <div
       v-if="isInfo"
-      class="
-        w-100
-        bg-light
-        account-modal
-        p-3
-        position-relative
-      "
+      class="w-100 bg-light account-modal p-3 position-relative"
     >
       <button
         @click="closeAccountModal"
