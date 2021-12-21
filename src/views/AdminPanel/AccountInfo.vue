@@ -1,5 +1,5 @@
 <template>
-  <section class="container" :key="componentKey">
+  <section class="container">
     <h3>Account Details:</h3>
     <span class="fw-bold text-decoration-underline">Client ID: </span>
     <span>&nbsp;{{ accountInfo.clientIdNumber }}</span> <br />
@@ -501,11 +501,10 @@
 export default {
   data() {
     return {
-      componentKey: 0,
       isEdit: false,
       isRemovePopup: false,
       vehicleInfo: {
-        userId: this.accountId,
+        userId: ``,
         details: ``,
         regNumber: ``,
         vin: ``,
@@ -516,6 +515,7 @@ export default {
       },
       changeVehicleObj: {},
       changeUserObj: {
+        accountId: ``,
         firstName: ``,
         lastName: ``,
         age: ``,
@@ -546,36 +546,23 @@ export default {
     this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
   },
   methods: {
-    forceRerender() {
-      this.componentKey += 1;
-    },
     changeAccount() {
+      this.changeUserObj.accountId = this.accountId;
       this.$store
-        .dispatch(`MODIFY_USER`, {
-          accountId: this.accountId,
-          firstName: this.changeUserObj.firstName,
-          lastName: this.changeUserObj.lastName,
-          age: this.changeUserObj.age,
-          address: this.changeUserObj.address,
-          cellphone: this.changeUserObj.cellphone,
-          phoneNumber: this.changeUserObj.phoneNumber,
-          maritalStatus: this.changeUserObj.maritalStatus,
-          countryOfResidence: this.changeUserObj.countryOfResidence,
-          previousInsurer: this.changeUserObj.previousInsurer,
-          yearOfIssueDriverLicense: this.changeUserObj.yearOfIssueDriverLicense,
-          overnightParkingVehicle: this.changeUserObj.overnightParkingVehicle,
-          claimsHistory: this.changeUserObj.claimsHistory,
-        })
-        .then(alert(`This account has updated!`))
-        .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
+        .dispatch(`MODIFY_USER`, this.changeUserObj)
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
+        )
         .catch((err) => alert(err));
     },
     createVehicle() {
+      this.vehicleInfo.userId = this.accountId;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.vehicleInfo = ``)
+          (this.vehicleInfo = {})
         )
         .catch((error) => alert(error));
     },
@@ -598,13 +585,11 @@ export default {
       this.isEdit = false;
     },
     editVehicle(vehicle, index) {
-      this.$store
-        .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.isEdit = false),
-          (this.vehicleInfo = {})
-        );
+      this.$store.dispatch(`CREATE_VEHICLE`, this.changeVehicleObj).then(
+        this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+        (this.isEdit = false)
+        // (this.vehicleInfo = {})
+      );
       console.log(index);
     },
     removePopup(vehicle, index) {

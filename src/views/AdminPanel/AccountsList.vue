@@ -5,7 +5,38 @@
       <h3 class="mt-3">Accounts:</h3>
       <!-- SEARCH -->
       <div class="search mt-3">
-        <input type="text" placeholder="Search.." />
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by username"
+            v-model="searchUsername"
+          />
+          <button
+            @click="searchAccount"
+            class="btn btn-outline-light"
+            type="button"
+          >
+            <svg
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24px"
+              height="23px"
+              viewBox="0 0 24 24"
+              aria-labelledby="searchIconTitle"
+              stroke="#2329D6"
+              stroke-width="1.7142857142857142"
+              stroke-linecap="square"
+              stroke-linejoin="miter"
+              fill="none"
+              color="#2329D6"
+            >
+              <title id="searchIconTitle">Search</title>
+              <path d="M14.4121122,14.4121122 L20,20" />
+              <circle cx="10" cy="10" r="6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
     <ul class="list-group mt-3">
@@ -16,11 +47,14 @@
         :class="{ active: index == pickedAccountIndex }"
         @click="pickAccount(account, index)"
       >
-        <span
-          >{{ account.firstName || "John" }}&nbsp;{{
-            account.lastName || "Doe"
-          }}</span
-        >
+        <span>
+          <span class="fw-bold">firts and last name:</span>
+          {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
+          <br />
+          <span class="fw-bold">username: </span
+          ><span>{{ account.username }}</span>
+        </span>
+
         <button
           type="button"
           class="btn btn-info btn-sm"
@@ -139,6 +173,7 @@ export default {
       phoneNumber: ``,
       isInfo: false,
       isBthDisabled: false,
+      searchUsername: ``,
     };
   },
   computed: {
@@ -187,6 +222,11 @@ export default {
       this.isBthDisabled = false;
       this.$store.dispatch(`GET_USERS`, ``);
     },
+    searchAccount() {
+      this.$store
+        .dispatch(`GET_USERS`, `?username=${this.searchUsername}`)
+        .then((this.searchUsername = ``));
+    },
   },
 };
 </script>
@@ -197,15 +237,7 @@ li {
 }
 .account-modal {
   margin-top: -11.5em;
-  // z-index: 3;
 }
-// .categories-list-wrapper {
-//   min-height: 100%;
-//   outline: solid 4px red;
-// }
-// .account-change-form {
-//   outline: solid 4px orange;
-// }
 .active {
   z-index: 0;
 }
