@@ -37,14 +37,14 @@
         @click="showEstimations"
       >
         Estimations
-      </button>
+      </button> -->
       <button
-        class="nav-link"
+        class="nav-link fs-5 fw-bold"
         :class="{ active: isOrders }"
         @click="showOrders"
       >
         Orders
-      </button> -->
+      </button>
     </nav>
 
     <section class="mt-1">

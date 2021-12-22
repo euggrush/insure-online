@@ -253,8 +253,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_SUB_PRODUCTS`);
-    this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+    this.$store.dispatch(`GET_SUB_PRODUCTS`, ``);
+    this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
   },
   methods: {
     pickSubProduct(subProduct, index) {

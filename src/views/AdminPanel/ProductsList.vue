@@ -244,7 +244,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+    this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
@@ -261,7 +261,7 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;
@@ -291,7 +291,7 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;

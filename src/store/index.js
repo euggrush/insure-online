@@ -141,19 +141,19 @@ export const store = new Vuex.Store({
         MODIFY_USER: async (context, payload) => {
             await Axios.post(`${BASE_URL}/accounts`, payload);
         },
-        GET_MAIN_PRODUCTS: async (context) => {
+        GET_MAIN_PRODUCTS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/mainProducts`);
+            } = await Axios.get(`${BASE_URL}/mainProducts${payload}`);
             context.commit('SET_MAIN_PRODUCTS', data);
         },
         CREATE_MAIN_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/mainProducts`, payload);
         },
-        GET_SUB_PRODUCTS: async (context) => {
+        GET_SUB_PRODUCTS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/subProducts`);
+            } = await Axios.get(`${BASE_URL}/subProducts${payload}`);
             context.commit(`SET_SUB_PRODUCTS`, data);
         },
         CREATE_SUB_PRODUCT: async (context, payload) => {
