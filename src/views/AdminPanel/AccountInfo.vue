@@ -504,7 +504,7 @@ export default {
       isEdit: false,
       isRemovePopup: false,
       vehicleInfo: {
-        userId: ``,
+        accountId: ``,
         details: ``,
         regNumber: ``,
         vin: ``,
@@ -557,7 +557,7 @@ export default {
         .catch((err) => alert(err));
     },
     createVehicle() {
-      this.vehicleInfo.userId = this.accountId;
+      this.vehicleInfo.accountId = this.accountId;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
@@ -569,7 +569,7 @@ export default {
     openEditVehicle(vehicle, index) {
       this.changeVehicleObj = {
         vehicleId: vehicle.vehicleId,
-        userId: this.accountId,
+        accountId: this.accountId,
         details: vehicle.details,
         regNumber: vehicle.regNumber,
         vin: vehicle.vin,
@@ -603,7 +603,7 @@ export default {
       this.$store
         .dispatch(`CREATE_VEHICLE`, {
           vehicleId: vehicle.vehicleId,
-          userId: this.accountId,
+          accountId: this.accountId,
           deleted: true,
         })
         .then(

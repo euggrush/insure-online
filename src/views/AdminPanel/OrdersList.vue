@@ -153,7 +153,7 @@ export default {
       selectedMainProduct: ``,
       checkedSubProducts: [],
       selectedAccountId: ``,
-      selectedCarId: ``,
+      selectedCarId: `Select customer's car...`,
       isAccountInfo: false,
     };
   },
@@ -172,7 +172,8 @@ export default {
     },
     accountInfo() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.selectedAccountId = this.$store.state.users_array.accounts[0].accountId;
+      this.selectedAccountId =
+        this.$store.state.users_array.accounts[0].accountId;
       return this.$store.state.users_array.accounts[0];
     },
   },
@@ -183,8 +184,12 @@ export default {
     selectCategory(event) {
       this.isCategorySelected = true;
       this.selectedCategory = event.target.value;
+      if (this.selectedCategory === `Select category...`) {
+        this.isCategorySelected = false;
+      } else {
+        this.isCategorySelected = true;
+      }
       this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
-
       // this.$store.dispatch(`GET_MAIN_PRODUCTS`, `categoryId=${this.selectedCategory}`);
     },
     selectMainProduct(event) {
@@ -204,7 +209,7 @@ export default {
       this.$store
         .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
         .then(
-          (this.isAccountInfo = true),
+          (this.isAccountInfo = true)
           // (this.selectedAccountId = this.accountInfo.accountId)
         );
     },
