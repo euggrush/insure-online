@@ -21,6 +21,7 @@
               @change="selectCategory($event)"
               class="form-select"
               aria-label="Default select example"
+              required
             >
               <option selected>Select category...</option>
               <option
@@ -30,12 +31,14 @@
               >
                 {{ category.categoryName }}
               </option>
+              ]
             </select>
             <select
               @change="selectMainProduct($event)"
               class="form-select mt-3"
               aria-label="Default select example"
               :disabled="!isCategorySelected"
+              required
             >
               <option selected>Select product...</option>
               <option
@@ -57,11 +60,12 @@
                   type="checkbox"
                   role="switch"
                   id="flexSwitchCheckChecked"
-                  checked
+                  :value="subProduct.subProductId"
+                  v-model="checkedSubProducts"
                 />
                 <label class="form-check-label" for="flexSwitchCheckChecked">
                   <span>{{ subProduct.subProductName }}</span>
-                  <span>&nbsp;for ${{subProduct.subProductCost}}</span>
+                  <span>&nbsp;for ${{ subProduct.subProductCost }}</span>
                 </label>
               </div>
             </div>
@@ -72,48 +76,69 @@
                 placeholder="Customer's username"
                 aria-label="Customer's username"
                 aria-describedby="button-addon2"
+                v-model="accountUsername"
+                required
               />
               <button
                 class="btn btn-outline-secondary"
                 type="button"
                 id="button-addon2"
+                @click="getAccount"
               >
                 Find
               </button>
             </div>
-            <div class="container bg-info text-white bg-opacity-75">
-              <div class="row row-cols-auto">
-                <div class="col">Username:</div>
-                <div class="col">First name:</div>
-                <div class="col">Last name:</div>
-                <div class="col">Date of birth:</div>
-              </div>
-            </div>
-            <select
-              class="form-select mt-3"
-              aria-label="Default select example"
+            <div
+              v-if="isAccountInfo"
+              class="container bg-info text-white bg-opacity-75 p-3"
             >
-              <option selected>Select customer's car...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+              <div class="row row-cols-auto">
+                <div class="col">
+                  Username:
+                  <span class="d-block text-danger fw-bold">{{
+                    accountInfo.username
+                  }}</span>
+                </div>
+                <div class="col">
+                  First name:
+                  <span class="d-block text-danger fw-bold">{{
+                    accountInfo.firstName
+                  }}</span>
+                </div>
+                <div class="col">
+                  Last name:
+                  <span class="d-block text-danger fw-bold">{{
+                    accountInfo.lastName
+                  }}</span>
+                </div>
+                <div class="col">
+                  Date of birth:
+                  <span class="d-block text-danger fw-bold">{{
+                    accountInfo.age
+                  }}</span>
+                </div>
+              </div>
+              <select
+                class="form-select mt-3"
+                aria-label="Default select example"
+                v-model="selectedCarId"
+              >
+                <option selected>Select customer's car...</option>
+                <option
+                  v-for="(vehicle, index) in accountInfo.vehicles"
+                  :key="index"
+                  :value="vehicle.vehicleId"
+                >
+                  {{ vehicle.details }}
+                </option>
+              </select>
+            </div>
+
             <button type="submit" class="btn btn-info mt-5">Calculate</button>
           </form>
         </div>
       </div>
     </div>
-    <!-- <ul class="list-group">
-      <li
-        v-for="(product, index) in productsList"
-        :key="index"
-        class="list-group-item"
-        :class="{ active: index === pickedProductIndex }"
-        @click="pickProduct(product, index)"
-      >
-        {{ product.mainProductName }}
-      </li>
-    </ul> -->
   </section>
 </template>
 
@@ -121,14 +146,15 @@
 export default {
   data() {
     return {
-      productName: ``,
-      pickedProductIndex: ``,
-      pickedProductInfo: [],
-      pickedProductId: ``,
-      productNewName: ``,
-      isBtnDisabled: true,
       isCategorySelected: false,
       isSubProducts: false,
+      accountUsername: ``,
+      selectedCategory: ``,
+      selectedMainProduct: ``,
+      checkedSubProducts: [],
+      selectedAccountId: ``,
+      selectedCarId: ``,
+      isAccountInfo: false,
     };
   },
   computed: {
@@ -144,31 +170,53 @@ export default {
       }
       return [];
     },
+    accountInfo() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.selectedAccountId = this.$store.state.users_array.accounts[0].accountId;
+      return this.$store.state.users_array.accounts[0];
+    },
   },
   mounted() {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
-    this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
   },
   methods: {
     selectCategory(event) {
       this.isCategorySelected = true;
-      let catId = event.target.value;
-      console.log(catId);
+      this.selectedCategory = event.target.value;
+      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
 
-      // this.$store.dispatch(`GET_MAIN_PRODUCTS`, `categoryId=${catId}`);
+      // this.$store.dispatch(`GET_MAIN_PRODUCTS`, `categoryId=${this.selectedCategory}`);
     },
     selectMainProduct(event) {
-      let mainProductId = event.target.value;
+      this.selectedMainProduct = event.target.value;
       this.$store
-        .dispatch(`GET_SUB_PRODUCTS`, `?mainProductId=${mainProductId}`)
+        .dispatch(
+          `GET_SUB_PRODUCTS`,
+          `?mainProductId=${this.selectedMainProduct}`
+        )
         .then((this.isSubProducts = true))
         .catch((err) => {
           this.isSubProducts = false;
           console.log(err);
         });
     },
+    getAccount() {
+      this.$store
+        .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
+        .then(
+          (this.isAccountInfo = true),
+          // (this.selectedAccountId = this.accountInfo.accountId)
+        );
+    },
     getEstimation() {
-      alert(`haha`);
+      const payload = {
+        categoryId: this.selectedCategory,
+        mainProductId: this.selectedMainProduct,
+        subProductsIds: Object.values(this.checkedSubProducts),
+        accountId: this.selectedAccountId,
+        vehicleId: this.selectedCarId,
+      };
+      console.log(payload);
     },
   },
 };
