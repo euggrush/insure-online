@@ -18,6 +18,7 @@ let ls = new SecureLS({
 import {
     BASE_URL
 } from '../constants';
+import axios from 'axios';
 
 export const store = new Vuex.Store({
     state: {
@@ -28,7 +29,9 @@ export const store = new Vuex.Store({
         product_categories: [],
         users_array: [],
         main_products: [],
-        sub_products: []
+        sub_products: [],
+        estimations: [],
+        current_estimation: []
     },
     plugins: [
         createLogger(),
@@ -75,6 +78,12 @@ export const store = new Vuex.Store({
         },
         SET_SUB_PRODUCTS(state, payload) {
             state.sub_products = payload;
+        },
+        SET_ESTIMATIONS(state, payload) {
+            state.estimations = payload;
+        },
+        SET_CURRENT_ESTIMATION(state, payload) {
+            state.current_estimation = payload;
         }
     },
     actions: {
@@ -161,6 +170,20 @@ export const store = new Vuex.Store({
         },
         CREATE_VEHICLE: async (content, payload) => {
             await Axios.post(`${BASE_URL}/vehicles`, payload);
+        },
+        GET_ESTIMATIONS: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/estimations${payload}`);
+            context.commit(`SET_ESTIMATIONS`, data);
+        },
+        CREATE_ESTIMATION: async (context, payload) => {
+            Axios.post(`${BASE_URL}/estimations`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_CURRENT_ESTIMATION`, data)
+                }
+            )
         }
     },
 });

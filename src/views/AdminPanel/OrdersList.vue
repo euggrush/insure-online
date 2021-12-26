@@ -59,11 +59,14 @@
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-                  id="flexSwitchCheckChecked"
-                  :value="subProduct.subProductId"
+                  id="flexSwitchCheckCheckedDisabled"
                   v-model="checkedSubProducts"
+                  :value="subProduct.subProductId"
                 />
-                <label class="form-check-label" for="flexSwitchCheckChecked">
+                <label
+                  class="form-check-label"
+                  for="flexSwitchCheckCheckedDisabled"
+                >
                   <span>{{ subProduct.subProductName }}</span>
                   <span>&nbsp;for ${{ subProduct.subProductCost }}</span>
                 </label>
@@ -133,7 +136,9 @@
                 </option>
               </select>
             </div>
-
+            <span class="d-block mt-5"
+              >Estimation: {{ currentEstimation.totalCost || 0 }}</span
+            >
             <button type="submit" class="btn btn-info mt-5">Calculate</button>
           </form>
         </div>
@@ -174,7 +179,16 @@ export default {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.selectedAccountId =
         this.$store.state.users_array.accounts[0].accountId;
-      return this.$store.state.users_array.accounts[0];
+      if (this.isAccountInfo == true) {
+        return this.$store.state.users_array.accounts[0];
+      }
+      return [];
+    },
+    estimationsList() {
+      return this.$store.state.estimations.estimations || [];
+    },
+    currentEstimation() {
+      return this.$store.state.current_estimation || 0;
     },
   },
   mounted() {
@@ -189,8 +203,11 @@ export default {
       } else {
         this.isCategorySelected = true;
       }
-      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
-      // this.$store.dispatch(`GET_MAIN_PRODUCTS`, `categoryId=${this.selectedCategory}`);
+      // this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+      this.$store.dispatch(
+        `GET_MAIN_PRODUCTS`,
+        `?categoryId=${this.selectedCategory}`
+      );
     },
     selectMainProduct(event) {
       this.selectedMainProduct = event.target.value;
@@ -206,22 +223,23 @@ export default {
         });
     },
     getAccount() {
-      this.$store
-        .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
-        .then(
-          (this.isAccountInfo = true)
-          // (this.selectedAccountId = this.accountInfo.accountId)
-        );
+      if (this.accountUsername !== ``) {
+        this.$store
+          .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
+          .then((this.isAccountInfo = true))
+          .catch((err) => alert(err.response.data.message));
+      }
     },
     getEstimation() {
-      const payload = {
-        categoryId: this.selectedCategory,
-        mainProductId: this.selectedMainProduct,
-        subProductsIds: Object.values(this.checkedSubProducts),
-        accountId: this.selectedAccountId,
-        vehicleId: this.selectedCarId,
-      };
-      console.log(payload);
+      this.$store
+        .dispatch(`CREATE_ESTIMATION`, {
+          accountId: this.selectedAccountId,
+          mainProductId: this.selectedMainProduct,
+          subProductsIds: Object.values(this.checkedSubProducts),
+          vehicleId: this.selectedCarId,
+        })
+        // .then((this.current_estimation = this.$store.state.current_estimation))
+        .catch((err) => alert(err));
     },
   },
 };

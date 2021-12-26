@@ -110,9 +110,13 @@
             >
             <input type="text" class="form-control" v-model="lastName" />
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Age:</label>
             <input type="number" class="form-control" v-model="age" />
+          </div> -->
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Date of birth:</label>
+            <input type="date" class="form-control" v-model="age" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
@@ -168,6 +172,7 @@ export default {
       firstName: ``,
       lastName: ``,
       age: ``,
+      dateOfBirth: ``,
       address: ``,
       cellphone: ``,
       phoneNumber: ``,

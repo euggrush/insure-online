@@ -224,6 +224,17 @@
               />
             </div>
             <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Year:</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="exampleInputEmail1"
+                v-model="vehicleInfo.year"
+              />
+            </div>
+            <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label"
                 >Registration license plate:</label
               >
@@ -306,6 +317,10 @@
         >
         <span>&nbsp;{{ vehicle.details }}</span> <br />
         <span class="fw-bold text-decoration-underline"
+          >Vehicle year:</span
+        >
+        <span>&nbsp;{{ vehicle.year }}</span> <br />
+        <span class="fw-bold text-decoration-underline"
           >Vehicle license plate nunber:</span
         >
         <span>&nbsp;{{ vehicle.regNumber }}</span> <br />
@@ -371,6 +386,17 @@
                   type="text"
                   :placeholder="changeVehicleObj.details"
                   v-model="changeVehicleObj.details"
+                />
+              </label>
+              <label class="col mt-3">
+                <span class="fw-bold text-decoration-underline lh-lg">
+                  Vehicle year:
+                </span>
+                <input
+                  class="form-control form-control-sm col"
+                  type="number"
+                  :placeholder="changeVehicleObj.year"
+                  v-model="changeVehicleObj.year"
                 />
               </label>
               <label class="col mt-3">
@@ -506,6 +532,7 @@ export default {
       vehicleInfo: {
         accountId: ``,
         details: ``,
+        year: ``,
         regNumber: ``,
         vin: ``,
         engine: ``,
@@ -571,6 +598,7 @@ export default {
         vehicleId: vehicle.vehicleId,
         accountId: this.accountId,
         details: vehicle.details,
+        year: vehicle.year,
         regNumber: vehicle.regNumber,
         vin: vehicle.vin,
         engine: vehicle.engine,
