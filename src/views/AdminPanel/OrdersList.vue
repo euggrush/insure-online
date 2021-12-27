@@ -18,10 +18,11 @@
         <div class="card card-body">
           <form @submit.prevent="getEstimation">
             <select
-              @change="selectCategory($event)"
+              @change="selectCategory()"
               class="form-select"
               aria-label="Default select example"
               required
+              v-model="selectedCategory"
             >
               <option selected>Select category...</option>
               <option
@@ -34,11 +35,11 @@
               ]
             </select>
             <select
-              @change="selectMainProduct($event)"
+              @change="selectMainProduct()"
               class="form-select mt-3"
               aria-label="Default select example"
               :disabled="!isCategorySelected"
-              required
+              v-model="selectedMainProduct"
             >
               <option selected>Select product...</option>
               <option
@@ -72,6 +73,7 @@
                 </label>
               </div>
             </div>
+            <p class="fw-bold">Customer</p>
             <div class="input-group mt-3 mb-3">
               <input
                 type="text"
@@ -122,9 +124,11 @@
                 </div>
               </div>
               <select
+                v-if="isCarCategorySelected"
                 class="form-select mt-3"
                 aria-label="Default select example"
                 v-model="selectedCarId"
+                @change="selectCar"
               >
                 <option selected>Select customer's car...</option>
                 <option
@@ -136,10 +140,18 @@
                 </option>
               </select>
             </div>
-            <span class="d-block mt-5"
+            <span v-if="showEstimate" class="d-block mt-5"
               >Estimation: {{ currentEstimation.totalCost || 0 }}</span
             >
-            <button type="submit" class="btn btn-info mt-5">Calculate</button>
+            <button
+              type="submit"
+              class="btn btn-info mt-5"
+              :disabled="
+                !isCategorySelected || !isMainProductSelected || !isUserSelected
+              "
+            >
+              Calculate
+            </button>
           </form>
         </div>
       </div>
@@ -152,14 +164,22 @@ export default {
   data() {
     return {
       isCategorySelected: false,
+      isMainProductSelected: false,
+      isUserSelected: false,
+      isCarSelected: false,
       isSubProducts: false,
       accountUsername: ``,
-      selectedCategory: ``,
-      selectedMainProduct: ``,
+      selectedCategory: `Select category...`,
+      selectedMainProduct: `Select product...`,
       checkedSubProducts: [],
       selectedAccountId: ``,
       selectedCarId: `Select customer's car...`,
       isAccountInfo: false,
+      showEstimate: false,
+      isCalcBtnDisabled: true,
+      resetSelectMainProduct: true,
+      isCarCategorySelected: false,
+      shoNullEstimation: true,
     };
   },
   computed: {
@@ -188,35 +208,41 @@ export default {
       return this.$store.state.estimations.estimations || [];
     },
     currentEstimation() {
-      return this.$store.state.current_estimation || 0;
+      if (this.shoNullEstimation) {
+        return 0;
+      }
+      return this.$store.state.current_estimation;
     },
   },
   mounted() {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
-    selectCategory(event) {
-      this.isCategorySelected = true;
-      this.selectedCategory = event.target.value;
+    selectCategory() {
+      this.selectedMainProduct = `Select product...`;
+      this.isSubProducts = false;
+      this.isCarCategorySelected = false;
       if (this.selectedCategory === `Select category...`) {
         this.isCategorySelected = false;
+        this.shoNullEstimation = true;
       } else {
         this.isCategorySelected = true;
       }
-      // this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+      if (this.selectedCategory == `280fc9df-1dec-4631-8fe3-76a6f606d6ad`) {
+        this.isCarCategorySelected = true;
+      }
       this.$store.dispatch(
         `GET_MAIN_PRODUCTS`,
         `?categoryId=${this.selectedCategory}`
       );
     },
-    selectMainProduct(event) {
-      this.selectedMainProduct = event.target.value;
+    selectMainProduct() {
       this.$store
         .dispatch(
           `GET_SUB_PRODUCTS`,
           `?mainProductId=${this.selectedMainProduct}`
         )
-        .then((this.isSubProducts = true))
+        .then((this.isSubProducts = true), (this.isMainProductSelected = true))
         .catch((err) => {
           this.isSubProducts = false;
           console.log(err);
@@ -226,7 +252,7 @@ export default {
       if (this.accountUsername !== ``) {
         this.$store
           .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
-          .then((this.isAccountInfo = true))
+          .then((this.isAccountInfo = true), (this.isUserSelected = true))
           .catch((err) => alert(err.response.data.message));
       }
     },
@@ -238,8 +264,14 @@ export default {
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
         })
-        // .then((this.current_estimation = this.$store.state.current_estimation))
+        .then((this.showEstimate = true), (this.shoNullEstimation = false))
         .catch((err) => alert(err));
+    },
+    selectCar() {
+      if (this.selectedCarId !== `Select customer's car...`) {
+        this.isCarSelected = true;
+      }
+      this.isCarSelected = false;
     },
   },
 };
@@ -248,6 +280,5 @@ export default {
 <style lang="scss" scoped>
 .orders-list-wrapper {
   min-height: 53vh;
-  // outline: solid 4px palevioletred;
 }
 </style>
