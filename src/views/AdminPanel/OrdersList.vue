@@ -17,62 +17,7 @@
       <div class="collapse" id="collapseWidthExample">
         <div class="card card-body">
           <form @submit.prevent="getEstimation">
-            <select
-              @change="selectCategory()"
-              class="form-select"
-              aria-label="Default select example"
-              required
-              v-model="selectedCategory"
-            >
-              <option selected>Select category...</option>
-              <option
-                v-for="(category, index) in categoriesList"
-                :key="index"
-                :value="category.categoryId"
-              >
-                {{ category.categoryName }}
-              </option>
-              ]
-            </select>
-            <select
-              @change="selectMainProduct()"
-              class="form-select mt-3"
-              aria-label="Default select example"
-              :disabled="!isCategorySelected"
-              v-model="selectedMainProduct"
-            >
-              <option selected>Select product...</option>
-              <option
-                v-for="(product, index) in productsList"
-                :key="index"
-                :value="product.mainProductId"
-              >
-                {{ product.mainProductName }}
-              </option>
-            </select>
-            <div class="options-wrapper mt-3">
-              <div
-                v-for="(subProduct, index) in subProductsList"
-                :key="index"
-                class="form-check form-switch"
-              >
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="flexSwitchCheckCheckedDisabled"
-                  v-model="checkedSubProducts"
-                  :value="subProduct.subProductId"
-                />
-                <label
-                  class="form-check-label"
-                  for="flexSwitchCheckCheckedDisabled"
-                >
-                  <span>{{ subProduct.subProductName }}</span>
-                  <span>&nbsp;for ${{ subProduct.subProductCost }}</span>
-                </label>
-              </div>
-            </div>
+            <!-- CUSTOMER START -->
             <p class="fw-bold">Customer</p>
             <div class="input-group mt-3 mb-3">
               <input
@@ -83,6 +28,7 @@
                 aria-describedby="button-addon2"
                 v-model="accountUsername"
                 required
+                v-on:keyup.enter="getAccount"
               />
               <button
                 class="btn btn-outline-secondary"
@@ -95,7 +41,7 @@
             </div>
             <div
               v-if="isAccountInfo"
-              class="container bg-info text-white bg-opacity-75 p-3"
+              class="container bg-info text-white bg-opacity-75 p-3 mb-3"
             >
               <div class="row row-cols-auto">
                 <div class="col">
@@ -129,8 +75,9 @@
                 aria-label="Default select example"
                 v-model="selectedCarId"
                 @change="selectCar"
+                required
               >
-                <option selected>Select customer's car...</option>
+                <option value="" selected>Select customer's car...</option>
                 <option
                   v-for="(vehicle, index) in accountInfo.vehicles"
                   :key="index"
@@ -140,6 +87,70 @@
                 </option>
               </select>
             </div>
+            <!-- CUSTOMER END -->
+            <p class="fw-bold">Category</p>
+            <select
+              @change="selectCategory()"
+              class="form-select"
+              aria-label="Default select example"
+              required
+              v-model="selectedCategory"
+            >
+              <option selected>Select category...</option>
+              <option
+                v-for="(category, index) in categoriesList"
+                :key="index"
+                :value="category.categoryId"
+              >
+                {{ category.categoryName }}
+              </option>
+              ]
+            </select>
+            <p class="fw-bold mt-3">Product</p>
+            <select
+              @change="selectMainProduct()"
+              class="form-select mt-3"
+              aria-label="Default select example"
+              :disabled="!isCategorySelected"
+              v-model="selectedMainProduct"
+              required
+            >
+              <option value="" selected>Select product...</option>
+              <option
+                v-for="(product, index) in productsList"
+                :key="index"
+                :value="product.mainProductId"
+              >
+                {{ product.mainProductName }}
+              </option>
+            </select>
+            <div class="options-wrapper mt-3 mb-3">
+              <div
+                v-for="(subProduct, index) in subProductsList"
+                :key="index"
+                class="form-check form-switch"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckCheckedDisabled"
+                  :value="subProduct.subProductId"
+                  v-model="checkedSubProducts"
+                  :required="isCarCategorySelected"
+                />
+                <label
+                  class="form-check-label"
+                  for="flexSwitchCheckCheckedDisabled"
+                >
+                  <span>{{ subProduct.subProductName }}</span>
+                  <span class="fw-bold"
+                    >&nbsp;${{ subProduct.subProductCost }}</span
+                  >
+                </label>
+              </div>
+            </div>
+
             <span v-if="showEstimate" class="d-block mt-5"
               >Estimation: {{ currentEstimation.totalCost || 0 }}</span
             >
@@ -170,10 +181,10 @@ export default {
       isSubProducts: false,
       accountUsername: ``,
       selectedCategory: `Select category...`,
-      selectedMainProduct: `Select product...`,
+      selectedMainProduct: ``,
       checkedSubProducts: [],
       selectedAccountId: ``,
-      selectedCarId: `Select customer's car...`,
+      selectedCarId: ``,
       isAccountInfo: false,
       showEstimate: false,
       isCalcBtnDisabled: true,
@@ -219,7 +230,7 @@ export default {
   },
   methods: {
     selectCategory() {
-      this.selectedMainProduct = `Select product...`;
+      this.selectedMainProduct = ``;
       this.isSubProducts = false;
       this.isCarCategorySelected = false;
       if (this.selectedCategory === `Select category...`) {
@@ -252,8 +263,16 @@ export default {
       if (this.accountUsername !== ``) {
         this.$store
           .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
-          .then((this.isAccountInfo = true), (this.isUserSelected = true))
-          .catch((err) => alert(err.response.data.message));
+          .then((res) => {
+            (this.isAccountInfo = true),
+              (this.isUserSelected = true),
+              console.log(res);
+          })
+          .catch(
+            (err) => alert(err.response.data.message),
+            (this.isAccountInfo = false),
+            (this.isUserSelected = false)
+          );
       }
     },
     getEstimation() {
@@ -264,11 +283,20 @@ export default {
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
         })
-        .then((this.showEstimate = true), (this.shoNullEstimation = false))
+        .then(
+          (this.showEstimate = true),
+          (this.shoNullEstimation = false)
+          // console.log({
+          //   accountId: this.selectedAccountId,
+          //   mainProductId: this.selectedMainProduct,
+          //   subProductsIds: Object.values(this.checkedSubProducts),
+          //   vehicleId: this.selectedCarId,
+          // })
+        )
         .catch((err) => alert(err));
     },
     selectCar() {
-      if (this.selectedCarId !== `Select customer's car...`) {
+      if (this.selectedCarId !== ``) {
         this.isCarSelected = true;
       }
       this.isCarSelected = false;

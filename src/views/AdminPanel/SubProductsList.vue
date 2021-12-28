@@ -1,6 +1,6 @@
 <template>
   <section class="container subproducts-list-wrapper">
-    <h3 class="mt-3">Products options:</h3>
+    <h3 class="mt-3">Products coverages:</h3>
     <ul class="list-group mt-3">
       <li
         v-for="(subProduct, index) in subProductsList"
@@ -13,7 +13,7 @@
           <div class="row">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Option's name:</span
+                >Coverage name:</span
               >
               <span class="d-block">
                 {{ subProduct.subProductName }}
@@ -21,7 +21,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Option's description:</span
+                >Coverage description:</span
               >
               <span class="d-block">
                 {{ subProduct.subProductDescription }}
@@ -29,7 +29,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Option's cost:</span
+                >Coverage cost:</span
               >
               <span class="d-block">
                 {{ subProduct.subProductCost }}
@@ -37,7 +37,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Option's related product:</span
+                >Related to product:</span
               >
               <span class="d-block">
                 {{ subProduct.mainProductName }}
@@ -45,7 +45,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Option's related category:</span
+                >Related to category:</span
               >
               <span class="d-block">
                 {{ subProduct.categoryName }}
@@ -65,7 +65,7 @@
         aria-expanded="false"
         aria-controls="collapseExample1"
       >
-        Create product option
+        Create product coverage
       </button>
     </p>
     <div class="collapse" id="collapseExample1">
@@ -79,7 +79,7 @@
           required
         >
           <option disabled :selected="!isMainProductSelected">
-            Choose product that you want add option
+            Choose product that you want add coverage
           </option>
           <option
             v-for="(product, index) in productsList"
@@ -93,7 +93,7 @@
         <form class="mt-1" @submit.prevent="createSubProduct">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option name</label
+              >Product coverage name</label
             >
             <input
               type="text"
@@ -105,7 +105,7 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option description</label
+              >Product coverage description</label
             >
             <input
               type="text"
@@ -117,7 +117,7 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option cost</label
+              >Product coverage cost</label
             >
             <input
               type="number"
@@ -148,7 +148,7 @@
         aria-expanded="false"
         aria-controls="collapseExample2"
       >
-        Change product option
+        Change product coverage
       </button>
     </p>
     <div class="collapse" id="collapseExample2">
@@ -160,7 +160,7 @@
           required
         >
           <option disabled :selected="!isSubProductSelected">
-            Choose product option that you want to change
+            Choose product coverage that you want to change
           </option>
           <option
             v-for="(subProduct, index) in subProductsList"
@@ -176,7 +176,7 @@
         <form class="mt-1" @submit.prevent="changeSubProduct">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option name</label
+              >Product coverage name</label
             >
             <input
               type="text"
@@ -188,7 +188,7 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option description</label
+              >Product coverage description</label
             >
             <input
               type="text"
@@ -200,7 +200,7 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Product option cost</label
+              >Product coverage cost</label
             >
             <input
               type="number"

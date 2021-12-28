@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's name:</span
+                >Name:</span
               >
               <span class="d-block">
                 {{ product.mainProductName }}
@@ -22,7 +22,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's description:</span
+                >Description:</span
               >
               <span class="d-block">
                 {{ product.mainProductDescription }}
@@ -30,7 +30,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's cost:</span
+                >Cost:</span
               >
               <span class="d-block">
                 {{ product.mainProductCost }}
@@ -38,7 +38,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's category:</span
+                >Category:</span
               >
               <span class="d-block">
                 {{ product.categoryName }}
