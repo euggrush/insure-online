@@ -221,17 +221,19 @@
                 class="form-control"
                 id="exampleInputEmail1"
                 v-model="vehicleInfo.details"
+                minlength="5"
+                maxlength="30"
+                required
               />
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label"
-                >Year:</label
-              >
+              <label for="exampleInputEmail2" class="form-label">Year:</label>
               <input
                 type="number"
                 class="form-control"
-                id="exampleInputEmail1"
+                id="exampleInputEmail2"
                 v-model="vehicleInfo.year"
+                required
               />
             </div>
             <div class="mb-3">
@@ -243,60 +245,91 @@
                 class="form-control"
                 id="exampleInputPassword1"
                 v-model="vehicleInfo.regNumber"
+                minlength="2"
+                maxlength="10"
+                required
               />
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">VIN:</label>
+              <label for="exampleInputPassword2" class="form-label">VIN:</label>
               <input
                 type="text"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="exampleInputPassword2"
                 v-model="vehicleInfo.vin"
+                minlength="17"
+                maxlength="17"
+                required
               />
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
+              <label for="exampleInputPassword3" class="form-label"
                 >Engine size:</label
               >
               <input
-                type="text"
+                type="number"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="exampleInputPassword3"
                 v-model="vehicleInfo.engine"
+                step="0.1"
+                required
               />
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
+              <label for="exampleInputPassword4" class="form-label"
                 >Retail value:</label
               >
               <input
-                type="text"
+                type="number"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="exampleInputPassword4"
                 v-model="vehicleInfo.retailValue"
+                required
               />
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
-                >Tracking device:</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="exampleInputPassword1"
-                v-model="vehicleInfo.trackingDevice"
-              />
+              <span>Tracking device:</span>
+              <label class="ms-3">
+                <input
+                  type="radio"
+                  name="tracking"
+                  value="Yes"
+                  v-model="vehicleInfo.trackingDevice"
+                  required
+                />
+                Yes
+              </label>
+              <label class="ms-3">
+                <input
+                  type="radio"
+                  name="tracking"
+                  value="No"
+                  v-model="vehicleInfo.trackingDevice"
+                />
+                No
+              </label>
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label"
-                >Use case:</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="exampleInputPassword1"
-                v-model="vehicleInfo.useCase"
-              />
+              <span>Use:</span>
+              <label class="ms-3">
+                <input
+                  type="radio"
+                  name="use"
+                  value="Private"
+                  v-model="vehicleInfo.useCase"
+                  required
+                />
+                Private
+              </label>
+              <label class="ms-3">
+                <input
+                  type="radio"
+                  name="use"
+                  value="Business"
+                  v-model="vehicleInfo.useCase"
+                />
+                Business
+              </label>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -316,9 +349,7 @@
           >Vehicle make and model:</span
         >
         <span>&nbsp;{{ vehicle.details }}</span> <br />
-        <span class="fw-bold text-decoration-underline"
-          >Vehicle year:</span
-        >
+        <span class="fw-bold text-decoration-underline">Vehicle year:</span>
         <span>&nbsp;{{ vehicle.year }}</span> <br />
         <span class="fw-bold text-decoration-underline"
           >Vehicle license plate nunber:</span
@@ -443,29 +474,54 @@
                   v-model="changeVehicleObj.retailValue"
                 />
               </label>
-              <label class="col mt-3">
-                <span class="fw-bold text-decoration-underline lh-lg">
+              <div class="col mt-3 form-check">
+                <span class="d-block fw-bold text-decoration-underline lh-lg">
                   Tracking device:
                 </span>
-                <input
-                  class="form-control form-control-sm"
-                  type="text"
-                  :placeholder="changeVehicleObj.trackingDevice"
-                  v-model="changeVehicleObj.trackingDevice"
-                />
-              </label>
-              <label class="col mt-3">
-                <span class="fw-bold text-decoration-underline lh-lg"
-                  >Use case:</span
+                <label class="form-check-label m-1">
+                  <input
+                    type="radio"
+                    name="trackingDevice"
+                    value="Yes"
+                    v-model="changeVehicleObj.trackingDevice"
+                    required
+                  />
+                  Yes
+                </label>
+                <label class="m-1">
+                  <input
+                    type="radio"
+                    name="trackingDevice"
+                    value="No"
+                    v-model="changeVehicleObj.trackingDevice"
+                  />
+                  No
+                </label>
+              </div>
+              <div class="col mt-3 form-check">
+                <span class="d-block fw-bold text-decoration-underline lh-lg"
+                  >Use:</span
                 >
-
-                <input
-                  class="form-control form-control-sm"
-                  type="text"
-                  :placeholder="changeVehicleObj.useCase"
-                  v-model="changeVehicleObj.useCase"
-                />
-              </label>
+                <label class="form-check-label m-1">
+                  <input
+                    type="radio"
+                    name="useCase"
+                    value="Private"
+                    v-model="changeVehicleObj.useCase"
+                    required
+                  />
+                  Private
+                </label>
+                <label class="m-1">
+                  <input
+                    type="radio"
+                    name="useCase"
+                    value="Business"
+                    v-model="changeVehicleObj.useCase"
+                  />
+                  Business
+                </label>
+              </div>
             </div>
           </div>
 

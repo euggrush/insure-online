@@ -10,7 +10,7 @@
         @click="pickSubProduct(subProduct, index)"
       >
         <div class="container">
-          <div class="row">
+          <div class="row  bg-light">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
                 >Coverage name:</span

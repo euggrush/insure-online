@@ -11,7 +11,7 @@
         @click="pickProduct(product, index)"
       >
         <div class="container">
-          <div class="row">
+          <div class="row bg-light p-1">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
                 >Name:</span
@@ -33,7 +33,7 @@
                 >Cost:</span
               >
               <span class="d-block">
-                {{ product.mainProductCost }}
+                R{{ product.mainProductCost }}
               </span>
             </div>
             <div class="col border">
@@ -43,6 +43,19 @@
               <span class="d-block">
                 {{ product.categoryName }}
               </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Coverages:</span
+              >
+              <p
+                v-for="(subProduct, index) in product.subProducts"
+                :key="index"
+                class="m-0"
+              >
+                <span class="">{{ subProduct.subProductName }}</span>
+                <span class="fw-bold ">&nbsp;R{{ subProduct.subProductCost }}</span>
+              </p>
             </div>
           </div>
         </div>
