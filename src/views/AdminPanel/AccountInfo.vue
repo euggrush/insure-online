@@ -9,7 +9,7 @@
     <span>&nbsp;{{ accountInfo.firstName }}</span> <br />
     <span class="fw-bold text-decoration-underline">Last: </span>
     <span>&nbsp;{{ accountInfo.lastName }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Date of birth: </span>
+    <span class="fw-bold text-decoration-underline">Age: </span>
     <span>&nbsp;{{ accountInfo.age }}</span> <br />
     <span class="fw-bold text-decoration-underline">Address: </span>
     <span>&nbsp;{{ accountInfo.address }}</span> <br />
@@ -81,15 +81,8 @@
             />
           </label>
           <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Date of birth:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.age"
-              v-model="changeUserObj.age"
-            />
+            <span class="fw-bold text-decoration-underline lh-lg">Date of birth:</span>
+            <input class="form-control" type="date" v-model="dateOfBirth" />
           </label>
           <label>
             <span class="fw-bold text-decoration-underline lh-lg"
@@ -417,6 +410,8 @@
                   type="text"
                   :placeholder="changeVehicleObj.details"
                   v-model="changeVehicleObj.details"
+                  minlength="5"
+                  maxlength="30"
                 />
               </label>
               <label class="col mt-3">
@@ -439,6 +434,8 @@
                   type="text"
                   :placeholder="changeVehicleObj.regNumber"
                   v-model="changeVehicleObj.regNumber"
+                  minlength="2"
+                  maxlength="10"
                 />
               </label>
               <label class="col mt-3">
@@ -450,6 +447,8 @@
                   type="text"
                   :placeholder="changeVehicleObj.vin"
                   v-model="changeVehicleObj.vin"
+                  minlength="17"
+                  maxlength="17"
                 />
               </label>
               <label class="col mt-3">
@@ -458,9 +457,10 @@
                 </span>
                 <input
                   class="form-control form-control-sm"
-                  type="text"
+                  type="number"
                   :placeholder="changeVehicleObj.engine"
                   v-model="changeVehicleObj.engine"
+                  step="0.1"
                 />
               </label>
               <label class="col mt-3">
@@ -469,7 +469,7 @@
                 </span>
                 <input
                   class="form-control form-control-sm"
-                  type="text"
+                  type="number"
                   :placeholder="changeVehicleObj.retailValue"
                   v-model="changeVehicleObj.retailValue"
                 />
@@ -580,6 +580,14 @@
 </template>
 
 <script>
+const getTimeStamp = (date) => {
+  let myDate = date;
+  myDate = myDate.split("-");
+  const timestamp = +new Date(
+    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
+  ).getTime();
+  return timestamp;
+};
 export default {
   data() {
     return {
@@ -597,11 +605,12 @@ export default {
         useCase: ``,
       },
       changeVehicleObj: {},
+      dateOfBirth: ``,
       changeUserObj: {
         accountId: ``,
         firstName: ``,
         lastName: ``,
-        age: ``,
+        birthDate: ``,
         address: ``,
         cellphone: ``,
         phoneNumber: ``,
@@ -631,6 +640,7 @@ export default {
   methods: {
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;
+      this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
         .then(

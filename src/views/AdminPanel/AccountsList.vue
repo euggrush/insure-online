@@ -87,53 +87,149 @@
           @submit.prevent="createAccount"
         >
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Username:</label>
-            <input type="text" class="form-control" v-model="username" />
+            <label class="form-label">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="username"
+              minlength="5"
+              maxlength="15"
+              required
+            />
           </div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Password:</label>
-            <input type="password" class="form-control" v-model="password" />
+            <label class="form-label">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              minlength="8"
+              v-model="password"
+              required
+            />
           </div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email:</label>
-            <input type="email" class="form-control" v-model="email" />
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" v-model="email" required />
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >First name:</label
+            <label class="form-label">First name:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="firstName"
+              minlength="2"
+              maxlength="15"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last name:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="lastName"
+              minlength="2"
+              maxlength="15"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date of birth:</label>
+            <input type="date" class="form-control" v-model="birth" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Area & Postal Code:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="address"
+              minlength="5"
+              maxlength="100"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telephone number:</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="phoneNumber"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cell number:</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="cellphone"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ID Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              minlength="5"
+              maxlength="15"
+              v-model="clientIdNumber"
+            />
+          </div>
+          <div class="mb-3">
+            <span class="d-block">Marital Status:</span>
+            <select
+              class="form-select mt-3"
+              aria-label="Default select example"
+              v-model="maritalStatus"
             >
-            <input type="text" class="form-control" v-model="firstName" />
+              <option value="" selected>Select marital status</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+            </select>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Last name:</label
+            <label class="form-label">Country of residence:</label>
+            <input
+              type="text"
+              class="form-control"
+              minlength="5"
+              maxlength="50"
+              v-model="countryOfResidence"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Year of issue of driver's license (YYYY):</label
             >
-            <input type="text" class="form-control" v-model="lastName" />
+            <input
+              type="number"
+              class="form-control"
+              v-model="yearOfIssueDriverLicense"
+            />
           </div>
-          <!-- <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Age:</label>
-            <input type="number" class="form-control" v-model="age" />
-          </div> -->
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Date of birth:</label>
-            <input type="date" class="form-control" v-model="age" />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Address:</label
+          <div class="form-floating mb-3">
+            <span class="d-block"
+              >Claims History over the immediate past 3 years:</span
             >
-            <input type="text" class="form-control" v-model="address" />
+            <textarea
+              class="form-control mt-3"
+              placeholder="Leave a comment here"
+              maxlength="1000"
+              v-model="claimsHistory"
+            ></textarea>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Phone:</label>
-            <input type="tel" class="form-control" v-model="phoneNumber" />
+            <label class="form-label">Previous Insurer:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="previousInsurer"
+              maxlength="50"
+            />
           </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Cellphone:</label
-            >
-            <input type="tel" class="form-control" v-model="cellphone" />
-          </div>
+
           <button type="submit" class="btn btn-primary mt-5">Submit</button>
         </form>
       </div>
@@ -157,6 +253,14 @@
 </template>
 
 <script>
+const getTimeStamp = (date) => {
+  let myDate = date;
+  myDate = myDate.split("-");
+  const timestamp = +new Date(
+    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
+  ).getTime();
+  return timestamp;
+};
 import AccountInfo from "./AccountInfo.vue";
 export default {
   components: {
@@ -171,14 +275,21 @@ export default {
       email: ``,
       firstName: ``,
       lastName: ``,
-      age: ``,
+      birthDate: ``,
       dateOfBirth: ``,
       address: ``,
+      countryOfResidence: ``,
       cellphone: ``,
       phoneNumber: ``,
       isInfo: false,
       isBthDisabled: false,
       searchUsername: ``,
+      clientIdNumber: ``,
+      maritalStatus: ``,
+      yearOfIssueDriverLicense: ``,
+      claimsHistory: ``,
+      previousInsurer: ``,
+      birth: ``,
     };
   },
   computed: {
@@ -198,12 +309,19 @@ export default {
           email: this.email,
           firstName: this.firstName,
           lastName: this.lastName,
-          age: this.age,
+          birthDate: getTimeStamp(this.birth),
           address: this.address,
+          countryOfResidence: this.countryOfResidence,
           cellphone: this.cellphone,
           phoneNumber: this.phoneNumber,
+          clientIdNumber: this.clientIdNumber,
+          maritalStatus: this.maritalStatus,
+          yearOfIssueDriverLicense: this.yearOfIssueDriverLicense,
+          claimsHistory: this.claimsHistory,
+          previousInsurer: this.previousInsurer,
         })
         .then(() => {
+          alert(`User created`);
           this.$store.dispatch(`GET_USERS`, ``);
         })
         .catch((error) => {
