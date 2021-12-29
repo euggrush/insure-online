@@ -323,6 +323,9 @@ export default {
 li {
   cursor: pointer;
 }
+.active {
+  color: $bgColorMain;
+}
 // .products-list-wrapper {
 //   outline: solid 4px yellow;
 // }

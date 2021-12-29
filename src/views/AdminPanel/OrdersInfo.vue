@@ -4,7 +4,7 @@
       <li
         v-for="(order, index) in ordersList"
         :key="index"
-        class="list-group-item position-relative"
+        class="list-group-item"
       >
         <div class="container">
           <div class="row border p-1 bg-light">
@@ -20,7 +20,7 @@
                 >Customer:</span
               >
               <span>{{ order.firstName }}</span>
-              <span>{{ order.lastName }}</span>
+              <span>&nbsp;{{ order.lastName }}</span>
             </div>
 
             <div class="col border-bottom border-start">
@@ -66,7 +66,7 @@
         </div>
         <div
           v-if="isOrderModal == order.orderId"
-          class="order-modal w-100 h-100 p-3"
+          class="order-modal w-100 h-100 p-3 border border-info"
         >
           <button
             type="button"
@@ -75,19 +75,26 @@
             @click="closeOrderModal"
           ></button>
           <h5>Order details:</h5>
+          <span class="fw-bold text-decoration-underline">Product:</span>
           <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
-          <p>{{ order.mainProductName }}</p>
+          <h6 class="fw-bold text-decoration-underline">Coverages Included:</h6>
+          <p v-for="(sub, index) in order.subProducts" :key="index">
+            <span>{{ sub.subProductName }}</span>
+          </p>
+          <span class="fw-bold text-decoration-underline">Total:</span>
+          <p>R{{ order.totalCost }}</p>
+          <span class="fw-bold text-decoration-underline">Order created:</span>
+          <p>{{ getDate(order.orderCreated) }}</p>
+          <span class="fw-bold text-decoration-underline">Order status:</span>
+          <p>{{ order.orderStatus }}</p>
+          <span class="fw-bold text-decoration-underline">Customer:</span>
+          <p>{{ order.firstName }}&nbsp;{{ order.lastName }}</p>
+          <span class="fw-bold text-decoration-underline">Vehicle:</span>
+          <p>{{ order.vehicleDetails }}</p>
+          <span class="fw-bold text-decoration-underline">Vehicle value:</span>
+          <p>R{{ order.vehicleRetailValue }}</p>
+          <button type="button" class="btn btn-primary">Approve</button>
+          <button type="button" class="btn btn-danger ms-3">Reject</button>
         </div>
       </li>
     </ul>
@@ -95,6 +102,8 @@
 </template>
 
 <script>
+const dayjs = require("dayjs");
+
 export default {
   data() {
     return {
@@ -124,6 +133,9 @@ export default {
     this.$store.dispatch(`GET_ORDERS`, ``);
   },
   methods: {
+    getDate(date) {
+      return dayjs(date).format("MMMM D, YYYY h:mm A");
+    },
     getOrder(id) {
       this.$store
         .dispatch(`GET_ORDERS`, `?orderId=${id}`)
@@ -138,15 +150,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 5.5em;
+}
+
 .order-modal {
-  min-height: 40em;
-  margin-top: -6.5em;
-  outline: solid 5px blue;
-  // @include media-breakpoint-up(md) {
-  //   margin-top: -6.5em;
-  // }
-  // @include media-breakpoint-up(lg) {
-  //   margin-top: -6.5em;
-  // }
+  height: auto;
 }
 </style>

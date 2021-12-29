@@ -355,7 +355,7 @@
         <span class="fw-bold text-decoration-underline"
           >Vehicle retail value:</span
         >
-        <span>&nbsp;{{ vehicle.retailValue }}</span> <br />
+        <span>&nbsp;<span class="fw-bold">R</span>{{ vehicle.retailValue }}</span> <br />
         <span class="fw-bold text-decoration-underline">Tracking device:</span>
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>

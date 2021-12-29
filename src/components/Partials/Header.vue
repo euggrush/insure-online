@@ -17,7 +17,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav w-100">
         <li class="nav-item">
           <router-link class="nav-link" to="/our-products"
             >Our Products</router-link
@@ -41,7 +41,7 @@
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
-        <li v-if="this.$store.state.status === 'success'" class="nav-item">
+        <li v-if="this.$store.state.status === 'success'" class="nav-item logout-btn">
           <button
             class="nav-link border-0 bg-transparent fs-5 fw-bold"
             type="button"
@@ -78,5 +78,13 @@ export default {
 .navbar {
   height: 4em;
   opacity: 0.8;
+}
+.logout-btn {
+  min-width: 6em;
+  margin: 0px 0px 0px auto;
+  background-image: url("../../assets/img/exit.svg");
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: right center;
 }
 </style>
