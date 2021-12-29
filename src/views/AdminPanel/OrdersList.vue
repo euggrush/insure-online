@@ -167,11 +167,16 @@
         </div>
       </div>
     </div>
+    <OrdersInfo />
   </section>
 </template>
 
 <script>
+import OrdersInfo from "../AdminPanel/OrdersInfo.vue";
 export default {
+  components: {
+    OrdersInfo,
+  },
   data() {
     return {
       isCategorySelected: false,
