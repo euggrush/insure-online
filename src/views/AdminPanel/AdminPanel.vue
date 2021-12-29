@@ -1,6 +1,13 @@
 <template>
   <section class="admin-panel container-fluid pt-1 pb-5">
-    <h1 class="text-center text-white fw-bold mt-5">Admin Panel</h1>
+    <div class="d-flex justify-content-between align-items-center mt-1 p-3">
+      <h1 class="text-center text-white fw-bold">Admin Panel</h1>
+      <span class="text-white fs-3">
+        <span>{{ this.$store.state.user.firstName || loggedUser }}</span>
+        <span>&nbsp;{{ this.$store.state.user.lastName || loggedUser }}</span>
+      </span>
+    </div>
+
     <nav class="nav nav-pills nav-justified mt-5">
       <button
         class="nav-link fs-5 fw-bold"
@@ -31,13 +38,6 @@
       >
         Coverages
       </button>
-      <!-- <button
-        class="nav-link"
-        :class="{ active: isEstimations }"
-        @click="showEstimations"
-      >
-        Estimations
-      </button> -->
       <button
         class="nav-link fs-5 fw-bold"
         :class="{ active: isOrders }"
@@ -83,6 +83,7 @@ export default {
       isSubProducts: false,
       isEstimations: false,
       isOrders: false,
+      loggedUser: `John Doe`,
     };
   },
   methods: {

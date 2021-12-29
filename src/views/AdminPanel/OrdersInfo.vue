@@ -12,7 +12,14 @@
               <span class="d-block fw-bold text-decoration-underline"
                 >Order status:</span
               >
-              <span>{{ order.orderStatus }}</span>
+              <span
+                class="fw-bold text-uppercase"
+                :class="{
+                  'text-success': order.orderStatus == `approved`,
+                  'text-danger': order.orderStatus == `rejected`,
+                }"
+                >{{ order.orderStatus }}</span
+              >
             </div>
 
             <div class="col border-bottom border-start">
@@ -56,7 +63,7 @@
             <div class="col">
               <button
                 type="button"
-                class="btn btn-info"
+                class="btn btn-info float-end mt-3"
                 @click="getOrder(order.orderId)"
               >
                 View order
@@ -86,15 +93,37 @@
           <span class="fw-bold text-decoration-underline">Order created:</span>
           <p>{{ getDate(order.orderCreated) }}</p>
           <span class="fw-bold text-decoration-underline">Order status:</span>
-          <p>{{ order.orderStatus }}</p>
+          <p
+            class="fw-bold text-uppercase"
+            :class="{
+              'text-success': order.orderStatus == `approved`,
+              'text-danger': order.orderStatus == `rejected`,
+            }"
+          >
+            {{ order.orderStatus }}
+          </p>
           <span class="fw-bold text-decoration-underline">Customer:</span>
           <p>{{ order.firstName }}&nbsp;{{ order.lastName }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle:</span>
           <p>{{ order.vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
           <p>R{{ order.vehicleRetailValue }}</p>
-          <button type="button" class="btn btn-primary">Approve</button>
-          <button type="button" class="btn btn-danger ms-3">Reject</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            :disabled="order.orderStatus == `approved`"
+            @click="approveOrder(order)"
+          >
+            Approve
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger ms-3"
+            :disabled="order.orderStatus == `rejected`"
+            @click="rejectOrder(order)"
+          >
+            Reject
+          </button>
         </div>
       </li>
     </ul>
@@ -144,6 +173,22 @@ export default {
     closeOrderModal() {
       this.isOrderModal = false;
       this.$store.dispatch(`GET_ORDERS`, ``);
+    },
+    approveOrder(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          orderStatus: `approved`,
+        })
+        .then(this.closeOrderModal);
+    },
+    rejectOrder(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          orderStatus: `rejected`,
+        })
+        .then(this.closeOrderModal);
     },
   },
 };

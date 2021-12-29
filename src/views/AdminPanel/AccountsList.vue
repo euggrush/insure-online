@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <ul class="list-group mt-3">
+    <ul class="list-group">
       <li
         v-for="(account, index) in accountsList"
         :key="index"
@@ -359,7 +359,7 @@ li {
   cursor: pointer;
 }
 .account-modal {
-  margin-top: -11.5em;
+  margin-top: -10em;
 }
 .active {
   z-index: 0;
