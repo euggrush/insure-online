@@ -3,7 +3,7 @@
     <h3 class="mt-3">Orders:</h3>
     <p>
       <button
-        class="btn btn-primary"
+        class="btn btn-primary mt-3"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseWidthExample"
@@ -151,9 +151,6 @@
               </div>
             </div>
 
-            <span v-if="showEstimate" class="d-block mt-5"
-              >Estimation: {{ currentEstimation.totalCost || 0 }}</span
-            >
             <button
               type="submit"
               class="btn btn-info mt-5"
@@ -163,11 +160,27 @@
             >
               Calculate
             </button>
+            <span v-if="showEstimate" class="d-block mt-5"
+              >Estimation: R{{ currentEstimation.totalCost || 0 }}</span
+            >
           </form>
+          <div>
+            <button
+              v-if="showEstimate"
+              type="button"
+              class="btn btn-success mt-5"
+              :disabled="
+                !isCategorySelected || !isMainProductSelected || !isUserSelected
+              "
+              @click="createOrder"
+            >
+              Submit order
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <OrdersInfo />
+    <OrdersInfo :componentKey="componentKey" />
   </section>
 </template>
 
@@ -196,6 +209,7 @@ export default {
       resetSelectMainProduct: true,
       isCarCategorySelected: false,
       shoNullEstimation: true,
+      componentKey: 0,
     };
   },
   computed: {
@@ -288,16 +302,7 @@ export default {
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
         })
-        .then(
-          (this.showEstimate = true),
-          (this.shoNullEstimation = false)
-          // console.log({
-          //   accountId: this.selectedAccountId,
-          //   mainProductId: this.selectedMainProduct,
-          //   subProductsIds: Object.values(this.checkedSubProducts),
-          //   vehicleId: this.selectedCarId,
-          // })
-        )
+        .then((this.showEstimate = true), (this.shoNullEstimation = false))
         .catch((err) => alert(err));
     },
     selectCar() {
@@ -305,6 +310,36 @@ export default {
         this.isCarSelected = true;
       }
       this.isCarSelected = false;
+    },
+    createOrder() {
+      let estimationId = this.$store.state.current_estimation.estimationId;
+      let accountId = this.$store.state.current_estimation.accountId;
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          accountId: accountId,
+          estimationId: estimationId,
+        })
+        .then(
+          (this.componentKey += 1),
+          this.$store.dispatch(`GET_ORDERS`, ``, this.resetForm()),
+          (this.isCategorySelected = false),
+          (this.isMainProductSelected = false),
+          (this.isUserSelected = false)
+        )
+        .catch((err) => alert(err));
+    },
+    resetForm() {
+      (this.isCategorySelected = false),
+        (this.isMainProductSelected = false),
+        (this.isUserSelected = false),
+        (this.selectedCategory = `Select category...`),
+        (this.isAccountInfo = false),
+        (this.accountUsername = ``),
+        (this.selectedMainProduct = ``),
+        (this.isSubProducts = false);
+      (this.shoNullEstimation = true),
+        (this.showEstimate = false),
+        (this.selectedCarId = ``);
     },
   },
 };
