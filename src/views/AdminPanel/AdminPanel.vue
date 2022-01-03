@@ -1,8 +1,8 @@
 <template>
   <section class="admin-panel container-fluid pt-1 pb-5">
-    <div class="d-flex justify-content-between align-items-center mt-1 p-3">
-      <h1 class="text-center text-white fw-bold">Admin Panel</h1>
-      <span class="text-white fs-3">
+    <div class="d-flex justify-content-between">
+      <h2 class="text-white fw-bold mt-1">Admin Panel</h2>
+      <span class="text-white">
         <span>{{ this.$store.state.user.firstName || loggedUser }}</span>
         <span>&nbsp;{{ this.$store.state.user.lastName || loggedUser }}</span>
       </span>

@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold"
-  >
+  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
     <router-link class="navbar-brand" to="/"
       ><img src="../../assets/logo.png" width="50" height="50" alt="logo"
     /></router-link>
@@ -16,9 +14,15 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse bg-white" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav w-100">
-        <li class="nav-item">
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item"
+        >
           <router-link class="nav-link" to="/our-products"
             >Our Products</router-link
           >
@@ -41,7 +45,10 @@
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li>
-        <li v-if="this.$store.state.status === 'success'" class="nav-item logout-btn">
+        <li
+          v-if="this.$store.state.status === 'success'"
+          class="nav-item logout-btn"
+        >
           <button
             class="nav-link border-0 bg-transparent fw-bold"
             type="button"
@@ -76,7 +83,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 4em;
+  min-height: 4em;
   opacity: 0.8;
 }
 .logout-btn {
@@ -87,4 +94,7 @@ export default {
   background-repeat: no-repeat;
   background-position: right center;
 }
+// #navbarNav {
+//   outline: solid 3px red;
+// }
 </style>

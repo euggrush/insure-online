@@ -9,7 +9,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Search by username"
+            placeholder="Search..."
             v-model="searchUsername"
           />
           <button
@@ -60,7 +60,7 @@
           class="btn btn-info btn-sm"
           @click="showAccountInfo(account, index)"
         >
-          Account Info
+          View details
         </button>
       </li>
     </ul>
@@ -363,5 +363,27 @@ li {
 }
 .active {
   z-index: 0;
+}
+.search {
+  width: 140px;
+  @include media-breakpoint-up(md) {
+    width: 150px;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 180px;
+  }
+}
+input,
+input::-webkit-input-placeholder {
+  font-size: $font-size-micro;
+  @include media-breakpoint-up(sm) {
+    font-size: $font-size-mobile;
+  }
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-medium;
+  }
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-medium;
+  }
 }
 </style>
