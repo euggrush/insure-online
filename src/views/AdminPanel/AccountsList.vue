@@ -1,30 +1,74 @@
 <template>
-  <section class="container categories-list-wrapper position-relative">
-    <!-- SEARCH -->
-    <!-- <div class="search">
-      <input type="text" placeholder="Search.." />
-    </div> -->
+  <section class="container">
     <!-- ACCOUNTS RENDER -->
-    <h3 class="mt-3">Accounts:</h3>
-    <ul class="list-group mt-3">
+    <div class="d-flex justify-content-between align-items-start mt-3">
+      <h3>Accounts:</h3>
+      <!-- SEARCH -->
+      <div class="search">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search..."
+            v-model="searchUser"
+          />
+          <button
+            @click="searchAccount"
+            class="btn btn-outline-light"
+            type="button"
+            v-if="!showAllusers"
+          >
+            <svg
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24px"
+              height="23px"
+              viewBox="0 0 24 24"
+              aria-labelledby="searchIconTitle"
+              stroke="#2329D6"
+              stroke-width="1.7142857142857142"
+              stroke-linecap="square"
+              stroke-linejoin="miter"
+              fill="none"
+              color="#2329D6"
+            >
+              <title id="searchIconTitle">Search</title>
+              <path d="M14.4121122,14.4121122 L20,20" />
+              <circle cx="10" cy="10" r="6" />
+            </svg>
+          </button>
+          <button
+            class="btn btn-outline-light"
+            v-if="showAllusers"
+            @click="findAllUsers"
+          >
+            All
+          </button>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group">
       <li
         v-for="(account, index) in accountsList"
         :key="index"
         class="list-group-item d-flex justify-content-between"
-        :class="{ active: index === pickedAccountIndex }"
+        :class="{ active: index == pickedAccountIndex }"
         @click="pickAccount(account, index)"
       >
-        <span
-          >{{ account.firstName || "John" }}&nbsp;{{
-            account.lastName || "Doe"
-          }}</span
-        >
+        <span>
+          <!-- <span class="fw-bold">firts and last name:</span> -->
+          {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
+          <!-- <br /> -->
+          <!-- <span class="fw-bold">username: </span
+          ><span>{{ account.username }}</span> -->
+        </span>
+
         <button
           type="button"
           class="btn btn-info btn-sm"
           @click="showAccountInfo(account, index)"
         >
-          View Account Info
+          More...
         </button>
       </li>
     </ul>
@@ -38,6 +82,7 @@
         data-bs-target="#collapseExample1"
         aria-expanded="false"
         aria-controls="collapseExample1"
+        :disabled="isBthDisabled"
       >
         Create account
       </button>
@@ -50,49 +95,149 @@
           @submit.prevent="createAccount"
         >
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Username:</label>
-            <input type="text" class="form-control" v-model="username" />
+            <label class="form-label">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="username"
+              minlength="5"
+              maxlength="15"
+              required
+            />
           </div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Password:</label>
-            <input type="password" class="form-control" v-model="password" />
+            <label class="form-label">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              minlength="8"
+              v-model="password"
+              required
+            />
           </div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email:</label>
-            <input type="email" class="form-control" v-model="email" />
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" v-model="email" required />
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >First name:</label
+            <label class="form-label">First name:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="firstName"
+              minlength="2"
+              maxlength="15"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last name:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="lastName"
+              minlength="2"
+              maxlength="15"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date of birth:</label>
+            <input type="date" class="form-control" v-model="birth" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Area & Postal Code:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="address"
+              minlength="5"
+              maxlength="100"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telephone number:</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="phoneNumber"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cell number:</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="cellphone"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ID Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              minlength="5"
+              maxlength="15"
+              v-model="clientIdNumber"
+            />
+          </div>
+          <div class="mb-3">
+            <span class="d-block">Marital Status:</span>
+            <select
+              class="form-select mt-3"
+              aria-label="Default select example"
+              v-model="maritalStatus"
             >
-            <input type="text" class="form-control" v-model="firstName" />
+              <option value="" selected>Select marital status</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+            </select>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Last name:</label
+            <label class="form-label">Country of residence:</label>
+            <input
+              type="text"
+              class="form-control"
+              minlength="5"
+              maxlength="50"
+              v-model="countryOfResidence"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Year of issue of driver's license (YYYY):</label
             >
-            <input type="text" class="form-control" v-model="lastName" />
+            <input
+              type="number"
+              class="form-control"
+              v-model="yearOfIssueDriverLicense"
+            />
           </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Age:</label>
-            <input type="number" class="form-control" v-model="age" />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Address:</label
+          <div class="form-floating mb-3">
+            <span class="d-block"
+              >Claims History over the immediate past 3 years:</span
             >
-            <input type="text" class="form-control" v-model="address" />
+            <textarea
+              class="form-control mt-3"
+              placeholder="Leave a comment here"
+              maxlength="1000"
+              v-model="claimsHistory"
+            ></textarea>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Phone:</label>
-            <input type="tel" class="form-control" v-model="phoneNumber" />
+            <label class="form-label">Previous Insurer:</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="previousInsurer"
+              maxlength="50"
+            />
           </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Cellphone:</label
-            >
-            <input type="tel" class="form-control" v-model="cellphone" />
-          </div>
+
           <button type="submit" class="btn btn-primary mt-5">Submit</button>
         </form>
       </div>
@@ -100,24 +245,15 @@
     <!-- MODAL ACCOUNT INFO -->
     <div
       v-if="isInfo"
-      class="
-        position-absolute
-        top-50
-        start-50
-        translate-middle
-        w-100
-        h-100
-        bg-light
-        account-modal
-      "
+      class="w-100 bg-light account-modal p-3 position-relative"
     >
       <button
         @click="closeAccountModal"
         type="button"
-        class="btn-close position-absolute top-0 end-0 m-3"
+        class="btn-close float-end"
         aria-label="Close"
       ></button>
-      <AccountInfo :accountInfo="pickedAccountInfo" />
+      <AccountInfo :accountId="pickedAccountInfo.accountId" />
     </div>
 
     <!-- MODAL ACCOUNT INFO END -->
@@ -125,6 +261,14 @@
 </template>
 
 <script>
+const getTimeStamp = (date) => {
+  let myDate = date;
+  myDate = myDate.split("-");
+  const timestamp = +new Date(
+    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
+  ).getTime();
+  return timestamp;
+};
 import AccountInfo from "./AccountInfo.vue";
 export default {
   components: {
@@ -139,11 +283,22 @@ export default {
       email: ``,
       firstName: ``,
       lastName: ``,
-      age: ``,
+      birthDate: ``,
+      dateOfBirth: ``,
       address: ``,
+      countryOfResidence: ``,
       cellphone: ``,
       phoneNumber: ``,
       isInfo: false,
+      isBthDisabled: false,
+      searchUser: ``,
+      clientIdNumber: ``,
+      maritalStatus: ``,
+      yearOfIssueDriverLicense: ``,
+      claimsHistory: ``,
+      previousInsurer: ``,
+      birth: ``,
+      showAllusers: false,
     };
   },
   computed: {
@@ -152,7 +307,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_USERS`);
+    this.$store.dispatch(`GET_USERS`, ``);
   },
   methods: {
     createAccount() {
@@ -163,13 +318,20 @@ export default {
           email: this.email,
           firstName: this.firstName,
           lastName: this.lastName,
-          age: this.age,
+          birthDate: getTimeStamp(this.birth),
           address: this.address,
+          countryOfResidence: this.countryOfResidence,
           cellphone: this.cellphone,
           phoneNumber: this.phoneNumber,
+          clientIdNumber: this.clientIdNumber,
+          maritalStatus: this.maritalStatus,
+          yearOfIssueDriverLicense: this.yearOfIssueDriverLicense,
+          claimsHistory: this.claimsHistory,
+          previousInsurer: this.previousInsurer,
         })
         .then(() => {
-          this.$store.dispatch(`GET_USERS`);
+          alert(`User created`);
+          this.$store.dispatch(`GET_USERS`, ``);
         })
         .catch((error) => {
           alert(error);
@@ -183,11 +345,40 @@ export default {
       this.isInfo = true;
       this.pickedAccountInfo = account;
       this.pickedAccountIndex = ``;
+      this.isBthDisabled = true;
 
       console.log(index);
     },
     closeAccountModal() {
       this.isInfo = false;
+      this.isBthDisabled = false;
+      this.$store.dispatch(`GET_USERS`, ``);
+    },
+    searchAccount() {
+      let query = this.searchUser.split(` `);
+
+      let firstName = query[0];
+      let lastName = [];
+
+      for (let i = 1; i <= query.length; i++) {
+        lastName.push(query[i]);
+      }
+      if (this.searchUser != ``) {
+        this.$store
+          .dispatch(
+            `GET_USERS`,
+            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
+          )
+          .then((this.searchUser = ``), (this.showAllusers = true))
+          .catch((err) => {
+            alert(err.response.data.message), (this.showAllusers = false);
+          });
+      }
+    },
+    findAllUsers() {
+      this.$store
+        .dispatch(`GET_USERS`, ``)
+        .then((this.searchUser = ``), (this.showAllusers = false));
     },
   },
 };
@@ -198,12 +389,37 @@ li {
   cursor: pointer;
 }
 .account-modal {
-  z-index: 2;
+  margin-top: -10em;
+  @include media-breakpoint-up(sm) {
+    margin-top: -9em;
+  }
+  @include media-breakpoint-up(xl) {
+    margin-top: -8em;
+  }
 }
-// .categories-list-wrapper {
-//   outline: solid 4px red;
-// }
-// .account-change-form {
-//   outline: solid 4px orange;
-// }
+.active {
+  z-index: 0;
+}
+.search {
+  width: 140px;
+  @include media-breakpoint-up(md) {
+    width: 150px;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 180px;
+  }
+}
+input,
+input::-webkit-input-placeholder {
+  font-size: $font-size-micro;
+  @include media-breakpoint-up(sm) {
+    font-size: $font-size-mobile;
+  }
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-medium;
+  }
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-medium;
+  }
+}
 </style>

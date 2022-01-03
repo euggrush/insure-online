@@ -11,10 +11,10 @@
         @click="pickProduct(product, index)"
       >
         <div class="container">
-          <div class="row">
+          <div class="row product-item">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's name:</span
+                >Name:</span
               >
               <span class="d-block">
                 {{ product.mainProductName }}
@@ -22,7 +22,7 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's description:</span
+                >Description:</span
               >
               <span class="d-block">
                 {{ product.mainProductDescription }}
@@ -30,19 +30,32 @@
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's cost:</span
+                >Cost:</span
               >
-              <span class="d-block">
-                {{ product.mainProductCost }}
-              </span>
+              <span class="d-block"> R{{ product.mainProductCost }} </span>
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
-                >Product's category:</span
+                >Category:</span
               >
               <span class="d-block">
                 {{ product.categoryName }}
               </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Coverages:</span
+              >
+              <p
+                v-for="(subProduct, index) in product.subProducts"
+                :key="index"
+                class="m-0"
+              >
+                <span class="">{{ subProduct.subProductName }}</span>
+                <span class="fw-bold"
+                  >&nbsp;R{{ subProduct.subProductCost }}</span
+                >
+              </p>
             </div>
           </div>
         </div>
@@ -244,7 +257,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+    this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
@@ -261,7 +274,7 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;
@@ -291,7 +304,7 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          this.$store.dispatch(`GET_MAIN_PRODUCTS`);
+          this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;
@@ -310,7 +323,14 @@ export default {
 li {
   cursor: pointer;
 }
-// .products-list-wrapper {
-//   outline: solid 4px yellow;
-// }
+.active {
+  color: $bgColorMain;
+}
+.product-item {
+  min-height: 7em;
+  background-color: $mainGreen;
+  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
 </style>

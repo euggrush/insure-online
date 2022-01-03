@@ -18,6 +18,7 @@ let ls = new SecureLS({
 import {
     BASE_URL
 } from '../constants';
+import axios from 'axios';
 
 export const store = new Vuex.Store({
     state: {
@@ -28,7 +29,11 @@ export const store = new Vuex.Store({
         product_categories: [],
         users_array: [],
         main_products: [],
-        sub_products: []
+        sub_products: [],
+        estimations: [],
+        current_estimation: [],
+        orders: [],
+        current_order: []
     },
     plugins: [
         createLogger(),
@@ -75,6 +80,18 @@ export const store = new Vuex.Store({
         },
         SET_SUB_PRODUCTS(state, payload) {
             state.sub_products = payload;
+        },
+        SET_ESTIMATIONS(state, payload) {
+            state.estimations = payload;
+        },
+        SET_CURRENT_ESTIMATION(state, payload) {
+            state.current_estimation = payload;
+        },
+        SET_ORDERS(state, payload) {
+            state.orders = payload;
+        },
+        SET_CURRENT_ORDER(state, payload) {
+            state.current_order = payload;
         }
     },
     actions: {
@@ -132,32 +149,63 @@ export const store = new Vuex.Store({
         CREATE_PRODUCT_CATEGORY: async (context, payload) => {
             await Axios.post(`${BASE_URL}/categories`, payload);
         },
-        GET_USERS: async (context) => {
+        GET_USERS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/accounts`);
+            } = await Axios.get(`${BASE_URL}/accounts${payload}`);
             context.commit('SET_USERS_ARRAY', data);
         },
         MODIFY_USER: async (context, payload) => {
             await Axios.post(`${BASE_URL}/accounts`, payload);
         },
-        GET_MAIN_PRODUCTS: async (context) => {
+        GET_MAIN_PRODUCTS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/mainProducts`);
+            } = await Axios.get(`${BASE_URL}/mainProducts${payload}`);
             context.commit('SET_MAIN_PRODUCTS', data);
         },
         CREATE_MAIN_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/mainProducts`, payload);
         },
-        GET_SUB_PRODUCTS: async (context) => {
+        GET_SUB_PRODUCTS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/subProducts`);
-            context.commit('SET_SUB_PRODUCTS', data);
+            } = await Axios.get(`${BASE_URL}/subProducts${payload}`);
+            context.commit(`SET_SUB_PRODUCTS`, data);
         },
         CREATE_SUB_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/subProducts`, payload);
         },
+        CREATE_VEHICLE: async (content, payload) => {
+            await Axios.post(`${BASE_URL}/vehicles`, payload);
+        },
+        GET_ESTIMATIONS: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/estimations${payload}`);
+            context.commit(`SET_ESTIMATIONS`, data);
+        },
+        CREATE_ESTIMATION: async (context, payload) => {
+            Axios.post(`${BASE_URL}/estimations`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_CURRENT_ESTIMATION`, data)
+                }
+            )
+        },
+        GET_ORDERS: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/orders${payload}`);
+            context.commit(`SET_ORDERS`, data);
+        },
+        CREATE_ORDER: async (context, payload) => {
+            Axios.post(`${BASE_URL}/orders`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_CURRENT_ORDER`, data);
+                }
+            )
+        }
     },
 });

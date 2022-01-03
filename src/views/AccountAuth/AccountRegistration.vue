@@ -2,7 +2,7 @@
   <section class="container-fluid reg-wrap pt-5 pb-5">
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="signUp">
-        <h2>Sign Up</h2>
+        <h2>Registration</h2>
         <p>Please fill in this form to create an account!</p>
         <hr />
         <div class="form-group">
@@ -17,15 +17,6 @@
                 required="required"
               />
             </div>
-            <!-- <div class="col">
-            <input
-              type="text"
-              class="form-control"
-              name="last_name"
-              placeholder="Last Name"
-              required="required"
-            />
-          </div> -->
           </div>
         </div>
         <div class="form-group">
@@ -48,15 +39,7 @@
             required="required"
           />
         </div>
-        <!-- <div class="form-group">
-        <input
-          type="password"
-          class="form-control"
-          name="confirm_password"
-          placeholder="Confirm Password"
-          required="required"
-        />
-      </div> -->
+
         <div class="form-group">
           <label class="form-check-label"
             ><input type="checkbox" required="required" /> I accept the
@@ -115,9 +98,8 @@ export default {
   min-height: calc(100vh - 7em);
   color: #fff;
   background-image: url($mainBg);
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .form-control {
   height: 41px;
@@ -133,8 +115,13 @@ export default {
   border-radius: 3px;
 }
 .signup-form {
-  width: 400px;
   margin: 0 auto;
+  @include media-breakpoint-up(sm) {
+    width: 400px;
+  }
+  @include media-breakpoint-up(md) {
+    width: 500px;
+  }
 }
 .signup-form form {
   color: #999;

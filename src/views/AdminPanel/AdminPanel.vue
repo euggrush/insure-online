@@ -1,9 +1,16 @@
 <template>
   <section class="admin-panel container-fluid pt-1 pb-5">
-    <h1 class="text-center text-white fw-bold mt-5">Admin Panel</h1>
+    <div class="d-flex justify-content-between mt-3">
+      <h2 class="text-white fw-bold mt-1">Admin Panel</h2>
+      <span class="text-white">
+        <span>{{ this.$store.state.user.firstName || loggedUser }}</span>
+        <span>&nbsp;{{ this.$store.state.user.lastName || loggedUser }}</span>
+      </span>
+    </div>
+
     <nav class="nav nav-pills nav-justified mt-5">
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isAccounts }"
         aria-current="page"
         @click="showAccounts"
@@ -11,40 +18,33 @@
         Accounts
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
         Categories
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
         Products
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isSubProducts }"
         @click="showSubProducts"
       >
-        Products options
-      </button>
-      <!-- <button
-        class="nav-link"
-        :class="{ active: isEstimations }"
-        @click="showEstimations"
-      >
-        Estimations
+        Coverages
       </button>
       <button
-        class="nav-link"
+        class="nav-link fw-bold"
         :class="{ active: isOrders }"
         @click="showOrders"
       >
         Orders
-      </button> -->
+      </button>
     </nav>
 
     <section class="mt-1">
@@ -83,6 +83,7 @@ export default {
       isSubProducts: false,
       isEstimations: false,
       isOrders: false,
+      loggedUser: `John Doe`,
     };
   },
   methods: {
@@ -140,11 +141,11 @@ export default {
 
 <style lang="scss" scoped>
 .admin-panel {
+  min-height: calc(100vh - 6.2em);
   background-color: $bgOrange;
   background-image: url($mainBg);
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 .nav-link {
   color: $colorWhite;
