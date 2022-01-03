@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light container-fluid fs-5 fw-bold"
+    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold"
   >
     <router-link class="navbar-brand" to="/"
       ><img src="../../assets/logo.png" width="50" height="50" alt="logo"
@@ -16,7 +16,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse bg-white" id="navbarNav">
       <ul class="navbar-nav w-100">
         <li class="nav-item">
           <router-link class="nav-link" to="/our-products"
@@ -43,7 +43,7 @@
         </li>
         <li v-if="this.$store.state.status === 'success'" class="nav-item logout-btn">
           <button
-            class="nav-link border-0 bg-transparent fs-5 fw-bold"
+            class="nav-link border-0 bg-transparent fw-bold"
             type="button"
             @click="logout"
           >

@@ -1,10 +1,10 @@
 <template>
-  <section class="container categories-list-wrapper">
+  <section class="container">
     <!-- ACCOUNTS RENDER -->
-    <div class="d-flex justify-content-between">
-      <h3 class="mt-3">Accounts:</h3>
+    <div class="d-flex justify-content-between align-items-start mt-3">
+      <h3>Accounts:</h3>
       <!-- SEARCH -->
-      <div class="search mt-3">
+      <div class="search">
         <div class="input-group mb-3">
           <input
             type="text"

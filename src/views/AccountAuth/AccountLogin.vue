@@ -74,9 +74,8 @@ export default {
   min-height: calc(100vh - 7em);
   color: #fff;
   background-image: url($mainBg);
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .form-control {
   height: 41px;
@@ -92,8 +91,13 @@ export default {
   border-radius: 3px;
 }
 .signup-form {
-  width: 400px;
-  margin: 0 auto;
+  @include media-breakpoint-up(sm) {
+    width: 400px;
+    margin: 0 auto;
+  }
+  @include media-breakpoint-up(md) {
+    width: 500px;
+  }
 }
 .signup-form form {
   color: #999;

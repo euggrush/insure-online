@@ -10,7 +10,7 @@
 
     <nav class="nav nav-pills nav-justified mt-5">
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isAccounts }"
         aria-current="page"
         @click="showAccounts"
@@ -18,28 +18,28 @@
         Accounts
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
         Categories
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
         Products
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isSubProducts }"
         @click="showSubProducts"
       >
         Coverages
       </button>
       <button
-        class="nav-link fs-5 fw-bold"
+        class="nav-link fw-bold"
         :class="{ active: isOrders }"
         @click="showOrders"
       >

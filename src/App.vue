@@ -26,6 +26,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $colorDark;
+  font-size: $font-size-mobile;
+  @include media-breakpoint-up(sm) {
+    font-size: $font-size-small;
+  }
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-medium;
+  }
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-medium;
+  }
+  @include media-breakpoint-up(xl) {
+    font-size: $font-size-large;
+  }
+  @include media-breakpoint-up(xxl) {
+    font-size: $font-size-xxl;
+  }
 }
 
 #nav {
@@ -43,11 +59,4 @@ body {
 .btn-info {
   color: $colorWhite;
 }
-// .btn-primary {
-//   background-color: $mainBlue;
-//   border: none;
-// }
-// .faded {
-//   opacity: 0.1;
-// }
 </style>
