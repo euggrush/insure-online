@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h3>Account Details:</h3>
-    <span class="fw-bold text-decoration-underline">Client ID: </span>
+    <span class="fw-bold text-decoration-underline">ID Number: </span>
     <span>&nbsp;{{ accountInfo.clientIdNumber }}</span> <br />
     <span class="fw-bold text-decoration-underline">Account username: </span>
     <span>&nbsp;{{ accountInfo.username }}</span> <br />
@@ -11,34 +11,28 @@
     <span>&nbsp;{{ accountInfo.lastName }}</span> <br />
     <span class="fw-bold text-decoration-underline">Age: </span>
     <span>&nbsp;{{ accountInfo.age }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Address: </span>
-    <span>&nbsp;{{ accountInfo.address }}</span> <br />
     <span class="fw-bold text-decoration-underline">Email: </span>
     <span>&nbsp;{{ accountInfo.email }}</span> <br />
     <span class="fw-bold text-decoration-underline">Cellphone: </span>
     <span>&nbsp;{{ accountInfo.cellphone }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Home phone: </span>
+    <span class="fw-bold text-decoration-underline">Telephone number: </span>
     <span>&nbsp;{{ accountInfo.phoneNumber }}</span> <br />
     <span class="fw-bold text-decoration-underline">Marital Status: </span>
     <span>&nbsp;{{ accountInfo.maritalStatus }}</span> <br />
+    <span class="fw-bold text-decoration-underline">Area & Postal Code: </span>
+    <span>&nbsp;{{ accountInfo.address }}</span> <br />
     <span class="fw-bold text-decoration-underline"
       >Country Of Residence:
     </span>
     <span>&nbsp;{{ accountInfo.countryOfResidence }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Previous Insurer: </span>
-    <span>&nbsp;{{ accountInfo.previousInsurer }}</span> <br />
     <span class="fw-bold text-decoration-underline"
       >Year of issue driver license:
     </span>
     <span>&nbsp;{{ accountInfo.yearOfIssueDriverLicense }}</span> <br />
-    <span class="fw-bold text-decoration-underline"
-      >Overnight parking vehicle:
-    </span>
-    <span>&nbsp;{{ accountInfo.overnightParkingVehicle }}</span> <br />
     <span class="fw-bold text-decoration-underline">Claims history: </span>
     <span>&nbsp;{{ accountInfo.claimsHistory }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Rating: </span>
-    <span>&nbsp;{{ accountInfo.rating }}</span> <br />
+    <span class="fw-bold text-decoration-underline">Previous Insurer: </span>
+    <span>&nbsp;{{ accountInfo.previousInsurer }}</span> <br />
     <p>
       <button
         class="btn btn-primary mt-3"
@@ -81,7 +75,9 @@
             />
           </label>
           <label>
-            <span class="fw-bold text-decoration-underline lh-lg">Date of birth:</span>
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Date of birth:</span
+            >
             <input class="form-control" type="date" v-model="dateOfBirth" />
           </label>
           <label>
@@ -117,17 +113,15 @@
               v-model="changeUserObj.phoneNumber"
             />
           </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Marital Status:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.maritalStatus"
-              v-model="changeUserObj.maritalStatus"
-            />
-          </label>
+          <select
+            class="form-select mt-3"
+            aria-label="Default select example"
+            v-model="changeUserObj.maritalStatus"
+          >
+            <option value="" selected>Select marital status</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+          </select>
           <label>
             <span class="fw-bold text-decoration-underline lh-lg"
               >Country Of Residence:</span
@@ -161,7 +155,7 @@
               v-model="changeUserObj.yearOfIssueDriverLicense"
             />
           </label>
-          <label>
+          <!-- <label>
             <span class="fw-bold text-decoration-underline lh-lg"
               >Overnight parking vehicle:</span
             >
@@ -171,7 +165,7 @@
               :placeholder="accountInfo.overnightParkingVehicle"
               v-model="changeUserObj.overnightParkingVehicle"
             />
-          </label>
+          </label> -->
           <label>
             <span class="fw-bold text-decoration-underline lh-lg"
               >Claims history:</span
@@ -355,7 +349,10 @@
         <span class="fw-bold text-decoration-underline"
           >Vehicle retail value:</span
         >
-        <span>&nbsp;<span class="fw-bold">R</span>{{ vehicle.retailValue }}</span> <br />
+        <span
+          >&nbsp;<span class="fw-bold">R</span>{{ vehicle.retailValue }}</span
+        >
+        <br />
         <span class="fw-bold text-decoration-underline">Tracking device:</span>
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>

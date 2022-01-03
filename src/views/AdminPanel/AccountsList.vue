@@ -78,17 +78,25 @@
       <button
         class="btn btn-primary mt-5"
         type="button"
-        data-bs-toggle="collapse"
         data-bs-target="#collapseExample1"
         aria-expanded="false"
         aria-controls="collapseExample1"
         :disabled="isBthDisabled"
+        @click="
+          () => {
+            showCreateAccount = !showCreateAccount;
+          }
+        "
       >
         Create account
       </button>
     </div>
 
-    <div class="collapse" id="collapseExample1">
+    <div
+      class="collapse"
+      :class="{ show: showCreateAccount }"
+      id="collapseExample1"
+    >
       <div class="card card-body">
         <form
           class="account-change-form mt-3 p-3"
@@ -299,6 +307,7 @@ export default {
       previousInsurer: ``,
       birth: ``,
       showAllusers: false,
+      showCreateAccount: false,
     };
   },
   computed: {
@@ -342,6 +351,7 @@ export default {
       this.pickedAccountInfo = account;
     },
     showAccountInfo(account, index) {
+      this.showCreateAccount = false;
       this.isInfo = true;
       this.pickedAccountInfo = account;
       this.pickedAccountIndex = ``;
