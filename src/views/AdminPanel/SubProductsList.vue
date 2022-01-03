@@ -10,7 +10,7 @@
         @click="pickSubProduct(subProduct, index)"
       >
         <div class="container">
-          <div class="row  bg-light">
+          <div class="row coverage-item">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
                 >Coverage name:</span
@@ -317,7 +317,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .subproducts-list-wrapper {
-//   outline: solid 4px blue;
-// }
+.coverage-item {
+  min-height: 7em;
+  background-color: $mainGreen;
+  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
 </style>

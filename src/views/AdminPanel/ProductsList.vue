@@ -11,7 +11,7 @@
         @click="pickProduct(product, index)"
       >
         <div class="container">
-          <div class="row bg-light p-1">
+          <div class="row product-item">
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
                 >Name:</span
@@ -32,9 +32,7 @@
               <span class="d-block fw-bold text-decoration-underline"
                 >Cost:</span
               >
-              <span class="d-block">
-                R{{ product.mainProductCost }}
-              </span>
+              <span class="d-block"> R{{ product.mainProductCost }} </span>
             </div>
             <div class="col border">
               <span class="d-block fw-bold text-decoration-underline"
@@ -54,7 +52,9 @@
                 class="m-0"
               >
                 <span class="">{{ subProduct.subProductName }}</span>
-                <span class="fw-bold ">&nbsp;R{{ subProduct.subProductCost }}</span>
+                <span class="fw-bold"
+                  >&nbsp;R{{ subProduct.subProductCost }}</span
+                >
               </p>
             </div>
           </div>
@@ -326,7 +326,11 @@ li {
 .active {
   color: $bgColorMain;
 }
-// .products-list-wrapper {
-//   outline: solid 4px yellow;
-// }
+.product-item {
+  min-height: 7em;
+  background-color: $mainGreen;
+  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
 </style>

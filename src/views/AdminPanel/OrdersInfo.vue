@@ -7,7 +7,7 @@
         class="list-group-item"
       >
         <div class="container">
-          <div class="row border p-1 bg-light">
+          <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Order status:</span
@@ -15,7 +15,7 @@
               <span
                 class="fw-bold text-uppercase"
                 :class="{
-                  'text-success': order.orderStatus == `approved`,
+                  'text-primary': order.orderStatus == `approved`,
                   'text-danger': order.orderStatus == `rejected`,
                 }"
                 >{{ order.orderStatus }}</span
@@ -63,7 +63,7 @@
             <div class="col">
               <button
                 type="button"
-                class="btn btn-info float-end mt-3"
+                class="btn btn-primary float-end mt-3"
                 @click="getOrder(order.orderId)"
               >
                 View order
@@ -96,7 +96,7 @@
           <p
             class="fw-bold text-uppercase"
             :class="{
-              'text-success': order.orderStatus == `approved`,
+              'text-warning': order.orderStatus == `approved`,
               'text-danger': order.orderStatus == `rejected`,
             }"
           >
@@ -201,5 +201,11 @@ export default {
 
 .order-modal {
   height: auto;
+}
+.order-item {
+  background-color: $mainGreen;
+  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
 }
 </style>

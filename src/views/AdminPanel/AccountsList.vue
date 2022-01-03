@@ -10,12 +10,13 @@
             type="text"
             class="form-control"
             placeholder="Search..."
-            v-model="searchUsername"
+            v-model="searchUser"
           />
           <button
             @click="searchAccount"
             class="btn btn-outline-light"
             type="button"
+            v-if="!showAllusers"
           >
             <svg
               role="img"
@@ -36,6 +37,13 @@
               <circle cx="10" cy="10" r="6" />
             </svg>
           </button>
+          <button
+            class="btn btn-outline-light"
+            v-if="showAllusers"
+            @click="findAllUsers"
+          >
+            All
+          </button>
         </div>
       </div>
     </div>
@@ -48,11 +56,11 @@
         @click="pickAccount(account, index)"
       >
         <span>
-          <span class="fw-bold">firts and last name:</span>
+          <!-- <span class="fw-bold">firts and last name:</span> -->
           {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
-          <br />
-          <span class="fw-bold">username: </span
-          ><span>{{ account.username }}</span>
+          <!-- <br /> -->
+          <!-- <span class="fw-bold">username: </span
+          ><span>{{ account.username }}</span> -->
         </span>
 
         <button
@@ -60,7 +68,7 @@
           class="btn btn-info btn-sm"
           @click="showAccountInfo(account, index)"
         >
-          View details
+          More...
         </button>
       </li>
     </ul>
@@ -283,13 +291,14 @@ export default {
       phoneNumber: ``,
       isInfo: false,
       isBthDisabled: false,
-      searchUsername: ``,
+      searchUser: ``,
       clientIdNumber: ``,
       maritalStatus: ``,
       yearOfIssueDriverLicense: ``,
       claimsHistory: ``,
       previousInsurer: ``,
       birth: ``,
+      showAllusers: false,
     };
   },
   computed: {
@@ -346,9 +355,30 @@ export default {
       this.$store.dispatch(`GET_USERS`, ``);
     },
     searchAccount() {
+      let query = this.searchUser.split(` `);
+
+      let firstName = query[0];
+      let lastName = [];
+
+      for (let i = 1; i <= query.length; i++) {
+        lastName.push(query[i]);
+      }
+      if (this.searchUser != ``) {
+        this.$store
+          .dispatch(
+            `GET_USERS`,
+            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
+          )
+          .then((this.searchUser = ``), (this.showAllusers = true))
+          .catch((err) => {
+            alert(err.response.data.message), (this.showAllusers = false);
+          });
+      }
+    },
+    findAllUsers() {
       this.$store
-        .dispatch(`GET_USERS`, `?username=${this.searchUsername}`)
-        .then((this.searchUsername = ``));
+        .dispatch(`GET_USERS`, ``)
+        .then((this.searchUser = ``), (this.showAllusers = false));
     },
   },
 };
@@ -360,6 +390,12 @@ li {
 }
 .account-modal {
   margin-top: -10em;
+  @include media-breakpoint-up(sm) {
+    margin-top: -9em;
+  }
+  @include media-breakpoint-up(xl) {
+    margin-top: -8em;
+  }
 }
 .active {
   z-index: 0;

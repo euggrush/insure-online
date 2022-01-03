@@ -1,6 +1,6 @@
 <template>
   <section class="admin-panel container-fluid pt-1 pb-5">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-3">
       <h2 class="text-white fw-bold mt-1">Admin Panel</h2>
       <span class="text-white">
         <span>{{ this.$store.state.user.firstName || loggedUser }}</span>
@@ -141,11 +141,11 @@ export default {
 
 <style lang="scss" scoped>
 .admin-panel {
+  min-height: calc(100vh - 6.2em);
   background-color: $bgOrange;
   background-image: url($mainBg);
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 .nav-link {
   color: $colorWhite;
