@@ -131,18 +131,15 @@
       </div>
     </section>
     <!-- Portfolio-->
+
     <div id="portfolio">
       <div class="container-fluid p-0">
         <div class="row g-0">
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/1.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/1.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/7.jpg"
                 alt="..."
               />
               <div class="portfolio-box-caption">
@@ -152,14 +149,10 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/2.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/2.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/8.jpeg"
                 alt="..."
               />
               <div class="portfolio-box-caption">
@@ -169,14 +162,10 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/3.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/3.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/9.jpeg"
                 alt="..."
               />
               <div class="portfolio-box-caption">
@@ -186,14 +175,10 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/4.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/4.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/10.jpeg"
                 alt="..."
               />
               <div class="portfolio-box-caption">
@@ -203,14 +188,10 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/5.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/5.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/11.jpeg"
                 alt="..."
               />
               <div class="portfolio-box-caption">
@@ -220,14 +201,10 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a
-              class="portfolio-box"
-              href="../../src/assets/img/portfolio/fullsize/6.jpg"
-              title="Project Name"
-            >
+            <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/6.jpg"
+                src="../../src/assets/img/portfolio/thumbnails/12.webp"
                 alt="..."
               />
               <div class="portfolio-box-caption p-3">
@@ -1013,8 +990,9 @@ progress {
 }
 
 .img-fluid {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  max-height: 193px;
+  object-fit: cover;
 }
 
 .img-thumbnail {
