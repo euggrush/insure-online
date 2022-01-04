@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid reg-wrap bg-dark pt-5 pb-5">
+  <section class="container-fluid reg-wrap bg-dark">
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="login">
         <h2>Login</h2>
@@ -71,11 +71,12 @@ export default {
 
 <style lang="scss" scoped>
 .reg-wrap {
-  min-height: calc(100vh - 7em);
+  min-height: calc(100vh - 7.3em);
   color: #fff;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  padding-top: 4em;
 }
 .form-control {
   height: 41px;

@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
+  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold shadow">
     <router-link class="navbar-brand" to="/"
-      ><img src="../../assets/logo.png" width="50" height="50" alt="logo"
+      ><img src="../../assets/tuffstuff_logo.png" alt="logo" class="rounded-circle"
     /></router-link>
     <button
       class="navbar-toggler"
@@ -16,17 +16,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav w-100">
-        <li
+        <!-- <li
           v-if="
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
           "
           class="nav-item"
         >
-          <router-link class="nav-link" to="/our-products"
+          <router-link class="nav-link text-white" to="/our-products"
             >Our Products</router-link
           >
-        </li>
+        </li> -->
         <li
           v-if="
             this.$store.state.status === '' ||
@@ -94,7 +94,4 @@ export default {
   background-repeat: no-repeat;
   background-position: right center;
 }
-// #navbarNav {
-//   outline: solid 3px red;
-// }
 </style>
