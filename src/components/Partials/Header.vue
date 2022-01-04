@@ -15,7 +15,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav w-100">
+      <ul class="navbar-nav ms-auto">
         <!-- <li
           v-if="
             this.$store.state.status === '' ||
@@ -85,10 +85,11 @@ export default {
 .navbar {
   min-height: 4em;
   opacity: 0.8;
+  // outline: solid 4px red;
 }
 .logout-btn {
   min-width: 6em;
-  margin: 0px 0px 0px auto;
+  // margin: 0px 0px 0px auto;
   background-image: url("../../assets/img/exit.svg");
   background-size: 30px 30px;
   background-repeat: no-repeat;
