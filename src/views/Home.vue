@@ -51,15 +51,13 @@
         >
           <div class="col-lg-8 align-self-end">
             <h1 class="text-white font-weight-bold">
-              Your Favorite Place for Free Bootstrap Themes
+              YOUR SAFETY IS EVERYTHING TO US.
             </h1>
             <hr class="divider" />
           </div>
           <div class="col-lg-8 align-self-baseline">
             <p class="text-white-75 mb-5">
-              Start Bootstrap can help you build better websites using the
-              Bootstrap framework! Just download a theme and start customizing,
-              no strings attached!
+              Find out how we're continuing to be there for you on the road.
             </p>
             <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
           </div>
@@ -71,12 +69,10 @@
       <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-lg-8 text-center">
-            <h2 class="text-white mt-0">We've got what you need!</h2>
+            <h2 class="text-white mt-0">LOCAL KNOWLEDGE & HELPFUL ADVICE</h2>
             <hr class="divider divider-light" />
             <p class="text-white-75 mb-4">
-              Start Bootstrap has everything you need to get your new website up
-              and running in no time! Choose one of our open source, free to
-              download, and easy to use themes! No strings attached!
+              We’ll take care of all your car insurance needs.
             </p>
             <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
           </div>
@@ -86,44 +82,48 @@
     <!-- Services-->
     <section class="page-section" id="services">
       <div class="container px-4 px-lg-5">
-        <h2 class="text-center mt-0">At Your Service</h2>
+        <h2 class="text-center mt-0">Our Service</h2>
         <hr class="divider" />
         <div class="row gx-4 gx-lg-5">
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-              <h3 class="h4 mb-2">Sturdy Themes</h3>
+              <div class="mb-2"><i class="fas fa-truck-monster fs-1 text-primary"></i></div>
+              <h3 class="h4 mb-2">TUFFSTUFF 4x4 Insurance Product</h3>
               <p class="text-muted mb-0">
-                Our themes are updated regularly to keep them bug free!
+                Market leaders in all aspects of outdoor, lifestyle, 4x4 and all
+                insurance products.
               </p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
               <div class="mb-2">
-                <i class="bi-laptop fs-1 text-primary"></i>
+                <i class="fas fa-helicopter fs-1 text-primary"></i>
               </div>
-              <h3 class="h4 mb-2">Up to Date</h3>
+              <h3 class="h4 mb-2">Airborne Medical Evacuation</h3>
               <p class="text-muted mb-0">
-                All dependencies are kept current to keep things fresh.
+                Full airborne medical evacuation by qualified personnel while
+                outside RSA and back to RSA.
               </p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
-              <h3 class="h4 mb-2">Ready to Publish</h3>
+              <div class="mb-2"><i class="fas fa-ambulance fs-1 text-primary"></i></div>
+              <h3 class="h4 mb-2">Emergency Accommodation</h3>
               <p class="text-muted mb-0">
-                You can use this design as is, or you can make changes!
+                Whilst outside the RSA limited to R20 000 for any one incident
+                and R1 000 pp per night.
               </p>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-              <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
-              <h3 class="h4 mb-2">Made with Love</h3>
+              <div class="mb-2"><i class="fas fa-balance-scale fs-1 text-primary"></i></div>
+              <h3 class="h4 mb-2">International Legal Assistance</h3>
               <p class="text-muted mb-0">
-                Is it really open source if it's not made with love?
+                TUFFSTUFF allows you to receive international legal assistance
+                cover up to R75 000.
               </p>
             </div>
           </div>
@@ -139,8 +139,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/7.jpg"
-                alt="..."
+                src="https://i.ibb.co/hgcQFfg/11.jpg"
+                alt="photo"
               />
               <div class="portfolio-box-caption">
                 <div class="project-category text-white-50">Category</div>
@@ -152,8 +152,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/8.jpeg"
-                alt="..."
+                src="https://i.ibb.co/BLcgtqF/10.jpg"
+                alt="photo"
               />
               <div class="portfolio-box-caption">
                 <div class="project-category text-white-50">Category</div>
@@ -165,8 +165,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/9.jpeg"
-                alt="..."
+                src="https://i.ibb.co/5sM3CNg/9.jpg"
+                alt="photo"
               />
               <div class="portfolio-box-caption">
                 <div class="project-category text-white-50">Category</div>
@@ -178,8 +178,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/10.jpeg"
-                alt="..."
+                src="https://i.ibb.co/X4rm2Y4/8.jpg"
+                alt="photo"
               />
               <div class="portfolio-box-caption">
                 <div class="project-category text-white-50">Category</div>
@@ -191,8 +191,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/11.jpeg"
-                alt="..."
+                src="https://i.ibb.co/rMrc6JK/7.jpg"
+                alt="photo"
               />
               <div class="portfolio-box-caption">
                 <div class="project-category text-white-50">Category</div>
@@ -204,8 +204,8 @@
             <a class="portfolio-box" href="#" title="Project Name">
               <img
                 class="img-fluid"
-                src="../../src/assets/img/portfolio/thumbnails/12.webp"
-                alt="..."
+                src="https://i.ibb.co/4Kz5xDg/12.webp"
+                alt="photo"
               />
               <div class="portfolio-box-caption p-3">
                 <div class="project-category text-white-50">Category</div>
@@ -991,7 +991,7 @@ progress {
 
 .img-fluid {
   width: 100%;
-  max-height: 193px;
+  max-height: 233px;
   object-fit: cover;
 }
 
@@ -12133,7 +12133,7 @@ header.masthead {
       rgba(92, 77, 66, 0.8) 0%,
       rgba(92, 77, 66, 0.8) 100%
     ),
-    url("../assets/img/bg2.jpeg");
+    url("https://i.ibb.co/Vp2jZnc/bg2.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
