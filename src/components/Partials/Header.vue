@@ -1,7 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold shadow">
+  <nav
+    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold shadow"
+  >
     <router-link class="navbar-brand" to="/"
-      ><img src="../../assets/tuffstuff_logo.png" alt="logo" class="rounded-circle"
+      ><img
+        src="../../assets/tuffstuff_logo.png"
+        alt="logo"
+        class="rounded-circle"
     /></router-link>
     <button
       class="navbar-toggler"
@@ -16,6 +21,34 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/">Home</router-link>
+        </li>
+
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/">About</router-link>
+        </li>
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/">Insurance</router-link>
+        </li>
         <!-- <li
           v-if="
             this.$store.state.status === '' ||
@@ -32,11 +65,13 @@
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
           "
-          class="nav-item active"
+          class="nav-item ms-5"
         >
-          <router-link to="/login" class="nav-link">Login</router-link>
+          <router-link to="/login" class="btn btn-warning rounded-pill"
+            >Login</router-link
+          >
         </li>
-        <li
+        <!-- <li
           v-if="
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
@@ -44,13 +79,10 @@
           class="nav-item"
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
-        </li>
-        <li
-          v-if="this.$store.state.status === 'success'"
-          class="nav-item logout-btn"
-        >
+        </li> -->
+        <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
-            class="nav-link border-0 bg-transparent fw-bold"
+            class="logout-btn btn btn-warning rounded-pill"
             type="button"
             @click="logout"
           >
@@ -85,13 +117,14 @@ export default {
 .navbar {
   min-height: 4em;
   opacity: 0.8;
-  // outline: solid 4px red;
+}
+.btn {
+  min-width: 8em;
+  font-weight: bold;
 }
 .logout-btn {
-  min-width: 6em;
-  // margin: 0px 0px 0px auto;
   background-image: url("../../assets/img/exit.svg");
-  background-size: 30px 30px;
+  background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: right center;
 }

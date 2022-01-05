@@ -51,7 +51,7 @@
       <li
         v-for="(account, index) in accountsList"
         :key="index"
-        class="list-group-item d-flex justify-content-between"
+        class="list-group-item d-flex justify-content-between shadow-lg"
         :class="{ active: index == pickedAccountIndex }"
         @click="pickAccount(account, index)"
       >

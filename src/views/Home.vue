@@ -1,41 +1,5 @@
 <template>
   <body id="page-top">
-    <!-- Navigation-->
-    <!-- <nav
-      class="navbar navbar-expand-lg navbar-light fixed-top py-3"
-      id="mainNav"
-    >
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
-        <button
-          class="navbar-toggler navbar-toggler-right"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ms-auto my-2 my-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav> -->
     <!-- Masthead-->
     <header class="masthead">
       <div class="container px-4 px-lg-5 h-100">
@@ -59,7 +23,7 @@
             <p class="text-white-75 mb-5">
               Find out how we're continuing to be there for you on the road.
             </p>
-            <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+            <a class="btn btn-primary btn-xl" href="#services">Find Out More</a>
           </div>
         </div>
       </div>
@@ -74,7 +38,7 @@
             <p class="text-white-75 mb-4">
               We’ll take care of all your car insurance needs.
             </p>
-            <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+            <a class="btn btn-light btn-xl" href="#contact">Quote online now</a>
           </div>
         </div>
       </div>
@@ -133,7 +97,7 @@
     <!-- Portfolio-->
 
     <div id="portfolio">
-      <div class="container-fluid p-0">
+      <div class="container-fluid pb-0 ps-0 pe-0 pt-0">
         <div class="row g-0">
           <div class="col-lg-4 col-sm-6">
             <a class="portfolio-box" href="#" title="Project Name">
@@ -175,7 +139,7 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
+            <a class="portfolio-box gradient" href="#" title="Project Name">
               <img
                 class="img-fluid"
                 src="https://i.ibb.co/X4rm2Y4/8.jpg"
@@ -188,7 +152,7 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
+            <a class="portfolio-box gradient" href="#" title="Project Name">
               <img
                 class="img-fluid"
                 src="https://i.ibb.co/rMrc6JK/7.jpg"
@@ -201,7 +165,7 @@
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
+            <a class="portfolio-box gradient" href="#" title="Project Name">
               <img
                 class="img-fluid"
                 src="https://i.ibb.co/4Kz5xDg/12.webp"
@@ -217,7 +181,7 @@
       </div>
     </div>
     <!-- Call to action-->
-    <section class="page-section bg-dark text-white">
+    <!-- <section class="page-section bg-dark text-white">
       <div class="container px-4 px-lg-5 text-center">
         <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
         <a
@@ -226,31 +190,22 @@
           >Download Now!</a
         >
       </div>
-    </section>
+    </section> -->
     <!-- Contact-->
-    <section class="page-section" id="contact">
+    <!-- <section class="page-section" id="contact">
       <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-lg-8 col-xl-6 text-center">
-            <h2 class="mt-0">Let's Get In Touch!</h2>
+            <h2 class="mt-0">Online Quotation</h2>
             <hr class="divider" />
             <p class="text-muted mb-5">
-              Ready to start your next project with us? Send us a messages and
-              we will get back to you as soon as possible!
+              Complete the form below and we will contact you. (Office hours only).
             </p>
           </div>
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
           <div class="col-lg-6">
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- * * SB Forms Contact Form * *-->
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- This form is pre-integrated with SB Forms.-->
-            <!-- To make this form functional, sign up at-->
-            <!-- https://startbootstrap.com/solution/contact-forms-->
-            <!-- to get an API token!-->
             <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-              <!-- Name input-->
               <div class="form-floating mb-3">
                 <input
                   class="form-control"
@@ -264,7 +219,6 @@
                   A name is required.
                 </div>
               </div>
-              <!-- Email address input-->
               <div class="form-floating mb-3">
                 <input
                   class="form-control"
@@ -281,7 +235,6 @@
                   Email is not valid.
                 </div>
               </div>
-              <!-- Phone number input-->
               <div class="form-floating mb-3">
                 <input
                   class="form-control"
@@ -295,7 +248,6 @@
                   A phone number is required.
                 </div>
               </div>
-              <!-- Message input-->
               <div class="form-floating mb-3">
                 <textarea
                   class="form-control"
@@ -313,10 +265,7 @@
                   A message is required.
                 </div>
               </div>
-              <!-- Submit success message-->
-              <!---->
-              <!-- This is what your users will see when the form-->
-              <!-- has successfully submitted-->
+              
               <div class="d-none" id="submitSuccessMessage">
                 <div class="text-center mb-3">
                   <div class="fw-bolder">Form submission successful!</div>
@@ -327,23 +276,20 @@
                   >
                 </div>
               </div>
-              <!-- Submit error message-->
-              <!---->
-              <!-- This is what your users will see when there is-->
-              <!-- an error submitting the form-->
+              
               <div class="d-none" id="submitErrorMessage">
                 <div class="text-center text-danger mb-3">
                   Error sending message!
                 </div>
               </div>
-              <!-- Submit Button-->
               <div class="d-grid">
                 <button
-                  class="btn btn-primary btn-xl disabled"
+                  class="btn btn-primary btn-xl"
                   id="submitButton"
                   type="submit"
+                  :disabled="isCalculateBtnDisabled"
                 >
-                  Submit
+                  Calculate
                 </button>
               </div>
             </form>
@@ -356,20 +302,25 @@
           </div>
         </div>
       </div>
-    </section>
-    <!-- Footer-->
-    <!-- <footer class="bg-light py-5">
-      <div class="container px-4 px-lg-5">
-        <div class="small text-center text-muted">
-          Copyright &copy; 2021 - Company Name
-        </div>
-      </div>
-    </footer> -->
+    </section> -->
+    
   </body>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+    isCalculateBtnDisabled: true,
+    estimationPayloadObj: {}
+    }
+  },
+  methods: {
+    getEstimation() {
+      alert(`haha`)
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

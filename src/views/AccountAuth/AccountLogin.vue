@@ -10,7 +10,7 @@
               <input
                 v-model="username"
                 type="text"
-                class="form-control"
+                class="form-control shadow-lg"
                 name="username"
                 placeholder="Username"
                 required="required"
@@ -22,7 +22,7 @@
           <input
             v-model="password"
             type="password"
-            class="form-control"
+            class="form-control shadow-lg"
             name="password"
             placeholder="Password"
             required="required"

@@ -5,7 +5,7 @@
       <li
         v-for="(category, index) in categoriesList"
         :key="index"
-        class="list-group-item"
+        class="list-group-item shadow-lg"
         :class="{ active: index === pickedCategoryIndex }"
         @click="pickCategory(category, index)"
       >
