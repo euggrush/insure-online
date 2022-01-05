@@ -17,7 +17,7 @@
           id="validationCustom01"
           minlength="2"
           maxlength="15"
-          value=""
+          v-model="userPayload.firstName"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -35,7 +35,7 @@
           id="validationCustom02"
           minlength="2"
           maxlength="15"
-          value=""
+          v-model="userPayload.lastName"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -54,6 +54,7 @@
             class="form-control"
             id="validationCustomUsername"
             aria-describedby="inputGroupPrepend"
+            v-model="userPayload.email"
             required
           />
           <div class="invalid-feedback">Please enter email</div>
@@ -71,6 +72,7 @@
           id="validationCustom03"
           minlength="5"
           maxlength="100"
+          v-model="userPayload.address"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -83,9 +85,14 @@
         <label for="validationCustom04" class="form-label mt-1"
           >Country of Residence
         </label>
-        <select class="form-select" id="validationCustom04" required>
+        <select
+          class="form-select"
+          id="validationCustom04"
+          required
+          v-model="userPayload.countryOfResidence"
+        >
           <option selected disabled value="">Choose...</option>
-          <option>South Africa</option>
+          <option value="South Africa">South Africa</option>
         </select>
         <div class="invalid-feedback">Please select a valid state.</div>
       </div>
@@ -99,6 +106,7 @@
           type="tel"
           class="form-control"
           id="validationCustom05"
+          v-model="userPayload.phoneNumber"
           required
         />
         <div class="invalid-feedback">Please provide a valid number.</div>
@@ -113,7 +121,7 @@
           type="tel"
           class="form-control"
           id="validationCustom06"
-          value=""
+          v-model="userPayload.cellphone"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -130,7 +138,7 @@
           id="validationCustom07"
           minlength="10"
           maxlength="15"
-          value=""
+          v-model="userPayload.clientIdNumber"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -141,10 +149,15 @@
         <label for="validationCustom08" class="form-label mt-1"
           >Marital Status</label
         >
-        <select class="form-select" id="validationCustom08" required>
+        <select
+          class="form-select"
+          id="validationCustom08"
+          required
+          v-model="userPayload.maritalStatus"
+        >
           <option selected disabled value="">Choose...</option>
-          <option>Single</option>
-          <option>Married</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
         </select>
         <div class="invalid-feedback">Please select a marital status.</div>
       </div>
@@ -158,7 +171,7 @@
           type="number"
           class="form-control"
           id="validationCustom09"
-          value=""
+          v-model="userPayload.yearOfIssueDriverLicense"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -166,7 +179,7 @@
       </div>
       <!-- BLOCK 11 -->
 
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="validationCustom11" class="form-label mt-1"
           >Previous Insurer</label
         >
@@ -175,11 +188,27 @@
           class="form-control"
           id="validationCustom11"
           maxlength="50"
-          value=""
+          v-model="userPayload.previousInsurer"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter your previous insurer.</div>
+      </div>
+      <!-- BLOCK 111 -->
+
+      <div class="col-md-4">
+        <label for="validationCustom111" class="form-label mt-1"
+          >Date Of Birth</label
+        >
+        <input
+          type="date"
+          class="form-control"
+          id="validationCustom111"
+          v-model="userPayload.birthDate"
+          required
+        />
+        <!-- <div class="valid-feedback">Looks good!</div> -->
+        <div class="invalid-feedback">Please enter your date of birth</div>
       </div>
       <!-- BLOCK 10 -->
 
@@ -191,7 +220,7 @@
           class="form-control"
           id="validationCustom10"
           maxlength="1000"
-          value=""
+          v-model="userPayload.claimsHistory"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -211,7 +240,7 @@
           id="validationCustom12"
           minlength="5"
           maxlength="30"
-          value=""
+          v-model="vehiclePayload.details"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -227,7 +256,7 @@
           type="number"
           class="form-control"
           id="validationCustom121"
-          value=""
+          v-model="vehiclePayload.year"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -246,7 +275,7 @@
           id="validationCustom13"
           minlength="2"
           maxlength="10"
-          value=""
+          v-model="vehiclePayload.regNumber"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -264,7 +293,7 @@
           id="validationCustom14"
           minlength="17"
           maxlength="17"
-          value=""
+          v-model="vehiclePayload.vin"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -279,7 +308,7 @@
           class="form-control"
           id="validationCustom15"
           step="0.1"
-          value=""
+          v-model="vehiclePayload.engine"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -295,7 +324,7 @@
           type="number"
           class="form-control"
           id="validationCustom16"
-          value=""
+          v-model="vehiclePayload.retailValue"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -313,6 +342,7 @@
             name="flexRadioDefault"
             id="flexRadioDefault1"
             value="Yes"
+            v-model="vehiclePayload.trackingDevice"
           />
           <label class="form-check-label" for="flexRadioDefault1"> Yes </label>
         </div>
@@ -323,6 +353,7 @@
             name="flexRadioDefault"
             id="flexRadioDefault2"
             value="No"
+            v-model="vehiclePayload.trackingDevice"
             checked
           />
           <label class="form-check-label" for="flexRadioDefault2"> No </label>
@@ -340,6 +371,7 @@
             name="flexRadioDefault2"
             id="flexRadioDefault3"
             value="Private"
+            v-model="vehiclePayload.useCase"
           />
           <label class="form-check-label" for="flexRadioDefault3">
             Private
@@ -352,6 +384,7 @@
             name="flexRadioDefault2"
             id="flexRadioDefault4"
             value="Business"
+            v-model="vehiclePayload.useCase"
             checked
           />
           <label class="form-check-label" for="flexRadioDefault4">
@@ -367,7 +400,6 @@
           <input
             class="form-check-input"
             type="checkbox"
-            value=""
             id="invalidCheck"
             required
           />
@@ -388,8 +420,37 @@
 export default {
   data() {
     return {
+      isFormValidated: false,
       isCalculateBtnDisabled: true,
       estimationPayloadObj: {},
+      userPayload: {
+        username: ``,
+        password: ``,
+        email: ``,
+        firstName: ``,
+        lastName: ``,
+        birthDate: ``,
+        address: ``,
+        countryOfResidence: ``,
+        cellphone: ``,
+        phoneNumber: ``,
+        clientIdNumber: ``,
+        maritalStatus: ``,
+        yearOfIssueDriverLicense: ``,
+        claimsHistory: ``,
+        previousInsurer: ``,
+      },
+      vehiclePayload: {
+        accountId: ``,
+        details: ``,
+        year: ``,
+        regNumber: ``,
+        vin: ``,
+        engine: ``,
+        retailValue: ``,
+        trackingDevice: ``,
+        useCase: ``,
+      },
     };
   },
   methods: {
@@ -410,9 +471,20 @@ export default {
           false
         );
       });
+      if (document.querySelector(`.was-validated`)) {
+        return true
+      }
+      return false;
     },
     getEstimation() {
       this.validateForm();
+      if(this.validateForm()) {
+        this.userPayload.username = this.userPayload.email;
+        this.userPayload.password = this.userPayload.email;
+        
+        console.log(this.userPayload);
+        console.log(this.vehiclePayload);
+      }
     },
   },
 };
