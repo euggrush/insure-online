@@ -117,6 +117,8 @@ export default {
 .navbar {
   min-height: 4em;
   opacity: 0.8;
+    outline: solid 4px orangered;
+
 }
 .btn {
   min-width: 8em;

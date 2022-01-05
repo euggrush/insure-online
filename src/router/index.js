@@ -12,7 +12,7 @@ import AccountPage from '../views/UserPage/UserPage.vue'
 import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
 import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
 import NotFound from '../components/Errors/404.vue';
-
+import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
 
 const routes = [{
     path: '/login',
@@ -58,6 +58,10 @@ const routes = [{
     path: "/:catchAll(.*)",
     redirect: '/404'
   },
+  {
+    path: "/quote-online",
+    component: QuoteOnline
+  }
 ]
 
 const router = createRouter({

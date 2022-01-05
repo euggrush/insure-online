@@ -1,6 +1,6 @@
 <template>
   <section class="admin-panel container-fluid pt-1 pb-5">
-    <div class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom border-success">
+    <div class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom">
       <h2 class="text-white fw-bold mt-1">Admin Panel</h2>
       <span class="text-white">
         <span>{{ this.$store.state.user.firstName || loggedUser }}</span>
