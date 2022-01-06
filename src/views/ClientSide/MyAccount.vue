@@ -1,5 +1,9 @@
 <template>
   <section class="container my-account pb-5">
+    <router-link to="/my-order" class="btn btn-info btn-lg mt-3"
+      >Buy insurance online</router-link
+    >
+
     <div class="row mt-5 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <img
@@ -53,7 +57,7 @@
         </p>
       </div>
     </div>
-    <p class="mt-5">
+    <p class="mt-5 pb-3 border-bottom">
       <button
         class="btn btn-primary"
         type="button"

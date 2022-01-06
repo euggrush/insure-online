@@ -13,6 +13,7 @@ import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
 import NotFound from '../components/Errors/404.vue';
 import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
 import MyAccount from '../views/ClientSide/MyAccount.vue'
+import MyOrder from '../views/ClientSide/MyOrder.vue';
 
 const routes = [{
     path: '/login',
@@ -35,6 +36,15 @@ const routes = [{
   {
     path: '/my-account',
     component: MyAccount,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      residentAuth: true
+    }
+  },
+  {
+    path: '/my-order',
+    component: MyOrder,
     meta: {
       requiresAuth: true,
       adminAuth: false,

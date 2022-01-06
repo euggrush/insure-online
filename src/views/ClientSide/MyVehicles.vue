@@ -1,9 +1,9 @@
 <template>
   <section class="my-vehicles">
-    <h3 class="mt-5 fw-bold">Vehicles information:</h3>
+    <h3 class="mt-3 fw-bold">Vehicles information:</h3>
     <p class="m-0 p-0">
       <button
-        class="btn btn-primary mt-3"
+        class="btn btn-primary mt-1"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseWidthExample"
@@ -148,8 +148,9 @@
     <ul class="list-group position-relative">
       <li
         v-for="(vehicle, index) in myVehicles"
-        :key="index"
+        :key="index + vehicleKey"
         class="list-group-item mt-3"
+        v-show="vehicle.deleted == false"
       >
         <span class="fw-bold text-decoration-underline"
           >Vehicle make and model:</span
@@ -399,6 +400,7 @@
 export default {
   data() {
     return {
+      vehicleKey: 0,
       accountId: ``,
       changeVehicleObj: {},
       isEdit: false,
@@ -464,7 +466,8 @@ export default {
     editVehicle(vehicle, index) {
       this.$store.dispatch(`CREATE_VEHICLE`, this.changeVehicleObj).then(
         this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`),
-        (this.isEdit = false)
+        (this.isEdit = false),
+        this.vehicleKey += 1
         // (this.vehicleInfo = {})
       );
       console.log(index);
