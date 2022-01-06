@@ -337,28 +337,29 @@
         <span>Tracking Device</span>
         <div class="form-check">
           <input
-            class="form-check-input"
             type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
+            class="form-check-input"
+            id="validationFormCheck2"
+            name="radio-stacked"
             value="Yes"
             v-model="vehiclePayload.trackingDevice"
+            required
           />
-          <label class="form-check-label" for="flexRadioDefault1"> Yes </label>
+          <label class="form-check-label" for="validationFormCheck2">Yes</label>
         </div>
-        <div class="form-check">
+        <div class="form-check mb-3">
           <input
-            class="form-check-input"
             type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
+            class="form-check-input"
+            id="validationFormCheck3"
+            name="radio-stacked"
             value="No"
             v-model="vehiclePayload.trackingDevice"
-            checked
+            required
           />
-          <label class="form-check-label" for="flexRadioDefault2"> No </label>
+          <label class="form-check-label" for="validationFormCheck3">No</label>
+          <div class="invalid-feedback">Please check if you have tracking device</div>
         </div>
-        <!-- <div class="valid-feedback">Looks good!</div> -->
       </div>
       <!-- BLOCK 18 -->
 
@@ -369,11 +370,12 @@
             class="form-check-input"
             type="radio"
             name="flexRadioDefault2"
-            id="flexRadioDefault3"
+            id="validationFormCheck4"
             value="Private"
             v-model="vehiclePayload.useCase"
+            required
           />
-          <label class="form-check-label" for="flexRadioDefault3">
+          <label class="form-check-label" for="validationFormCheck4">
             Private
           </label>
         </div>
@@ -382,14 +384,15 @@
             class="form-check-input"
             type="radio"
             name="flexRadioDefault2"
-            id="flexRadioDefault4"
+            id="validationFormCheck5"
             value="Business"
             v-model="vehiclePayload.useCase"
-            checked
+            required
           />
-          <label class="form-check-label" for="flexRadioDefault4">
+          <label class="form-check-label" for="validationFormCheck5">
             Business
           </label>
+          <div class="invalid-feedback">Please check vehicle use case</div>
         </div>
         <!-- <div class="valid-feedback">Looks good!</div> -->
       </div>
@@ -420,7 +423,6 @@
 export default {
   data() {
     return {
-      isFormValidated: false,
       isCalculateBtnDisabled: true,
       estimationPayloadObj: {},
       userPayload: {
@@ -453,6 +455,9 @@ export default {
       },
     };
   },
+  mounted() {
+    this.validateForm();
+  },
   methods: {
     validateForm() {
       let forms = document.querySelectorAll(".needs-validation");
@@ -471,20 +476,45 @@ export default {
           false
         );
       });
-      if (document.querySelector(`.was-validated`)) {
-        return true
+    },
+    validatePayloads() {
+      if (
+        this.userPayload.email !== `` &&
+        this.userPayload.firstName !== `` &&
+        this.userPayload.lastName !== `` &&
+        this.userPayload.birthDate !== `` &&
+        this.userPayload.address !== `` &&
+        this.userPayload.countryOfResidence !== `` &&
+        this.userPayload.cellphone !== `` &&
+        this.userPayload.phoneNumber !== `` &&
+        this.userPayload.clientIdNumber !== `` &&
+        this.userPayload.maritalStatus !== `` &&
+        this.userPayload.yearOfIssueDriverLicense !== `` &&
+        this.userPayload.claimsHistory !== `` &&
+        this.userPayload.previousInsurer !== `` &&
+        this.vehiclePayload.details !== `` &&
+        this.vehiclePayload.year !== `` &&
+        this.vehiclePayload.regNumber !== `` &&
+        this.vehiclePayload.vin !== `` &&
+        this.vehiclePayload.engine !== `` &&
+        this.vehiclePayload.retailValue !== `` &&
+        this.vehiclePayload.trackingDevice !== `` &&
+        this.vehiclePayload.useCase !== ``
+      ) {
+        return true;
       }
       return false;
     },
     getEstimation() {
-      this.validateForm();
-      if(this.validateForm()) {
-        this.userPayload.username = this.userPayload.email;
-        this.userPayload.password = this.userPayload.email;
-        
-        console.log(this.userPayload);
-        console.log(this.vehiclePayload);
-      }
+      alert(this.validatePayloads());
+      // if (this.validateForm() == true) {
+
+      //   this.userPayload.username = this.userPayload.email;
+      //   this.userPayload.password = this.userPayload.email;
+
+      //   console.log(this.userPayload);
+      //   console.log(this.vehiclePayload);
+      // }
     },
   },
 };
