@@ -1,5 +1,5 @@
 <template>
-  <section class="container my-account">
+  <section class="container my-account pb-5">
     <div class="row mt-5 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <img
@@ -68,40 +68,203 @@
     <div class="collapse" id="collapseExample">
       <div class="card card-body">
         <form @submit.prevent="changeAccount">
-          
+          <form
+            @submit.prevent="changeAccount()"
+            class="card card-body"
+            style="width: 300px"
+          >
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >First name:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.firstName"
+                v-model="changeUserObj.firstName"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Last name:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.lastName"
+                v-model="changeUserObj.lastName"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Date of birth:</span
+              >
+              <input class="form-control" type="date" v-model="dateOfBirth" />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Address:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.address"
+                v-model="changeUserObj.address"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Cellphone:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.cellphone"
+                v-model="changeUserObj.cellphone"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Home phone:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.phoneNumber"
+                v-model="changeUserObj.phoneNumber"
+              />
+            </label>
+            <select
+              class="form-select mt-3"
+              aria-label="Default select example"
+              v-model="changeUserObj.maritalStatus"
+            >
+              <option value="" selected>Select marital status</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+            </select>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Country Of Residence:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.countryOfResidence"
+                v-model="changeUserObj.countryOfResidence"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Previous Insurer:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.previousInsurer"
+                v-model="changeUserObj.previousInsurer"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Year of issue driver license:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.yearOfIssueDriverLicense"
+                v-model="changeUserObj.yearOfIssueDriverLicense"
+              />
+            </label>
+            <label>
+              <span class="fw-bold text-decoration-underline lh-lg"
+                >Claims history:</span
+              >
+              <input
+                class="form-control"
+                type="text"
+                :placeholder="myInfo.claimsHistory"
+                v-model="changeUserObj.claimsHistory"
+              />
+            </label>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
         </form>
       </div>
     </div>
+    <MyVehicles
+      :myProps="{ myVehicles: myInfo.vehicles, accountId: accountId }"
+    />
   </section>
 </template>
 
 <script>
+import MyVehicles from "./MyVehicles.vue";
 const dayjs = require("dayjs");
-
+const getTimeStamp = (date) => {
+  let myDate = date;
+  myDate = myDate.split("-");
+  const timestamp = +new Date(
+    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
+  ).getTime();
+  return timestamp;
+};
 export default {
+  components: {
+    MyVehicles,
+  },
   data() {
     return {
+      dateOfBirth: ``,
+      accountId: ``,
       myInfo: {},
+      changeUserObj: {
+        accountId: ``,
+        firstName: ``,
+        lastName: ``,
+        birthDate: ``,
+        address: ``,
+        cellphone: ``,
+        phoneNumber: ``,
+        maritalStatus: ``,
+        countryOfResidence: ``,
+        previousInsurer: ``,
+        yearOfIssueDriverLicense: ``,
+        overnightParkingVehicle: ``,
+        claimsHistory: ``,
+      },
     };
   },
-  // computed: {
-  //   myInfo() {
-  //     return this.$store.state.users_array.accounts[0] || [];
-  //   },
-  // },
-  mounted() {
-    let accountId = this.$store.state.user.accountId;
-    this.$store.dispatch(`GET_USERS`, `?accountId=${accountId}`).then(() => {
+  computed: {
+    info() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.myInfo = this.$store.state.users_array.accounts[0];
-    });
+      return [];
+    },
+  },
+  mounted() {
+    this.accountId = this.$store.state.user.accountId;
+    this.$store
+      .dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
+      .then(() => {
+        this.myInfo = this.$store.state.users_array.accounts[0];
+      });
   },
   methods: {
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
     changeAccount() {
-      alert(`haha`);
-    }
+      this.changeUserObj.accountId = this.accountId;
+      this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
+      this.$store
+        .dispatch(`MODIFY_USER`, this.changeUserObj)
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
+          // this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
+        )
+        .catch((err) => alert(err));
+    },
   },
 };
 </script>
@@ -109,7 +272,7 @@ export default {
 <style lang="scss" scoped>
 .my-account {
   min-height: calc(100vh - 10em);
-  outline: solid 3px orangered;
+  // outline: solid 3px orangered;
 }
 .details li {
   list-style: none;
@@ -117,7 +280,7 @@ export default {
 li {
   margin-bottom: 10px;
 }
-.my-account_info {
-  outline: solid 3px blue;
-}
+// .my-account_info {
+//   outline: solid 3px blue;
+// }
 </style>

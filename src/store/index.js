@@ -34,7 +34,8 @@ export const store = new Vuex.Store({
         current_estimation: [],
         orders: [],
         current_order: [],
-        new_user: []
+        new_user: [],
+        vehicles: []
     },
     plugins: [
         createLogger(),
@@ -96,6 +97,9 @@ export const store = new Vuex.Store({
         },
         SET_NEW_USER(state, payload) {
             state.new_user = payload;
+        },
+        SET_VEHICLES(state, payload) {
+            state.vehicles = payload;
         }
     },
     actions: {
@@ -179,6 +183,10 @@ export const store = new Vuex.Store({
         },
         CREATE_SUB_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/subProducts`, payload);
+        },
+        GET_VEHICLES: async (context, payload) => {
+            let {data} = await Axios.get(`${BASE_URL}/vehicles${payload}`);
+            context.commit(`SET_VEHICLES`, data);
         },
         CREATE_VEHICLE: async (content, payload) => {
             await Axios.post(`${BASE_URL}/vehicles`, payload);
