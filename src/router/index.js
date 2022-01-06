@@ -8,11 +8,11 @@ import {
 import Home from '../views/Home.vue'
 import AccountLogin from '../views/AccountAuth/AccountLogin.vue'
 import AccountRegistration from '../views/AccountAuth/AccountRegistration.vue'
-import AccountPage from '../views/UserPage/UserPage.vue'
 import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
 import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
 import NotFound from '../components/Errors/404.vue';
 import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
+import MyAccount from '../views/ClientSide/MyAccount.vue'
 
 const routes = [{
     path: '/login',
@@ -34,7 +34,7 @@ const routes = [{
   },
   {
     path: '/my-account',
-    component: AccountPage,
+    component: MyAccount,
     meta: {
       requiresAuth: true,
       adminAuth: false,

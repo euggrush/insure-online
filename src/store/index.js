@@ -33,7 +33,8 @@ export const store = new Vuex.Store({
         estimations: [],
         current_estimation: [],
         orders: [],
-        current_order: []
+        current_order: [],
+        new_user: []
     },
     plugins: [
         createLogger(),
@@ -92,6 +93,9 @@ export const store = new Vuex.Store({
         },
         SET_CURRENT_ORDER(state, payload) {
             state.current_order = payload;
+        },
+        SET_NEW_USER(state, payload) {
+            state.new_user = payload;
         }
     },
     actions: {
@@ -204,6 +208,14 @@ export const store = new Vuex.Store({
                 resp => {
                     let data = resp.data;
                     context.commit(`SET_CURRENT_ORDER`, data);
+                }
+            )
+        },
+        CREATE_USER: async (context, payload) => {
+            Axios.post(`${BASE_URL}/accounts`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_NEW_USER`, data);
                 }
             )
         }

@@ -506,15 +506,18 @@ export default {
       return false;
     },
     getEstimation() {
-      alert(this.validatePayloads());
-      // if (this.validateForm() == true) {
+      if (this.validatePayloads()) {
 
-      //   this.userPayload.username = this.userPayload.email;
-      //   this.userPayload.password = this.userPayload.email;
+        this.userPayload.username = this.userPayload.email;
+        this.userPayload.password = this.userPayload.email;
 
-      //   console.log(this.userPayload);
-      //   console.log(this.vehiclePayload);
-      // }
+        console.log(this.userPayload);
+        console.log(this.vehiclePayload);
+        // this.$store.dispatch(`CREATE_USER`, this.userPayload)
+        // .then(() => {
+        //   let accountId = ``
+        // })
+      }
     },
   },
 };
@@ -524,11 +527,11 @@ export default {
 .container {
   min-height: calc(100vh - 7.3em);
 
-  outline: solid 4px red;
+  // outline: solid 4px red;
 }
 .estimation-form {
   width: 100%;
-  outline: solid 4px blue;
+  // outline: solid 4px blue;
 
   @include media-breakpoint-up(md) {
     width: 600px;
