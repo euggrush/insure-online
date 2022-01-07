@@ -35,7 +35,8 @@ export const store = new Vuex.Store({
         orders: [],
         current_order: [],
         new_user: [],
-        vehicles: []
+        vehicles: [],
+        rerender_key: 1
     },
     plugins: [
         createLogger(),
@@ -52,6 +53,9 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_RERENDER(state, payload) {
+            state.rerender_key++;
+        },
         auth_success(state, payload) {
             state.status = 'success'
             state.token = payload.token
@@ -185,10 +189,12 @@ export const store = new Vuex.Store({
             await Axios.post(`${BASE_URL}/subProducts`, payload);
         },
         GET_VEHICLES: async (context, payload) => {
-            let {data} = await Axios.get(`${BASE_URL}/vehicles${payload}`);
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/vehicles${payload}`);
             context.commit(`SET_VEHICLES`, data);
         },
-        CREATE_VEHICLE: async (content, payload) => {
+        CREATE_VEHICLE: async (context, payload) => {
             await Axios.post(`${BASE_URL}/vehicles`, payload);
         },
         GET_ESTIMATIONS: async (context, payload) => {

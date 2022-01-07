@@ -148,7 +148,7 @@
     <ul class="list-group position-relative">
       <li
         v-for="(vehicle, index) in myVehicles"
-        :key="index + vehicleKey"
+        :key="vehicle.vehicleId"
         class="list-group-item mt-3"
         v-show="vehicle.deleted == false"
       >
@@ -400,7 +400,6 @@
 export default {
   data() {
     return {
-      vehicleKey: 0,
       accountId: ``,
       changeVehicleObj: {},
       isEdit: false,
@@ -424,13 +423,14 @@ export default {
       default: () => {},
     },
   },
+
   computed: {
     myVehicles() {
       return this.$store.state.vehicles.vehicles;
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`);
+    this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
     createVehicle() {
@@ -439,7 +439,8 @@ export default {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
-          this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
           (this.vehicleInfo = {})
         )
         .catch((error) => alert(error));
@@ -464,12 +465,13 @@ export default {
       this.isEdit = false;
     },
     editVehicle(vehicle, index) {
-      this.$store.dispatch(`CREATE_VEHICLE`, this.changeVehicleObj).then(
-        this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`),
-        (this.isEdit = false),
-        (this.vehicleKey += 1)
-        // (this.vehicleInfo = {})
-      );
+      this.$store
+        .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
+        .then(
+          this.$store.dispatch(`GET_VEHICLES`, ``),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
+          (this.isEdit = false)
+        );
       console.log(index);
     },
     removePopup(vehicle, index) {
@@ -487,7 +489,8 @@ export default {
           deleted: true,
         })
         .then(
-          this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
           (this.isRemovePopup = false)
         );
       console.log(index);
