@@ -467,7 +467,7 @@ export default {
       this.$store.dispatch(`CREATE_VEHICLE`, this.changeVehicleObj).then(
         this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`),
         (this.isEdit = false),
-        this.vehicleKey += 1
+        (this.vehicleKey += 1)
         // (this.vehicleInfo = {})
       );
       console.log(index);

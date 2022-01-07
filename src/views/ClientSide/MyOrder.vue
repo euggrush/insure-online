@@ -1,5 +1,5 @@
 <template>
-  <section class="container my-order mt-5">
+  <section class="container my-order mt-5 pb-5">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
@@ -20,7 +20,6 @@
       <div class="collapse" id="collapseWidthExample">
         <div class="card card-body">
           <form @submit.prevent="getEstimation">
-            
             <p class="fw-bold">Category</p>
             <select
               @change="selectCategory()"
@@ -34,6 +33,7 @@
                 v-for="(category, index) in categoriesList"
                 :key="index"
                 :value="category.categoryId"
+                :disabled="category.categoryId !== carInsuranceCategory"
               >
                 {{ category.categoryName }}
               </option>
@@ -41,22 +41,22 @@
             </select>
             <p v-if="isCarCategorySelected" class="fw-bold mt-3">Select car</p>
             <select
-                v-if="isCarCategorySelected"
-                class="form-select mt-3"
-                aria-label="Default select example"
-                v-model="selectedCarId"
-                @change="selectCar"
-                required
+              v-if="isCarCategorySelected"
+              class="form-select mt-3"
+              aria-label="Default select example"
+              v-model="selectedCarId"
+              @change="selectCar"
+              required
+            >
+              <option value="" selected>Select customer's car...</option>
+              <option
+                v-for="(vehicle, index) in vehiclesList"
+                :key="index"
+                :value="vehicle.vehicleId"
               >
-                <option value="" selected>Select customer's car...</option>
-                <option
-                  v-for="(vehicle, index) in vehiclesList"
-                  :key="index"
-                  :value="vehicle.vehicleId"
-                >
-                  {{ vehicle.details }}
-                </option>
-              </select>
+                {{ vehicle.details }}
+              </option>
+            </select>
             <p class="fw-bold mt-3">Product</p>
             <select
               @change="selectMainProduct()"
@@ -105,9 +105,7 @@
             <button
               type="submit"
               class="btn btn-info mt-5"
-              :disabled="
-                !isCategorySelected || !isMainProductSelected
-              "
+              :disabled="!isCategorySelected || !isMainProductSelected"
             >
               Calculate
             </button>
@@ -120,9 +118,7 @@
               v-if="showEstimate"
               type="button"
               class="btn btn-success mt-5"
-              :disabled="
-                !isCategorySelected || !isMainProductSelected
-              "
+              :disabled="!isCategorySelected || !isMainProductSelected"
               @click="createOrder"
             >
               Submit order
@@ -131,11 +127,17 @@
         </div>
       </div>
     </div>
+    <MyOrdersList />
   </section>
 </template>
 
 <script>
+import { CAR_INSURANCE_CATEGORY } from "../../constants";
+import MyOrdersList from "./MyOrdersList.vue";
 export default {
+  components: {
+    MyOrdersList,
+  },
   data() {
     return {
       isCategorySelected: false,
@@ -156,7 +158,8 @@ export default {
       isCarCategorySelected: false,
       shoNullEstimation: true,
       componentKey: 0,
-      accountId: ``
+      accountId: ``,
+      carInsuranceCategory: ``,
     };
   },
   computed: {
@@ -188,9 +191,10 @@ export default {
     },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
-    }
+    },
   },
   mounted() {
+    this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
     this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`);
   },
@@ -205,7 +209,7 @@ export default {
       } else {
         this.isCategorySelected = true;
       }
-      if (this.selectedCategory == `280fc9df-1dec-4631-8fe3-76a6f606d6ad`) {
+      if (this.selectedCategory == CAR_INSURANCE_CATEGORY) {
         this.isCarCategorySelected = true;
       }
       this.$store.dispatch(
@@ -279,6 +283,6 @@ export default {
 <style lang="scss" scoped>
 .my-order {
   min-height: calc(100vh - 10em);
-  outline: solid 3px orangered;
+  // outline: solid 3px orangered;
 }
 </style>
