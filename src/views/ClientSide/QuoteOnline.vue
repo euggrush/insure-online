@@ -543,39 +543,28 @@ export default {
       return false;
     },
     createUserAccount() {
-      // let accountId = ``;
       if (this.validatePayloads()) {
         this.userPayload.username = this.userPayload.email;
         this.userPayload.birthDate = getTimeStamp(this.birth);
-        // console.log(this.userPayload);
-        // console.log(this.vehiclePayload);
-        this.$store
-          .dispatch(`CREATE_USER`, this.userPayload)
-          .then((response) => {
-            if (response) {
+
+        this.$store.dispatch(`CREATE_USER`, this.userPayload).then(() => {
+          setTimeout(() => {
+            if (this.$store.state.new_user.accountId) {
               alert(
                 `Account created, please login with your email and password`
               );
               this.resetForm();
               setTimeout(() => {
                 this.$router.push(`/login`);
-              });
+              }, 1000);
             } else {
               console.log(`Oops, something went wrong`);
               setTimeout(() => {
                 alert(this.$store.state.new_user.response.data.message);
               }, 1000);
             }
-
-            // if (this.$store.state.new_user) {
-            //   accountId = this.$store.state.new_user.accountId;
-            //   this.vehiclePayload.userId = accountId;
-            //   this.$store.dispatch(`CREATE_VEHICLE`, this.vehiclePayload);
-            // }
-          });
-        // .catch((err) => {
-        //   console.log(err.response);
-        // });
+          }, 1000);
+        });
       }
     },
   },
