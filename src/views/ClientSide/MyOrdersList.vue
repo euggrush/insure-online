@@ -143,7 +143,7 @@ export default {
     },
     closeOrderModal() {
       this.isOrderModal = false;
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
   },
 };

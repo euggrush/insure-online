@@ -36,7 +36,6 @@ export const store = new Vuex.Store({
         current_order: [],
         new_user: [],
         vehicles: [],
-        rerender_key: 1
     },
     plugins: [
         createLogger(),
@@ -53,9 +52,6 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
-        SET_RERENDER(state, payload) {
-            state.rerender_key++;
-        },
         auth_success(state, payload) {
             state.status = 'success'
             state.token = payload.token

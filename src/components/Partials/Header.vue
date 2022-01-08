@@ -127,6 +127,6 @@ export default {
   background-image: url("../../assets/img/exit.svg");
   background-size: 27px 27px;
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 95% center;
 }
 </style>

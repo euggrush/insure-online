@@ -1,5 +1,5 @@
 <template>
-  <section class="container my-order mt-5 pb-5">
+  <section class="container my-order mt-5 pb-5 position-relative">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
@@ -110,7 +110,7 @@
               Calculate
             </button>
             <span v-if="showEstimate" class="d-block mt-5"
-              >Estimation: R{{ currentEstimation.totalCost || 0 }}</span
+              >Monthly payment: R{{ currentEstimation.totalCost || 0 }}</span
             >
           </form>
           <div>
@@ -128,6 +128,56 @@
       </div>
     </div>
     <MyOrdersList />
+    <!-- MODAL -->
+    <div
+      class="
+        order-create-popup
+        position-absolute
+        top-0
+        start-50
+        translate-middle-x
+      "
+      tabindex="-1"
+      v-if="isCreateOrderPopup"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">The order has been created.</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="closeCreateOrderPopup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Your order is under review now, we will contact you for further
+              information.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <!-- <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button> -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="closeCreateOrderPopup"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL END -->
   </section>
 </template>
 
@@ -140,6 +190,7 @@ export default {
   },
   data() {
     return {
+      isCreateOrderPopup: false,
       isCategorySelected: false,
       isMainProductSelected: false,
       isUserSelected: false,
@@ -157,7 +208,6 @@ export default {
       resetSelectMainProduct: true,
       isCarCategorySelected: false,
       shoNullEstimation: true,
-      componentKey: 0,
       accountId: ``,
       carInsuranceCategory: ``,
     };
@@ -196,7 +246,7 @@ export default {
   mounted() {
     this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
-    this.$store.dispatch(`GET_VEHICLES`, `?userId=${this.accountId}`);
+    this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
     selectCategory() {
@@ -255,13 +305,14 @@ export default {
           estimationId: estimationId,
         })
         .then(
-          (this.componentKey += 1),
-          this.$store.dispatch(`GET_ORDERS`, ``, this.resetForm()),
+          (this.isCreateOrderPopup = true),
+          this.$store.dispatch(`GET_ORDERS`, `?order=desc`, this.resetForm()),
           (this.isCategorySelected = false),
           (this.isMainProductSelected = false),
           (this.isUserSelected = false)
         )
-        .catch((err) => alert(err));
+        .catch((err) => alert(err))
+        .then(this.$store.dispatch(`GET_ORDERS`, `?order=desc`));
     },
     resetForm() {
       (this.isCategorySelected = false),
@@ -276,6 +327,9 @@ export default {
         (this.showEstimate = false),
         (this.selectedCarId = ``);
     },
+    closeCreateOrderPopup() {
+      this.isCreateOrderPopup = false;
+    },
   },
 };
 </script>
@@ -284,5 +338,14 @@ export default {
 .my-order {
   min-height: calc(100vh - 10em);
   // outline: solid 3px orangered;
+}
+.order-create-popup {
+  min-width: 300px;
+  @include media-breakpoint-up(sm) {
+    min-width: 400px;
+  }
+  @include media-breakpoint-up(md) {
+    min-width: 500px;
+  }
 }
 </style>
