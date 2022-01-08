@@ -71,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .reg-wrap {
-  min-height: calc(100vh - 7.3em);
+  min-height: calc(100vh - 127px);
   color: #fff;
   background-image: url($mainBg);
   background-repeat: no-repeat;
@@ -103,7 +103,7 @@ export default {
 .signup-form form {
   color: #999;
   border-radius: 3px;
-  margin-bottom: 15px;
+  // margin-bottom: 15px;
   background: #fff;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   padding: 30px;

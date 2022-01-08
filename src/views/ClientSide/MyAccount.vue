@@ -14,46 +14,53 @@
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
         <div class="container" style="border-bottom: 1px solid black">
-          <h2 class="mt-3">{{ myInfo.firstName }} {{ myInfo.lastName }}</h2>
+          <h2 class="mt-3">
+            {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
+          </h2>
         </div>
         <hr />
         <p>
-          <span class="fw-bold">Cellphone:&nbsp;</span>{{ myInfo.cellphone }}
+          <span class="fw-bold">Cellphone:&nbsp;</span
+          >{{ myAccountInfo.cellphone }}
         </p>
         <p>
           <span class="fw-bold">Phone number:&nbsp;</span
-          >{{ myInfo.phoneNumber }}
+          >{{ myAccountInfo.phoneNumber }}
         </p>
-        <p><span class="fw-bold">Email:&nbsp;</span>{{ myInfo.email }}</p>
-        <p><span class="fw-bold">Age:&nbsp;</span> {{ myInfo.age }}</p>
-        <p><span class="fw-bold">Address:&nbsp;</span>{{ myInfo.address }}</p>
+        <p>
+          <span class="fw-bold">Email:&nbsp;</span>{{ myAccountInfo.email }}
+        </p>
+        <p><span class="fw-bold">Age:&nbsp;</span> {{ myAccountInfo.age }}</p>
+        <p>
+          <span class="fw-bold">Address:&nbsp;</span>{{ myAccountInfo.address }}
+        </p>
         <p>
           <span class="fw-bold">Client ID:&nbsp;</span
-          >{{ myInfo.clientIdNumber }}
+          >{{ myAccountInfo.clientIdNumber }}
         </p>
         <p>
           <span class="fw-bold">Marital status:&nbsp;</span
-          >{{ myInfo.maritalStatus }}
+          >{{ myAccountInfo.maritalStatus }}
         </p>
         <p>
           <span class="fw-bold">Country of residence:&nbsp;</span
-          >{{ myInfo.countryOfResidence }}
+          >{{ myAccountInfo.countryOfResidence }}
         </p>
         <p>
           <span class="fw-bold">Year of issue driver license:&nbsp;</span
-          >{{ myInfo.yearOfIssueDriverLicense }}
+          >{{ myAccountInfo.yearOfIssueDriverLicense }}
         </p>
         <p>
           <span class="fw-bold">Claims history:&nbsp;</span
-          >{{ myInfo.claimsHistory }}
+          >{{ myAccountInfo.claimsHistory }}
         </p>
         <p>
           <span class="fw-bold">Previous insurer:&nbsp;</span
-          >{{ myInfo.previousInsurer }}
+          >{{ myAccountInfo.previousInsurer }}
         </p>
         <p>
           <span class="fw-bold">Account created:&nbsp;</span
-          >{{ getDate(myInfo.created) }}
+          >{{ getDate(myAccountInfo.created) }}
         </p>
       </div>
     </div>
@@ -84,7 +91,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.firstName"
+                :placeholder="myAccountInfo.firstName"
                 v-model="changeUserObj.firstName"
               />
             </label>
@@ -95,7 +102,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.lastName"
+                :placeholder="myAccountInfo.lastName"
                 v-model="changeUserObj.lastName"
               />
             </label>
@@ -112,7 +119,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.address"
+                :placeholder="myAccountInfo.address"
                 v-model="changeUserObj.address"
               />
             </label>
@@ -123,7 +130,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.cellphone"
+                :placeholder="myAccountInfo.cellphone"
                 v-model="changeUserObj.cellphone"
               />
             </label>
@@ -134,7 +141,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.phoneNumber"
+                :placeholder="myAccountInfo.phoneNumber"
                 v-model="changeUserObj.phoneNumber"
               />
             </label>
@@ -154,7 +161,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.countryOfResidence"
+                :placeholder="myAccountInfo.countryOfResidence"
                 v-model="changeUserObj.countryOfResidence"
               />
             </label>
@@ -165,7 +172,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.previousInsurer"
+                :placeholder="myAccountInfo.previousInsurer"
                 v-model="changeUserObj.previousInsurer"
               />
             </label>
@@ -175,8 +182,8 @@
               >
               <input
                 class="form-control"
-                type="text"
-                :placeholder="myInfo.yearOfIssueDriverLicense"
+                type="number"
+                :placeholder="myAccountInfo.yearOfIssueDriverLicense"
                 v-model="changeUserObj.yearOfIssueDriverLicense"
               />
             </label>
@@ -187,7 +194,7 @@
               <input
                 class="form-control"
                 type="text"
-                :placeholder="myInfo.claimsHistory"
+                :placeholder="myAccountInfo.claimsHistory"
                 v-model="changeUserObj.claimsHistory"
               />
             </label>
@@ -197,7 +204,7 @@
       </div>
     </div>
     <MyVehicles
-      :myProps="{ myVehicles: myInfo.vehicles, accountId: accountId }"
+      :myProps="{ myVehicles: myAccountInfo.vehicles, accountId: accountId }"
     />
   </section>
 </template>
@@ -221,7 +228,6 @@ export default {
     return {
       dateOfBirth: ``,
       accountId: ``,
-      myInfo: {},
       changeUserObj: {
         accountId: ``,
         firstName: ``,
@@ -236,23 +242,21 @@ export default {
         yearOfIssueDriverLicense: ``,
         overnightParkingVehicle: ``,
         claimsHistory: ``,
+        myInfo: [],
       },
     };
   },
   computed: {
-    info() {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.myInfo = this.$store.state.users_array.accounts[0];
+    myAccountInfo() {
+      if (this.$store.state.users_array.accounts) {
+        return this.$store.state.users_array.accounts[0];
+      }
       return [];
     },
   },
   mounted() {
     this.accountId = this.$store.state.user.accountId;
-    this.$store
-      .dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-      .then(() => {
-        this.myInfo = this.$store.state.users_array.accounts[0];
-      });
+    this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
   },
   methods: {
     getDate(date) {
@@ -263,11 +267,11 @@ export default {
       this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
+        .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
+        .catch((err) => alert(err))
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-          // this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-        )
-        .catch((err) => alert(err));
+        );
     },
   },
 };
