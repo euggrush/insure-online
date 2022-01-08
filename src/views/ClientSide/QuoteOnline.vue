@@ -1,13 +1,14 @@
 <template>
   <section class="container pt-5">
+    <h1 class="fs-3 text-center">Create Account</h1>
     <form
-      class="row needs-validation estimation-form mx-auto pb-5"
+      class="row needs-validation estimation-form mx-auto mt-5 pb-5"
       novalidate
-      @submit.prevent="getEstimation"
+      @submit.prevent="createUserAccount"
     >
       <!-- BLOCK 01 -->
       <p class="fw-bold">Account Details:</p>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="validationCustom01" class="form-label mt-1"
           >First name</label
         >
@@ -25,7 +26,7 @@
       </div>
       <!-- BLOCK 02 -->
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="validationCustom02" class="form-label mt-1"
           >Last name</label
         >
@@ -41,25 +42,7 @@
         <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter last name</div>
       </div>
-      <!-- BLOCK 020 -->
 
-      <div class="col-md-4">
-        <label for="validationCustomUsername" class="form-label mt-1"
-          >Email</label
-        >
-        <div class="input-group has-validation">
-          <span class="input-group-text" id="inputGroupPrepend">@</span>
-          <input
-            type="text"
-            class="form-control"
-            id="validationCustomUsername"
-            aria-describedby="inputGroupPrepend"
-            v-model="userPayload.email"
-            required
-          />
-          <div class="invalid-feedback">Please enter email</div>
-        </div>
-      </div>
       <!-- BLOCK 03 -->
 
       <div class="col-md-6">
@@ -204,7 +187,7 @@
           type="date"
           class="form-control"
           id="validationCustom111"
-          v-model="userPayload.birthDate"
+          v-model="birth"
           required
         />
         <!-- <div class="valid-feedback">Looks good!</div> -->
@@ -226,10 +209,51 @@
         <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter your claims history.</div>
       </div>
+      <!-- BLOCK 020 -->
+
+      <div class="col-md-6">
+        <label for="validationCustomUsername" class="form-label mt-1"
+          >Email</label
+        >
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend">@</span>
+          <input
+            type="text"
+            class="form-control"
+            id="validationCustomUsername"
+            aria-describedby="inputGroupPrepend"
+            v-model="userPayload.email"
+            required
+          />
+          <div class="invalid-feedback">Please enter email</div>
+        </div>
+      </div>
+      <!-- BLOCK 0202 -->
+
+      <div class="col-md-6">
+        <label for="validationCustomUsername0202" class="form-label mt-1"
+          >Password</label
+        >
+        <div class="input-group has-validation">
+          <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
+          <input
+            type="password"
+            class="form-control"
+            id="validationCustomUsername0202"
+            aria-describedby="inputGroupPrepend"
+            v-model="userPayload.password"
+            minlength="8"
+            required
+          />
+          <div class="invalid-feedback">
+            Please create password, it must be 8 characters long
+          </div>
+        </div>
+      </div>
 
       <!-- BLOCK 12 -->
       <!-- Vehicle Details -->
-      <p class="mt-5 fw-bold">Vehicle Details:</p>
+      <!-- <p class="mt-5 fw-bold">Vehicle Details:</p>
       <div class="col-md-4">
         <label for="validationCustom12" class="form-label mt-1"
           >Make And Model</label
@@ -243,10 +267,8 @@
           v-model="vehiclePayload.details"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter vehicle make and model</div>
       </div>
-      <!-- BLOCK 121 -->
 
       <div class="col-md-4">
         <label for="validationCustom121" class="form-label mt-1"
@@ -259,11 +281,8 @@
           v-model="vehiclePayload.year"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter vehicle year</div>
       </div>
-
-      <!-- BLOCK 13 -->
 
       <div class="col-md-4">
         <label for="validationCustom13" class="form-label mt-1"
@@ -278,12 +297,10 @@
           v-model="vehiclePayload.regNumber"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">
           Please enter vehicle registration No.
         </div>
       </div>
-      <!-- BLOCK 14 -->
 
       <div class="col-md-4">
         <label for="validationCustom14" class="form-label mt-1">VIN</label>
@@ -296,10 +313,8 @@
           v-model="vehiclePayload.vin"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter vehicle VIN</div>
       </div>
-      <!-- BLOCK 15 -->
 
       <div class="col-md-4">
         <label for="validationCustom15" class="form-label mt-1">Engine</label>
@@ -311,10 +326,8 @@
           v-model="vehiclePayload.engine"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter vehicle engine size</div>
       </div>
-      <!-- BLOCK 16 -->
 
       <div class="col-md-4">
         <label for="validationCustom16" class="form-label mt-1"
@@ -327,11 +340,8 @@
           v-model="vehiclePayload.retailValue"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter vehicle retail value</div>
       </div>
-
-      <!-- BLOCK 17 -->
 
       <div class="col-md-6 mt-5">
         <span>Tracking Device</span>
@@ -358,10 +368,11 @@
             required
           />
           <label class="form-check-label" for="validationFormCheck3">No</label>
-          <div class="invalid-feedback">Please check if you have tracking device</div>
+          <div class="invalid-feedback">
+            Please check if you have tracking device
+          </div>
         </div>
       </div>
-      <!-- BLOCK 18 -->
 
       <div class="col-md-6 mt-5">
         <span>Use</span>
@@ -394,9 +405,7 @@
           </label>
           <div class="invalid-feedback">Please check vehicle use case</div>
         </div>
-        <!-- <div class="valid-feedback">Looks good!</div> -->
       </div>
-      <!-- BLOCK 19 -->
 
       <div class="col-12 mt-5">
         <div class="form-check">
@@ -411,18 +420,27 @@
           </label>
           <div class="invalid-feedback">You must agree before submitting.</div>
         </div>
-      </div>
+      </div> -->
       <div class="col-12 mt-5">
-        <button class="btn btn-primary" type="submit">Calculate</button>
+        <button class="btn btn-primary" type="submit">Create</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
+const getTimeStamp = (date) => {
+  let myDate = date;
+  myDate = myDate.split("-");
+  const timestamp = +new Date(
+    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
+  ).getTime();
+  return timestamp;
+};
 export default {
   data() {
     return {
+      birth: ``,
       isCalculateBtnDisabled: true,
       estimationPayloadObj: {},
       userPayload: {
@@ -442,23 +460,40 @@ export default {
         claimsHistory: ``,
         previousInsurer: ``,
       },
-      vehiclePayload: {
-        accountId: ``,
-        details: ``,
-        year: ``,
-        regNumber: ``,
-        vin: ``,
-        engine: ``,
-        retailValue: ``,
-        trackingDevice: ``,
-        useCase: ``,
-      },
+      // vehiclePayload: {
+      //   userId: ``,
+      //   details: ``,
+      //   year: ``,
+      //   regNumber: ``,
+      //   vin: ``,
+      //   engine: ``,
+      //   retailValue: ``,
+      //   trackingDevice: ``,
+      //   useCase: ``,
+      // },
     };
   },
   mounted() {
     this.validateForm();
   },
   methods: {
+    resetForm() {
+      this.userPayload.username = ``;
+      this.userPayload.password = ``;
+      this.userPayload.email = ``;
+      this.userPayload.firstName = ``;
+      this.userPayload.lastName = ``;
+      this.birth = ``;
+      this.userPayload.address = ``;
+      this.userPayload.countryOfResidence = ``;
+      this.userPayload.cellphone = ``;
+      this.userPayload.phoneNumber = ``;
+      this.userPayload.clientIdNumber = ``;
+      this.userPayload.maritalStatus = ``;
+      this.userPayload.yearOfIssueDriverLicense = ``;
+      this.userPayload.claimsHistory = ``;
+      this.userPayload.previousInsurer = ``;
+    },
     validateForm() {
       let forms = document.querySelectorAll(".needs-validation");
 
@@ -480,9 +515,10 @@ export default {
     validatePayloads() {
       if (
         this.userPayload.email !== `` &&
+        this.userPayload.password !== `` &&
         this.userPayload.firstName !== `` &&
         this.userPayload.lastName !== `` &&
-        this.userPayload.birthDate !== `` &&
+        this.birth !== `` &&
         this.userPayload.address !== `` &&
         this.userPayload.countryOfResidence !== `` &&
         this.userPayload.cellphone !== `` &&
@@ -491,32 +527,55 @@ export default {
         this.userPayload.maritalStatus !== `` &&
         this.userPayload.yearOfIssueDriverLicense !== `` &&
         this.userPayload.claimsHistory !== `` &&
-        this.userPayload.previousInsurer !== `` &&
-        this.vehiclePayload.details !== `` &&
-        this.vehiclePayload.year !== `` &&
-        this.vehiclePayload.regNumber !== `` &&
-        this.vehiclePayload.vin !== `` &&
-        this.vehiclePayload.engine !== `` &&
-        this.vehiclePayload.retailValue !== `` &&
-        this.vehiclePayload.trackingDevice !== `` &&
-        this.vehiclePayload.useCase !== ``
+        this.userPayload.previousInsurer !== ``
+        // &&
+        // this.vehiclePayload.details !== `` &&
+        // this.vehiclePayload.year !== `` &&
+        // this.vehiclePayload.regNumber !== `` &&
+        // this.vehiclePayload.vin !== `` &&
+        // this.vehiclePayload.engine !== `` &&
+        // this.vehiclePayload.retailValue !== `` &&
+        // this.vehiclePayload.trackingDevice !== `` &&
+        // this.vehiclePayload.useCase !== ``
       ) {
         return true;
       }
       return false;
     },
-    getEstimation() {
+    createUserAccount() {
+      // let accountId = ``;
       if (this.validatePayloads()) {
-
         this.userPayload.username = this.userPayload.email;
-        this.userPayload.password = this.userPayload.email;
+        this.userPayload.birthDate = getTimeStamp(this.birth);
+        // console.log(this.userPayload);
+        // console.log(this.vehiclePayload);
+        this.$store
+          .dispatch(`CREATE_USER`, this.userPayload)
+          .then((response) => {
+            if (response) {
+              alert(
+                `Account created, please login with your email and password`
+              );
+              this.resetForm();
+              setTimeout(() => {
+                this.$router.push(`/login`);
+              });
+            } else {
+              console.log(`Oops, something went wrong`);
+              setTimeout(() => {
+                alert(this.$store.state.new_user.response.data.message);
+              }, 1000);
+            }
 
-        console.log(this.userPayload);
-        console.log(this.vehiclePayload);
-        // this.$store.dispatch(`CREATE_USER`, this.userPayload)
-        // .then(() => {
-        //   let accountId = ``
-        // })
+            // if (this.$store.state.new_user) {
+            //   accountId = this.$store.state.new_user.accountId;
+            //   this.vehiclePayload.userId = accountId;
+            //   this.$store.dispatch(`CREATE_VEHICLE`, this.vehiclePayload);
+            // }
+          });
+        // .catch((err) => {
+        //   console.log(err.response);
+        // });
       }
     },
   },
@@ -526,12 +585,9 @@ export default {
 <style lang="scss" scoped>
 .container {
   min-height: calc(100vh - 7.3em);
-
-  // outline: solid 4px red;
 }
 .estimation-form {
   width: 100%;
-  // outline: solid 4px blue;
 
   @include media-breakpoint-up(md) {
     width: 600px;

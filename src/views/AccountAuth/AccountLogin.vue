@@ -12,7 +12,7 @@
                 type="text"
                 class="form-control shadow-lg"
                 name="username"
-                placeholder="Username"
+                placeholder="Username or email"
                 required="required"
               />
             </div>

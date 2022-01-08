@@ -227,7 +227,9 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_NEW_USER`, data);
                 }
-            )
+            ).catch((err) => {
+                context.commit(`SET_NEW_USER`, err);
+            })
         }
     },
 });
