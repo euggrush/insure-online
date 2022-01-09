@@ -147,7 +147,7 @@ export default {
   },
   watch: {
     componentRerenderKey() {
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
   },
   computed: {
@@ -159,7 +159,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_ORDERS`, ``);
+    this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
   },
   methods: {
     getDate(date) {
@@ -172,7 +172,7 @@ export default {
     },
     closeOrderModal() {
       this.isOrderModal = false;
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
     approveOrder(order) {
       this.$store
@@ -180,6 +180,8 @@ export default {
           orderId: order.orderId,
           orderStatus: `approved`,
         })
+        .then(this.closeOrderModal)
+        .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },
     rejectOrder(order) {
@@ -188,6 +190,8 @@ export default {
           orderId: order.orderId,
           orderStatus: `rejected`,
         })
+        .then(this.closeOrderModal)
+        .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },
   },

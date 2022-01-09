@@ -1,5 +1,6 @@
 <template>
-  <section class="container pt-5">
+  <section class="container pt-5 position-relative">
+    <ModalMessage />
     <h1 class="fs-3 text-center">Create Account</h1>
     <form
       class="row needs-validation estimation-form mx-auto mt-5 pb-5"
@@ -429,6 +430,7 @@
 </template>
 
 <script>
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
 const getTimeStamp = (date) => {
   let myDate = date;
   myDate = myDate.split("-");
@@ -438,6 +440,9 @@ const getTimeStamp = (date) => {
   return timestamp;
 };
 export default {
+  components: {
+    ModalMessage,
+  },
   data() {
     return {
       birth: ``,
@@ -550,9 +555,10 @@ export default {
         this.$store.dispatch(`CREATE_USER`, this.userPayload).then(() => {
           setTimeout(() => {
             if (this.$store.state.new_user.accountId) {
-              alert(
-                `Account created, please login with your email and password`
-              );
+              this.$store.commit(`SET_MODAL`, {
+                isModal: true,
+                msg: `Account created, please login with your email and password`,
+              });
               this.resetForm();
               setTimeout(() => {
                 this.$router.push(`/login`);
@@ -560,7 +566,10 @@ export default {
             } else {
               console.log(`Oops, something went wrong`);
               setTimeout(() => {
-                alert(this.$store.state.new_user.response.data.message);
+                this.$store.commit(`SET_MODAL`, {
+                  isModal: true,
+                  msg: this.$store.state.new_user.response.data.message,
+                });
               }, 1000);
             }
           }, 1000);

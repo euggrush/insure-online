@@ -65,7 +65,7 @@
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
           "
-          class="nav-item ms-5"
+          class="nav-item ms-5 me-3"
         >
           <router-link to="/login" class="btn btn-warning rounded-pill"
             >Login</router-link
@@ -80,7 +80,7 @@
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li> -->
-        <li v-if="this.$store.state.status === 'success'" class="nav-item">
+        <li v-if="this.$store.state.status === 'success'" class="nav-item me-3">
           <button
             class="logout-btn btn btn-warning rounded-pill"
             type="button"

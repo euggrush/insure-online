@@ -36,6 +36,10 @@ export const store = new Vuex.Store({
         current_order: [],
         new_user: [],
         vehicles: [],
+        modal_popup: {
+            isModal: false,
+            msg: ``
+        }
     },
     plugins: [
         createLogger(),
@@ -100,6 +104,10 @@ export const store = new Vuex.Store({
         },
         SET_VEHICLES(state, payload) {
             state.vehicles = payload;
+        },
+        SET_MODAL(state, payload) {
+            state.modal_popup.isModal = payload.isModal;
+            state.modal_popup.msg = payload.msg;
         }
     },
     actions: {
