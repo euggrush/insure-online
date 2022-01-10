@@ -9,11 +9,11 @@
           <div class="row">
             <div class="col">
               <input
-                v-model="username"
+                v-model="email"
                 type="text"
                 class="form-control shadow-lg"
-                name="username"
-                placeholder="Username or email"
+                name="email"
+                placeholder="Email"
                 required="required"
               />
             </div>
@@ -48,7 +48,7 @@ export default {
   name: `Login`,
   data() {
     return {
-      username: ``,
+      email: ``,
       password: ``,
     };
   },
@@ -56,7 +56,7 @@ export default {
     login() {
       this.$store
         .dispatch("LOGIN", {
-          username: this.username,
+          email: this.email,
           password: this.password,
         })
         .then(() => {
