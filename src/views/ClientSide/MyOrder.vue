@@ -104,7 +104,7 @@
 
             <button
               type="submit"
-              class="btn btn-info mt-5"
+              class="btn btn-info mt-3"
               :disabled="!isCategorySelected || !isMainProductSelected"
             >
               Calculate
@@ -249,6 +249,9 @@ export default {
     this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     selectCategory() {
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
@@ -309,7 +312,8 @@ export default {
           this.$store.dispatch(`GET_ORDERS`, `?order=desc`, this.resetForm()),
           (this.isCategorySelected = false),
           (this.isMainProductSelected = false),
-          (this.isUserSelected = false)
+          (this.isUserSelected = false),
+          this.scrollToTop()
         )
         .catch((err) => alert(err))
         .then(this.$store.dispatch(`GET_ORDERS`, `?order=desc`));

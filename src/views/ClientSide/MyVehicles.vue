@@ -1,9 +1,9 @@
 <template>
   <section class="my-vehicles">
     <h3 class="mt-3 fw-bold">Vehicles information:</h3>
-    <p class="m-0 p-0">
+    
       <button
-        class="btn btn-primary mt-1"
+        class="btn btn-primary mt-3"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseWidthExample"
@@ -12,10 +12,10 @@
       >
         <span>Add vehicle</span>
       </button>
-    </p>
+    
     <!-- CREATE VEHICLE FORN -->
     <div>
-      <div class="collapse collapse-horizontal" id="collapseWidthExample">
+      <div class="collapse collapse-horizontal mt-3" id="collapseWidthExample">
         <div class="card card-body" style="width: 300px">
           <form @submit.prevent="createVehicle">
             <div class="mb-3">

@@ -512,8 +512,12 @@ export default {
   },
   mounted() {
     this.validateForm();
+    this.scrollToTop();
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     closeModal() {
       this.isModal = false;
       if (this.isUserCreated) {
