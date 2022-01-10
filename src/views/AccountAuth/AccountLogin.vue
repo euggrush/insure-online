@@ -1,5 +1,6 @@
 <template>
-  <section class="container-fluid reg-wrap bg-dark">
+  <section class="container-fluid reg-wrap bg-dark position-relative">
+    <ModalMessage />
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="login">
         <h2>Login</h2>
@@ -38,7 +39,12 @@
 </template>
 
 <script>
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
+
 export default {
+  components: {
+    ModalMessage,
+  },
   name: `Login`,
   data() {
     return {
@@ -62,7 +68,11 @@ export default {
           }
         })
         .catch((err) => {
-          alert(err);
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg: err.response.data.message,
+          });
+          // alert(err.response.data.message);
         });
     },
   },

@@ -38,7 +38,9 @@
             <p class="text-white-75 mb-4">
               We’ll take care of all your car insurance needs.
             </p>
-            <router-link class="btn btn-light btn-xl" to="/quote-online">Quote online now</router-link>
+            <router-link class="btn btn-light btn-xl" to="/quote-online"
+              >Get insurance online</router-link
+            >
           </div>
         </div>
       </div>

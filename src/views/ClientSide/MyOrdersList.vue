@@ -73,7 +73,12 @@
         </div>
         <div
           v-if="isOrderModal == order.orderId"
-          class="order-modal w-100 h-100 p-3 border border-info"
+          class="order-modal w-100 h-100 p-3 border"
+          :class="{
+            'border-warning': order.orderStatus == `approved`,
+            'border-danger': order.orderStatus == `rejected`,
+            border: order.orderStatus == `pending`,
+          }"
         >
           <button
             type="button"
@@ -126,7 +131,7 @@ export default {
   },
   computed: {
     ordersList() {
-      return this.$store.state.orders.orders || [];
+      return this.$store.state.orders.orders;
     },
   },
   mounted() {

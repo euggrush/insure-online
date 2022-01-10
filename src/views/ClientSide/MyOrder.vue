@@ -336,6 +336,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 10em;
+}
 .my-order {
   min-height: calc(100vh - 10em);
   // outline: solid 3px orangered;

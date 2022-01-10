@@ -1,7 +1,7 @@
 <template>
   <section class="container my-account pb-5">
     <router-link to="/my-order" class="btn btn-info btn-lg mt-3"
-      >Buy insurance online</router-link
+      >Get Insurance</router-link
     >
 
     <div class="row mt-5 my-account_info">

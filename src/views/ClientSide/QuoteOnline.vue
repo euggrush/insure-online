@@ -637,4 +637,7 @@ export default {
 .msg-popup {
   min-width: 60%;
 }
+.btn {
+  min-width: 10em;
+}
 </style>

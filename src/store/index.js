@@ -132,7 +132,7 @@ export const store = new Vuex.Store({
                             user,
                             role
                         });
-
+                        commit(`SET_ORDERS`, []);
                         resolve(resp);
                     })
                     .catch(err => {

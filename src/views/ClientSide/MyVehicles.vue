@@ -177,20 +177,32 @@
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>
         <span>&nbsp;{{ vehicle.useCase }}</span> <br />
-        <button
-          type="button"
-          class="btn btn-secondary mt-3 me-3"
-          @click="openEditVehicle(vehicle, index)"
-        >
-          Edit vehicle
-        </button>
-        <button
-          @click="removePopup(vehicle, index)"
-          type="button"
-          class="btn btn-danger mt-3"
-        >
-          Remove vehicle
-        </button>
+        <div class="row row-cols-auto">
+          <div class="col col-lg-2">
+            <button
+              type="button"
+              class="btn btn-secondary mt-3"
+              @click="openEditVehicle(vehicle, index)"
+            >
+              Edit vehicle
+            </button>
+          </div>
+          <div class="col col-lg-2">
+            <button
+              @click="removePopup(vehicle, index)"
+              type="button"
+              class="btn btn-danger mt-3"
+            >
+              Remove vehicle
+            </button>
+          </div>
+          <div class="col col-lg-2">
+            <router-link to="/my-order" type="button" class="btn btn-info mt-3">
+              Insure vehicle
+            </router-link>
+          </div>
+        </div>
+
         <!-- EDIT VEHICLE FORM -->
         <form
           class="
@@ -500,4 +512,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 12em;
+}
 </style>
