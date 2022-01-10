@@ -95,7 +95,7 @@
                   data-bs-target="#collapseExample"
                   aria-expanded="false"
                   aria-controls="collapseExample"
-                  :disabled="!isCarSelected"
+                  :disabled="isCarSelected"
                 >
                   Create Car
                 </button>
@@ -505,9 +505,9 @@ export default {
     },
     selectCar() {
       if (this.selectedCarId.length === 0) {
-        this.isCarSelected = true;
-      } else {
         this.isCarSelected = false;
+      } else {
+        this.isCarSelected = true;
       }
     },
     createOrder() {
