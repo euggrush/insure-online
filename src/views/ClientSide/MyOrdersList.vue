@@ -130,7 +130,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
+    this.$store
+      .dispatch(`GET_ORDERS`, `?order=desc`)
+      .catch((err) => console.log(err));
   },
   methods: {
     getDate(date) {

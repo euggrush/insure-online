@@ -329,6 +329,7 @@ export default {
     },
     closeCreateOrderPopup() {
       this.isCreateOrderPopup = false;
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
   },
 };
