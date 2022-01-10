@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid reg-wrap bg-dark position-relative">
+  <section class="container-fluid d-flex flex-column justify-content-center align-items-center reg-wrap bg-dark position-relative">
     <ModalMessage />
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="login">
@@ -86,7 +86,7 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  padding-top: 4em;
+  // padding-top: 4em;
 }
 .form-control {
   height: 41px;
@@ -104,7 +104,7 @@ export default {
 .signup-form {
   @include media-breakpoint-up(sm) {
     width: 400px;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
   @include media-breakpoint-up(md) {
     width: 500px;
@@ -166,5 +166,8 @@ export default {
 .signup-form .hint-text {
   padding-bottom: 15px;
   text-align: center;
+}
+.btn {
+  border-radius: 50rem;
 }
 </style>

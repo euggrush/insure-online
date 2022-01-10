@@ -65,9 +65,11 @@
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
           "
-          class="nav-item ms-5 me-3"
+          class="nav-item"
         >
-          <router-link to="/login" class="btn btn-warning rounded-pill"
+          <router-link
+            to="/login"
+            class="btn btn-warning login-btn rounded-pill"
             >Login</router-link
           >
         </li>
@@ -80,7 +82,7 @@
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
         </li> -->
-        <li v-if="this.$store.state.status === 'success'" class="nav-item me-3">
+        <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
             class="logout-btn btn btn-warning rounded-pill"
             type="button"
@@ -122,6 +124,13 @@ export default {
 .btn {
   min-width: 8em;
   font-weight: bold;
+}
+.login-btn,
+.logout-btn {
+  min-width: 10em;
+  @include media-breakpoint-up(lg) {
+    margin: 0 2em 0 4em;
+  }
 }
 .logout-btn {
   background-image: url("../../assets/img/exit.svg");

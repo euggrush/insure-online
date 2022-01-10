@@ -89,10 +89,19 @@
           <h5>Order details:</h5>
           <span class="fw-bold text-decoration-underline">Product:</span>
           <p>{{ order.mainProductName }}</p>
-          <h6 class="fw-bold text-decoration-underline">Coverages Included:</h6>
-          <p v-for="(sub, index) in order.subProducts" :key="index">
-            <span>{{ sub.subProductName }}</span>
-          </p>
+          <span class="fw-bold text-decoration-underline">The Minimum Premium is:</span>
+          <span>&nbsp;R{{ order.mainProductCost }}</span>
+          <h6 class="fw-bold text-decoration-underline mt-3">Coverages Included:</h6>
+          <ul class="list-group pb-3">
+            <li
+              v-for="(sub, index) in order.subProducts"
+              :key="index"
+              class="list-group-item"
+            >
+              <span>{{ sub.subProductName }}:</span>
+              <span class="fw-bold">&nbsp;R{{ sub.subProductCost }}</span>
+            </li>
+          </ul>
           <span class="fw-bold text-decoration-underline">Total:</span>
           <p>R{{ order.totalCost }}</p>
           <span class="fw-bold text-decoration-underline">Order created:</span>

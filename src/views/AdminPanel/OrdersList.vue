@@ -23,8 +23,8 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Customer's username"
-                aria-label="Customer's username"
+                placeholder="Customer's first and last name"
+                aria-label="Customer's first and last name"
                 aria-describedby="button-addon2"
                 v-model="accountUsername"
                 required
@@ -41,30 +41,23 @@
             </div>
             <div
               v-if="isAccountInfo"
-              class="container bg-info text-white bg-opacity-75 p-3 mb-3"
+              class="container bg-info text-white bg-opacity-75 p-3 mb-3 rounded"
             >
               <div class="row row-cols-auto">
+                
                 <div class="col">
-                  Username:
-                  <span class="d-block text-danger fw-bold">{{
-                    accountInfo.username
-                  }}</span>
-                </div>
-                <div class="col">
-                  First name:
-                  <span class="d-block text-danger fw-bold">{{
+                  <span class="text-black">First, Last Name:</span>&nbsp;
+                  <span class="text-danger fw-bold">{{
                     accountInfo.firstName
                   }}</span>
-                </div>
-                <div class="col">
-                  Last name:
-                  <span class="d-block text-danger fw-bold">{{
+                  <span class="text-danger fw-bold">&nbsp;{{
                     accountInfo.lastName
                   }}</span>
                 </div>
+                
                 <div class="col">
-                  Date of birth:
-                  <span class="d-block text-danger fw-bold">{{
+                  <span class="text-black">Age:</span>
+                  <span class="text-danger fw-bold">&nbsp;{{
                     accountInfo.age
                   }}</span>
                 </div>
@@ -86,6 +79,7 @@
                   {{ vehicle.details }}
                 </option>
               </select>
+              <button type="button" class="btn btn-primary mt-3">Add Car</button>
             </div>
             <!-- CUSTOMER END -->
             <p class="fw-bold">Category</p>
@@ -248,6 +242,9 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
+    createCar() {
+      alert(`haha`)
+    },
     selectCategory() {
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
@@ -279,12 +276,24 @@ export default {
         });
     },
     getAccount() {
+      let query = this.accountUsername.split(` `);
+
+      let firstName = query[0];
+      let lastName = [];
+
+      for (let i = 1; i <= query.length; i++) {
+        lastName.push(query[i]);
+      }
       if (this.accountUsername !== ``) {
         this.$store
-          .dispatch(`GET_USERS`, `?username=${this.accountUsername}`)
+          .dispatch(
+            `GET_USERS`,
+            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
+          )
           .then((res) => {
             (this.isAccountInfo = true),
               (this.isUserSelected = true),
+              this.accountUsername = ``,
               console.log(res);
           })
           .catch(
@@ -348,5 +357,12 @@ export default {
 <style lang="scss" scoped>
 .orders-list-wrapper {
   min-height: 53vh;
+}
+.btn {
+  min-width: 12em;
+}
+#button-addon2 {
+  min-width: auto;
+  width: auto;
 }
 </style>

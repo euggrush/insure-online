@@ -73,7 +73,11 @@
         </div>
         <div
           v-if="isOrderModal == order.orderId"
-          class="order-modal w-100 h-100 p-3 border border-info"
+          class="order-modal w-100 h-100 p-3 border"
+          :class="{
+            'border-info': order.orderStatus == `approved`,
+            'border-danger': order.orderStatus == `rejected`,
+          }"
         >
           <button
             type="button"
@@ -108,22 +112,29 @@
           <p>{{ order.vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
           <p>R{{ order.vehicleRetailValue }}</p>
-          <button
-            type="button"
-            class="btn btn-primary"
-            :disabled="order.orderStatus == `approved`"
-            @click="approveOrder(order)"
-          >
-            Approve
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger ms-3"
-            :disabled="order.orderStatus == `rejected`"
-            @click="rejectOrder(order)"
-          >
-            Reject
-          </button>
+
+          <div class="row row-cols-auto">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-primary mt-1"
+                :disabled="order.orderStatus == `approved`"
+                @click="approveOrder(order)"
+              >
+                Approve
+              </button>
+            </div>
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-danger mt-1"
+                :disabled="order.orderStatus == `rejected`"
+                @click="rejectOrder(order)"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -200,7 +211,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  min-width: 5.5em;
+  min-width: 12em;
 }
 
 .order-modal {
