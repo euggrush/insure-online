@@ -1,6 +1,35 @@
 <template>
   <section class="container pt-5 position-relative">
-    <ModalMessage />
+    <!-- MODAL MESSAGE -->
+    <div
+      class="msg-popup position-absolute top-50 start-50 translate-middle"
+      tabindex="-1"
+      v-if="isModal"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Message:</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="closeModal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ modalMsg }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="closeModal">
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL END -->
     <h1 class="fs-3 text-center">Create Account</h1>
     <form
       class="row needs-validation estimation-form mx-auto mt-5 pb-5"
@@ -430,7 +459,7 @@
 </template>
 
 <script>
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
+// import ModalMessage from "../../components/Modals/ModalMessage.vue";
 const getTimeStamp = (date) => {
   let myDate = date;
   myDate = myDate.split("-");
@@ -440,11 +469,14 @@ const getTimeStamp = (date) => {
   return timestamp;
 };
 export default {
-  components: {
-    ModalMessage,
-  },
+  // components: {
+  //   ModalMessage,
+  // },
   data() {
     return {
+      isModal: false,
+      modalMsg: ``,
+      isUserCreated: false,
       birth: ``,
       isCalculateBtnDisabled: true,
       estimationPayloadObj: {},
@@ -482,6 +514,15 @@ export default {
     this.validateForm();
   },
   methods: {
+    closeModal() {
+      this.isModal = false;
+      if (this.isUserCreated) {
+        setTimeout(() => {
+          this.isUserCreated = false;
+          this.$router.push(`/login`);
+        }, 500);
+      }
+    },
     resetForm() {
       this.userPayload.username = ``;
       this.userPayload.password = ``;
@@ -498,6 +539,9 @@ export default {
       this.userPayload.yearOfIssueDriverLicense = ``;
       this.userPayload.claimsHistory = ``;
       this.userPayload.previousInsurer = ``;
+      document
+        .querySelector(`.needs-validation`)
+        .classList.remove(`was-validated`);
     },
     validateForm() {
       let forms = document.querySelectorAll(".needs-validation");
@@ -555,21 +599,17 @@ export default {
         this.$store.dispatch(`CREATE_USER`, this.userPayload).then(() => {
           setTimeout(() => {
             if (this.$store.state.new_user.accountId) {
-              this.$store.commit(`SET_MODAL`, {
-                isModal: true,
-                msg: `Account created, please login with your email and password`,
-              });
+              this.modalMsg = `Account created, please login with your email and password`;
+              this.isModal = true;
               this.resetForm();
-              setTimeout(() => {
-                this.$router.push(`/login`);
-              }, 1000);
+              this.isUserCreated = true;
             } else {
               console.log(`Oops, something went wrong`);
               setTimeout(() => {
-                this.$store.commit(`SET_MODAL`, {
-                  isModal: true,
-                  msg: this.$store.state.new_user.response.data.message,
-                });
+                this.modalMsg =
+                  this.$store.state.new_user.response.data.message;
+                this.isModal = true;
+                this.isUserCreated = false;
               }, 1000);
             }
           }, 1000);
@@ -593,5 +633,8 @@ export default {
   @include media-breakpoint-up(lg) {
     width: 900px;
   }
+}
+.msg-popup {
+  min-width: 60%;
 }
 </style>
