@@ -86,38 +86,69 @@
             @click="closeOrderModal"
           ></button>
           <h5>Order details:</h5>
-          <span class="fw-bold text-decoration-underline">Product:</span>
-          <p>{{ order.mainProductName }}</p>
-          <h6 class="fw-bold text-decoration-underline">Coverages Included:</h6>
-          <p v-for="(sub, index) in order.subProducts" :key="index">
-            <span>{{ sub.subProductName }}</span>
-          </p>
-          <span class="fw-bold text-decoration-underline">Total:</span>
-          <p>R{{ order.totalCost }}</p>
-          <span class="fw-bold text-decoration-underline">Order created:</span>
-          <p>{{ getDate(order.orderCreated) }}</p>
-          <span class="fw-bold text-decoration-underline">Order status:</span>
-          <p
-            class="fw-bold text-uppercase"
+          <span class="fw-bold text-decoration-underline">Product:&nbsp;</span>
+          <span>{{ order.mainProductName }}</span
+          ><br />
+          <span class="d-inline-block mt-1 fw-bold text-decoration-underline"
+            >The Minimum Premium is:&nbsp;</span
+          >
+          <span>R{{ order.mainProductCost }}</span>
+          <h6 class="fw-bold text-decoration-underline mt-3">
+            Coverages Included:
+          </h6>
+          <ul class="list-group">
+            <li
+              v-for="(sub, index) in order.subProducts"
+              :key="index"
+              class="list-group-item"
+            >
+              <span>{{ sub.subProductName }}&nbsp;</span>
+              <span class="fw-bold">R{{ sub.subProductCost }}</span>
+            </li>
+          </ul>
+
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Total:&nbsp;</span
+          >
+          <span>R{{ order.totalCost }}</span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Order created:&nbsp;</span
+          >
+          <span>{{ getDate(order.orderCreated) }}</span
+          ><br />
+          <span class="fw-bold text-decoration-underline"
+            >Order status:&nbsp;</span
+          >
+          <span
+            class="d-inline-block mt-3 fw-bold text-uppercase"
             :class="{
-              'text-warning': order.orderStatus == `approved`,
+              'text-info': order.orderStatus == `approved`,
               'text-danger': order.orderStatus == `rejected`,
             }"
           >
-            {{ order.orderStatus }}
-          </p>
-          <span class="fw-bold text-decoration-underline">Customer:</span>
-          <p>{{ order.firstName }}&nbsp;{{ order.lastName }}</p>
-          <span class="fw-bold text-decoration-underline">Vehicle:</span>
-          <p>{{ order.vehicleDetails }}</p>
-          <span class="fw-bold text-decoration-underline">Vehicle value:</span>
-          <p>R{{ order.vehicleRetailValue }}</p>
+            {{ order.orderStatus }} </span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Customer:&nbsp;</span
+          >
+          <span>{{ order.firstName }}&nbsp;{{ order.lastName }}</span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Vehicle:&nbsp;</span
+          >
+          <span>{{ order.vehicleDetails }}</span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Vehicle value:&nbsp;</span
+          >
+          <span>R{{ order.vehicleRetailValue }}</span>
 
           <div class="row row-cols-auto">
             <div class="col">
               <button
                 type="button"
-                class="btn btn-primary mt-1"
+                class="btn btn-primary mt-3"
                 :disabled="order.orderStatus == `approved`"
                 @click="approveOrder(order)"
               >
@@ -127,7 +158,7 @@
             <div class="col">
               <button
                 type="button"
-                class="btn btn-danger mt-1"
+                class="btn btn-danger mt-3"
                 :disabled="order.orderStatus == `rejected`"
                 @click="rejectOrder(order)"
               >
@@ -173,6 +204,9 @@ export default {
     this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
@@ -191,7 +225,7 @@ export default {
           orderId: order.orderId,
           orderStatus: `approved`,
         })
-        .then(this.closeOrderModal)
+        .then(this.closeOrderModal, this.scrollToTop())
         .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },
@@ -201,7 +235,7 @@ export default {
           orderId: order.orderId,
           orderStatus: `rejected`,
         })
-        .then(this.closeOrderModal)
+        .then(this.closeOrderModal, this.scrollToTop())
         .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },

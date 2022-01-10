@@ -459,7 +459,6 @@
 </template>
 
 <script>
-// import ModalMessage from "../../components/Modals/ModalMessage.vue";
 const getTimeStamp = (date) => {
   let myDate = date;
   myDate = myDate.split("-");
@@ -469,9 +468,7 @@ const getTimeStamp = (date) => {
   return timestamp;
 };
 export default {
-  // components: {
-  //   ModalMessage,
-  // },
+  
   data() {
     return {
       isModal: false,

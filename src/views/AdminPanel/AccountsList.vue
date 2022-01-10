@@ -93,7 +93,7 @@
     </div>
 
     <div
-      class="collapse"
+      class="collapse mt-3"
       :class="{ show: showCreateAccount }"
       id="collapseExample1"
     >
@@ -103,15 +103,8 @@
           @submit.prevent="createAccount"
         >
           <div class="mb-3">
-            <label class="form-label">Username:</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="username"
-              minlength="5"
-              maxlength="15"
-              required
-            />
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" v-model="email" required />
           </div>
           <div class="mb-3">
             <label class="form-label">Password:</label>
@@ -123,10 +116,7 @@
               required
             />
           </div>
-          <div class="mb-3">
-            <label class="form-label">Email:</label>
-            <input type="email" class="form-control" v-model="email" required />
-          </div>
+          
           <div class="mb-3">
             <label class="form-label">First name:</label>
             <input
@@ -431,5 +421,8 @@ input::-webkit-input-placeholder {
   @include media-breakpoint-up(lg) {
     font-size: $font-size-medium;
   }
+}
+.btn-info, .btn-primary {
+  min-width: 10em;
 }
 </style>

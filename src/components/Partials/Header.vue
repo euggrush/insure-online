@@ -47,7 +47,7 @@
           "
           class="nav-item me-5"
         >
-          <router-link class="nav-link" to="/">Insurance</router-link>
+          <router-link class="nav-link" to="/registration">Sign Up</router-link>
         </li>
         <!-- <li
           v-if="

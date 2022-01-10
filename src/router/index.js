@@ -69,7 +69,7 @@ const routes = [{
     redirect: '/404'
   },
   {
-    path: "/quote-online",
+    path: "/registration",
     component: QuoteOnline
   }
 ]

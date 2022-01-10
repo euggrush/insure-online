@@ -1,15 +1,15 @@
 <template>
   <section class="container my-account pb-5">
-    <router-link to="/my-order" class="btn btn-info btn-lg mt-3"
+    <router-link to="/my-order" class="btn btn-info btn-lg mt-5"
       >Get Insurance</router-link
     >
 
     <div class="row mt-5 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <img
-          src="https://www.svgimages.com/svg-image/s5/man-passportsize-silhouette-icon-256x256.png"
+          src="https://i.ibb.co/VC7PVnD/vector-unisex-avatar-468.png"
           alt="stack photo"
-          class="img"
+          class="img user-avatar"
         />
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
@@ -280,7 +280,6 @@ export default {
 <style lang="scss" scoped>
 .my-account {
   min-height: calc(100vh - 10em);
-  // outline: solid 3px orangered;
 }
 .details li {
   list-style: none;
@@ -288,7 +287,21 @@ export default {
 li {
   margin-bottom: 10px;
 }
-// .my-account_info {
-//   outline: solid 3px blue;
-// }
+.user-avatar {
+  width: 100%;
+  height: auto;
+  @include media-breakpoint-up(sm) {
+    width: 180px;
+    margin-top: 10px;
+  }
+  @include media-breakpoint-up(md) {
+    width: 200px;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 250px;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 300px;
+  }
+}
 </style>

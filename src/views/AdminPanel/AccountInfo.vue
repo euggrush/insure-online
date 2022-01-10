@@ -42,7 +42,7 @@
         aria-expanded="false"
         aria-controls="collapseWidthExample1"
       >
-        Change account information
+        Change Account
       </button>
     </p>
     <div>
@@ -708,4 +708,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 12em;
+}
 </style>
