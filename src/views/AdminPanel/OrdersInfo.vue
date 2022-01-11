@@ -112,6 +112,41 @@
           >
           <span>R{{ order.totalCost }}</span
           ><br />
+          <span
+            v-if="order.adjustedCost > 0"
+            class="d-inline-block mt-3 mb-1 fw-bold text-decoration-underline"
+            >Adjusted Premium:&nbsp;</span
+          >
+          <span v-if="order.adjustedCost > 0">R{{ order.adjustedCost }}</span
+          ><br />
+          <div v-if="isAdjust" class="input-group mt-3 adjust-input">
+            <input
+              type="number"
+              class="form-control"
+              aria-label="cost
+              "
+              aria-describedby="button-addon2"
+              :placeholder="order.adjustedCost"
+              v-model="adjustedCost"
+            />
+            <button
+              class="btn btn-outline-secondary adjust-btn"
+              type="button"
+              id="button-addon2"
+              @click="adjustOrderCost(order)"
+            >
+              Ok
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary mt-3"
+            @click="toggleAdjust()"
+          >
+            Adjust Premium
+          </button>
+          <br />
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
             >Order created:&nbsp;</span
           >
@@ -178,6 +213,8 @@ const dayjs = require("dayjs");
 export default {
   data() {
     return {
+      isAdjust: false,
+      adjustedCost: ``,
       isOrderModal: false,
     };
   },
@@ -239,6 +276,25 @@ export default {
         .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },
+    toggleAdjust() {
+      this.isAdjust = !this.isAdjust;
+    },
+    adjustOrderCost(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          adjustedCost: this.adjustedCost,
+        })
+        .then(() => {
+          this.getOrder(order.orderId);
+          this.isAdjust = false;
+          this.adjustedCost = ``;
+        })
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.getOrder(order.orderId);
+        });
+    },
   },
 };
 </script>
@@ -256,5 +312,16 @@ export default {
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
+.adjust-input {
+  width: 11em;
+}
+.adjust-btn {
+  min-width: auto;
+}
+br {
+  display: block;
+  content: "";
+  margin-top: 0;
 }
 </style>

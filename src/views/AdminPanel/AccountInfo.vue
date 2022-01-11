@@ -12,11 +12,12 @@
     <span class="fw-bold text-decoration-underline">Age: </span>
     <span>&nbsp;{{ accountInfo.age }}</span> <br />
     <span class="fw-bold text-decoration-underline">Email: </span>
-    <span>&nbsp;{{ accountInfo.email }}</span> <br />
+    <a :href="`mailto:${accountInfo.email}`">&nbsp;{{ accountInfo.email }}</a>
+    <br />
     <span class="fw-bold text-decoration-underline">Cellphone: </span>
-    <span>&nbsp;{{ accountInfo.cellphone }}</span> <br />
+    <a :href="`tel:${accountInfo.cellphone}`">&nbsp;{{accountInfo.cellphone}}</a><br>
     <span class="fw-bold text-decoration-underline">Telephone number: </span>
-    <span>&nbsp;{{ accountInfo.phoneNumber }}</span> <br />
+    <a :href="`tel:${accountInfo.phoneNumber}`">&nbsp;{{accountInfo.phoneNumber}}</a><br>
     <span class="fw-bold text-decoration-underline">Marital Status: </span>
     <span>&nbsp;{{ accountInfo.maritalStatus }}</span> <br />
     <span class="fw-bold text-decoration-underline">Area & Postal Code: </span>

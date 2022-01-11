@@ -54,7 +54,7 @@
                 :key="index"
                 :value="vehicle.vehicleId"
               >
-                {{ vehicle.details }}
+                {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
               </option>
             </select>
             <p class="fw-bold mt-3">Product</p>
@@ -96,7 +96,7 @@
                 >
                   <span>{{ subProduct.subProductName }}</span>
                   <span class="fw-bold"
-                    >&nbsp;${{ subProduct.subProductCost }}</span
+                    >&nbsp;R{{ subProduct.subProductCost }}</span
                   >
                 </label>
               </div>
@@ -345,7 +345,6 @@ export default {
 }
 .my-order {
   min-height: calc(100vh - 10em);
-  // outline: solid 3px orangered;
 }
 .order-create-popup {
   min-width: 300px;

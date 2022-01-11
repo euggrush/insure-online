@@ -166,4 +166,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 10em;
+}
 </style>

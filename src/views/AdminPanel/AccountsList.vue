@@ -391,6 +391,9 @@ export default {
   },
   data() {
     return {
+      searchUser: ``,
+      isInfo: false,
+      isBthDisabled: false,
       pickedAccountIndex: ``,
       pickedAccountInfo: [],
       userPayload: {
