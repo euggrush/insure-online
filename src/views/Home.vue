@@ -114,10 +114,6 @@
                 src="https://i.ibb.co/hgcQFfg/11.jpg"
                 alt="photo"
               />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -127,10 +123,6 @@
                 src="https://i.ibb.co/BLcgtqF/10.jpg"
                 alt="photo"
               />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -140,10 +132,6 @@
                 src="https://i.ibb.co/5sM3CNg/9.jpg"
                 alt="photo"
               />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -153,10 +141,6 @@
                 src="https://i.ibb.co/X4rm2Y4/8.jpg"
                 alt="photo"
               />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -166,10 +150,6 @@
                 src="https://i.ibb.co/rMrc6JK/7.jpg"
                 alt="photo"
               />
-              <div class="portfolio-box-caption">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -179,10 +159,6 @@
                 src="https://i.ibb.co/4Kz5xDg/12.webp"
                 alt="photo"
               />
-              <div class="portfolio-box-caption p-3">
-                <div class="project-category text-white-50">Category</div>
-                <div class="project-name">Project Name</div>
-              </div>
             </a>
           </div>
         </div>

@@ -1,18 +1,18 @@
 <template>
   <section class="my-vehicles">
     <h3 class="mt-3 fw-bold">Vehicles information:</h3>
-    
-      <button
-        class="btn btn-primary mt-3"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseWidthExample"
-        aria-expanded="false"
-        aria-controls="collapseWidthExample"
-      >
-        <span>Add vehicle</span>
-      </button>
-    
+
+    <button
+      class="btn btn-primary mt-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseWidthExample"
+      aria-expanded="false"
+      aria-controls="collapseWidthExample"
+    >
+      <span>Add vehicle</span>
+    </button>
+
     <!-- CREATE VEHICLE FORN -->
     <div>
       <div class="collapse collapse-horizontal mt-3" id="collapseWidthExample">
@@ -450,12 +450,11 @@ export default {
       this.vehicleInfo.accountId = this.myProps.accountId;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
-        .then(
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          (this.vehicleInfo = {})
-        )
-        .catch((error) => alert(error));
+        .then(this.$store.dispatch(`GET_VEHICLES`, ``), (this.vehicleInfo = {}))
+        .catch((error) => alert(error))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+        });
     },
     openEditVehicle(vehicle, index) {
       this.changeVehicleObj = {
@@ -479,11 +478,11 @@ export default {
     editVehicle(vehicle, index) {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
-        .then(
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          (this.isEdit = false)
-        );
+        .then(this.$store.dispatch(`GET_VEHICLES`, ``), (this.isEdit = false))
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+        });
       console.log(index);
     },
     removePopup(vehicle, index) {
@@ -502,9 +501,12 @@ export default {
         })
         .then(
           this.$store.dispatch(`GET_VEHICLES`, ``),
-          this.$store.dispatch(`GET_VEHICLES`, ``),
           (this.isRemovePopup = false)
-        );
+        )
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+        });
       console.log(index);
     },
   },
