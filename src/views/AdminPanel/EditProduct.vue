@@ -104,8 +104,12 @@
       Create Or Add Coverage
     </button>
     <div class="collapse mt-3" id="collapseExample">
-      <form class="card card-body" @submit.prevent="createSubProduct(product)">
-        <div class="border coverages-checkboxes">
+      <div class="card card-body">
+        <!-- FIRST FORM -->
+        <form
+          class="coverages-checkboxes"
+          @submit.prevent="addSelectedCoverages(product)"
+        >
           <div class="row row-cols-4">
             <div
               v-for="(cover, index) in coveragesList"
@@ -116,52 +120,62 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value=""
+                  :value="cover"
+                  v-model="checkedCoverages"
                   :id="`defaultCheck${index}`"
                 />
                 <label class="form-check-label" :for="`defaultCheck${index}`">
-                  {{ cover.subProductName }}
+                  {{ cover.subProductName
+                  }}<span class="fw-bold"
+                    >&nbsp;R{{ cover.subProductCost }}</span
+                  >
                 </label>
               </div>
             </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Coverage name:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            v-model="subProductName"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label"
-            >Coverage description:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputPassword1"
-            v-model="subProductDescription"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword2" class="form-label"
-            >Coverage cost:</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            id="exampleInputPassword2"
-            v-model="coverageCost"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+          <button type="submit" class="btn btn-primary mt-5">Add</button>
+        </form>
+        <!-- FIST FORM END -->
+        <!-- SECOND FORM -->
+        <form class="mt-3" @submit.prevent="createSubProduct(product)">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Coverage name:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              v-model="subProductName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Coverage description:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputPassword1"
+              v-model="subProductDescription"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword2" class="form-label"
+              >Coverage cost:</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="exampleInputPassword2"
+              v-model="coverageCost"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <!-- SECOND FORM END -->
+      </div>
     </div>
   </section>
 </template>
@@ -170,6 +184,7 @@
 export default {
   data() {
     return {
+      checkedCoverages: [],
       productName: ``,
       pickedProductIndex: ``,
       pickedProductInfo: [],
@@ -194,7 +209,9 @@ export default {
       return this.$store.state.main_products.mainProducts[0] || [];
     },
     coveragesList() {
-      return this.getUniqueArr(this.$store.state.sub_products.subProducts);
+      return (
+        this.getUniqueArr(this.$store.state.sub_products.subProducts) || []
+      );
     },
   },
   mounted() {
@@ -202,6 +219,9 @@ export default {
   },
   methods: {
     getUniqueArr(arr) {
+      if (!arr) {
+        return [];
+      }
       let newArr = [];
 
       arr.map((item) => {
@@ -280,6 +300,27 @@ export default {
           );
         });
     },
+    addSelectedCoverages(product) {
+      this.checkedCoverages.map((item) => {
+        this.$store
+          .dispatch(`CREATE_SUB_PRODUCT`, {
+            mainProductId: product.mainProductId,
+            subProductName: item.subProductName,
+            subProductDescription: item.subProductDescription,
+            cost: item.subProductCost,
+          })
+          .then(() => {
+            this.$store.dispatch(
+              `GET_MAIN_PRODUCTS`,
+              `?mainProductId=${product.mainProductId}`
+            );
+          })
+          .catch((error) => {
+            alert(error);
+          })
+          
+      });
+    },
   },
 };
 </script>
@@ -297,6 +338,6 @@ br {
 .coverages-checkboxes {
   width: 100%;
   min-height: 100px;
-  outline: solid 3px red;
+  // outline: solid 3px red;
 }
 </style>
