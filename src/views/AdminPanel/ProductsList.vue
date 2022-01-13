@@ -1,5 +1,17 @@
 <template>
-  <section class="container products-list-wrapper">
+  <section class="container products-list-wrapper position-relative">
+    <div
+      class="edit-wrap position-absolute top-0 start-0 p-3"
+      v-if="isEditProductModal"
+    >
+      <button
+        type="button"
+        class="btn-close float-end"
+        aria-label="Close"
+        @click="closeModal"
+      ></button>
+      <EditProduct />
+    </div>
     <!-- PRODUCTS RENDER -->
     <h3 class="mt-3">Products:</h3>
     <ul class="list-group mt-3">
@@ -229,7 +241,11 @@
 </template>
 
 <script>
+import EditProduct from "./EditProduct.vue";
 export default {
+  components: {
+    EditProduct,
+  },
   data() {
     return {
       productName: ``,
@@ -246,6 +262,7 @@ export default {
       isCategorySelected: false,
       isProductToChangeSelected: false,
       mainProductId: ``,
+      isEditProductModal: false,
     };
   },
   computed: {
@@ -261,9 +278,21 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
+    closeModal() {
+      this.isEditProductModal = false;
+      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+    },
     pickProduct(product, index) {
       this.pickedProductIndex = index;
       this.pickedProductInfo = product;
+      this.$store
+        .dispatch(
+          `GET_MAIN_PRODUCTS`,
+          `?mainProductId=${product.mainProductId}`
+        )
+        .then(() => {
+          this.isEditProductModal = true;
+        });
     },
     createProduct() {
       this.$store
@@ -332,5 +361,12 @@ li {
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
+.edit-wrap {
+  width: 100%;
+  // min-height: 100%;
+  background: $bgLight;
+  outline: solid 5px blue;
+  z-index: 3;
 }
 </style>
