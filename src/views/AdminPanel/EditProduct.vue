@@ -110,26 +110,42 @@
           class="coverages-checkboxes"
           @submit.prevent="addSelectedCoverages(product)"
         >
-          <div class="row row-cols-4">
-            <div
-              v-for="(cover, index) in coveragesList"
-              :key="index"
-              class="col mt-1"
-            >
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  :value="cover"
-                  v-model="checkedCoverages"
-                  :id="`defaultCheck${index}`"
-                />
-                <label class="form-check-label" :for="`defaultCheck${index}`">
-                  {{ cover.subProductName
-                  }}<span class="fw-bold"
-                    >&nbsp;R{{ cover.subProductCost }}</span
-                  >
-                </label>
+          <div class="container">
+            <div class="row row-cols-auto">
+              <div
+                v-for="(cover, index) in coveragesList"
+                :key="index"
+                v-show="
+                  product.subProducts.every((item) => {
+                    if (item.subProductName == cover.subProductName) {
+                      return false;
+                    }
+                    return true;
+                  })
+                "
+                class="
+                  col
+                  mt-3
+                  me-5
+                  border-bottom border-end
+                  coverages-checkboxes__item
+                "
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="cover"
+                    v-model="checkedCoverages"
+                    :id="`defaultCheck${index}`"
+                  />
+                  <label class="form-check-label" :for="`defaultCheck${index}`">
+                    {{ cover.subProductName
+                    }}<span class="fw-bold"
+                      >&nbsp;R{{ cover.subProductCost }}</span
+                    >
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -317,8 +333,7 @@ export default {
           })
           .catch((error) => {
             alert(error);
-          })
-          
+          });
       });
     },
   },
@@ -339,5 +354,11 @@ br {
   width: 100%;
   min-height: 100px;
   // outline: solid 3px red;
+}
+.coverages-checkboxes__item label {
+  cursor: pointer;
+}
+.coverages-checkboxes__item label:hover {
+  color: $bgOrange;
 }
 </style>
