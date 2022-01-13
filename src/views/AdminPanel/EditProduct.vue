@@ -39,6 +39,60 @@
         <span class="fw-bold">R{{ coverage.subProductCost }}</span>
       </li>
     </ul>
+    <!-- CHANGE PRODUCT -->
+    <p class="mt-5">
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample2"
+        aria-expanded="false"
+        aria-controls="collapseExample2"
+      >
+        Change product
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample2">
+      <div class="card card-body">
+        <form class="mt-1" @submit.prevent="changeProduct(product)">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductName"
+              :placeholder="product.mainProductName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductDescription"
+              :placeholder="product.mainProductDescription"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              :placeholder="product.mainProductCost"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -46,6 +100,18 @@
 export default {
   data() {
     return {
+      productName: ``,
+      pickedProductIndex: ``,
+      pickedProductInfo: [],
+      pickedProductId: ``,
+      productCategoryId: ``,
+      productNewName: ``,
+      isBtnDisabled: true,
+      mainProductName: ``,
+      mainProductDescription: ``,
+      cost: ``,
+      isCategorySelected: false,
+      mainProductId: ``,
       productInfo: {},
     };
   },
@@ -53,13 +119,37 @@ export default {
     product() {
       return this.$store.state.main_products.mainProducts[0] || [];
     },
-    // categoriesList() {
-    //   return this.$store.state.product_categories.categories;
-    // },
   },
   methods: {
     closeModal() {
       this.isEditProductModal = false;
+    },
+    changeProduct(product) {
+      this.$store
+        .dispatch(`CREATE_MAIN_PRODUCT`, {
+          mainProductId: product.mainProductId,
+          mainProductName: this.mainProductName,
+          mainProductDescription: this.mainProductDescription,
+          cost: this.cost,
+        })
+        .then(() => {
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${product.mainProductId}`
+          );
+          this.mainProductName = ``;
+          this.mainProductDescription = ``;
+          this.cost = ``;
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        .then(() => {
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${product.mainProductId}`
+          );
+        });
     },
   },
 };

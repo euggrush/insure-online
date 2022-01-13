@@ -1,22 +1,11 @@
 <template>
   <section class="container products-list-wrapper position-relative">
-    <div
-      class="edit-wrap position-absolute top-0 start-0 p-3"
-      v-if="isEditProductModal"
-    >
-      <button
-        type="button"
-        class="btn-close float-end"
-        aria-label="Close"
-        @click="closeModal"
-      ></button>
-      <EditProduct />
-    </div>
     <!-- PRODUCTS RENDER -->
-    <h3 class="mt-3">Products:</h3>
+    <h3 v-show="showListItem" class="mt-3">Products:</h3>
     <ul class="list-group mt-3">
       <li
         v-for="(product, index) in productsList"
+        v-show="showListItem"
         :key="index"
         class="list-group-item"
         :class="{ active: index === pickedProductIndex }"
@@ -74,7 +63,7 @@
       </li>
     </ul>
     <!-- CREATE NEW PRODUCT -->
-    <p class="mt-5">
+    <p class="mt-5" v-show="showListItem">
       <button
         class="btn btn-primary"
         type="button"
@@ -156,86 +145,14 @@
         </form>
       </div>
     </div>
-    <!-- CHANGE PRODUCT -->
-    <p class="mt-5">
+    <div class="edit-wrap p-3" v-if="isEditProductModal">
       <button
-        class="btn btn-primary"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample2"
-        aria-expanded="false"
-        aria-controls="collapseExample2"
-      >
-        Change product
-      </button>
-    </p>
-    <div class="collapse" id="collapseExample2">
-      <div class="card card-body">
-        <select
-          class="form-select"
-          aria-label="Default select example"
-          @change="selectProductToChange($event)"
-          required
-        >
-          <option disabled :selected="!isProductToChangeSelected">
-            Choose product to change
-          </option>
-          <option
-            v-for="(product, index) in productsList"
-            :key="index"
-            :value="product.mainProductId"
-          >
-            {{ product.mainProductName }}
-            <span> (Category related to: {{ product.categoryName }}) </span>
-          </option>
-        </select>
-        <form class="mt-1" @submit.prevent="changeProduct">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product name</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductName"
-              required
-              :disabled="isChangeBtnDisabled"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product description</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductDescription"
-              :disabled="isChangeBtnDisabled"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product cost</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              v-model="cost"
-              required
-              :disabled="isChangeBtnDisabled"
-            />
-          </div>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-            :disabled="isChangeBtnDisabled"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+        class="btn-close float-end"
+        aria-label="Close"
+        @click="closeModal"
+      ></button>
+      <EditProduct />
     </div>
   </section>
 </template>
@@ -248,6 +165,7 @@ export default {
   },
   data() {
     return {
+      showListItem: true,
       productName: ``,
       pickedProductIndex: ``,
       pickedProductInfo: [],
@@ -280,6 +198,7 @@ export default {
   methods: {
     closeModal() {
       this.isEditProductModal = false;
+      this.showListItem = true;
       this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
     },
     pickProduct(product, index) {
@@ -292,6 +211,7 @@ export default {
         )
         .then(() => {
           this.isEditProductModal = true;
+          this.showListItem = false;
         });
     },
     createProduct() {
@@ -319,31 +239,6 @@ export default {
       this.isBtnDisabled = false;
       this.isCategorySelected = true;
     },
-    selectProductToChange(event) {
-      this.mainProductId = event.target.value;
-      this.isChangeBtnDisabled = false;
-      this.isProductToChangeSelected = true;
-    },
-    changeProduct() {
-      this.$store
-        .dispatch(`CREATE_MAIN_PRODUCT`, {
-          mainProductId: this.mainProductId,
-          mainProductName: this.mainProductName,
-          mainProductDescription: this.mainProductDescription,
-          cost: this.cost,
-        })
-        .then(() => {
-          this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
-          this.mainProductName = ``;
-          this.mainProductDescription = ``;
-          this.cost = ``;
-          this.isChangeBtnDisabled = true;
-          this.isProductToChangeSelected = false;
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    },
   },
 };
 </script>
@@ -362,11 +257,11 @@ li {
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
 }
+
 .edit-wrap {
   width: 100%;
-  // min-height: 100%;
+  min-height: 100%;
   background: $bgLight;
   outline: solid 5px blue;
-  z-index: 3;
 }
 </style>
