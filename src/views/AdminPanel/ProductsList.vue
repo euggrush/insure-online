@@ -196,6 +196,9 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     closeModal() {
       this.isEditProductModal = false;
       this.showListItem = true;
@@ -212,6 +215,7 @@ export default {
         .then(() => {
           this.isEditProductModal = true;
           this.showListItem = false;
+          this.scrollToTop();
         });
     },
     createProduct() {

@@ -105,6 +105,27 @@
     </button>
     <div class="collapse mt-3" id="collapseExample">
       <form class="card card-body" @submit.prevent="createSubProduct(product)">
+        <div class="border coverages-checkboxes">
+          <div class="row row-cols-4">
+            <div
+              v-for="(cover, index) in coveragesList"
+              :key="index"
+              class="col mt-1"
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  :id="`defaultCheck${index}`"
+                />
+                <label class="form-check-label" :for="`defaultCheck${index}`">
+                  {{ cover.subProductName }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label"
             >Coverage name:</label
@@ -172,8 +193,36 @@ export default {
     product() {
       return this.$store.state.main_products.mainProducts[0] || [];
     },
+    coveragesList() {
+      return this.getUniqueArr(this.$store.state.sub_products.subProducts);
+    },
+  },
+  mounted() {
+    this.$store.dispatch(`GET_SUB_PRODUCTS`, ``);
   },
   methods: {
+    getUniqueArr(arr) {
+      let newArr = [];
+
+      arr.map((item) => {
+        let sortedObj = {
+          subProductName: ``,
+          subProductDescription: ``,
+          subProductCost: ``,
+          isRequiredCoverages: ``,
+        };
+        sortedObj.subProductName = item.subProductName;
+        sortedObj.subProductDescription = item.subProductDescription;
+        sortedObj.subProductCost = item.subProductCost;
+        sortedObj.isRequiredCoverages = item.isRequiredCoverages;
+
+        newArr.push(JSON.stringify(sortedObj));
+      });
+
+      return Array.from(new Set(newArr)).map((item) => {
+        return JSON.parse(item);
+      });
+    },
     closeModal() {
       this.isEditProductModal = false;
     },
@@ -244,5 +293,10 @@ br {
 .btn-primary {
   min-width: 13em;
   max-width: 13em;
+}
+.coverages-checkboxes {
+  width: 100%;
+  min-height: 100px;
+  outline: solid 3px red;
 }
 </style>
