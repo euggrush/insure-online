@@ -2,79 +2,18 @@
   <section class="container products-list-wrapper position-relative">
     <!-- PRODUCTS RENDER -->
     <h3 v-show="showListItem" class="mt-3">Products:</h3>
-    <ul class="list-group mt-3">
-      <li
-        v-for="(product, index) in productsList"
-        v-show="showListItem"
-        :key="index"
-        class="list-group-item"
-        :class="{ active: index === pickedProductIndex }"
-        @click="pickProduct(product, index)"
-      >
-        <div class="container">
-          <div class="row product-item">
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Name:</span
-              >
-              <span class="d-block">
-                {{ product.mainProductName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Description:</span
-              >
-              <span class="d-block">
-                {{ product.mainProductDescription }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Cost:</span
-              >
-              <span class="d-block"> R{{ product.mainProductCost }} </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Category:</span
-              >
-              <span class="d-block">
-                {{ product.categoryName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Coverages:</span
-              >
-              <p
-                v-for="(subProduct, index) in product.subProducts"
-                :key="index"
-                class="m-0"
-              >
-                <span class="">{{ subProduct.subProductName }}</span>
-                <span class="fw-bold"
-                  >&nbsp;R{{ subProduct.subProductCost }}</span
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
     <!-- CREATE NEW PRODUCT -->
-    <p class="mt-5" v-show="showListItem">
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample1"
-        aria-expanded="false"
-        aria-controls="collapseExample1"
-      >
-        Create product
-      </button>
-    </p>
+    <button
+      v-show="showListItem"
+      class="btn btn-primary mt-1"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample1"
+      aria-expanded="false"
+      aria-controls="collapseExample1"
+    >
+      Create product
+    </button>
     <div class="collapse" id="collapseExample1">
       <div class="card card-body">
         <!-- CATEGORIES LIST -->
@@ -145,6 +84,67 @@
         </form>
       </div>
     </div>
+    <ul class="list-group mt-3">
+      <li
+        v-for="(product, index) in productsList"
+        v-show="showListItem"
+        :key="index"
+        class="list-group-item"
+        :class="{ active: index === pickedProductIndex }"
+        @click="pickProduct(product, index)"
+      >
+        <div class="container">
+          <div class="row product-item">
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Name:</span
+              >
+              <span class="d-block">
+                {{ product.mainProductName }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Description:</span
+              >
+              <span class="d-block">
+                {{ product.mainProductDescription }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Cost:</span
+              >
+              <span class="d-block"> R{{ product.mainProductCost }} </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Category:</span
+              >
+              <span class="d-block">
+                {{ product.categoryName }}
+              </span>
+            </div>
+            <div class="col border">
+              <span class="d-block fw-bold text-decoration-underline"
+                >Coverages:</span
+              >
+              <p
+                v-for="(subProduct, index) in product.subProducts"
+                :key="index"
+                class="m-0"
+              >
+                <span class="">{{ subProduct.subProductName }}</span>
+                <span class="fw-bold"
+                  >&nbsp;R{{ subProduct.subProductCost }}</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
     <div class="edit-wrap p-3" v-if="isEditProductModal">
       <button
         type="button"
@@ -251,17 +251,25 @@ li {
   color: $bgColorMain;
 }
 .product-item {
+  transition: all 0.5s ease;
+
   min-height: 7em;
   background-color: $mainGreen;
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
 }
-
+.product-item:hover {
+  background-color: $mainGreen;
+  opacity: 0.8;
+}
 .edit-wrap {
   width: 100%;
   min-height: 100%;
   background: $bgLight;
-  outline: solid 5px blue;
+  // outline: solid 5px blue;
+}
+.btn {
+  min-width: 12em;
 }
 </style>

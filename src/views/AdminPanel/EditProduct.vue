@@ -49,7 +49,7 @@
         aria-expanded="false"
         aria-controls="collapseExample2"
       >
-        Change product
+        Change Product
       </button>
     </p>
     <div class="collapse" id="collapseExample2">
@@ -89,9 +89,58 @@
             />
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-info">Submit</button>
         </form>
       </div>
+    </div>
+    <button
+      class="btn btn-primary mt-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    >
+      Create Or Add Coverage
+    </button>
+    <div class="collapse mt-3" id="collapseExample">
+      <form class="card card-body" @submit.prevent="createSubProduct(product)">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Coverage name:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            v-model="subProductName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Coverage description:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            v-model="subProductDescription"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword2" class="form-label"
+            >Coverage cost:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="exampleInputPassword2"
+            v-model="coverageCost"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
   </section>
 </template>
@@ -113,6 +162,10 @@ export default {
       isCategorySelected: false,
       mainProductId: ``,
       productInfo: {},
+      subProductName: ``,
+      subProductId: ``,
+      subProductDescription: ``,
+      coverageCost: ``,
     };
   },
   computed: {
@@ -151,6 +204,33 @@ export default {
           );
         });
     },
+    createSubProduct(product) {
+      this.$store
+        .dispatch(`CREATE_SUB_PRODUCT`, {
+          mainProductId: product.mainProductId,
+          subProductName: this.subProductName,
+          subProductDescription: this.subProductDescription,
+          cost: this.coverageCost,
+        })
+        .then(() => {
+          this.subProductName = ``;
+          this.subProductDescription = ``;
+          this.coverageCost = ``;
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${product.mainProductId}`
+          );
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        .then(() => {
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${product.mainProductId}`
+          );
+        });
+    },
   },
 };
 </script>
@@ -160,5 +240,9 @@ br {
   display: block;
   content: "";
   margin-top: 0;
+}
+.btn-primary {
+  min-width: 13em;
+  max-width: 13em;
 }
 </style>

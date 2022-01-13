@@ -31,13 +31,13 @@
       >
         Products
       </button>
-      <button
+      <!-- <button
         class="nav-link fw-bold"
         :class="{ active: isSubProducts }"
         @click="showSubProducts"
       >
         Coverages
-      </button>
+      </button> -->
       <button
         class="nav-link fw-bold"
         :class="{ active: isOrders }"

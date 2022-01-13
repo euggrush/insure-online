@@ -1,22 +1,11 @@
 <template>
   <section class="container categories-list-wrapper">
+    
     <h3 class="mt-3">Categories:</h3>
-    <ul class="list-group mt-3">
-      <li
-        v-for="(category, index) in categoriesList"
-        :key="index"
-        class="list-group-item shadow-lg"
-        :class="{ active: index === pickedCategoryIndex }"
-        @click="pickCategory(category, index)"
-      >
-        {{ category.categoryName }}
-      </li>
-    </ul>
-
     <!-- ADD NEW CATEGORY -->
     <div>
       <button
-        class="btn btn-primary mt-5"
+        class="btn btn-primary mt-1"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseExample1"
@@ -41,6 +30,19 @@
         </form>
       </div>
     </div>
+    <ul class="list-group mt-3">
+      <li
+        v-for="(category, index) in categoriesList"
+        :key="index"
+        class="list-group-item shadow-lg"
+        :class="{ active: index === pickedCategoryIndex }"
+        @click="pickCategory(category, index)"
+      >
+        {{ category.categoryName }}
+      </li>
+    </ul>
+
+    
 
     <!-- CHANGE CATEGORY -->
     <div>
@@ -148,4 +150,7 @@ li {
 // .categories-list-wrapper {
 //   outline: solid 4px purple;
 // }
+.btn {
+  min-width: 12em;
+}
 </style>
