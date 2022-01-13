@@ -231,7 +231,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_SUB_PRODUCTS`, ``);
+    this.$store.dispatch(`GET_SUB_PRODUCTS`, `?categoryId=${this.product.categoryId}`);
   },
   methods: {
     getUniqueArr(arr) {
