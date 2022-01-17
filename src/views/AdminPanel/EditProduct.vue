@@ -1,34 +1,34 @@
 <template>
   <section>
     <p class="fw-bold">Product details:</p>
-    <span class="fw-bolder text-decoration-underline mt-1"
+    <!-- <span class="fw-bolder text-decoration-underline mt-1"
       >Product name:&nbsp;</span
-    >
-    <span>{{ product.mainProductName }}</span
+    > -->
+    <span class="d-block fw-bold pb-3">{{ product.mainProductName }}</span
     ><br />
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
-      >Product description:&nbsp;</span
+      >Description:&nbsp;</span
     >
     <span>{{ product.mainProductDescription }}</span
     ><br />
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
-      >Product cost:&nbsp;</span
+      >Cost:&nbsp;</span
     >
     <span>{{ product.mainProductCost }}</span
     ><br />
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
-      >Product category:&nbsp;</span
+      >Category:&nbsp;</span
     >
     <span>{{ product.categoryName }}</span
     ><br />
 
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
-      >Product created:&nbsp;</span
+      >Created:&nbsp;</span
     >
-    <span>{{ product.created }}</span
+    <span>{{getDate( product.created) }}</span
     ><br />
 
-    <p class="mt-3 fw-bold">Coverages included:</p>
+    <p class="mt-3 fw-bold">Included:</p>
     <ul class="list-group">
       <li
         v-for="(coverage, index) in product.subProducts"
@@ -197,6 +197,8 @@
 </template>
 
 <script>
+const dayjs = require("dayjs");
+
 export default {
   data() {
     return {
@@ -234,6 +236,9 @@ export default {
     this.$store.dispatch(`GET_SUB_PRODUCTS`, `?categoryId=${this.product.categoryId}`);
   },
   methods: {
+    getDate(date) {
+      return dayjs(date).format("MMMM D, YYYY h:mm A");
+    },
     getUniqueArr(arr) {
       if (!arr) {
         return [];

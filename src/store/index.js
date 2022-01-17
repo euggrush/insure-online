@@ -39,7 +39,8 @@ export const store = new Vuex.Store({
         modal_popup: {
             isModal: false,
             msg: ``
-        }
+        },
+        uploaded_file: []
     },
     plugins: [
         createLogger(),
@@ -108,6 +109,9 @@ export const store = new Vuex.Store({
         SET_MODAL(state, payload) {
             state.modal_popup.isModal = payload.isModal;
             state.modal_popup.msg = payload.msg;
+        },
+        SET_UPLOADED_FILE(state, payload) {
+            state.uploaded_file = payload;
         }
     },
     actions: {
@@ -237,6 +241,16 @@ export const store = new Vuex.Store({
                 }
             ).catch((err) => {
                 context.commit(`SET_NEW_USER`, err);
+            })
+        },
+        UPLOAD: async (context, payload) => {
+            Axios.post(`${BASE_URL}/assets?act=upload`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_UPLOADED_FILE`, data);
+                }
+            ).catch(err => {
+                context.commit(`SET_UPLOADED_FILE`, err.response);
             })
         }
     },

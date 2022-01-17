@@ -1,6 +1,10 @@
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold shadow"
+    class="
+      navbar navbar-expand-lg navbar-light
+      container-fluid
+      fw-bold
+    "
   >
     <router-link class="navbar-brand" to="/"
       ><img
@@ -99,12 +103,30 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return {
-      currentPage: window.location.pathname,
-    };
-  },
+  // data() {
+  //   return {
+  //     currentPage: window.location.pathname,
+  //   };
+  // },
+
+  // created() {
+  //   window.addEventListener("scroll", this.handleScroll);
+  // },
+  // unmounted() {
+  //   window.removeEventListener("scroll", this.handleScroll);
+  // },
   methods: {
+    // handleScroll() {
+    //   const navbarCollapsible = document.body.querySelector("#mainNav");
+    //   if (!navbarCollapsible) {
+    //     return;
+    //   }
+    //   if (window.scrollY === 0) {
+    //     navbarCollapsible.classList.remove("navbar-shrink");
+    //   } else {
+    //     navbarCollapsible.classList.add("navbar-shrink");
+    //   }
+    // },
     logout() {
       this.$store
         .dispatch("LOGOUT")
@@ -118,7 +140,7 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   min-height: 4em;
-  opacity: 0.8;
+  // opacity: 0.8;
   // outline: solid 4px orangered;
 }
 .btn {
@@ -137,5 +159,71 @@ export default {
   background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: 95% center;
+}
+#mainNav {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+#mainNav .navbar-brand {
+  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  color: #212529;
+}
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: #6c757d;
+  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
+}
+#mainNav .navbar-nav .nav-item .nav-link:hover,
+#mainNav .navbar-nav .nav-item .nav-link:active {
+  color: #f4623a;
+}
+#mainNav .navbar-nav .nav-item .nav-link.active {
+  color: #f4623a !important;
+}
+@media (min-width: 992px) {
+  #mainNav {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  #mainNav .navbar-brand {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  #mainNav .navbar-brand:hover {
+    color: #fff;
+  }
+  #mainNav .navbar-nav .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0 1rem;
+  }
+  #mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: #fff;
+  }
+  #mainNav .navbar-nav .nav-item:last-child .nav-link {
+    padding-right: 0;
+  }
+  #mainNav.navbar-shrink {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #f4623a;
+  }
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
+    color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
+    color: #f4623a;
+  }
 }
 </style>

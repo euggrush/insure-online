@@ -90,7 +90,6 @@
         v-show="showListItem"
         :key="index"
         class="list-group-item"
-        :class="{ active: index === pickedProductIndex }"
         @click="pickProduct(product, index)"
       >
         <div class="container">

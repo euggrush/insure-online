@@ -73,7 +73,7 @@
         </div>
         <div
           v-if="isOrderModal == order.orderId"
-          class="order-modal w-100 h-100 p-3 border"
+          class="order-modal w-100 h-100 p-3 border position-relative"
           :class="{
             'border-warning': order.orderStatus == `approved`,
             'border-danger': order.orderStatus == `rejected`,
@@ -89,9 +89,13 @@
           <h5>Order details:</h5>
           <span class="fw-bold text-decoration-underline">Product:</span>
           <p>{{ order.mainProductName }}</p>
-          <span class="fw-bold text-decoration-underline">The Minimum Premium is:</span>
+          <span class="fw-bold text-decoration-underline"
+            >The Minimum Premium is:</span
+          >
           <span>&nbsp;R{{ order.mainProductCost }}</span>
-          <h6 class="fw-bold text-decoration-underline mt-3">Coverages Included:</h6>
+          <h6 class="fw-bold text-decoration-underline mt-3">
+            Coverages Included:
+          </h6>
           <ul class="list-group pb-3">
             <li
               v-for="(sub, index) in order.subProducts"
@@ -116,12 +120,58 @@
           >
             {{ order.orderStatus }}
           </p>
-          <span class="fw-bold text-decoration-underline">Customer:</span>
-          <p>{{ order.firstName }}&nbsp;{{ order.lastName }}</p>
+
           <span class="fw-bold text-decoration-underline">Vehicle:</span>
           <p>{{ order.vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
           <p>R{{ order.vehicleRetailValue }}</p>
+          <button type="button" class="btn btn-light btn-pdf">PDF File</button>
+          <div class="mt-3 mb-3">
+            <label for="formFile" class="form-label fw-bold"
+              >Add your banking details:</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="uploadFile($event)"
+            />
+          </div>
+          <!-- MODAL ERROR -->
+          <div
+            class="msg-popup position-absolute top-50 start-50 translate-middle"
+            tabindex="-1"
+            v-if="isUploadError"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Message:</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    @click="closeModal"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-black">{{ errMsg }}</p>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="closeModal"
+                  >
+                    Ok
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- MODAL ERROR END -->
         </div>
       </li>
     </ul>
@@ -136,6 +186,9 @@ export default {
     return {
       myId: ``,
       isOrderModal: false,
+      isFileUploaded: ``,
+      errMsg: ``,
+      isUploadError: false,
     };
   },
   computed: {
@@ -149,6 +202,27 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
+    uploadFile(event) {
+      const asset = event.target.files[0];
+      const formData = new FormData();
+      formData.append(
+        `meta`,
+        JSON.stringify({ fileType: `photo`, description: `` })
+      );
+      formData.append("asset", asset);
+      this.$store.dispatch(`UPLOAD`, formData).then(() => {
+        setTimeout(() => {
+          if (this.$store.state.uploaded_file.data.state == `fail`) {
+            this.isFileUploaded = false;
+            this.isUploadError = true;
+            this.errMsg = this.$store.state.uploaded_file.data.message;
+          } else {
+            this.isFileUploaded = true;
+          }
+          console.log(this.isFileUploaded);
+        }, 1000);
+      });
+    },
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
@@ -161,6 +235,9 @@ export default {
       this.isOrderModal = false;
       this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
+    closeModal() {
+      this.isUploadError = false;
+    },
   },
 };
 </script>
@@ -168,5 +245,12 @@ export default {
 <style lang="scss" scoped>
 .btn {
   min-width: 10em;
+}
+.btn-pdf {
+  border-radius: 0;
+  background-image: url("../../assets/img/icon-pdf.png");
+  background-size: 27px 27px;
+  background-repeat: no-repeat;
+  background-position: 5% center;
 }
 </style>
