@@ -20,11 +20,10 @@
         </div>
         <hr />
         <p>
-          <span class="fw-bold">Cellphone:&nbsp;</span
-          >{{ myAccountInfo.cellphone }}
+          <span class="fw-bold">Cell:&nbsp;</span>{{ myAccountInfo.cellphone }}
         </p>
         <p>
-          <span class="fw-bold">Phone number:&nbsp;</span
+          <span class="fw-bold">Phone:&nbsp;</span
           >{{ myAccountInfo.phoneNumber }}
         </p>
         <p>
@@ -39,27 +38,27 @@
           >{{ myAccountInfo.clientIdNumber }}
         </p>
         <p>
-          <span class="fw-bold">Marital status:&nbsp;</span
+          <span class="fw-bold">Marital Status:&nbsp;</span
           >{{ myAccountInfo.maritalStatus }}
         </p>
         <p>
-          <span class="fw-bold">Country of residence:&nbsp;</span
+          <span class="fw-bold">Country Of Residence:&nbsp;</span
           >{{ myAccountInfo.countryOfResidence }}
         </p>
         <p>
-          <span class="fw-bold">Year of issue driver license:&nbsp;</span
+          <span class="fw-bold">Year Of Issue Driver License:&nbsp;</span
           >{{ myAccountInfo.yearOfIssueDriverLicense }}
         </p>
         <p>
-          <span class="fw-bold">Claims history:&nbsp;</span
+          <span class="fw-bold">Claims History:&nbsp;</span
           >{{ myAccountInfo.claimsHistory }}
         </p>
         <p>
-          <span class="fw-bold">Previous insurer:&nbsp;</span
+          <span class="fw-bold">Previous Insurer:&nbsp;</span
           >{{ myAccountInfo.previousInsurer }}
         </p>
         <p>
-          <span class="fw-bold">Account created:&nbsp;</span
+          <span class="fw-bold">Created:&nbsp;</span
           >{{ getDate(myAccountInfo.created) }}
         </p>
       </div>

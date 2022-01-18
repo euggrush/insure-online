@@ -25,7 +25,7 @@
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
       >Created:&nbsp;</span
     >
-    <span>{{getDate( product.created) }}</span
+    <span>{{ getDate(product.created) }}</span
     ><br />
 
     <p class="mt-3 fw-bold">Included:</p>
@@ -103,12 +103,17 @@
     >
       Create Or Add Coverage
     </button>
+    <!-- <div class="mt-5">
+      Total in this category: {{ availableCoveragesToAdd }}
+    </div>
+    <div>Added to product already: {{ product.subProducts.length }}</div> -->
     <div class="collapse mt-3" id="collapseExample">
       <div class="card card-body">
         <!-- FIRST FORM -->
         <form
           class="coverages-checkboxes"
           @submit.prevent="addSelectedCoverages(product)"
+          v-show="availableCoveragesToAdd > product.subProducts.length"
         >
           <div class="container">
             <div class="row row-cols-auto">
@@ -202,6 +207,7 @@ const dayjs = require("dayjs");
 export default {
   data() {
     return {
+      isSubProductsError: false,
       checkedCoverages: [],
       productName: ``,
       pickedProductIndex: ``,
@@ -220,6 +226,7 @@ export default {
       subProductId: ``,
       subProductDescription: ``,
       coverageCost: ``,
+      availableCoveragesToAdd: [],
     };
   },
   computed: {
@@ -227,13 +234,23 @@ export default {
       return this.$store.state.main_products.mainProducts[0] || [];
     },
     coveragesList() {
-      return (
-        this.getUniqueArr(this.$store.state.sub_products.subProducts) || []
-      );
+      if (this.isSubProductsError) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.availableCoveragesToAdd = 0;
+        return [];
+      } else {
+        return (
+          this.getUniqueArr(this.$store.state.sub_products.subProducts) || []
+        );
+      }
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_SUB_PRODUCTS`, `?categoryId=${this.product.categoryId}`);
+    this.$store
+      .dispatch(`GET_SUB_PRODUCTS`, `?categoryId=${this.product.categoryId}`)
+      .catch((error) => {
+        console.log(error), (this.isSubProductsError = true);
+      });
   },
   methods: {
     getDate(date) {
@@ -241,6 +258,7 @@ export default {
     },
     getUniqueArr(arr) {
       if (!arr) {
+        this.availableCoveragesToAdd = 0;
         return [];
       }
       let newArr = [];
@@ -259,6 +277,7 @@ export default {
 
         newArr.push(JSON.stringify(sortedObj));
       });
+      this.availableCoveragesToAdd = Array.from(new Set(newArr)).length;
 
       return Array.from(new Set(newArr)).map((item) => {
         return JSON.parse(item);

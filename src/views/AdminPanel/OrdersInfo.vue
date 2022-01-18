@@ -42,12 +42,12 @@
               >
               <span>{{ order.vehicleRetailValue }}</span>
             </div>
-            <div class="col border-bottom border-start">
+            <!-- <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Category:</span
               >
               <span>{{ order.categoryName }}</span>
-            </div>
+            </div> -->
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product:</span
@@ -59,6 +59,15 @@
                 >Total:</span
               >
               <span>R{{ order.totalCost }}</span>
+            </div>
+            <div
+              v-if="order.adjustedCost > 0"
+              class="col border-bottom border-start"
+            >
+              <span class="d-block fw-bold text-decoration-underline fst-italic"
+                >Adjusted:</span
+              >
+              <span class="fst-italic">R{{ order.adjustedCost }}</span>
             </div>
             <div class="col">
               <button
@@ -115,7 +124,7 @@
           <span
             v-if="order.adjustedCost > 0"
             class="d-inline-block mt-3 mb-1 fw-bold text-decoration-underline"
-            >Adjusted Premium:&nbsp;</span
+            >Adjusted:&nbsp;</span
           >
           <span v-if="order.adjustedCost > 0">R{{ order.adjustedCost }}</span
           ><br />
@@ -148,13 +157,11 @@
           </button>
           <br />
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-            >Order created:&nbsp;</span
+            >Created:&nbsp;</span
           >
           <span>{{ getDate(order.orderCreated) }}</span
           ><br />
-          <span class="fw-bold text-decoration-underline"
-            >Order status:&nbsp;</span
-          >
+          <span class="fw-bold text-decoration-underline">Status:&nbsp;</span>
           <span
             class="d-inline-block mt-3 fw-bold text-uppercase"
             :class="{
@@ -175,9 +182,16 @@
           <span>{{ order.vehicleDetails }}</span
           ><br />
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-            >Vehicle value:&nbsp;</span
+            >Value:&nbsp;</span
           >
-          <span>R{{ order.vehicleRetailValue }}</span>
+          <span>R{{ order.vehicleRetailValue }}</span
+          ><br />
+          <!-- <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Supported documents:&nbsp;</span
+          > -->
+          <button type="button" class="btn btn-light btn-pdf mt-3">
+           Banking Details
+          </button>
 
           <div class="row row-cols-auto">
             <div class="col">
@@ -293,6 +307,8 @@ export default {
         .catch((err) => console.log(err))
         .then(() => {
           this.getOrder(order.orderId);
+          this.isAdjust = false;
+          this.adjustedCost = ``;
         });
     },
   },
@@ -323,5 +339,12 @@ br {
   display: block;
   content: "";
   margin-top: 0;
+}
+.btn-pdf {
+  border-radius: 0;
+  background-image: url("../../assets/img/icon-pdf.png");
+  background-size: 27px 27px;
+  background-repeat: no-repeat;
+  background-position: 5% center;
 }
 </style>
