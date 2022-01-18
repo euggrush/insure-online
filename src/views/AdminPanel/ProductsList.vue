@@ -14,7 +14,7 @@
     >
       Create product
     </button>
-    <div class="collapse" id="collapseExample1">
+    <div class="collapse mt-3" id="collapseExample1">
       <div class="card card-body">
         <!-- CATEGORIES LIST -->
 

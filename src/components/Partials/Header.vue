@@ -1,10 +1,6 @@
 <template>
   <nav
-    class="
-      navbar navbar-expand-lg navbar-light
-      container-fluid
-      fw-bold
-    "
+    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold"
   >
     <router-link class="navbar-brand" to="/"
       ><img
@@ -101,11 +97,16 @@
 </template>
 
 <script>
+// import vClickOutside from "click-outside-vue3";
+
 export default {
   name: "Header",
+  // directives: {
+  //   clickOutside: vClickOutside.directive,
+  // },
   // data() {
   //   return {
-  //     currentPage: window.location.pathname,
+  //     isNavbarOpen: false,
   //   };
   // },
 
@@ -133,6 +134,10 @@ export default {
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
     },
+    // onClickOutside() {
+    //   document.querySelector(`#navbarNav`).classList.remove(`show`);
+      
+    // },
   },
 };
 </script>

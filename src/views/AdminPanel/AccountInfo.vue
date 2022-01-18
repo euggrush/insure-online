@@ -15,9 +15,13 @@
     <a :href="`mailto:${accountInfo.email}`">&nbsp;{{ accountInfo.email }}</a>
     <br />
     <span class="fw-bold text-decoration-underline">Cellphone: </span>
-    <a :href="`tel:${accountInfo.cellphone}`">&nbsp;{{accountInfo.cellphone}}</a><br>
+    <a :href="`tel:${accountInfo.cellphone}`"
+      >&nbsp;{{ accountInfo.cellphone }}</a
+    ><br />
     <span class="fw-bold text-decoration-underline">Telephone number: </span>
-    <a :href="`tel:${accountInfo.phoneNumber}`">&nbsp;{{accountInfo.phoneNumber}}</a><br>
+    <a :href="`tel:${accountInfo.phoneNumber}`"
+      >&nbsp;{{ accountInfo.phoneNumber }}</a
+    ><br />
     <span class="fw-bold text-decoration-underline">Marital Status: </span>
     <span>&nbsp;{{ accountInfo.maritalStatus }}</span> <br />
     <span class="fw-bold text-decoration-underline">Area & Postal Code: </span>
@@ -677,11 +681,16 @@ export default {
       this.isEdit = false;
     },
     editVehicle(vehicle, index) {
-      this.$store.dispatch(`CREATE_VEHICLE`, this.changeVehicleObj).then(
-        this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-        (this.isEdit = false)
-        // (this.vehicleInfo = {})
-      );
+      this.$store
+        .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          (this.isEdit = false)
+        )
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+        });
       console.log(index);
     },
     removePopup(vehicle, index) {

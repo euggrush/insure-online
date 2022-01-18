@@ -2,10 +2,10 @@
   <section class="container">
     <!-- ACCOUNTS RENDER -->
     <div class="d-flex justify-content-between align-items-start mt-3">
-      <h3>Accounts:</h3>
+      <h3 class="mb-0">Accounts:</h3>
       <!-- SEARCH -->
       <div class="search">
-        <div class="input-group mb-3">
+        <div class="input-group">
           <input
             type="text"
             class="form-control"
@@ -47,47 +47,23 @@
         </div>
       </div>
     </div>
-    <ul class="list-group">
-      <li
-        v-for="(account, index) in accountsList"
-        :key="index"
-        class="list-group-item d-flex justify-content-between shadow-lg"
-        :class="{ active: index == pickedAccountIndex }"
-        @click="pickAccount(account, index)"
-      >
-        <span>
-          {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
-        </span>
-
-        <button
-          type="button"
-          class="btn btn-info btn-sm"
-          @click="showAccountInfo(account, index)"
-        >
-          More...
-        </button>
-      </li>
-    </ul>
-
     <!-- CREATE NEW ACCOUNT -->
-    <div>
-      <button
-        class="btn btn-primary mt-5"
-        type="button"
-        data-bs-target="#collapseExample1"
-        aria-expanded="false"
-        aria-controls="collapseExample1"
-        :disabled="isBthDisabled"
-        @click="
-          () => {
-            showCreateAccount = !showCreateAccount;
-            validateForm();
-          }
-        "
-      >
-        Create account
-      </button>
-    </div>
+    <button
+      class="btn btn-primary create-user-btn"
+      type="button"
+      data-bs-target="#collapseExample1"
+      aria-expanded="false"
+      aria-controls="collapseExample1"
+      :disabled="isBthDisabled"
+      @click="
+        () => {
+          showCreateAccount = !showCreateAccount;
+          validateForm();
+        }
+      "
+    >
+      Create account
+    </button>
 
     <div
       class="collapse mt-3"
@@ -96,7 +72,7 @@
     >
       <div class="card card-body">
         <form
-          class="row needs-validation estimation-form mx-auto mt-5 pb-5"
+          class="row needs-validation estimation-form mx-auto mt-1 pb-5"
           novalidate
           @submit.prevent="createUserAccount"
         >
@@ -372,6 +348,27 @@
     </div>
 
     <!-- MODAL ACCOUNT INFO END -->
+    <ul class="list-group mt-3">
+      <li
+        v-for="(account, index) in accountsList"
+        :key="index"
+        class="list-group-item d-flex justify-content-between shadow-lg"
+        :class="{ active: index == pickedAccountIndex }"
+        @click="pickAccount(account, index)"
+      >
+        <span class="text-break">
+          {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
+        </span>
+
+        <button
+          type="button"
+          class="btn btn-info btn-sm"
+          @click="showAccountInfo(account, index)"
+        >
+          More...
+        </button>
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -560,11 +557,14 @@ li {
   cursor: pointer;
 }
 .account-modal {
-  margin-top: -10em;
+  margin-top: -13em;
   @include media-breakpoint-up(sm) {
     margin-top: -9em;
   }
   @include media-breakpoint-up(xl) {
+    margin-top: -8em;
+  }
+  @include media-breakpoint-up(xxl) {
     margin-top: -8em;
   }
 }
@@ -573,11 +573,32 @@ li {
 }
 .search {
   width: 140px;
+  margin-top: -18px;
   @include media-breakpoint-up(md) {
+    transform: translate(0px, 26px);
     width: 150px;
   }
   @include media-breakpoint-up(lg) {
     width: 180px;
+  }
+}
+.create-user-btn {
+  min-width: 12em !important;
+  margin-top: 8px;
+  @include media-breakpoint-up(sm) {
+    margin-top: 9px;
+  }
+  @include media-breakpoint-up(md) {
+    margin-top: 9px;
+  }
+  @include media-breakpoint-up(lg) {
+    margin-top: 9px;
+  }
+  @include media-breakpoint-up(xl) {
+    margin-top: 11px;
+  }
+  @include media-breakpoint-up(xxl) {
+    margin-top: 12px;
   }
 }
 input,
@@ -593,8 +614,12 @@ input::-webkit-input-placeholder {
     font-size: $font-size-medium;
   }
 }
-.btn-info,
 .btn-primary {
   min-width: 10em;
+}
+.btn-info {
+  @include media-breakpoint-up(md) {
+    min-width: 10em;
+  }
 }
 </style>
