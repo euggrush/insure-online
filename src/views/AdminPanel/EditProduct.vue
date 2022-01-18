@@ -88,8 +88,19 @@
               :placeholder="product.mainProductCost"
             />
           </div>
-
-          <button type="submit" class="btn btn-info">Submit</button>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="isRequiredCoverages"
+              id="flexCheckDefault"
+              :checked="product.isRequiredCoverages"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Coverages in this product are required (Recommended)
+            </label>
+          </div>
+          <button type="submit" class="btn btn-info mt-3">Submit</button>
         </form>
       </div>
     </div>
@@ -193,6 +204,7 @@
               v-model="coverageCost"
             />
           </div>
+
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <!-- SECOND FORM END -->
@@ -219,6 +231,8 @@ export default {
       mainProductName: ``,
       mainProductDescription: ``,
       cost: ``,
+      isRequiredCoverages: ``,
+
       isCategorySelected: false,
       mainProductId: ``,
       productInfo: {},
@@ -292,6 +306,7 @@ export default {
           mainProductId: product.mainProductId,
           mainProductName: this.mainProductName,
           mainProductDescription: this.mainProductDescription,
+          isRequiredCoverages: this.isRequiredCoverages,
           cost: this.cost,
         })
         .then(() => {

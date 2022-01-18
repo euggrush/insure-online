@@ -14,7 +14,7 @@
     >
       Create product
     </button>
-    <div class="collapse mt-3" id="collapseExample1">
+    <div v-show="showListItem" class="collapse mt-3" id="collapseExample1">
       <div class="card card-body">
         <!-- CATEGORIES LIST -->
 
@@ -73,10 +73,20 @@
               :disabled="isBtnDisabled"
             />
           </div>
-
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="isRequiredCoverages"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Coverages in this product are required (Recommended)
+            </label>
+          </div>
           <button
             type="submit"
-            class="btn btn-primary"
+            class="btn btn-primary mt-3"
             :disabled="isBtnDisabled"
           >
             Submit
@@ -176,6 +186,7 @@ export default {
       mainProductName: ``,
       mainProductDescription: ``,
       cost: ``,
+      isRequiredCoverages: ``,
       isCategorySelected: false,
       isProductToChangeSelected: false,
       mainProductId: ``,
@@ -223,6 +234,7 @@ export default {
           categoryId: this.productCategoryId,
           mainProductName: this.mainProductName,
           mainProductDescription: this.mainProductDescription,
+          isRequiredCoverages: this.isRequiredCoverages,
           cost: this.cost,
         })
         .then(() => {

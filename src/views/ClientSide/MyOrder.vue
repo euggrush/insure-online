@@ -88,7 +88,7 @@
                   id="flexSwitchCheckCheckedDisabled"
                   :value="subProduct.subProductId"
                   v-model="checkedSubProducts"
-                  :required="isCarCategorySelected"
+                  :required="isRequiredCoverages"
                 />
                 <label
                   class="form-check-label"
@@ -210,6 +210,7 @@ export default {
       shoNullEstimation: true,
       accountId: ``,
       carInsuranceCategory: ``,
+      isRequiredCoverages: false,
     };
   },
   computed: {
@@ -276,7 +277,11 @@ export default {
           `GET_SUB_PRODUCTS`,
           `?mainProductId=${this.selectedMainProduct}`
         )
-        .then((this.isSubProducts = true), (this.isMainProductSelected = true))
+        .then(
+          (this.isSubProducts = true),
+          (this.isMainProductSelected = true),
+          (this.isRequiredCoverages = true)
+        )
         .catch((err) => {
           this.isSubProducts = false;
           console.log(err);
