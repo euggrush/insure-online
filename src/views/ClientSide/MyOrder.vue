@@ -159,13 +159,6 @@
             </p>
           </div>
           <div class="modal-footer">
-            <!-- <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button> -->
             <button
               type="button"
               class="btn btn-primary"
@@ -254,6 +247,7 @@ export default {
       window.scrollTo(0, 0);
     },
     selectCategory() {
+      this.checkedSubProducts = [];
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
       this.isCarCategorySelected = false;
@@ -272,6 +266,7 @@ export default {
       );
     },
     selectMainProduct() {
+      this.checkedSubProducts = [];
       this.$store
         .dispatch(
           `GET_SUB_PRODUCTS`,

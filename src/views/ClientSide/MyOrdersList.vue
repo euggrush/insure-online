@@ -125,8 +125,16 @@
           <p>{{ order.vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
           <p>R{{ order.vehicleRetailValue }}</p>
-          <button type="button" class="btn btn-light btn-pdf">PDF File</button>
-          <div class="mt-3 mb-3">
+          <a
+            v-for="(file, index) in order.documents"
+            :key="index"
+            :href="`${FILE_URL}${file}`"
+            class="btn btn-light btn-pdf text-end"
+            target="_blank"
+          >
+            Banking Details
+          </a>
+          <div class="mt-3 mb-3" v-if="order.documents.length == 0">
             <label for="formFile" class="form-label fw-bold"
               >Add your banking details:</label
             >
@@ -135,7 +143,7 @@
               type="file"
               id="formFile"
               name="asset"
-              @change="uploadFile($event)"
+              @change="uploadFile($event, order.orderId)"
             />
           </div>
           <!-- MODAL ERROR -->
@@ -180,15 +188,16 @@
 
 <script>
 const dayjs = require("dayjs");
-
+import { FILE_URL } from "../../constants";
 export default {
   data() {
     return {
       myId: ``,
       isOrderModal: false,
-      isFileUploaded: ``,
       errMsg: ``,
       isUploadError: false,
+      documentsArray: [],
+      FILE_URL: FILE_URL,
     };
   },
   computed: {
@@ -202,24 +211,40 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    uploadFile(event) {
+    uploadFile(event, id) {
       const asset = event.target.files[0];
       const formData = new FormData();
       formData.append(
         `meta`,
-        JSON.stringify({ fileType: `photo`, description: `` })
+        JSON.stringify({ fileType: `document`, description: `` })
       );
       formData.append("asset", asset);
       this.$store.dispatch(`UPLOAD`, formData).then(() => {
         setTimeout(() => {
-          if (this.$store.state.uploaded_file.data.state == `fail`) {
-            this.isFileUploaded = false;
+          if (
+            this.$store.state.uploaded_file.data &&
+            this.$store.state.uploaded_file.data.state == `fail`
+          ) {
             this.isUploadError = true;
             this.errMsg = this.$store.state.uploaded_file.data.message;
-          } else {
-            this.isFileUploaded = true;
           }
-          console.log(this.isFileUploaded);
+          if (this.$store.state.uploaded_file.state == `ok`) {
+            this.documentsArray.push(this.$store.state.uploaded_file.path);
+            setTimeout(() => {
+              this.$store
+                .dispatch(`CREATE_ORDER`, {
+                  orderId: id,
+                  documents: this.documentsArray,
+                })
+                .then(() => {
+                  this.getOrder(id);
+                })
+                .catch((err) => console.log(err))
+                .then(() => {
+                  this.getOrder(id);
+                });
+            }, 1000);
+          }
         }, 1000);
       });
     },
@@ -247,6 +272,7 @@ export default {
   min-width: 10em;
 }
 .btn-pdf {
+  min-width: 11em;
   border-radius: 0;
   background-image: url("../../assets/img/icon-pdf.png");
   background-size: 27px 27px;

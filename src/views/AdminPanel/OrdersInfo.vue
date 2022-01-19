@@ -42,12 +42,7 @@
               >
               <span>{{ order.vehicleRetailValue }}</span>
             </div>
-            <!-- <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Category:</span
-              >
-              <span>{{ order.categoryName }}</span>
-            </div> -->
+
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product:</span
@@ -186,12 +181,16 @@
           >
           <span>R{{ order.vehicleRetailValue }}</span
           ><br />
-          <!-- <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-            >Supported documents:&nbsp;</span
-          > -->
-          <button type="button" class="btn btn-light btn-pdf mt-3">
-           Banking Details
-          </button>
+
+          <a
+            v-for="(file, index) in order.documents"
+            :href="`${FILE_URL}${file}`"
+            :key="index"
+            class="btn btn-light btn-pdf mt-3"
+            target="_blank"
+          >
+            Banking Details
+          </a>
 
           <div class="row row-cols-auto">
             <div class="col">
@@ -223,6 +222,7 @@
 
 <script>
 const dayjs = require("dayjs");
+import { FILE_URL } from "../../constants";
 
 export default {
   data() {
@@ -230,6 +230,7 @@ export default {
       isAdjust: false,
       adjustedCost: ``,
       isOrderModal: false,
+      FILE_URL: FILE_URL,
     };
   },
   props: {
