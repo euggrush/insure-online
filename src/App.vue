@@ -82,4 +82,25 @@ h6 {
     font-size: $font-size-xxl;
   }
 }
+
+.gradient {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+.gradient:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  background-image: linear-gradient(to bottom, transparent, #fcfcfc);
+  opacity: 0.8;
+}
+.btn {
+  border-radius: 50rem;
+}
 </style>

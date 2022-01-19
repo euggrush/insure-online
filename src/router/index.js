@@ -1,32 +1,38 @@
 import {
   createRouter,
-  createWebHistory
+  createWebHashHistory
 } from 'vue-router'
 import {
   store
 } from '../store/index.js'
 import Home from '../views/Home.vue'
 import AccountLogin from '../views/AccountAuth/AccountLogin.vue'
-import AccountRegistration from '../views/AccountAuth/AccountRegistration.vue'
-import AccountPage from '../views/UserPage/UserPage.vue'
 import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
 import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
 import NotFound from '../components/Errors/404.vue';
-
+import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
+import MyAccount from '../views/ClientSide/MyAccount.vue'
+import MyOrder from '../views/ClientSide/MyOrder.vue';
 
 const routes = [{
     path: '/login',
     name: 'Login',
-    component: AccountLogin
-  },
-  {
-    path: '/signup',
-    component: AccountRegistration
+    component: AccountLogin,
+    meta: {
+      requiresAuth: false,
+      adminAuth: false,
+      residentAuth: false
+    }
   },
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: false,
+      adminAuth: false,
+      residentAuth: false
+    }
   },
   {
     path: '/our-products',
@@ -34,7 +40,16 @@ const routes = [{
   },
   {
     path: '/my-account',
-    component: AccountPage,
+    component: MyAccount,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      residentAuth: true
+    }
+  },
+  {
+    path: '/my-order',
+    component: MyOrder,
     meta: {
       requiresAuth: true,
       adminAuth: false,
@@ -55,13 +70,17 @@ const routes = [{
     component: NotFound
   },
   {
-    path: "/:catchAll(.*)",
+    path: '/:catchAll(.*)',
     redirect: '/404'
   },
+  {
+    path: "/registration",
+    component: QuoteOnline
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 

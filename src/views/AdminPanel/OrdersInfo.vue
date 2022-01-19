@@ -1,5 +1,5 @@
 <template>
-  <section class="order mt-5">
+  <section class="order mt-3">
     <ul class="list-group">
       <li
         v-for="(order, index) in ordersList"
@@ -42,12 +42,7 @@
               >
               <span>{{ order.vehicleRetailValue }}</span>
             </div>
-            <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Category:</span
-              >
-              <span>{{ order.categoryName }}</span>
-            </div>
+
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product:</span
@@ -59,6 +54,15 @@
                 >Total:</span
               >
               <span>R{{ order.totalCost }}</span>
+            </div>
+            <div
+              v-if="order.adjustedCost > 0"
+              class="col border-bottom border-start"
+            >
+              <span class="d-block fw-bold text-decoration-underline fst-italic"
+                >Adjusted:</span
+              >
+              <span class="fst-italic">R{{ order.adjustedCost }}</span>
             </div>
             <div class="col">
               <button
@@ -73,7 +77,11 @@
         </div>
         <div
           v-if="isOrderModal == order.orderId"
-          class="order-modal w-100 h-100 p-3 border border-info"
+          class="order-modal w-100 h-100 p-3 border"
+          :class="{
+            'border-info': order.orderStatus == `approved`,
+            'border-danger': order.orderStatus == `rejected`,
+          }"
         >
           <button
             type="button"
@@ -82,48 +90,130 @@
             @click="closeOrderModal"
           ></button>
           <h5>Order details:</h5>
-          <span class="fw-bold text-decoration-underline">Product:</span>
-          <p>{{ order.mainProductName }}</p>
-          <h6 class="fw-bold text-decoration-underline">Coverages Included:</h6>
-          <p v-for="(sub, index) in order.subProducts" :key="index">
-            <span>{{ sub.subProductName }}</span>
-          </p>
-          <span class="fw-bold text-decoration-underline">Total:</span>
-          <p>R{{ order.totalCost }}</p>
-          <span class="fw-bold text-decoration-underline">Order created:</span>
-          <p>{{ getDate(order.orderCreated) }}</p>
-          <span class="fw-bold text-decoration-underline">Order status:</span>
-          <p
-            class="fw-bold text-uppercase"
+          <span class="fw-bold text-decoration-underline">Product:&nbsp;</span>
+          <span>{{ order.mainProductName }}</span
+          ><br />
+          <span class="d-inline-block mt-1 fw-bold text-decoration-underline"
+            >The Minimum Premium is:&nbsp;</span
+          >
+          <span>R{{ order.mainProductCost }}</span>
+          <h6 class="fw-bold text-decoration-underline mt-3">
+            Coverages Included:
+          </h6>
+          <ul class="list-group">
+            <li
+              v-for="(sub, index) in order.subProducts"
+              :key="index"
+              class="list-group-item"
+            >
+              <span>{{ sub.subProductName }}&nbsp;</span>
+              <span class="fw-bold">R{{ sub.subProductCost }}</span>
+            </li>
+          </ul>
+
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Total:&nbsp;</span
+          >
+          <span>R{{ order.totalCost }}</span
+          ><br />
+          <span
+            v-if="order.adjustedCost > 0"
+            class="d-inline-block mt-3 mb-1 fw-bold text-decoration-underline"
+            >Adjusted:&nbsp;</span
+          >
+          <span v-if="order.adjustedCost > 0">R{{ order.adjustedCost }}</span
+          ><br />
+          <div v-if="isAdjust" class="input-group mt-3 adjust-input">
+            <input
+              type="number"
+              class="form-control"
+              aria-label="cost
+              "
+              aria-describedby="button-addon2"
+              :placeholder="order.adjustedCost"
+              v-model="adjustedCost"
+            />
+            <button
+              class="btn btn-outline-secondary adjust-btn"
+              type="button"
+              id="button-addon2"
+              @click="adjustOrderCost(order)"
+            >
+              Ok
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary mt-3"
+            @click="toggleAdjust()"
+          >
+            Adjust Premium
+          </button>
+          <br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Created:&nbsp;</span
+          >
+          <span>{{ getDate(order.orderCreated) }}</span
+          ><br />
+          <span class="fw-bold text-decoration-underline">Status:&nbsp;</span>
+          <span
+            class="d-inline-block mt-3 fw-bold text-uppercase"
             :class="{
-              'text-warning': order.orderStatus == `approved`,
+              'text-info': order.orderStatus == `approved`,
               'text-danger': order.orderStatus == `rejected`,
             }"
           >
-            {{ order.orderStatus }}
-          </p>
-          <span class="fw-bold text-decoration-underline">Customer:</span>
-          <p>{{ order.firstName }}&nbsp;{{ order.lastName }}</p>
-          <span class="fw-bold text-decoration-underline">Vehicle:</span>
-          <p>{{ order.vehicleDetails }}</p>
-          <span class="fw-bold text-decoration-underline">Vehicle value:</span>
-          <p>R{{ order.vehicleRetailValue }}</p>
-          <button
-            type="button"
-            class="btn btn-primary"
-            :disabled="order.orderStatus == `approved`"
-            @click="approveOrder(order)"
+            {{ order.orderStatus }} </span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Customer:&nbsp;</span
           >
-            Approve
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger ms-3"
-            :disabled="order.orderStatus == `rejected`"
-            @click="rejectOrder(order)"
+          <span>{{ order.firstName }}&nbsp;{{ order.lastName }}</span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Vehicle:&nbsp;</span
           >
-            Reject
-          </button>
+          <span>{{ order.vehicleDetails }}</span
+          ><br />
+          <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
+            >Value:&nbsp;</span
+          >
+          <span>R{{ order.vehicleRetailValue }}</span
+          ><br />
+
+          <a
+            v-for="(file, index) in order.documents"
+            :href="`${FILE_URL}${file}`"
+            :key="index"
+            class="btn btn-light btn-pdf mt-3"
+            target="_blank"
+          >
+            Banking Details
+          </a>
+
+          <div class="row row-cols-auto">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-primary mt-3"
+                :disabled="order.orderStatus == `approved`"
+                @click="approveOrder(order)"
+              >
+                Approve
+              </button>
+            </div>
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-danger mt-3"
+                :disabled="order.orderStatus == `rejected`"
+                @click="rejectOrder(order)"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -132,11 +222,15 @@
 
 <script>
 const dayjs = require("dayjs");
+import { FILE_URL } from "../../constants";
 
 export default {
   data() {
     return {
+      isAdjust: false,
+      adjustedCost: ``,
       isOrderModal: false,
+      FILE_URL: FILE_URL,
     };
   },
   props: {
@@ -147,7 +241,7 @@ export default {
   },
   watch: {
     componentRerenderKey() {
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
   },
   computed: {
@@ -159,9 +253,12 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_ORDERS`, ``);
+    this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
@@ -172,7 +269,7 @@ export default {
     },
     closeOrderModal() {
       this.isOrderModal = false;
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
     },
     approveOrder(order) {
       this.$store
@@ -180,6 +277,8 @@ export default {
           orderId: order.orderId,
           orderStatus: `approved`,
         })
+        .then(this.closeOrderModal, this.scrollToTop())
+        .catch((err) => alert(err))
         .then(this.closeOrderModal);
     },
     rejectOrder(order) {
@@ -188,7 +287,30 @@ export default {
           orderId: order.orderId,
           orderStatus: `rejected`,
         })
+        .then(this.closeOrderModal, this.scrollToTop())
+        .catch((err) => alert(err))
         .then(this.closeOrderModal);
+    },
+    toggleAdjust() {
+      this.isAdjust = !this.isAdjust;
+    },
+    adjustOrderCost(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          adjustedCost: this.adjustedCost,
+        })
+        .then(() => {
+          this.getOrder(order.orderId);
+          this.isAdjust = false;
+          this.adjustedCost = ``;
+        })
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.getOrder(order.orderId);
+          this.isAdjust = false;
+          this.adjustedCost = ``;
+        });
     },
   },
 };
@@ -196,7 +318,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  min-width: 5.5em;
+  min-width: 12em;
 }
 
 .order-modal {
@@ -207,5 +329,23 @@ export default {
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
+.adjust-input {
+  width: 11em;
+}
+.adjust-btn {
+  min-width: auto;
+}
+br {
+  display: block;
+  content: "";
+  margin-top: 0;
+}
+.btn-pdf {
+  border-radius: 0;
+  background-image: url("../../assets/img/icon-pdf.png");
+  background-size: 27px 27px;
+  background-repeat: no-repeat;
+  background-position: 5% center;
 }
 </style>

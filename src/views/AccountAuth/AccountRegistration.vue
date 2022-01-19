@@ -1,6 +1,6 @@
 <template>
-  <section class="container-fluid reg-wrap pt-5 pb-5">
-    <div class="signup-form">
+  <section class="container-fluid reg-wrap">
+    <div class="signup-form pt-5">
       <form autocomplete="off" @submit.prevent="signUp">
         <h2>Registration</h2>
         <p>Please fill in this form to create an account!</p>
@@ -95,7 +95,7 @@ export default {
 
 <style lang="scss" scoped>
 .reg-wrap {
-  min-height: calc(100vh - 7em);
+  min-height: calc(100vh - 7.3em);
   color: #fff;
   background-image: url($mainBg);
   background-repeat: no-repeat;

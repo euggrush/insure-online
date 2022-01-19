@@ -1,207 +1,21 @@
 <template>
-  <section class="container">
-    <h3>Account Details:</h3>
-    <span class="fw-bold text-decoration-underline">ID Number: </span>
-    <span>&nbsp;{{ accountInfo.clientIdNumber }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Account username: </span>
-    <span>&nbsp;{{ accountInfo.username }}</span> <br />
-    <span class="fw-bold text-decoration-underline">First: </span>
-    <span>&nbsp;{{ accountInfo.firstName }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Last: </span>
-    <span>&nbsp;{{ accountInfo.lastName }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Age: </span>
-    <span>&nbsp;{{ accountInfo.age }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Email: </span>
-    <a :href="`mailto:${accountInfo.email}`">&nbsp;{{ accountInfo.email }}</a>
-    <br />
-    <span class="fw-bold text-decoration-underline">Cellphone: </span>
-    <a :href="`tel:${accountInfo.cellphone}`"
-      >&nbsp;{{ accountInfo.cellphone }}</a
-    ><br />
-    <span class="fw-bold text-decoration-underline">Telephone number: </span>
-    <a :href="`tel:${accountInfo.phoneNumber}`"
-      >&nbsp;{{ accountInfo.phoneNumber }}</a
-    ><br />
-    <span class="fw-bold text-decoration-underline">Marital Status: </span>
-    <span>&nbsp;{{ accountInfo.maritalStatus }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Area & Postal Code: </span>
-    <span>&nbsp;{{ accountInfo.address }}</span> <br />
-    <span class="fw-bold text-decoration-underline"
-      >Country Of Residence:
-    </span>
-    <span>&nbsp;{{ accountInfo.countryOfResidence }}</span> <br />
-    <span class="fw-bold text-decoration-underline"
-      >Year of issue driver license:
-    </span>
-    <span>&nbsp;{{ accountInfo.yearOfIssueDriverLicense }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Claims history: </span>
-    <span>&nbsp;{{ accountInfo.claimsHistory }}</span> <br />
-    <span class="fw-bold text-decoration-underline">Previous Insurer: </span>
-    <span>&nbsp;{{ accountInfo.previousInsurer }}</span> <br />
-    <p>
-      <button
-        class="btn btn-primary mt-3"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseWidthExample1"
-        aria-expanded="false"
-        aria-controls="collapseWidthExample1"
-      >
-        Change Account
-      </button>
-    </p>
-    <div>
-      <div class="collapse collapse-horizontal" id="collapseWidthExample1">
-        <form
-          @submit.prevent="changeAccount()"
-          class="card card-body"
-          style="width: 300px"
-        >
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >First name:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.firstName"
-              v-model="changeUserObj.firstName"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Last name:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.lastName"
-              v-model="changeUserObj.lastName"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Date of birth:</span
-            >
-            <input class="form-control" type="date" v-model="dateOfBirth" />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Address:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.address"
-              v-model="changeUserObj.address"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Cellphone:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.cellphone"
-              v-model="changeUserObj.cellphone"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Home phone:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.phoneNumber"
-              v-model="changeUserObj.phoneNumber"
-            />
-          </label>
-          <select
-            class="form-select mt-3"
-            aria-label="Default select example"
-            v-model="changeUserObj.maritalStatus"
-          >
-            <option value="" selected>Select marital status</option>
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-          </select>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Country Of Residence:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.countryOfResidence"
-              v-model="changeUserObj.countryOfResidence"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Previous Insurer:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.previousInsurer"
-              v-model="changeUserObj.previousInsurer"
-            />
-          </label>
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Year of issue driver license:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.yearOfIssueDriverLicense"
-              v-model="changeUserObj.yearOfIssueDriverLicense"
-            />
-          </label>
-          <!-- <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Overnight parking vehicle:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.overnightParkingVehicle"
-              v-model="changeUserObj.overnightParkingVehicle"
-            />
-          </label> -->
-          <label>
-            <span class="fw-bold text-decoration-underline lh-lg"
-              >Claims history:</span
-            >
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="accountInfo.claimsHistory"
-              v-model="changeUserObj.claimsHistory"
-            />
-          </label>
-          <button type="submit" class="btn btn-primary mt-3">Submit</button>
-        </form>
-      </div>
-    </div>
-    <h4 class="mt-3">Vehicles information:</h4>
-    <p class="m-0 p-0">
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseWidthExample"
-        aria-expanded="false"
-        aria-controls="collapseWidthExample"
-      >
-        <span>Add vehicle</span>
-      </button>
-    </p>
+  <section class="my-vehicles">
+    <h3 class="mt-3 fw-bold">Vehicles information:</h3>
+
+    <button
+      class="btn btn-primary mt-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseWidthExample"
+      aria-expanded="false"
+      aria-controls="collapseWidthExample"
+    >
+      <span>Add vehicle</span>
+    </button>
+
     <!-- CREATE VEHICLE FORN -->
     <div>
-      <div class="collapse collapse-horizontal" id="collapseWidthExample">
+      <div class="collapse collapse-horizontal mt-3" id="collapseWidthExample">
         <div class="card card-body" style="width: 300px">
           <form @submit.prevent="createVehicle">
             <div class="mb-3">
@@ -330,10 +144,11 @@
       </div>
     </div>
     <!-- CREATE VEHICLE FORN END -->
+    <!-- VEHICLES LIST -->
     <ul class="list-group position-relative">
       <li
-        v-for="(vehicle, index) in accountInfo.vehicles"
-        :key="index"
+        v-for="(vehicle, index) in myVehicles"
+        :key="vehicle.vehicleId"
         class="list-group-item mt-3"
         v-show="vehicle.deleted == false"
       >
@@ -362,20 +177,32 @@
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>
         <span>&nbsp;{{ vehicle.useCase }}</span> <br />
-        <button
-          type="button"
-          class="btn btn-secondary mt-3 me-3"
-          @click="openEditVehicle(vehicle, index)"
-        >
-          Edit vehicle
-        </button>
-        <button
-          @click="removePopup(vehicle, index)"
-          type="button"
-          class="btn btn-danger mt-3"
-        >
-          Remove vehicle
-        </button>
+        <div class="row row-cols-auto">
+          <div class="col col-lg-2">
+            <button
+              type="button"
+              class="btn btn-secondary mt-3"
+              @click="openEditVehicle(vehicle, index)"
+            >
+              Edit vehicle
+            </button>
+          </div>
+          <div class="col col-lg-2">
+            <button
+              @click="removePopup(vehicle, index)"
+              type="button"
+              class="btn btn-danger mt-3"
+            >
+              Remove vehicle
+            </button>
+          </div>
+          <div class="col col-lg-2">
+            <router-link to="/my-order" type="button" class="btn btn-info mt-3">
+              Insure vehicle
+            </router-link>
+          </div>
+        </div>
+
         <!-- EDIT VEHICLE FORM -->
         <form
           class="
@@ -582,17 +409,11 @@
 </template>
 
 <script>
-const getTimeStamp = (date) => {
-  let myDate = date;
-  myDate = myDate.split("-");
-  const timestamp = +new Date(
-    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
-  ).getTime();
-  return timestamp;
-};
 export default {
   data() {
     return {
+      accountId: ``,
+      changeVehicleObj: {},
       isEdit: false,
       isRemovePopup: false,
       vehicleInfo: {
@@ -606,60 +427,34 @@ export default {
         trackingDevice: ``,
         useCase: ``,
       },
-      changeVehicleObj: {},
-      dateOfBirth: ``,
-      changeUserObj: {
-        accountId: ``,
-        firstName: ``,
-        lastName: ``,
-        birthDate: ``,
-        address: ``,
-        cellphone: ``,
-        phoneNumber: ``,
-        maritalStatus: ``,
-        countryOfResidence: ``,
-        previousInsurer: ``,
-        yearOfIssueDriverLicense: ``,
-        overnightParkingVehicle: ``,
-        claimsHistory: ``,
-      },
     };
   },
   props: {
-    accountId: {
-      type: String,
-      default: ``,
+    myProps: {
+      type: Object,
+      default: () => {},
     },
   },
+
   computed: {
-    accountInfo() {
-      return this.$store.state.users_array.accounts[0];
+    myVehicles() {
+      return this.$store.state.vehicles.vehicles;
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+    this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
-    changeAccount() {
-      this.changeUserObj.accountId = this.accountId;
-      this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
-      this.$store
-        .dispatch(`MODIFY_USER`, this.changeUserObj)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-        )
-        .catch((err) => alert(err));
-    },
     createVehicle() {
-      this.vehicleInfo.accountId = this.accountId;
+      this.accountId = this.myProps.accountId;
+      this.vehicleInfo.accountId = this.myProps.accountId;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.vehicleInfo = {})
-        )
-        .catch((error) => alert(error));
+        .then(this.$store.dispatch(`GET_VEHICLES`, ``), (this.vehicleInfo = {}))
+        .catch((error) => alert(error))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+        });
     },
     openEditVehicle(vehicle, index) {
       this.changeVehicleObj = {
@@ -683,13 +478,10 @@ export default {
     editVehicle(vehicle, index) {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.isEdit = false)
-        )
+        .then(this.$store.dispatch(`GET_VEHICLES`, ``), (this.isEdit = false))
         .catch((err) => console.log(err))
         .then(() => {
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+          this.$store.dispatch(`GET_VEHICLES`, ``);
         });
       console.log(index);
     },
@@ -708,9 +500,13 @@ export default {
           deleted: true,
         })
         .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          this.$store.dispatch(`GET_VEHICLES`, ``),
           (this.isRemovePopup = false)
-        );
+        )
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+        });
       console.log(index);
     },
   },

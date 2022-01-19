@@ -4,7 +4,7 @@
     <ul class="list-group mt-3">
       <li
         v-for="(subProduct, index) in subProductsList"
-        :key="index"
+        :key="subProduct.subProductId"
         class="list-group-item"
         :class="{ active: index === pickedSubProductIndex }"
         @click="pickSubProduct(subProduct, index)"
@@ -242,14 +242,24 @@ export default {
       subProductId: ``,
       subProductDescription: ``,
       cost: ``,
+      componentKey: 0,
     };
   },
+  watch: {
+    componentRerenderKey() {
+      this.$store.dispatch(`GET_SUB_PRODUCTS`, ``);
+      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+    },
+  },
   computed: {
+    componentRerenderKey() {
+      return this.componentKey;
+    },
     subProductsList() {
-      return this.$store.state.sub_products.subProducts;
+      return this.$store.state.sub_products.subProducts || [];
     },
     productsList() {
-      return this.$store.state.main_products.mainProducts;
+      return this.$store.state.main_products.mainProducts || [];
     },
   },
   mounted() {
@@ -271,7 +281,8 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          this.$store.dispatch(`GET_SUB_PRODUCTS`);
+          // this.$store.dispatch(`GET_SUB_PRODUCTS`);
+          this.componentKey += 1;
           this.subProductName = ``;
           this.subProductDescription = ``;
           this.cost = ``;

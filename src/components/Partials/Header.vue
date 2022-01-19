@@ -1,7 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
+  <nav
+    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold"
+  >
     <router-link class="navbar-brand" to="/"
-      ><img src="../../assets/logo.png" width="50" height="50" alt="logo"
+      ><img
+        src="../../assets/tuffstuff_logo.png"
+        alt="logo"
+        class="rounded-circle"
     /></router-link>
     <button
       class="navbar-toggler"
@@ -15,7 +20,46 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav w-100">
+      <ul class="navbar-nav ms-auto">
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/">Home</router-link>
+        </li>
+
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/">About</router-link>
+        </li>
+        <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item me-5"
+        >
+          <router-link class="nav-link" to="/registration">Sign Up</router-link>
+        </li>
+        <!-- <li
+          v-if="
+            this.$store.state.status === '' ||
+            this.$store.state.status === 'error'
+          "
+          class="nav-item"
+        >
+          <router-link class="nav-link text-white" to="/our-products"
+            >Our Products</router-link
+          >
+        </li> -->
         <li
           v-if="
             this.$store.state.status === '' ||
@@ -23,20 +67,13 @@
           "
           class="nav-item"
         >
-          <router-link class="nav-link" to="/our-products"
-            >Our Products</router-link
+          <router-link
+            to="/login"
+            class="btn btn-warning login-btn rounded-pill"
+            >Login</router-link
           >
         </li>
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item active"
-        >
-          <router-link to="/login" class="nav-link">Login</router-link>
-        </li>
-        <li
+        <!-- <li
           v-if="
             this.$store.state.status === '' ||
             this.$store.state.status === 'error'
@@ -44,13 +81,10 @@
           class="nav-item"
         >
           <router-link class="nav-link" to="/signup">Registration</router-link>
-        </li>
-        <li
-          v-if="this.$store.state.status === 'success'"
-          class="nav-item logout-btn"
-        >
+        </li> -->
+        <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
-            class="nav-link border-0 bg-transparent fw-bold"
+            class="logout-btn btn btn-warning rounded-pill"
             type="button"
             @click="logout"
           >
@@ -63,20 +97,47 @@
 </template>
 
 <script>
+// import vClickOutside from "click-outside-vue3";
+
 export default {
   name: "Header",
-  data() {
-    return {
-      currentPage: window.location.pathname,
-    };
-  },
+  // directives: {
+  //   clickOutside: vClickOutside.directive,
+  // },
+  // data() {
+  //   return {
+  //     isNavbarOpen: false,
+  //   };
+  // },
+
+  // created() {
+  //   window.addEventListener("scroll", this.handleScroll);
+  // },
+  // unmounted() {
+  //   window.removeEventListener("scroll", this.handleScroll);
+  // },
   methods: {
+    // handleScroll() {
+    //   const navbarCollapsible = document.body.querySelector("#mainNav");
+    //   if (!navbarCollapsible) {
+    //     return;
+    //   }
+    //   if (window.scrollY === 0) {
+    //     navbarCollapsible.classList.remove("navbar-shrink");
+    //   } else {
+    //     navbarCollapsible.classList.add("navbar-shrink");
+    //   }
+    // },
     logout() {
       this.$store
         .dispatch("LOGOUT")
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
     },
+    // onClickOutside() {
+    //   document.querySelector(`#navbarNav`).classList.remove(`show`);
+      
+    // },
   },
 };
 </script>
@@ -84,17 +145,90 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   min-height: 4em;
-  opacity: 0.8;
+  // opacity: 0.8;
+  // outline: solid 4px orangered;
+}
+.btn {
+  min-width: 8em;
+  font-weight: bold;
+}
+.login-btn,
+.logout-btn {
+  min-width: 10em;
+  @include media-breakpoint-up(lg) {
+    margin: 0 2em 0 4em;
+  }
 }
 .logout-btn {
-  min-width: 6em;
-  margin: 0px 0px 0px auto;
   background-image: url("../../assets/img/exit.svg");
-  background-size: 30px 30px;
+  background-size: 27px 27px;
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 95% center;
 }
-// #navbarNav {
-//   outline: solid 3px red;
-// }
+#mainNav {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+#mainNav .navbar-brand {
+  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  color: #212529;
+}
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: #6c757d;
+  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
+}
+#mainNav .navbar-nav .nav-item .nav-link:hover,
+#mainNav .navbar-nav .nav-item .nav-link:active {
+  color: #f4623a;
+}
+#mainNav .navbar-nav .nav-item .nav-link.active {
+  color: #f4623a !important;
+}
+@media (min-width: 992px) {
+  #mainNav {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  #mainNav .navbar-brand {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  #mainNav .navbar-brand:hover {
+    color: #fff;
+  }
+  #mainNav .navbar-nav .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0 1rem;
+  }
+  #mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: #fff;
+  }
+  #mainNav .navbar-nav .nav-item:last-child .nav-link {
+    padding-right: 0;
+  }
+  #mainNav.navbar-shrink {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #f4623a;
+  }
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
+    color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
+    color: #f4623a;
+  }
+}
 </style>

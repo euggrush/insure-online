@@ -18,7 +18,7 @@ let ls = new SecureLS({
 import {
     BASE_URL
 } from '../constants';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const store = new Vuex.Store({
     state: {
@@ -33,7 +33,14 @@ export const store = new Vuex.Store({
         estimations: [],
         current_estimation: [],
         orders: [],
-        current_order: []
+        current_order: [],
+        new_user: [],
+        vehicles: [],
+        modal_popup: {
+            isModal: false,
+            msg: ``
+        },
+        uploaded_file: []
     },
     plugins: [
         createLogger(),
@@ -92,6 +99,19 @@ export const store = new Vuex.Store({
         },
         SET_CURRENT_ORDER(state, payload) {
             state.current_order = payload;
+        },
+        SET_NEW_USER(state, payload) {
+            state.new_user = payload;
+        },
+        SET_VEHICLES(state, payload) {
+            state.vehicles = payload;
+        },
+        SET_MODAL(state, payload) {
+            state.modal_popup.isModal = payload.isModal;
+            state.modal_popup.msg = payload.msg;
+        },
+        SET_UPLOADED_FILE(state, payload) {
+            state.uploaded_file = payload;
         }
     },
     actions: {
@@ -116,7 +136,7 @@ export const store = new Vuex.Store({
                             user,
                             role
                         });
-
+                        commit(`SET_ORDERS`, []);
                         resolve(resp);
                     })
                     .catch(err => {
@@ -176,7 +196,13 @@ export const store = new Vuex.Store({
         CREATE_SUB_PRODUCT: async (context, payload) => {
             await Axios.post(`${BASE_URL}/subProducts`, payload);
         },
-        CREATE_VEHICLE: async (content, payload) => {
+        GET_VEHICLES: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/vehicles${payload}`);
+            context.commit(`SET_VEHICLES`, data);
+        },
+        CREATE_VEHICLE: async (context, payload) => {
             await Axios.post(`${BASE_URL}/vehicles`, payload);
         },
         GET_ESTIMATIONS: async (context, payload) => {
@@ -206,6 +232,26 @@ export const store = new Vuex.Store({
                     context.commit(`SET_CURRENT_ORDER`, data);
                 }
             )
+        },
+        CREATE_USER: async (context, payload) => {
+            Axios.post(`${BASE_URL}/accounts`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_NEW_USER`, data);
+                }
+            ).catch((err) => {
+                context.commit(`SET_NEW_USER`, err);
+            })
+        },
+        UPLOAD: async (context, payload) => {
+            Axios.post(`${BASE_URL}/assets?act=upload`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_UPLOADED_FILE`, data);
+                }
+            ).catch(err => {
+                context.commit(`SET_UPLOADED_FILE`, err.response);
+            })
         }
     },
 });
