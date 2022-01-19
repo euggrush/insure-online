@@ -353,8 +353,6 @@
         v-for="(account, index) in accountsList"
         :key="index"
         class="list-group-item d-flex justify-content-between shadow-lg"
-        :class="{ active: index == pickedAccountIndex }"
-        @click="pickAccount(account, index)"
       >
         <span class="text-break">
           {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
@@ -504,10 +502,7 @@ export default {
         });
       }
     },
-    pickAccount(account, index) {
-      this.pickedAccountIndex = index;
-      this.pickedAccountInfo = account;
-    },
+   
     showAccountInfo(account, index) {
       this.showCreateAccount = false;
       this.isInfo = true;
@@ -619,7 +614,7 @@ input::-webkit-input-placeholder {
 }
 .btn-info {
   @include media-breakpoint-up(md) {
-    min-width: 10em;
+    min-width: 12em;
   }
 }
 </style>
