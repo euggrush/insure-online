@@ -1,7 +1,7 @@
 <template>
   <section class="container my-account pb-5">
     <router-link to="/my-order" class="btn btn-info btn-lg mt-5"
-      >Get Insurance</router-link
+      >Insure</router-link
     >
 
     <div class="row mt-5 my-account_info">
@@ -277,6 +277,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-info {
+  min-width: 8em;
+}
 .my-account {
   min-height: calc(100vh - 10em);
 }
