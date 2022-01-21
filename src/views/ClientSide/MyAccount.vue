@@ -6,22 +6,26 @@
 
     <div class="row mt-5 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <img
-          :src="`${FILE_URL}${avatar}`"
-          alt="avatar"
-          class="img user-avatar rounded-circle"
-        />
         <div class="mt-3 mb-3">
-          <label for="formFile" class="form-label fw-bold"
-            >Add your avatar</label
+          <label
+            for="formFile"
+            class="form-label fw-bold user-avatar-wrap rounded-circle"
           >
-          <input
-            class="form-control"
-            type="file"
-            id="formFile"
-            name="asset"
-            @change="uploadAvatar($event)"
-          />
+            <img
+              :src="`${FILE_URL}${avatar}`"
+              alt="avatar"
+              class="img user-avatar-photo rounded-circle"
+              width="100"
+              height="100"
+            />
+            <input
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="uploadAvatar($event)"
+              v-show="showInput"
+            />
+          </label>
         </div>
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
@@ -240,7 +244,7 @@ export default {
   data() {
     return {
       FILE_URL: FILE_URL,
-
+      showInput: false,
       avatar: `https://i.ibb.co/VC7PVnD/vector-unisex-avatar-468.png`,
       dateOfBirth: ``,
       accountId: ``,
@@ -341,10 +345,10 @@ export default {
 li {
   margin-bottom: 10px;
 }
-.user-avatar {
+.user-avatar-wrap {
   width: 290px;
   height: 290px;
-  object-fit: cover;
+  cursor: pointer;
   @include media-breakpoint-up(sm) {
     width: 180px;
     height: 180px;
@@ -362,5 +366,20 @@ li {
     width: 300px;
     height: 300px;
   }
+}
+.user-avatar-wrap:hover {
+  outline: solid 1px $mainBlue;
+  background-image: url("../../assets/img/icon-change-avatar.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+}
+.user-avatar-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user-avatar-photo:hover {
+  opacity: 0.5;
 }
 </style>
