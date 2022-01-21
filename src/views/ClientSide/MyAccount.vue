@@ -1,20 +1,15 @@
 <template>
-  <section class="container-fluid my-account pb-5">
-    <router-link to="/my-order" class="btn btn-info btn-lg mt-5"
-      >Insure</router-link
-    >
+  <section class="container-fluid my-account p-3 position-relative">
+    <router-link to="/my-order" class="btn btn-info btn-lg">Insure</router-link>
 
-    <div class="row mt-5 my-account_info">
+    <div class="row mt-3 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <div class="mt-3 mb-3">
-          <label
-            for="formFile"
-            class="form-label fw-bold user-avatar-wrap rounded-circle"
-          >
+        <div>
+          <label for="formFile" class="form-label fw-bold user-avatar-wrap">
             <img
               :src="`${FILE_URL}${avatar}`"
               alt="avatar"
-              class="img user-avatar-photo rounded-circle"
+              class="img user-avatar-photo"
               width="100"
               height="100"
             />
@@ -30,7 +25,7 @@
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
         <div class="container" style="border-bottom: 1px solid black">
-          <h2 class="mt-3">
+          <h2 class="mt-1">
             {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
           </h2>
         </div>
@@ -221,11 +216,13 @@
     <MyVehicles
       :myProps="{ myVehicles: myAccountInfo.vehicles, accountId: accountId }"
     />
+    <ModalMessage />
   </section>
 </template>
 
 <script>
 import { FILE_URL, DEFAULT_AVATAR } from "../../constants";
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
 
 import MyVehicles from "./MyVehicles.vue";
 const dayjs = require("dayjs");
@@ -240,6 +237,7 @@ const getTimeStamp = (date) => {
 export default {
   components: {
     MyVehicles,
+    ModalMessage,
   },
   data() {
     return {
@@ -304,14 +302,12 @@ export default {
             this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
             this.changeAccount();
           } else {
-            alert(
-              this.$store.state.uploaded_file.data.message ||
-                `File upload error, please try later`
-            );
-            // this.isUploadError = true;
-            // this.errMsg =
-            //   this.$store.state.uploaded_file.data.message ||
-            //   `File upload error, please try later`;
+            this.$store.commit(`SET_MODAL`, {
+              isModal: true,
+              msg:
+                this.$store.state.uploaded_file.data.message ||
+                `File upload error, please try later`,
+            });
           }
         }, 1000);
       });
@@ -360,16 +356,20 @@ li {
     margin-top: 10px;
   }
   @include media-breakpoint-up(md) {
-    width: 200px;
-    height: 200px;
+    width: 230px;
+    height: 230px;
   }
   @include media-breakpoint-up(lg) {
-    width: 250px;
-    height: 250px;
+    width: 308px;
+    height: 308px;
   }
   @include media-breakpoint-up(xl) {
-    width: 300px;
-    height: 300px;
+    width: 375px;
+    height: 375px;
+  }
+  @include media-breakpoint-up(xxl) {
+    width: 445px;
+    height: 445px;
   }
 }
 .user-avatar-wrap:hover {

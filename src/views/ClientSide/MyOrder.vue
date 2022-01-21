@@ -1,5 +1,5 @@
 <template>
-  <section class="container my-order mt-5 pb-5 position-relative">
+  <section class="container-fluid my-order mt-5 p-3 position-relative">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
@@ -318,6 +318,10 @@ export default {
 }
 .my-order {
   min-height: calc(100vh - 10em);
+  background-color: $bgOrange;
+  background-image: url($mainBg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 .order-create-popup {
   min-width: 300px;
