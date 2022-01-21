@@ -225,7 +225,7 @@
 </template>
 
 <script>
-import { FILE_URL } from "../../constants";
+import { FILE_URL, DEFAULT_AVATAR } from "../../constants";
 
 import MyVehicles from "./MyVehicles.vue";
 const dayjs = require("dayjs");
@@ -245,7 +245,7 @@ export default {
     return {
       FILE_URL: FILE_URL,
       showInput: false,
-      avatar: `https://i.ibb.co/VC7PVnD/vector-unisex-avatar-468.png`,
+      avatar: DEFAULT_AVATAR,
       dateOfBirth: ``,
       accountId: ``,
       changeUserObj: {
@@ -304,7 +304,10 @@ export default {
             this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
             this.changeAccount();
           } else {
-            alert(this.$store.state.uploaded_file.data.message);
+            alert(
+              this.$store.state.uploaded_file.data.message ||
+                `File upload error, please try later`
+            );
             // this.isUploadError = true;
             // this.errMsg =
             //   this.$store.state.uploaded_file.data.message ||

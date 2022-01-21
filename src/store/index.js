@@ -18,7 +18,20 @@ let ls = new SecureLS({
 import {
     BASE_URL
 } from '../constants';
-// import axios from 'axios';
+
+const errorsHeandler = (error) => {
+    if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+
+        console.log(error.request);
+    } else {
+        console.log('Error', error.message);
+    }
+    console.log(error.config);
+}
 
 export const store = new Vuex.Store({
     state: {
@@ -40,7 +53,8 @@ export const store = new Vuex.Store({
             isModal: false,
             msg: ``
         },
-        uploaded_file: []
+        uploaded_file: [],
+        general_errors: {}
     },
     plugins: [
         createLogger(),
@@ -57,6 +71,24 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_GENERAL_ERRORS(state, payload) {
+            if (payload.response) {
+                state.general_errors = {
+                    data: payload.response.data,
+                    status: payload.response.status,
+                    headers: payload.response.headers
+                }
+            } else if (payload.request) {
+                state.general_errors = {
+                    request: payload.request
+                }
+            } else {
+                state.general_errors = {
+                    error: payload.message
+                }
+            }
+            console.log(payload.config);
+        },
         auth_success(state, payload) {
             state.status = 'success'
             state.token = payload.token
@@ -249,8 +281,24 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_UPLOADED_FILE`, data);
                 }
-            ).catch(err => {
-                context.commit(`SET_UPLOADED_FILE`, err.response);
+            ).catch((error) => {
+                if (error.response) {
+                    context.commit(`SET_UPLOADED_FILE`, {
+                        data: error.response.data,
+                        status: error.response.status,
+                        headers: error.response.headers
+                    });
+                } else if (error.request) {
+
+                    console.log(error.request);
+                    context.commit(`SET_UPLOADED_FILE`, {
+                        request: error.request
+                    });
+                } else {
+                    context.commit(`SET_UPLOADED_FILE`, {
+                        message: error.message
+                    });
+                }
             })
         }
     },
