@@ -349,6 +349,8 @@ li {
   width: 290px;
   height: 290px;
   cursor: pointer;
+  object-fit: cover;
+
   @include media-breakpoint-up(sm) {
     width: 180px;
     height: 180px;
