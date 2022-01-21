@@ -60,6 +60,12 @@
               >
               <span>R{{ order.totalCost }}</span>
             </div>
+            <div v-if="order.adjustedCost>0" class="col border-bottom border-start">
+              <span class="d-block fw-bold fst-italic"
+                >Adjusted:</span
+              >
+              <span>R{{ order.adjustedCost }}</span>
+            </div>
             <div class="col">
               <button
                 type="button"
@@ -222,13 +228,9 @@ export default {
       this.$store.dispatch(`UPLOAD`, formData).then(() => {
         setTimeout(() => {
           if (
-            this.$store.state.uploaded_file.data &&
-            this.$store.state.uploaded_file.data.state == `fail`
+            this.$store.state.uploaded_file &&
+            this.$store.state.uploaded_file.state == `ok`
           ) {
-            this.isUploadError = true;
-            this.errMsg = this.$store.state.uploaded_file.data.message;
-          }
-          if (this.$store.state.uploaded_file.state == `ok`) {
             this.documentsArray.push(this.$store.state.uploaded_file.path);
             setTimeout(() => {
               this.$store
@@ -244,6 +246,11 @@ export default {
                   this.getOrder(id);
                 });
             }, 1000);
+          } else {
+            this.isUploadError = true;
+            this.errMsg =
+              this.$store.state.uploaded_file.data.message ||
+              `File upload error, please try later`;
           }
         }, 1000);
       });

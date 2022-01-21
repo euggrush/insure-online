@@ -7,11 +7,24 @@
 <script>
 import Header from "./components/Partials/Header.vue";
 import Footer from "./components/Partials/Footer.vue";
+import axios from "axios";
+
 export default {
   name: "Home",
   components: {
     Header,
     Footer,
+  },
+  created() {
+    axios.interceptors.response.use(undefined, function (err) {
+      // eslint-disable-next-line no-unused-vars
+      return new Promise(function (_resolve, _reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch(`LOGOUT`);
+        }
+        throw err;
+      });
+    });
   },
 };
 </script>

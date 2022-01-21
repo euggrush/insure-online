@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="navbar navbar-expand-lg navbar-light container-fluid fw-bold"
-  >
+  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
     <router-link class="navbar-brand" to="/"
       ><img
         src="../../assets/tuffstuff_logo.png"
@@ -49,17 +47,7 @@
         >
           <router-link class="nav-link" to="/registration">Sign Up</router-link>
         </li>
-        <!-- <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link text-white" to="/our-products"
-            >Our Products</router-link
-          >
-        </li> -->
+
         <li
           v-if="
             this.$store.state.status === '' ||
@@ -73,15 +61,7 @@
             >Login</router-link
           >
         </li>
-        <!-- <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item"
-        >
-          <router-link class="nav-link" to="/signup">Registration</router-link>
-        </li> -->
+
         <li v-if="this.$store.state.status === 'success'" class="nav-item">
           <button
             class="logout-btn btn btn-warning rounded-pill"
@@ -97,47 +77,16 @@
 </template>
 
 <script>
-// import vClickOutside from "click-outside-vue3";
-
 export default {
   name: "Header",
-  // directives: {
-  //   clickOutside: vClickOutside.directive,
-  // },
-  // data() {
-  //   return {
-  //     isNavbarOpen: false,
-  //   };
-  // },
 
-  // created() {
-  //   window.addEventListener("scroll", this.handleScroll);
-  // },
-  // unmounted() {
-  //   window.removeEventListener("scroll", this.handleScroll);
-  // },
   methods: {
-    // handleScroll() {
-    //   const navbarCollapsible = document.body.querySelector("#mainNav");
-    //   if (!navbarCollapsible) {
-    //     return;
-    //   }
-    //   if (window.scrollY === 0) {
-    //     navbarCollapsible.classList.remove("navbar-shrink");
-    //   } else {
-    //     navbarCollapsible.classList.add("navbar-shrink");
-    //   }
-    // },
     logout() {
       this.$store
         .dispatch("LOGOUT")
-        .then(() => this.$router.push("/"))
+        .then(() => this.$router.push("/login"))
         .catch((err) => console.log(err));
     },
-    // onClickOutside() {
-    //   document.querySelector(`#navbarNav`).classList.remove(`show`);
-      
-    // },
   },
 };
 </script>
@@ -145,8 +94,6 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   min-height: 4em;
-  // opacity: 0.8;
-  // outline: solid 4px orangered;
 }
 .btn {
   min-width: 8em;

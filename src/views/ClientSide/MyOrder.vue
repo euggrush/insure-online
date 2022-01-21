@@ -1,5 +1,5 @@
 <template>
-  <section class="container my-order mt-5 pb-5 position-relative">
+  <section class="container-fluid my-order mt-5 p-3 position-relative">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
@@ -70,14 +70,14 @@
               <option
                 v-for="(product, index) in productsList"
                 :key="index"
-                :value="product.mainProductId"
+                :value="product"
               >
                 {{ product.mainProductName }}
               </option>
             </select>
             <div class="options-wrapper mt-3 mb-3">
               <div
-                v-for="(subProduct, index) in subProductsList"
+                v-for="(subProduct, index) in selectedMainProduct.subProducts"
                 :key="index"
                 class="form-check form-switch"
               >
@@ -88,7 +88,7 @@
                   id="flexSwitchCheckCheckedDisabled"
                   :value="subProduct.subProductId"
                   v-model="checkedSubProducts"
-                  :required="isRequiredCoverages"
+                  :required="selectedMainProduct.isRequiredCoverages"
                 />
                 <label
                   class="form-check-label"
@@ -188,22 +188,18 @@ export default {
       isMainProductSelected: false,
       isUserSelected: false,
       isCarSelected: false,
-      isSubProducts: false,
       accountUsername: ``,
       selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
       selectedAccountId: ``,
       selectedCarId: ``,
-      isAccountInfo: false,
       showEstimate: false,
       isCalcBtnDisabled: true,
       resetSelectMainProduct: true,
       isCarCategorySelected: false,
       shoNullEstimation: true,
-      accountId: ``,
       carInsuranceCategory: ``,
-      isRequiredCoverages: false,
     };
   },
   computed: {
@@ -213,15 +209,8 @@ export default {
     productsList() {
       return this.$store.state.main_products.mainProducts || [];
     },
-    subProductsList() {
-      if (this.isSubProducts) {
-        return this.$store.state.sub_products.subProducts;
-      }
-      return [];
-    },
+
     accountInfo() {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.accountId = this.$store.state.user.accountId;
       return this.$store.state.user;
     },
     estimationsList() {
@@ -249,7 +238,6 @@ export default {
     selectCategory() {
       this.checkedSubProducts = [];
       this.selectedMainProduct = ``;
-      this.isSubProducts = false;
       this.isCarCategorySelected = false;
       if (this.selectedCategory === `Select category...`) {
         this.isCategorySelected = false;
@@ -266,27 +254,14 @@ export default {
       );
     },
     selectMainProduct() {
+      this.isMainProductSelected = true;
       this.checkedSubProducts = [];
-      this.$store
-        .dispatch(
-          `GET_SUB_PRODUCTS`,
-          `?mainProductId=${this.selectedMainProduct}`
-        )
-        .then(
-          (this.isSubProducts = true),
-          (this.isMainProductSelected = true),
-          (this.isRequiredCoverages = true)
-        )
-        .catch((err) => {
-          this.isSubProducts = false;
-          console.log(err);
-        });
     },
     getEstimation() {
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
-          accountId: this.selectedAccountId,
-          mainProductId: this.selectedMainProduct,
+          accountId: this.$store.state.user.accountId,
+          mainProductId: this.selectedMainProduct.mainProductId,
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
         })
@@ -323,11 +298,9 @@ export default {
         (this.isMainProductSelected = false),
         (this.isUserSelected = false),
         (this.selectedCategory = `Select category...`),
-        (this.isAccountInfo = false),
         (this.accountUsername = ``),
         (this.selectedMainProduct = ``),
-        (this.isSubProducts = false);
-      (this.shoNullEstimation = true),
+        (this.shoNullEstimation = true),
         (this.showEstimate = false),
         (this.selectedCarId = ``);
     },
@@ -345,6 +318,10 @@ export default {
 }
 .my-order {
   min-height: calc(100vh - 10em);
+  background-color: $bgOrange;
+  background-image: url($mainBg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 .order-create-popup {
   min-width: 300px;

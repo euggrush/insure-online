@@ -1,20 +1,31 @@
 <template>
-  <section class="container my-account pb-5">
-    <router-link to="/my-order" class="btn btn-info btn-lg mt-5"
-      >Get Insurance</router-link
-    >
+  <section class="container-fluid my-account p-3 position-relative">
+    <router-link to="/my-order" class="btn btn-info btn-lg">Insure</router-link>
 
-    <div class="row mt-5 my-account_info">
+    <div class="row mt-3 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <img
-          src="https://i.ibb.co/VC7PVnD/vector-unisex-avatar-468.png"
-          alt="stack photo"
-          class="img user-avatar"
-        />
+        <div>
+          <label for="formFile" class="form-label fw-bold user-avatar-wrap">
+            <img
+              :src="`${FILE_URL}${avatar}`"
+              alt="avatar"
+              class="img user-avatar-photo"
+              width="100"
+              height="100"
+            />
+            <input
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="uploadAvatar($event)"
+              v-show="showInput"
+            />
+          </label>
+        </div>
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
         <div class="container" style="border-bottom: 1px solid black">
-          <h2 class="mt-3">
+          <h2 class="mt-1">
             {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
           </h2>
         </div>
@@ -205,10 +216,14 @@
     <MyVehicles
       :myProps="{ myVehicles: myAccountInfo.vehicles, accountId: accountId }"
     />
+    <ModalMessage />
   </section>
 </template>
 
 <script>
+import { FILE_URL, DEFAULT_AVATAR } from "../../constants";
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
+
 import MyVehicles from "./MyVehicles.vue";
 const dayjs = require("dayjs");
 const getTimeStamp = (date) => {
@@ -222,12 +237,17 @@ const getTimeStamp = (date) => {
 export default {
   components: {
     MyVehicles,
+    ModalMessage,
   },
   data() {
     return {
+      FILE_URL: FILE_URL,
+      showInput: false,
+      avatar: DEFAULT_AVATAR,
       dateOfBirth: ``,
       accountId: ``,
       changeUserObj: {
+        avatar: ``,
         accountId: ``,
         firstName: ``,
         lastName: ``,
@@ -248,6 +268,10 @@ export default {
   computed: {
     myAccountInfo() {
       if (this.$store.state.users_array.accounts) {
+        if (this.$store.state.users_array.accounts[0].avatar !== ``) {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.avatar = this.$store.state.users_array.accounts[0].avatar;
+        }
         return this.$store.state.users_array.accounts[0];
       }
       return [];
@@ -260,6 +284,33 @@ export default {
   methods: {
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
+    },
+    uploadAvatar(event) {
+      const asset = event.target.files[0];
+      const formData = new FormData();
+      formData.append(
+        `meta`,
+        JSON.stringify({ fileType: `photo`, description: `` })
+      );
+      formData.append("asset", asset);
+      this.$store.dispatch(`UPLOAD`, formData).then(() => {
+        setTimeout(() => {
+          if (
+            this.$store.state.uploaded_file &&
+            this.$store.state.uploaded_file.state == `ok`
+          ) {
+            this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
+            this.changeAccount();
+          } else {
+            this.$store.commit(`SET_MODAL`, {
+              isModal: true,
+              msg:
+                this.$store.state.uploaded_file.data.message ||
+                `File upload error, please try later`,
+            });
+          }
+        }, 1000);
+      });
     },
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;
@@ -277,8 +328,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-info {
+  min-width: 8em;
+}
 .my-account {
   min-height: calc(100vh - 10em);
+  background-color: $bgOrange;
+  background-image: url($mainBg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 .details li {
   list-style: none;
@@ -286,21 +344,47 @@ export default {
 li {
   margin-bottom: 10px;
 }
-.user-avatar {
-  width: 100%;
-  height: auto;
+.user-avatar-wrap {
+  width: 290px;
+  height: 290px;
+  cursor: pointer;
+  object-fit: cover;
+
   @include media-breakpoint-up(sm) {
     width: 180px;
+    height: 180px;
     margin-top: 10px;
   }
   @include media-breakpoint-up(md) {
-    width: 200px;
+    width: 230px;
+    height: 230px;
   }
   @include media-breakpoint-up(lg) {
-    width: 250px;
+    width: 308px;
+    height: 308px;
   }
   @include media-breakpoint-up(xl) {
-    width: 300px;
+    width: 375px;
+    height: 375px;
   }
+  @include media-breakpoint-up(xxl) {
+    width: 445px;
+    height: 445px;
+  }
+}
+.user-avatar-wrap:hover {
+  outline: solid 1px $mainBlue;
+  background-image: url("../../assets/img/icon-change-avatar.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+}
+.user-avatar-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user-avatar-photo:hover {
+  opacity: 0.5;
 }
 </style>

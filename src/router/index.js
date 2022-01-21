@@ -87,7 +87,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     if (store.state.token === ``) {
-      next('/')
+      next('/login')
     } else if (to.meta.adminAuth) {
       if (store.state.my_role === `admin`) {
         next()

@@ -1,5 +1,5 @@
 <template>
-  <div class="msg-popup position-absolute top-50 start-50 translate-middle" tabindex="-1" v-if="modalInfo.isModal">
+  <div class="msg-popup position-absolute top-0 start-50 translate-middle" tabindex="-1" v-if="modalInfo.isModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -43,6 +43,7 @@ export default {
 <style lang="scss" scoped>
 .msg-popup {
   min-width: 60%;
+  margin-top: 9em;
 }
 .btn {
   min-width: 10em;
