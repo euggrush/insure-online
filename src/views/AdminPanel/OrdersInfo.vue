@@ -181,12 +181,11 @@
           >
           <span>R{{ order.vehicleRetailValue }}</span
           ><br />
-
           <a
             v-for="(file, index) in order.documents"
             :href="`${FILE_URL}${file}`"
             :key="index"
-            class="btn btn-light btn-pdf mt-3"
+            class="btn btn-light btn-pdf mt-3 text-end"
             target="_blank"
           >
             Banking Details
@@ -347,5 +346,10 @@ br {
   background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: 5% center;
+}
+.btn-pdf:hover {
+  color: blue;
+  text-decoration: underline;
+  font-weight: bold;
 }
 </style>

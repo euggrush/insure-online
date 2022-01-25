@@ -33,7 +33,13 @@
       >
         Products
       </button>
-      
+      <button
+        class="nav-link fw-bold"
+        :class="{ active: isEstimations }"
+        @click="showEstimations"
+      >
+        Quotes
+      </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isOrders }"

@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid my-order mt-5 p-3 position-relative">
+  <section class="container-fluid my-order p-3 position-relative">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >

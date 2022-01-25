@@ -257,8 +257,9 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_NEW_USER`, data);
                 }
-            ).catch((err) => {
-                context.commit(`SET_NEW_USER`, err);
+            ).catch((error) => {
+                context.commit(`SET_NEW_USER`, error);
+                context.commit(`SET_GENERAL_ERRORS`, error);
             })
         },
         UPLOAD: async (context, payload) => {
@@ -268,23 +269,7 @@ export const store = new Vuex.Store({
                     context.commit(`SET_UPLOADED_FILE`, data);
                 }
             ).catch((error) => {
-                if (error.response) {
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        data: error.response.data,
-                        status: error.response.status,
-                        headers: error.response.headers
-                    });
-                } else if (error.request) {
-
-                    console.log(error.request);
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        request: error.request
-                    });
-                } else {
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        message: error.message
-                    });
-                }
+                context.commit(`SET_GENERAL_ERRORS`, error);
             })
         }
     },

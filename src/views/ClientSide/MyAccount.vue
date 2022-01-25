@@ -293,24 +293,37 @@ export default {
         JSON.stringify({ fileType: `photo`, description: `` })
       );
       formData.append("asset", asset);
-      this.$store.dispatch(`UPLOAD`, formData).then(() => {
-        setTimeout(() => {
-          if (
-            this.$store.state.uploaded_file &&
-            this.$store.state.uploaded_file.state == `ok`
-          ) {
+      this.$store
+        .dispatch(`UPLOAD`, formData)
+        .then(() => {
+          setTimeout(() => {
             this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
             this.changeAccount();
-          } else {
-            this.$store.commit(`SET_MODAL`, {
-              isModal: true,
-              msg:
-                this.$store.state.uploaded_file.data.message ||
-                `File upload error, please try later`,
-            });
-          }
-        }, 1000);
-      });
+            // if (
+            //   this.$store.state.uploaded_file &&
+            //   this.$store.state.uploaded_file.state == `ok`
+            // ) {
+            //   this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
+            //   this.changeAccount();
+            // } else {
+            //   this.$store.commit(`SET_MODAL`, {
+            //     isModal: true,
+            //     msg:
+            //       this.$store.state.uploaded_file.data.message ||
+            //       `File upload error, please try later`,
+            //   });
+            // }
+          }, 1000);
+        })
+        .catch(() => {
+          alert(`File upload error, please try later`);
+          // this.$store.commit(`SET_MODAL`, {
+          //   isModal: true,
+          //   msg:
+          //     this.$store.state.general_errors ||
+          //     `File upload error, please try later`,
+          // });
+        });
     },
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;

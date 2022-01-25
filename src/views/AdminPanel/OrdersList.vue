@@ -485,11 +485,11 @@ export default {
               (this.isUserSelected = true),
               console.log(res);
           })
-          .catch(
-            (err) => alert(err.response.data.message),
-            (this.isAccountInfo = false),
-            (this.isUserSelected = false)
-          );
+          .catch((err) => {
+            alert(err.response.data.message),
+              (this.isAccountInfo = false),
+              (this.isUserSelected = false);
+          });
       }
     },
     getEstimation() {
