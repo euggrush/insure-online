@@ -4,47 +4,52 @@
     <div class="d-flex justify-content-between align-items-start mt-3">
       <h3 class="mb-0">Accounts:</h3>
       <!-- SEARCH -->
-      <div class="search">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search..."
-            v-model="searchUser"
-          />
-          <button
-            @click="searchAccount"
-            class="btn btn-outline-light"
-            type="button"
-            v-if="!showAllusers"
+      <div class="search d-flex border rounded">
+        <select class="form-select search-select" aria-label="select">
+          <option value="1">ID</option>
+          <option value="2">First Name</option>
+          <option value="3">Last Name</option>
+          <option value="3">Cell</option>
+          <option value="3">Email</option>
+        </select>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search..."
+          v-model="searchUser"
+        />
+        <button
+          @click="searchAccount"
+          class="btn btn-outline-light search-btn"
+          type="button"
+          v-if="!showAllusers"
+        >
+          <svg
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24px"
+            height="23px"
+            viewBox="0 0 24 24"
+            aria-labelledby="searchIconTitle"
+            stroke="#2329D6"
+            stroke-width="1.7142857142857142"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+            fill="none"
+            color="#2329D6"
           >
-            <svg
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24px"
-              height="23px"
-              viewBox="0 0 24 24"
-              aria-labelledby="searchIconTitle"
-              stroke="#2329D6"
-              stroke-width="1.7142857142857142"
-              stroke-linecap="square"
-              stroke-linejoin="miter"
-              fill="none"
-              color="#2329D6"
-            >
-              <title id="searchIconTitle">Search</title>
-              <path d="M14.4121122,14.4121122 L20,20" />
-              <circle cx="10" cy="10" r="6" />
-            </svg>
-          </button>
-          <button
-            class="btn btn-outline-light"
-            v-if="showAllusers"
-            @click="findAllUsers"
-          >
-            All
-          </button>
-        </div>
+            <title id="searchIconTitle">Search</title>
+            <path d="M14.4121122,14.4121122 L20,20" />
+            <circle cx="10" cy="10" r="6" />
+          </svg>
+        </button>
+        <button
+          class="btn btn-outline-light"
+          v-if="showAllusers"
+          @click="findAllUsers"
+        >
+          All
+        </button>
       </div>
     </div>
     <!-- CREATE NEW ACCOUNT -->
@@ -599,15 +604,25 @@ li {
   z-index: 0;
 }
 .search {
-  width: 140px;
-  margin-top: -18px;
+  width: 200px;
+  margin-top: -24px;
+  padding: 3px;
+  background-color: $colorWhite;
   @include media-breakpoint-up(md) {
     transform: translate(0px, 26px);
-    width: 150px;
+    width: 230px;
   }
   @include media-breakpoint-up(lg) {
-    width: 180px;
+    width: 300px;
   }
+}
+.search-select {
+  width: 66px;
+  border: none;
+}
+.search-btn {
+  border: none;
+  border-radius: 0;
 }
 .create-user-btn {
   min-width: 12em !important;
@@ -629,7 +644,10 @@ li {
   }
 }
 input,
+select,
+select::-webkit-input-placeholder,
 input::-webkit-input-placeholder {
+  border: none;
   font-size: $font-size-micro;
   @include media-breakpoint-up(sm) {
     font-size: $font-size-mobile;
@@ -640,6 +658,14 @@ input::-webkit-input-placeholder {
   @include media-breakpoint-up(lg) {
     font-size: $font-size-medium;
   }
+}
+input:focus,
+select:focus,
+input:active,
+select:active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
 }
 .btn-primary {
   min-width: 10em;
