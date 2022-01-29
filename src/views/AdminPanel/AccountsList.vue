@@ -5,24 +5,34 @@
       <h3 class="mb-0">Accounts:</h3>
       <!-- SEARCH -->
       <div class="search d-flex border rounded">
-        <select class="form-select search-select" aria-label="select">
-          <option value="1">ID</option>
-          <option value="2">First Name</option>
-          <option value="3">Last Name</option>
-          <option value="3">Cell</option>
-          <option value="3">Email</option>
+        <select
+          @change="makeSelection()"
+          v-model="accountSearchOption"
+          class="form-select search-select"
+          aria-label="select"
+          required
+        >
+          <option disabled value>Search by...</option>
+          <option :value="`clientIdNumber`" selected>ID</option>
+          <option :value="`firstName`">First Name</option>
+          <option :value="`lastName`">Last Name</option>
+          <option :value="`cellphone`">Cell</option>
+          <option :value="`email`">Email</option>
         </select>
         <input
           type="text"
           class="form-control"
           placeholder="Search..."
           v-model="searchUser"
+          :disabled="searchBtnInputDisabled"
+          required
         />
         <button
           @click="searchAccount"
           class="btn btn-outline-light search-btn"
           type="button"
           v-if="!showAllusers"
+          :disabled="searchBtnInputDisabled"
         >
           <svg
             role="img"
@@ -44,7 +54,7 @@
           </svg>
         </button>
         <button
-          class="btn btn-outline-light"
+          class="btn btn-outline-light search-btn"
           v-if="showAllusers"
           @click="findAllUsers"
         >
@@ -420,6 +430,8 @@ export default {
   },
   data() {
     return {
+      searchBtnInputDisabled: true,
+      accountSearchOption: ``,
       searchUser: ``,
       isInfo: false,
       isBthDisabled: false,
@@ -554,22 +566,24 @@ export default {
       this.isBthDisabled = false;
       this.$store.dispatch(`GET_USERS`, ``);
     },
-    searchAccount() {
-      let query = this.searchUser.split(` `);
-
-      let firstName = query[0];
-      let lastName = [];
-
-      for (let i = 1; i <= query.length; i++) {
-        lastName.push(query[i]);
+    makeSelection() {
+      if (this.accountSearchOption != ``) {
+        this.searchBtnInputDisabled = false;
       }
-      if (this.searchUser != ``) {
+    },
+    searchAccount() {
+      if (this.searchUser != `` && this.accountSearchOption != ``) {
         this.$store
           .dispatch(
             `GET_USERS`,
-            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
+            `?${this.accountSearchOption}=${this.searchUser}`
           )
-          .then((this.searchUser = ``), (this.showAllusers = true))
+          .then(
+            (this.searchUser = ``),
+            (this.showAllusers = true),
+            (this.accountSearchOption = ``),
+            (this.searchBtnInputDisabled = true)
+          )
           .catch((err) => {
             alert(err.response.data.message), (this.showAllusers = false);
           });
@@ -578,7 +592,11 @@ export default {
     findAllUsers() {
       this.$store
         .dispatch(`GET_USERS`, ``)
-        .then((this.searchUser = ``), (this.showAllusers = false));
+        .then(
+          (this.searchUser = ``),
+          (this.showAllusers = false),
+          (this.searchBtnInputDisabled = true)
+        );
     },
   },
 };
@@ -610,19 +628,23 @@ li {
   background-color: $colorWhite;
   @include media-breakpoint-up(md) {
     transform: translate(0px, 26px);
-    width: 230px;
+    width: 310px;
   }
   @include media-breakpoint-up(lg) {
-    width: 300px;
+    width: 330px;
   }
 }
 .search-select {
   width: 66px;
   border: none;
+  @include media-breakpoint-up(md) {
+    width: auto;
+  }
 }
 .search-btn {
   border: none;
   border-radius: 0;
+  color: $colorDark;
 }
 .create-user-btn {
   min-width: 12em !important;
