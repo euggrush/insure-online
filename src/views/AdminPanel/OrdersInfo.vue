@@ -9,6 +9,10 @@
         <div class="container">
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
+              <span class="d-block fw-bold text-decoration-underline">Created:</span
+              ><span class="fst-italic">{{ getDate(order.orderCreated) }}</span>
+            </div>
+            <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Order status:</span
               >
