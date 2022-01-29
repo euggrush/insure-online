@@ -352,25 +352,54 @@
       <li
         v-for="(account, index) in accountsList"
         :key="index"
-        class="list-group-item d-flex justify-content-between shadow-lg"
+        class="list-group-item shadow-lg"
       >
-        <span class="text-break">
-          {{ account.firstName || "John" }}&nbsp;{{ account.lastName || "Doe" }}
-        </span>
-
-        <button
-          type="button"
-          class="btn btn-info btn-sm"
-          @click="showAccountInfo(account, index)"
-        >
-          More...
-        </button>
+        <div class="row">
+          <div class="col">
+            <span>
+              {{ account.firstName || "John" }}&nbsp;{{
+                account.lastName || "Doe"
+              }}
+            </span>
+          </div>
+          <div class="col-lg-6">
+            <span
+              >Created:&nbsp;<span class="fst-italic">{{
+                getDate(account.created)
+              }}</span></span
+            >
+          </div>
+          <div class="col">
+            <span
+              >Status:
+              <span
+                class="text-uppercase fw-bold"
+                :class="{
+                  'text-primary': account.role == `user`,
+                  'text-danger': account.role == `admin`,
+                }"
+                >{{ account.role }}</span
+              ></span
+            >
+          </div>
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-info btn-sm float-end"
+              @click="showAccountInfo(account, index)"
+            >
+              More...
+            </button>
+          </div>
+        </div>
       </li>
     </ul>
   </section>
 </template>
 
 <script>
+const dayjs = require("dayjs");
+
 const getTimeStamp = (date) => {
   let myDate = date;
   myDate = myDate.split("-");
@@ -423,6 +452,9 @@ export default {
     this.$store.dispatch(`GET_USERS`, ``);
   },
   methods: {
+    getDate(date) {
+      return dayjs(date).format("MMMM D, YYYY h:mm A");
+    },
     resetForm() {
       this.userPayload.username = ``;
       this.userPayload.password = ``;
@@ -502,7 +534,7 @@ export default {
         });
       }
     },
-   
+
     showAccountInfo(account, index) {
       this.showCreateAccount = false;
       this.isInfo = true;
