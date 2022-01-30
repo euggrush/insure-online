@@ -466,7 +466,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_USERS`, ``);
+    this.$store.dispatch(`GET_USERS`, `?order=desc`);
   },
   methods: {
     getDate(date) {
@@ -540,7 +540,7 @@ export default {
           setTimeout(() => {
             if (this.$store.state.new_user.accountId) {
               this.resetForm();
-              this.$store.dispatch(`GET_USERS`, ``);
+              this.$store.dispatch(`GET_USERS`, `?order=desc`);
             } else {
               console.log(`Oops, something went wrong`);
               setTimeout(() => {
@@ -564,7 +564,7 @@ export default {
     closeAccountModal() {
       this.isInfo = false;
       this.isBthDisabled = false;
-      this.$store.dispatch(`GET_USERS`, ``);
+      this.$store.dispatch(`GET_USERS`, `?order=desc`);
     },
     makeSelection() {
       if (this.accountSearchOption != ``) {
