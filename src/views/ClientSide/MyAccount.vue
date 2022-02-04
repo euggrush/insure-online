@@ -213,9 +213,7 @@
         </form>
       </div>
     </div>
-    <MyVehicles
-      :myProps="{ myVehicles: myAccountInfo.vehicles, accountId: accountId }"
-    />
+    <MyVehicles />
     <ModalMessage />
   </section>
 </template>
