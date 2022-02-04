@@ -40,7 +40,10 @@ export const store = new Vuex.Store({
             msg: ``
         },
         uploaded_file: [],
-        general_errors: {}
+        general_errors: {},
+        modals_toggle: {
+            isEditVehicleOpen: false
+        }
     },
     plugins: [
         createLogger(),
@@ -57,6 +60,9 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_MODALS_TOGGLE(state, payload) {
+            state.modals_toggle = payload;
+        },
         SET_GENERAL_ERRORS(state, payload) {
             if (payload.response) {
                 state.general_errors = {
