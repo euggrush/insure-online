@@ -14,6 +14,7 @@
       align-items-end
       p-3
       border
+      overflow-auto
     "
     @submit.prevent="editVehicle(vehicle, index)"
   >
@@ -97,6 +98,16 @@
             :placeholder="changeVehicleObj.retailValue"
             v-model="changeVehicleObj.retailValue"
           />
+        </label>
+        <label class="col mt-3">
+          <span class="fw-bold text-decoration-underline lh-lg">
+            Comments:
+          </span>
+          <textarea
+            class="form-control"
+            placeholder="Leave a comment here"
+            id="floatingTextarea"
+          ></textarea>
         </label>
         <div class="col mt-3 form-check">
           <span class="d-block fw-bold text-decoration-underline lh-lg">

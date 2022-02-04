@@ -7,6 +7,7 @@
         class="form-control"
         id="exampleInputEmail1"
         v-model="vehicleInfo.details"
+        placeholder="Make And Model"
         minlength="5"
         maxlength="30"
         required
@@ -19,6 +20,7 @@
         class="form-control"
         id="exampleInputEmail2"
         v-model="vehicleInfo.year"
+        placeholder="Year"
         required
       />
     </div>
@@ -33,6 +35,7 @@
         v-model="vehicleInfo.regNumber"
         minlength="2"
         maxlength="10"
+        placeholder="Registration License Plate"
         required
       />
     </div>
@@ -45,6 +48,7 @@
         v-model="vehicleInfo.vin"
         minlength="17"
         maxlength="17"
+        placeholder="VIN"
         required
       />
     </div>
@@ -56,6 +60,7 @@
         id="exampleInputPassword3"
         v-model="vehicleInfo.engine"
         step="0.1"
+        placeholder="Engine Size"
         required
       />
     </div>
@@ -68,8 +73,18 @@
         class="form-control"
         id="exampleInputPassword4"
         v-model="vehicleInfo.retailValue"
+        placeholder="Retail Value"
         required
       />
+    </div>
+    <div class="form-floating mt-3 mb-5">
+      <textarea
+        class="form-control"
+        placeholder="Accessories"
+        id="floatingTextarea"
+        v-model="vehicleInfo.accessories"
+      ></textarea>
+      <label for="floatingTextarea">Accessories:</label>
     </div>
     <div class="mb-3">
       <span>Tracking device:</span>
@@ -135,6 +150,7 @@ export default {
         retailValue: ``,
         trackingDevice: ``,
         useCase: ``,
+        accessories: ``,
       },
     };
   },

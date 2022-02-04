@@ -16,7 +16,7 @@
     <!-- CREATE VEHICLE FORN -->
     <div>
       <div class="collapse collapse-horizontal mt-3" id="collapseWidthExample">
-        <div class="card card-body" style="width: 300px">
+        <div class="card card-body">
           <CreateVehicleForm :myProps="{ accountId: accountId }" />
         </div>
       </div>
@@ -27,7 +27,7 @@
       <li
         v-for="(vehicle, index) in myVehicles"
         :key="vehicle.vehicleId"
-        class="list-group-item mt-3"
+        class="list-group-item mt-3 overflow-auto"
         v-show="vehicle.deleted == false"
       >
         <span class="fw-bold text-decoration-underline"
@@ -55,6 +55,8 @@
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>
         <span>&nbsp;{{ vehicle.useCase }}</span> <br />
+        <span class="fw-bold text-decoration-underline">Accessories:</span>
+        <span>&nbsp;{{ vehicle.accessories }}</span> <br />
         <div class="row row-cols-auto">
           <div class="col col-lg-2">
             <button
