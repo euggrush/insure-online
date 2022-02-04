@@ -179,9 +179,13 @@ export default {
         .catch((err) => console.log(err))
         .then(() => {
           this.$store.dispatch(`GET_VEHICLES`, ``),
-            this.$store.commit(`SET_MODALS_TOGGLE`, {
-              isEditVehicleOpen: false,
-            });
+            this.$store.dispatch(
+              `GET_USERS`,
+              `?accountId=${this.changeVehicleObj.accountId}`
+            );
+          this.$store.commit(`SET_MODALS_TOGGLE`, {
+            isEditVehicleOpen: false,
+          });
         });
       console.log(index);
     },
