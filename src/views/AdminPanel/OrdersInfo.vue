@@ -9,7 +9,8 @@
         <div class="container">
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline">Created:</span
+              <span class="d-block fw-bold text-decoration-underline"
+                >Created:</span
               ><span class="fst-italic">{{ getDate(order.orderCreated) }}</span>
             </div>
             <div class="col border-bottom border-start">
@@ -237,14 +238,23 @@ export default {
     };
   },
   props: {
-    componentKey: {
-      type: Number,
-      default: 0,
+    myProps: {
+      type: Object,
+      default: () => {},
     },
   },
   watch: {
     componentRerenderKey() {
-      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
+      this.$store.dispatch(
+        `GET_ORDERS`,
+        `?order=desc&${this.myProps.orderStatus}`
+      );
+    },
+    toggleStatus() {
+      this.$store.dispatch(
+        `GET_ORDERS`,
+        `?order=desc&${this.myProps.orderStatus}`
+      );
     },
   },
   computed: {
@@ -252,7 +262,10 @@ export default {
       return this.$store.state.orders.orders || [];
     },
     componentRerenderKey() {
-      return this.componentKey;
+      return this.myProps.componentKey;
+    },
+    toggleStatus() {
+      return this.myProps.orderStatus;
     },
   },
   mounted() {
