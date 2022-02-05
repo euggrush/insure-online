@@ -420,4 +420,7 @@ export default {
 .btn {
   min-width: 12em;
 }
+.list-group-item {
+  min-height: 23em;
+}
 </style>

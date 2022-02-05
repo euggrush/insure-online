@@ -101,11 +101,11 @@
         </label>
         <label class="col mt-3">
           <span class="fw-bold text-decoration-underline lh-lg">
-            Comments:
+            Accessories:
           </span>
           <textarea
             class="form-control"
-            placeholder="Leave a comment here"
+            placeholder="accessories"
             id="floatingTextarea"
           ></textarea>
         </label>
@@ -156,6 +156,38 @@
             />
             Business
           </label>
+          <label class="m-1">
+            <input
+              type="radio"
+              name="useCase"
+              value="privateandbusiness"
+              v-model="changeVehicleObj.useCase"
+            />
+            Private And Business
+          </label>
+        </div>
+        <div
+          v-if="
+            changeVehicleObj.useCase == 'Business' ||
+            changeVehicleObj.useCase == 'privateandbusiness'
+          "
+          class="col mt-3 form-check"
+        >
+          <label for="floatingTextarea" class="m-1">
+            <span class="fw-bold text-decoration-underline lh-lg"
+              >Explanation Of the Business Use:</span
+            >
+          </label>
+          <textarea
+            class="form-control"
+            placeholder="Explanation Of the Business Use"
+            id="floatingTextarea"
+            v-model="changeVehicleObj.businessDescription"
+            :required="
+              changeVehicleObj.useCase == 'Business' ||
+              changeVehicleObj.useCase == 'privateandbusiness'
+            "
+          ></textarea>
         </div>
       </div>
     </div>

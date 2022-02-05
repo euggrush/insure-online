@@ -77,14 +77,14 @@
         required
       />
     </div>
-    <div class="form-floating mt-3 mb-5">
+    <div class="mb-3">
+      <label for="floatingTextarea" class="form-label">Accessories: </label>
       <textarea
         class="form-control"
         placeholder="Accessories"
         id="floatingTextarea"
         v-model="vehicleInfo.accessories"
       ></textarea>
-      <label for="floatingTextarea">Accessories:</label>
     </div>
     <div class="mb-3">
       <span>Tracking device:</span>
@@ -129,8 +129,37 @@
         />
         Business
       </label>
+      <label class="ms-3">
+        <input
+          type="radio"
+          name="use"
+          value="privateandbusiness"
+          v-model="vehicleInfo.useCase"
+        />
+        Private And Business
+      </label>
     </div>
-
+    <div
+      v-if="
+        vehicleInfo.useCase == 'Business' ||
+        vehicleInfo.useCase == 'privateandbusiness'
+      "
+      class="mb-3"
+    >
+      <label for="floatingTextarea" class="form-label"
+        >Explanation Of the Business Use:
+      </label>
+      <textarea
+        class="form-control"
+        placeholder="Explanation Of the Business Use"
+        id="floatingTextarea"
+        v-model="vehicleInfo.businessDescription"
+        :required="
+          vehicleInfo.useCase == 'Business' ||
+          vehicleInfo.useCase == 'privateandbusiness'
+        "
+      ></textarea>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </template>
@@ -151,6 +180,7 @@ export default {
         trackingDevice: ``,
         useCase: ``,
         accessories: ``,
+        businessDescription: ``,
       },
     };
   },

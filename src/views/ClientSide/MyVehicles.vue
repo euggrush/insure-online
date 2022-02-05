@@ -57,6 +57,10 @@
         <span>&nbsp;{{ vehicle.useCase }}</span> <br />
         <span class="fw-bold text-decoration-underline">Accessories:</span>
         <span>&nbsp;{{ vehicle.accessories }}</span> <br />
+        <span class="fw-bold text-decoration-underline"
+          >Explanation Of The Business Use:</span
+        >
+        <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
         <div class="row row-cols-auto">
           <div class="col col-lg-2">
             <button
