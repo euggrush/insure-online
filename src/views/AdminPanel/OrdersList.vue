@@ -603,7 +603,7 @@ export default {
 .btn-outline-dark {
   margin-top: 1em;
   border-radius: 0;
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     margin-top: 0.25rem;
     border-radius: 50px;
   }
