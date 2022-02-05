@@ -2,7 +2,6 @@
   <section class="container">
     <!-- ACCOUNTS RENDER -->
     <h3 class="mt-3">Accounts:</h3>
-
     <div
       class="d-flex justify-content-between flex-wrap align-items-center mt-1"
     >
@@ -23,6 +22,8 @@
       >
         Create account
       </button>
+      <DateRange />
+
       <!-- SEARCH -->
       <div class="search d-flex border rounded">
         <select
@@ -426,12 +427,15 @@ const getTimeStamp = (date) => {
   return timestamp;
 };
 import AccountInfo from "./AccountInfo.vue";
+import DateRange from "../../components/Forms/DateRange.vue";
 export default {
   components: {
     AccountInfo,
+    DateRange,
   },
   data() {
     return {
+      date: new Date(2016, 9, 16),
       searchBtnInputDisabled: true,
       accountSearchOption: ``,
       searchUser: ``,
@@ -632,11 +636,13 @@ li {
   padding: 3px;
   background-color: $colorWhite;
   @include media-breakpoint-up(md) {
-    margin-top: 0;
     width: 310px;
   }
   @include media-breakpoint-up(lg) {
     width: 330px;
+  }
+  @include media-breakpoint-up(xl) {
+    margin-top: 0;
   }
 }
 .search-select {

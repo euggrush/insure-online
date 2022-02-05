@@ -43,6 +43,10 @@ export const store = new Vuex.Store({
         general_errors: {},
         modals_toggle: {
             isEditVehicleOpen: false
+        },
+        date_range: {
+            createdFrom: 0,
+            createdTo: new Date().getTime()
         }
     },
     plugins: [
@@ -80,6 +84,9 @@ export const store = new Vuex.Store({
                 }
             }
             console.log(payload.config);
+        },
+        SET_DATE_RANGE(state, payload) {
+            state.date_range = payload;
         },
         auth_success(state, payload) {
             state.status = 'success'
