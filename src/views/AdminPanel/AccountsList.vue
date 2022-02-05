@@ -466,9 +466,20 @@ export default {
       showCreateAccount: false,
     };
   },
+  watch: {
+    getTimeRange() {
+      this.$store.dispatch(
+        `GET_USERS`,
+        `?order=desc&created>=${this.$store.state.date_range.createdFrom}`
+      );
+    },
+  },
   computed: {
     accountsList() {
       return this.$store.state.users_array.accounts;
+    },
+    getTimeRange() {
+      return this.$store.state.date_range;
     },
   },
   mounted() {
