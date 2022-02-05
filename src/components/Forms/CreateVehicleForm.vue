@@ -133,7 +133,7 @@
         <input
           type="radio"
           name="use"
-          value="privateandbusiness"
+          value="Private And Business"
           v-model="vehicleInfo.useCase"
         />
         Private And Business
@@ -142,7 +142,7 @@
     <div
       v-if="
         vehicleInfo.useCase == 'Business' ||
-        vehicleInfo.useCase == 'privateandbusiness'
+        vehicleInfo.useCase == 'Private And Business'
       "
       class="mb-3"
     >
@@ -156,7 +156,7 @@
         v-model="vehicleInfo.businessDescription"
         :required="
           vehicleInfo.useCase == 'Business' ||
-          vehicleInfo.useCase == 'privateandbusiness'
+          vehicleInfo.useCase == 'Private And Business'
         "
       ></textarea>
     </div>

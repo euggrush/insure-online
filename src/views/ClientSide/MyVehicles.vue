@@ -54,7 +54,7 @@
         <span class="fw-bold text-decoration-underline">Tracking device:</span>
         <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
         <span class="fw-bold text-decoration-underline">Use case:</span>
-        <span>&nbsp;{{ vehicle.useCase }}</span> <br />
+        <span class="text-capitalize">&nbsp;{{ vehicle.useCase }}</span> <br />
         <span class="fw-bold text-decoration-underline">Accessories:</span>
         <span>&nbsp;{{ vehicle.accessories }}</span> <br />
         <span class="fw-bold text-decoration-underline"

@@ -1,8 +1,28 @@
 <template>
   <section class="container">
     <!-- ACCOUNTS RENDER -->
-    <div class="d-flex justify-content-between align-items-start mt-3">
-      <h3 class="mb-0">Accounts:</h3>
+    <h3 class="mt-3">Accounts:</h3>
+
+    <div
+      class="d-flex justify-content-between flex-wrap align-items-center mt-1"
+    >
+      <!-- CREATE NEW ACCOUNT -->
+      <button
+        class="btn btn-primary create-user-btn"
+        type="button"
+        data-bs-target="#collapseExample1"
+        aria-expanded="false"
+        aria-controls="collapseExample1"
+        :disabled="isBthDisabled"
+        @click="
+          () => {
+            showCreateAccount = !showCreateAccount;
+            validateForm();
+          }
+        "
+      >
+        Create account
+      </button>
       <!-- SEARCH -->
       <div class="search d-flex border rounded">
         <select
@@ -62,24 +82,6 @@
         </button>
       </div>
     </div>
-    <!-- CREATE NEW ACCOUNT -->
-    <button
-      class="btn btn-primary create-user-btn"
-      type="button"
-      data-bs-target="#collapseExample1"
-      aria-expanded="false"
-      aria-controls="collapseExample1"
-      :disabled="isBthDisabled"
-      @click="
-        () => {
-          showCreateAccount = !showCreateAccount;
-          validateForm();
-        }
-      "
-    >
-      Create account
-    </button>
-
     <div
       class="collapse mt-3"
       :class="{ show: showCreateAccount }"
@@ -363,7 +365,7 @@
     </div>
 
     <!-- MODAL ACCOUNT INFO END -->
-    <ul class="list-group mt-3">
+    <ul class="list-group">
       <li
         v-for="(account, index) in accountsList"
         :key="index"
@@ -591,7 +593,7 @@ export default {
     },
     findAllUsers() {
       this.$store
-        .dispatch(`GET_USERS`, ``)
+        .dispatch(`GET_USERS`, `?order=desc`)
         .then(
           (this.searchUser = ``),
           (this.showAllusers = false),
@@ -603,6 +605,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list-group {
+  margin-top: 12px;
+}
 li {
   cursor: pointer;
 }
@@ -622,12 +627,12 @@ li {
   z-index: 0;
 }
 .search {
-  width: 200px;
-  margin-top: -24px;
+  width: 100%;
+  margin-top: 18px;
   padding: 3px;
   background-color: $colorWhite;
   @include media-breakpoint-up(md) {
-    transform: translate(0px, 26px);
+    margin-top: 0;
     width: 310px;
   }
   @include media-breakpoint-up(lg) {
@@ -648,22 +653,22 @@ li {
 }
 .create-user-btn {
   min-width: 12em !important;
-  margin-top: 8px;
-  @include media-breakpoint-up(sm) {
-    margin-top: 9px;
-  }
-  @include media-breakpoint-up(md) {
-    margin-top: 9px;
-  }
-  @include media-breakpoint-up(lg) {
-    margin-top: 9px;
-  }
-  @include media-breakpoint-up(xl) {
-    margin-top: 11px;
-  }
-  @include media-breakpoint-up(xxl) {
-    margin-top: 12px;
-  }
+  // margin-top: 8px;
+  // @include media-breakpoint-up(sm) {
+  //   margin-top: 9px;
+  // }
+  // @include media-breakpoint-up(md) {
+  //   margin-top: 9px;
+  // }
+  // @include media-breakpoint-up(lg) {
+  //   margin-top: 9px;
+  // }
+  // @include media-breakpoint-up(xl) {
+  //   margin-top: 11px;
+  // }
+  // @include media-breakpoint-up(xxl) {
+  //   margin-top: 12px;
+  // }
 }
 input,
 select,
