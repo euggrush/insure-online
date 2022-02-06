@@ -27,7 +27,7 @@ export default {
     getRange() {
       let timestampFromTo = {
         createdFrom: this.dateFrom.getTime(),
-        createdTill: this.dateTo.getTime(),
+        createdTo: this.dateTo.getTime(),
       };
       this.$store.commit(`SET_DATE_RANGE`, timestampFromTo);
     },

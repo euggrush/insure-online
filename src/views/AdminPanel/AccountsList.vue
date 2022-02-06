@@ -470,7 +470,7 @@ export default {
     getTimeRange() {
       this.$store.dispatch(
         `GET_USERS`,
-        `?order=desc&created>=${this.$store.state.date_range.createdFrom}`
+        `?order=desc&createdFrom=${this.$store.state.date_range.createdFrom}&createdTo=${this.$store.state.date_range.createdTo}`
       );
     },
   },
@@ -691,7 +691,6 @@ input,
 select,
 select::-webkit-input-placeholder,
 input::-webkit-input-placeholder {
-  border: none;
   font-size: $font-size-micro;
   @include media-breakpoint-up(sm) {
     font-size: $font-size-mobile;

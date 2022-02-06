@@ -1,9 +1,7 @@
 <template>
   <section>
     <p class="fw-bold">Product details:</p>
-    <!-- <span class="fw-bolder text-decoration-underline mt-1"
-      >Product name:&nbsp;</span
-    > -->
+
     <span class="d-block fw-bold pb-3">{{ product.mainProductName }}</span
     ><br />
     <span class="d-inline-block fw-bolder text-decoration-underline mt-1"
@@ -37,6 +35,13 @@
       >
         {{ coverage.subProductName }}
         <span class="fw-bold">R{{ coverage.subProductCost }}</span>
+        <button
+          type="button"
+          class="btn btn-outline-danger float-end"
+          @click="removeCoverage(coverage)"
+        >
+          Remove
+        </button>
       </li>
     </ul>
     <!-- CHANGE PRODUCT -->
@@ -114,10 +119,7 @@
     >
       Create Or Add Coverage
     </button>
-    <!-- <div class="mt-5">
-      Total in this category: {{ availableCoveragesToAdd }}
-    </div>
-    <div>Added to product already: {{ product.subProducts.length }}</div> -->
+
     <div class="collapse mt-3" id="collapseExample">
       <div class="card card-body">
         <!-- FIRST FORM -->
@@ -374,6 +376,9 @@ export default {
             alert(error);
           });
       });
+    },
+    removeCoverage(coverage) {
+      alert(coverage.subProductId);
     },
   },
 };
