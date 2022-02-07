@@ -437,7 +437,7 @@ export default {
         trackingDevice: ``,
         useCase: ``,
       },
-      orderStatus: `pending`,
+      orderStatus: ``,
     };
   },
   computed: {

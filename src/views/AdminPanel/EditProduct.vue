@@ -38,77 +38,13 @@
         <button
           type="button"
           class="btn btn-outline-danger float-end"
-          @click="removeCoverage(coverage)"
+          @click="removeCoverage(product.mainProductId, coverage.subProductId)"
         >
           Remove
         </button>
       </li>
     </ul>
-    <!-- CHANGE PRODUCT -->
-    <p class="mt-5">
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample2"
-        aria-expanded="false"
-        aria-controls="collapseExample2"
-      >
-        Change Product
-      </button>
-    </p>
-    <div class="collapse" id="collapseExample2">
-      <div class="card card-body">
-        <form class="mt-1" @submit.prevent="changeProduct(product)">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product name</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductName"
-              :placeholder="product.mainProductName"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product description</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductDescription"
-              :placeholder="product.mainProductDescription"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product cost</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              v-model="cost"
-              :placeholder="product.mainProductCost"
-            />
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="isRequiredCoverages"
-              id="flexCheckDefault"
-              :checked="product.isRequiredCoverages"
-            />
-            <label class="form-check-label" for="flexCheckDefault">
-              Coverages in this product are required (Recommended)
-            </label>
-          </div>
-          <button type="submit" class="btn btn-info mt-3">Submit</button>
-        </form>
-      </div>
-    </div>
+
     <button
       class="btn btn-primary mt-3"
       type="button"
@@ -212,6 +148,69 @@
         <!-- SECOND FORM END -->
       </div>
     </div>
+    <!-- CHANGE PRODUCT -->
+    <button
+      class="btn btn-primary d-block mt-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample2"
+      aria-expanded="false"
+      aria-controls="collapseExample2"
+    >
+      Change Product
+    </button>
+    <div class="collapse" id="collapseExample2">
+      <div class="card card-body mt-3">
+        <form class="mt-1" @submit.prevent="changeProduct(product)">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductName"
+              :placeholder="product.mainProductName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="mainProductDescription"
+              :placeholder="product.mainProductDescription"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Product cost</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="cost"
+              :placeholder="product.mainProductCost"
+            />
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="isRequiredCoverages"
+              id="flexCheckDefault"
+              :checked="product.isRequiredCoverages"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Coverages in this product are required (Recommended)
+            </label>
+          </div>
+          <button type="submit" class="btn btn-info mt-3">Submit</button>
+        </form>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -234,7 +233,6 @@ export default {
       mainProductDescription: ``,
       cost: ``,
       isRequiredCoverages: ``,
-
       isCategorySelected: false,
       mainProductId: ``,
       productInfo: {},
@@ -377,8 +375,33 @@ export default {
           });
       });
     },
-    removeCoverage(coverage) {
-      alert(coverage.subProductId);
+    removeCoverage(productId, coverageId) {
+      this.$store
+        .dispatch(`CREATE_SUB_PRODUCT`, {
+          subProductId: coverageId,
+          deleted: true,
+        })
+        .then(
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${productId}`
+          ),
+          this.$store.dispatch(
+            `GET_SUB_PRODUCTS`,
+            `?categoryId=${this.product.categoryId}`
+          )
+        )
+        .catch((err) => console.log(err))
+        .then(
+          this.$store.dispatch(
+            `GET_MAIN_PRODUCTS`,
+            `?mainProductId=${productId}`
+          ),
+          this.$store.dispatch(
+            `GET_SUB_PRODUCTS`,
+            `?categoryId=${this.product.categoryId}`
+          )
+        );
     },
   },
 };
