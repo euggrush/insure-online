@@ -4,8 +4,15 @@
     <Datepicker v-model="dateFrom" />
     <span class="ms-1 me-1">To:</span>
     <Datepicker v-model="dateTo" />
-    <button type="button" class="btn btn-dark ms-1" @click="getRange">
+    <button type="button" class="btn btn-dark ms-1 me-1" @click="getRange">
       Show
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary ms-1"
+      @click="resetRange"
+    >
+      Reset
     </button>
   </div>
 </template>
@@ -28,6 +35,15 @@ export default {
       let timestampFromTo = {
         createdFrom: this.dateFrom.getTime(),
         createdTo: this.dateTo.getTime(),
+      };
+      this.$store.commit(`SET_DATE_RANGE`, timestampFromTo);
+    },
+    resetRange() {
+      this.dateFrom = new Date();
+      this.dateTo = new Date();
+      let timestampFromTo = {
+        createdFrom: 0,
+        createdTo: new Date().getTime(),
       };
       this.$store.commit(`SET_DATE_RANGE`, timestampFromTo);
     },

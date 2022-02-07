@@ -60,10 +60,11 @@
               >
               <span>R{{ order.totalCost }}</span>
             </div>
-            <div v-if="order.adjustedCost>0" class="col border-bottom border-start">
-              <span class="d-block fw-bold fst-italic"
-                >Adjusted:</span
-              >
+            <div
+              v-if="order.adjustedCost > 0"
+              class="col border-bottom border-start"
+            >
+              <span class="d-block fw-bold fst-italic">Adjusted:</span>
               <span>R{{ order.adjustedCost }}</span>
             </div>
             <div class="col">
@@ -131,25 +132,142 @@
           <p>{{ order.vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
           <p>R{{ order.vehicleRetailValue }}</p>
-          <a
-            v-for="(file, index) in order.documents"
-            :key="index"
-            :href="`${FILE_URL}${file}`"
-            class="btn btn-light btn-pdf text-end"
-            target="_blank"
+          <div class="d-flex flex-wrap">
+            <a
+              v-for="(file, index) in order.assets"
+              :key="index"
+              :href="`${FILE_URL}${file.path}`"
+              class="btn btn-outline-dark btn-pdf text-end me-3"
+              target="_blank"
+            >
+              {{ file.description }}
+            </a>
+          </div>
+
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some((e) => e.description === 'Banking Details')
+            "
           >
-            Banking Details
-          </a>
-          <div class="mt-3 mb-3" v-if="order.documents.length == 0">
             <label for="formFile" class="form-label fw-bold"
-              >Add your banking details:</label
+              >Add Your Banking Details (PDF):</label
             >
             <input
               class="form-control"
               type="file"
               id="formFile"
               name="asset"
-              @change="uploadFile($event, order.orderId)"
+              @change="
+                uploadFile($event, order.orderId, `Banking Details`, `document`)
+              "
+            />
+          </div>
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some((e) => e.description === 'Vehicle Invoice')
+            "
+          >
+            <label for="formFile" class="form-label fw-bold"
+              >Add Your Vehicle Invoice (PDF):</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="
+                uploadFile($event, order.orderId, `Vehicle Invoice`, `document`)
+              "
+            />
+          </div>
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some(
+                (e) => e.description === 'Vehicle Registration'
+              )
+            "
+          >
+            <label for="formFile" class="form-label fw-bold"
+              >Add Your Vehicle Registration (PDF):</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="
+                uploadFile(
+                  $event,
+                  order.orderId,
+                  `Vehicle Registration`,
+                  `document`
+                )
+              "
+            />
+          </div>
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some((e) => e.description === 'Passport Document')
+            "
+          >
+            <label for="formFile" class="form-label fw-bold"
+              >Add Your ID / Passport Document (PDF):</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="
+                uploadFile(
+                  $event,
+                  order.orderId,
+                  `Passport Document`,
+                  `document`
+                )
+              "
+            />
+          </div>
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some((e) => e.description === 'Drivers License')
+            "
+          >
+            <label for="formFile" class="form-label fw-bold"
+              >Add Your Drivers License (PDF):</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="
+                uploadFile($event, order.orderId, `Drivers License`, `document`)
+              "
+            />
+          </div>
+          <div
+            class="mt-3 mb-3"
+            v-if="
+              !order.assets.some((e) => e.description === 'Photo Of Vehicle')
+            "
+          >
+            <label for="formFile" class="form-label fw-bold"
+              >Add Photo Of Vehicle (JPEG or PNG):</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="asset"
+              @change="
+                uploadFile($event, order.orderId, `Photo Of Vehicle`, `photo`)
+              "
             />
           </div>
           <!-- MODAL ERROR -->
@@ -217,39 +335,32 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    uploadFile(event, id) {
-      const asset = event.target.files[0];
-      const formData = new FormData();
+    uploadFile(event, id, description, fileType) {
+      let asset = event.target.files[0];
+
+      let formData = new FormData();
       formData.append(
         `meta`,
-        JSON.stringify({ fileType: `document`, description: `` })
+        JSON.stringify({
+          fileType: fileType,
+          description: description,
+          relatedTo: `orders`,
+          relationId: id,
+        })
       );
-      formData.append("asset", asset);
+      formData.append("asset[]", asset);
+
       this.$store.dispatch(`UPLOAD`, formData).then(() => {
         setTimeout(() => {
           if (
             this.$store.state.uploaded_file &&
             this.$store.state.uploaded_file.state == `ok`
           ) {
-            this.documentsArray.push(this.$store.state.uploaded_file.path);
-            setTimeout(() => {
-              this.$store
-                .dispatch(`CREATE_ORDER`, {
-                  orderId: id,
-                  documents: this.documentsArray,
-                })
-                .then(() => {
-                  this.getOrder(id);
-                })
-                .catch((err) => console.log(err))
-                .then(() => {
-                  this.getOrder(id);
-                });
-            }, 1000);
+            this.getOrder(id);
           } else {
             this.isUploadError = true;
             this.errMsg =
-              this.$store.state.uploaded_file.data.message ||
+              this.$store.state.general_errors.data.message ||
               `File upload error, please try later`;
           }
         }, 1000);
@@ -279,11 +390,19 @@ export default {
   min-width: 10em;
 }
 .btn-pdf {
-  min-width: 11em;
+  min-width: 100%;
   border-radius: 0;
   background-image: url("../../assets/img/icon-pdf.png");
   background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: 5% center;
+  margin-bottom: 10px;
+  padding-left: 40px;
+  @include media-breakpoint-up(md) {
+    min-width: 11em;
+  }
+}
+.btn-pdf:hover {
+  background-image: url("../../assets/img/icon-pdf.svg");
 }
 </style>
