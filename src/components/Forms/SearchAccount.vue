@@ -106,6 +106,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+input,
+select,
+select::-webkit-input-placeholder,
+input::-webkit-input-placeholder {
+  font-size: $font-size-micro;
+  @include media-breakpoint-up(sm) {
+    font-size: $font-size-mobile;
+  }
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-medium;
+  }
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-medium;
+  }
+}
+input:focus,
+select:focus,
+input:active,
+select:active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
 .search {
   width: 100%;
   margin-top: 18px;
