@@ -68,26 +68,7 @@
           <form @submit.prevent="getEstimation">
             <!-- CUSTOMER START -->
             <p class="fw-bold">Customer</p>
-            <div class="input-group mt-3 mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Customer's first and last name"
-                aria-label="Customer's first and last name"
-                aria-describedby="button-addon2"
-                v-model="accountUsername"
-                :required="!isUserSelected"
-                v-on:keyup.enter="getAccount"
-              />
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
-                @click="getAccount"
-              >
-                Find
-              </button>
-            </div>
+            <SearchAccount class="w-100 mb-3" />
             <div
               v-if="isAccountInfo"
               class="
@@ -151,147 +132,10 @@
 
                 <div class="collapse mt-3" id="collapseExample">
                   <div class="card card-body">
-                    <form @submit.prevent="createCar(accountInfo.accountId)">
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputEmail1"
-                          class="form-label text-black"
-                          >Make and model:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          v-model="vehicleInfo.details"
-                          minlength="5"
-                          maxlength="30"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputEmail2"
-                          class="form-label text-black"
-                          >Year:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputEmail2"
-                          v-model="vehicleInfo.year"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword1"
-                          class="form-label text-black"
-                          >Registration license plate:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          v-model="vehicleInfo.regNumber"
-                          minlength="2"
-                          maxlength="10"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword2"
-                          class="form-label text-black"
-                          >VIN:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputPassword2"
-                          v-model="vehicleInfo.vin"
-                          minlength="17"
-                          maxlength="17"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword3"
-                          class="form-label text-black"
-                          >Engine size:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputPassword3"
-                          v-model="vehicleInfo.engine"
-                          step="0.1"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword4"
-                          class="form-label text-black"
-                          >Retail value:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputPassword4"
-                          v-model="vehicleInfo.retailValue"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <span class="text-black">Tracking device:</span>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="tracking"
-                            value="Yes"
-                            v-model="vehicleInfo.trackingDevice"
-                            required
-                          />
-                          Yes
-                        </label>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="tracking"
-                            value="No"
-                            v-model="vehicleInfo.trackingDevice"
-                          />
-                          No
-                        </label>
-                      </div>
-                      <div class="mb-3">
-                        <span class="text-black">Use:</span>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="use"
-                            value="Private"
-                            v-model="vehicleInfo.useCase"
-                            required
-                          />
-                          Private
-                        </label>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="use"
-                            value="Business"
-                            v-model="vehicleInfo.useCase"
-                          />
-                          Business
-                        </label>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary">
-                        Submit
-                      </button>
-                    </form>
+                    <CreateVehicleForm
+                      :myProps="{ accountId: accountInfo.accountId }"
+                      class="text-black"
+                    />
                   </div>
                 </div>
               </div>
@@ -402,9 +246,13 @@
 
 <script>
 import OrdersInfo from "../AdminPanel/OrdersInfo.vue";
+import SearchAccount from "../../components/Forms/SearchAccount.vue";
+import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 export default {
   components: {
     OrdersInfo,
+    SearchAccount,
+    CreateVehicleForm,
   },
   data() {
     return {
@@ -413,7 +261,6 @@ export default {
       isUserSelected: false,
       isCarSelected: false,
       isSubProducts: false,
-      accountUsername: ``,
       selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
@@ -426,19 +273,19 @@ export default {
       isCarCategorySelected: false,
       shoNullEstimation: true,
       componentKey: 0,
-      vehicleInfo: {
-        accountId: ``,
-        details: ``,
-        year: ``,
-        regNumber: ``,
-        vin: ``,
-        engine: ``,
-        retailValue: ``,
-        trackingDevice: ``,
-        useCase: ``,
-      },
       orderStatus: ``,
     };
+  },
+  watch: {
+    accountInfo() {
+      if (this.$store.state.users_array.accounts.length == 1) {
+        this.isAccountInfo = true;
+        this.isUserSelected = true;
+      } else {
+        this.isAccountInfo = false;
+        this.isUserSelected = false;
+      }
+    },
   },
   computed: {
     categoriesList() {
@@ -476,20 +323,6 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
-    createCar(accId) {
-      this.vehicleInfo.accountId = accId;
-      this.$store
-        .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
-        .then(() => {
-          this.vehicleInfo = {};
-          this.getAccount();
-        })
-        .catch((err) => console.log(err))
-        .then(() => {
-          this.vehicleInfo = {};
-          this.getAccount();
-        });
-    },
     selectCategory() {
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
@@ -519,33 +352,6 @@ export default {
           this.isSubProducts = false;
           console.log(err);
         });
-    },
-    getAccount() {
-      let query = this.accountUsername.split(` `);
-
-      let firstName = query[0];
-      let lastName = [];
-
-      for (let i = 1; i <= query.length; i++) {
-        lastName.push(query[i]);
-      }
-      if (this.accountUsername !== ``) {
-        this.$store
-          .dispatch(
-            `GET_USERS`,
-            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
-          )
-          .then((res) => {
-            (this.isAccountInfo = true),
-              (this.isUserSelected = true),
-              console.log(res);
-          })
-          .catch((err) => {
-            alert(err.response.data.message),
-              (this.isAccountInfo = false),
-              (this.isUserSelected = false);
-          });
-      }
     },
     getEstimation() {
       this.$store
@@ -588,12 +394,12 @@ export default {
         (this.isUserSelected = false),
         (this.selectedCategory = `Select category...`),
         (this.isAccountInfo = false),
-        (this.accountUsername = ``),
         (this.selectedMainProduct = ``),
         (this.isSubProducts = false);
       (this.shoNullEstimation = true),
         (this.showEstimate = false),
         (this.selectedCarId = ``);
+      this.$store.dispatch(`GET_USERS`, ``);
     },
   },
 };

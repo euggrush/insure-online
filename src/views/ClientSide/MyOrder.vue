@@ -266,7 +266,7 @@ export default {
           vehicleId: this.selectedCarId,
         })
         .then((this.showEstimate = true), (this.shoNullEstimation = false))
-        .catch((err) => alert(err));
+        .catch((err) => console.log(err));
     },
     selectCar() {
       if (this.selectedCarId !== ``) {
@@ -290,7 +290,7 @@ export default {
           (this.isUserSelected = false),
           this.scrollToTop()
         )
-        .catch((err) => alert(err))
+        .catch((err) => console.log(err))
         .then(this.$store.dispatch(`GET_ORDERS`, `?order=desc`));
     },
     resetForm() {

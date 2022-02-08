@@ -297,30 +297,15 @@ export default {
           setTimeout(() => {
             this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
             this.changeAccount();
-            // if (
-            //   this.$store.state.uploaded_file &&
-            //   this.$store.state.uploaded_file.state == `ok`
-            // ) {
-            //   this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
-            //   this.changeAccount();
-            // } else {
-            //   this.$store.commit(`SET_MODAL`, {
-            //     isModal: true,
-            //     msg:
-            //       this.$store.state.uploaded_file.data.message ||
-            //       `File upload error, please try later`,
-            //   });
-            // }
           }, 1000);
         })
         .catch(() => {
-          alert(`File upload error, please try later`);
-          // this.$store.commit(`SET_MODAL`, {
-          //   isModal: true,
-          //   msg:
-          //     this.$store.state.general_errors ||
-          //     `File upload error, please try later`,
-          // });
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg:
+              this.$store.state.general_errors ??
+              `File upload error, please try later`,
+          });
         });
     },
     changeAccount() {
@@ -329,7 +314,7 @@ export default {
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
         .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
-        .catch((err) => alert(err))
+        .catch((err) => console.log(err))
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
         );
