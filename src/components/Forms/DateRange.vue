@@ -71,6 +71,7 @@ export default {
   margin-top: 1em;
   @include media-breakpoint-up(lg) {
     width: auto;
+    margin-top: 0;
   }
 }
 .from-wrap,

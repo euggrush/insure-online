@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid my-account p-3 position-relative">
-    <router-link to="/my-order" class="btn btn-info btn-lg">Insure</router-link>
+    <router-link to="/my-order" class="btn btn-dark btn-lg">Get Quote</router-link>
 
     <div class="row mt-3 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
@@ -9,7 +9,7 @@
             <img
               :src="`${FILE_URL}${avatar}`"
               alt="avatar"
-              class="img user-avatar-photo"
+              class="img user-avatar-photo rounded"
               width="100"
               height="100"
             />
@@ -76,7 +76,7 @@
     </div>
     <p class="mt-5 pb-3 border-bottom">
       <button
-        class="btn btn-primary"
+        class="btn btn-dark"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseExample"
@@ -208,7 +208,7 @@
                 v-model="changeUserObj.claimsHistory"
               />
             </label>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" class="btn btn-dark mt-3">Submit</button>
           </form>
         </form>
       </div>
@@ -324,7 +324,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-info {
+.btn {
   min-width: 8em;
 }
 .my-account {

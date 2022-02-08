@@ -3,7 +3,7 @@
     <h3 class="mt-3 fw-bold">Vehicles information:</h3>
 
     <button
-      class="btn btn-primary mt-3"
+      class="btn btn-dark mt-3"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#collapseWidthExample"
@@ -133,7 +133,7 @@
             <button
               @click="removeVehicle(vehicle, index)"
               type="button"
-              class="btn btn-primary"
+              class="btn btn-dark"
             >
               Save changes
             </button>
