@@ -420,7 +420,6 @@ br {
 .coverages-checkboxes {
   width: 100%;
   min-height: 100px;
-  // outline: solid 3px red;
 }
 .coverages-checkboxes__item label {
   cursor: pointer;

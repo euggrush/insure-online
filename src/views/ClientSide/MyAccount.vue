@@ -2,7 +2,7 @@
   <section class="container-fluid my-account p-3 position-relative">
     <router-link to="/my-order" class="btn btn-dark btn-lg">Get Quote</router-link>
 
-    <div class="row mt-3 my-account_info">
+    <div class="row mt-1 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <div>
           <label for="formFile" class="form-label fw-bold user-avatar-wrap">
@@ -76,7 +76,7 @@
     </div>
     <p class="mt-5 pb-3 border-bottom">
       <button
-        class="btn btn-dark"
+        class="btn btn-dark text-capitalize"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseExample"

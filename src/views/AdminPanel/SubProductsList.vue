@@ -281,7 +281,6 @@ export default {
           cost: this.cost,
         })
         .then(() => {
-          // this.$store.dispatch(`GET_SUB_PRODUCTS`);
           this.componentKey += 1;
           this.subProductName = ``;
           this.subProductDescription = ``;

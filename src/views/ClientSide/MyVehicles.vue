@@ -1,6 +1,6 @@
 <template>
   <section class="my-vehicles">
-    <h3 class="mt-3 fw-bold">Vehicles information:</h3>
+    <h3 class="mt-3 fw-bold text-capitalize">Vehicles information:</h3>
 
     <button
       class="btn btn-dark mt-3"
@@ -10,12 +10,12 @@
       aria-expanded="false"
       aria-controls="collapseWidthExample"
     >
-      <span>Add vehicle</span>
+      <span class="text-capitalize">Add vehicle</span>
     </button>
 
     <!-- CREATE VEHICLE FORN -->
     <div>
-      <div class="collapse collapse-horizontal mt-3" id="collapseWidthExample">
+      <div class="collapse mt-3" id="collapseWidthExample">
         <div class="card card-body">
           <CreateVehicleForm :myProps="{ accountId: accountId }" />
         </div>

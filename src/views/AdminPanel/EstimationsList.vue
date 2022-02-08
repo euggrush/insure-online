@@ -48,7 +48,9 @@
           </div>
 
           <div class="col border-bottom border-start">
-            <span class="d-block fw-bold text-decoration-underline">Client:</span>
+            <span class="d-block fw-bold text-decoration-underline"
+              >Client:</span
+            >
             <span
               >{{ estimation.firstName }}&nbsp;{{ estimation.lastName }}</span
             >
@@ -66,11 +68,6 @@
 const dayjs = require("dayjs");
 
 export default {
-  // data() {
-  //   return {
-  //     accIdsArr: [],
-  //   };
-  // },
   computed: {
     estimationsList() {
       return this.$store.state.estimations.estimations;
@@ -79,16 +76,6 @@ export default {
 
   mounted() {
     this.$store.dispatch(`GET_ESTIMATIONS`, ``);
-    // .then(() => {
-    //   this.$store.state.estimations.estimations.map((estimation) => {
-    //     this.accIdsArr.push(estimation.accountId);
-    //   });
-    //   this.$nextTick(() => {
-    //     this.accIdsArr.map((item) => {
-    //       console.log(item);
-    //     });
-    //   });
-    // });
   },
   methods: {
     getDate(date) {

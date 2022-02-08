@@ -1,5 +1,16 @@
 <template>
-  <section class="container-fluid d-flex flex-column justify-content-center align-items-center reg-wrap bg-dark position-relative">
+  <section
+    class="
+      container-fluid
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center
+      reg-wrap
+      bg-dark
+      position-relative
+    "
+  >
     <ModalMessage />
     <div class="signup-form">
       <form autocomplete="off" @submit.prevent="login">
@@ -72,7 +83,6 @@ export default {
             isModal: true,
             msg: err.response.data.message,
           });
-          // alert(err.response.data.message);
         });
     },
   },
@@ -86,7 +96,6 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  // padding-top: 4em;
 }
 .form-control {
   height: 41px;
@@ -104,7 +113,6 @@ export default {
 .signup-form {
   @include media-breakpoint-up(sm) {
     width: 400px;
-    // margin: 0 auto;
   }
   @include media-breakpoint-up(md) {
     width: 500px;
@@ -113,7 +121,6 @@ export default {
 .signup-form form {
   color: #999;
   border-radius: 3px;
-  // margin-bottom: 15px;
   background: #fff;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   padding: 30px;
