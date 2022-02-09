@@ -54,8 +54,29 @@
             <span
               >{{ estimation.firstName }}&nbsp;{{ estimation.lastName }}</span
             >
-            <a class="d-block" :href="`mailto:${estimation.username}`"
-              >&nbsp;{{ estimation.username }}</a
+            <a
+              class="
+                d-block
+                text-decoration-none
+                email-link
+                text-black
+                border-end border-bottom border-dark
+              "
+              :href="`mailto:${estimation.email}`"
+              >&nbsp;{{ estimation.email }}</a
+            >
+            <a
+              class="
+                d-block
+                text-decoration-none
+                cell-link
+                text-black
+                mt-1
+                mb-1
+                border-end border-bottom border-dark
+              "
+              :href="`tel:${estimation.cellphone}`"
+              >&nbsp;{{ estimation.cellphone }}</a
             >
           </div>
         </div>
@@ -86,13 +107,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.estimations-list-wrapper {
-  // outline: solid 4px green;
-}
 .quote-item {
   background-color: $mainGreen;
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
+.email-link {
+  background-image: url("../../assets/img/icon-mail.svg");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 25px;
+}
+.cell-link {
+  background-image: url("../../assets/img/icon-cell.svg");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 25px;
 }
 </style>
