@@ -1,19 +1,19 @@
 <template>
-  <section class="container-fluid my-order mt-5 p-3 position-relative">
+  <section class="container-fluid my-order p-3 position-relative">
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
     <h3 class="mt-3">Orders:</h3>
     <p>
       <button
-        class="btn btn-primary mt-3"
+        class="btn btn-dark mt-3"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseWidthExample"
         aria-expanded="false"
         aria-controls="collapseWidthExample"
       >
-        Create order
+        Create Order
       </button>
     </p>
     <div>
@@ -266,7 +266,7 @@ export default {
           vehicleId: this.selectedCarId,
         })
         .then((this.showEstimate = true), (this.shoNullEstimation = false))
-        .catch((err) => alert(err));
+        .catch((err) => console.log(err));
     },
     selectCar() {
       if (this.selectedCarId !== ``) {
@@ -290,7 +290,7 @@ export default {
           (this.isUserSelected = false),
           this.scrollToTop()
         )
-        .catch((err) => alert(err))
+        .catch((err) => console.log(err))
         .then(this.$store.dispatch(`GET_ORDERS`, `?order=desc`));
     },
     resetForm() {

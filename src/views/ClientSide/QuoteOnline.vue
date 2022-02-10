@@ -280,177 +280,6 @@
           </div>
         </div>
       </div>
-
-      <!-- BLOCK 12 -->
-      <!-- Vehicle Details -->
-      <!-- <p class="mt-5 fw-bold">Vehicle Details:</p>
-      <div class="col-md-4">
-        <label for="validationCustom12" class="form-label mt-1"
-          >Make And Model</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="validationCustom12"
-          minlength="5"
-          maxlength="30"
-          v-model="vehiclePayload.details"
-          required
-        />
-        <div class="invalid-feedback">Please enter vehicle make and model</div>
-      </div>
-
-      <div class="col-md-4">
-        <label for="validationCustom121" class="form-label mt-1"
-          >Vehicke Year</label
-        >
-        <input
-          type="number"
-          class="form-control"
-          id="validationCustom121"
-          v-model="vehiclePayload.year"
-          required
-        />
-        <div class="invalid-feedback">Please enter vehicle year</div>
-      </div>
-
-      <div class="col-md-4">
-        <label for="validationCustom13" class="form-label mt-1"
-          >Registration No.</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="validationCustom13"
-          minlength="2"
-          maxlength="10"
-          v-model="vehiclePayload.regNumber"
-          required
-        />
-        <div class="invalid-feedback">
-          Please enter vehicle registration No.
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <label for="validationCustom14" class="form-label mt-1">VIN</label>
-        <input
-          type="text"
-          class="form-control"
-          id="validationCustom14"
-          minlength="17"
-          maxlength="17"
-          v-model="vehiclePayload.vin"
-          required
-        />
-        <div class="invalid-feedback">Please enter vehicle VIN</div>
-      </div>
-
-      <div class="col-md-4">
-        <label for="validationCustom15" class="form-label mt-1">Engine</label>
-        <input
-          type="number"
-          class="form-control"
-          id="validationCustom15"
-          step="0.1"
-          v-model="vehiclePayload.engine"
-          required
-        />
-        <div class="invalid-feedback">Please enter vehicle engine size</div>
-      </div>
-
-      <div class="col-md-4">
-        <label for="validationCustom16" class="form-label mt-1"
-          >Retail Value</label
-        >
-        <input
-          type="number"
-          class="form-control"
-          id="validationCustom16"
-          v-model="vehiclePayload.retailValue"
-          required
-        />
-        <div class="invalid-feedback">Please enter vehicle retail value</div>
-      </div>
-
-      <div class="col-md-6 mt-5">
-        <span>Tracking Device</span>
-        <div class="form-check">
-          <input
-            type="radio"
-            class="form-check-input"
-            id="validationFormCheck2"
-            name="radio-stacked"
-            value="Yes"
-            v-model="vehiclePayload.trackingDevice"
-            required
-          />
-          <label class="form-check-label" for="validationFormCheck2">Yes</label>
-        </div>
-        <div class="form-check mb-3">
-          <input
-            type="radio"
-            class="form-check-input"
-            id="validationFormCheck3"
-            name="radio-stacked"
-            value="No"
-            v-model="vehiclePayload.trackingDevice"
-            required
-          />
-          <label class="form-check-label" for="validationFormCheck3">No</label>
-          <div class="invalid-feedback">
-            Please check if you have tracking device
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 mt-5">
-        <span>Use</span>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault2"
-            id="validationFormCheck4"
-            value="Private"
-            v-model="vehiclePayload.useCase"
-            required
-          />
-          <label class="form-check-label" for="validationFormCheck4">
-            Private
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault2"
-            id="validationFormCheck5"
-            value="Business"
-            v-model="vehiclePayload.useCase"
-            required
-          />
-          <label class="form-check-label" for="validationFormCheck5">
-            Business
-          </label>
-          <div class="invalid-feedback">Please check vehicle use case</div>
-        </div>
-      </div>
-
-      <div class="col-12 mt-5">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="invalidCheck"
-            required
-          />
-          <label class="form-check-label" for="invalidCheck">
-            Agree to terms and conditions
-          </label>
-          <div class="invalid-feedback">You must agree before submitting.</div>
-        </div>
-      </div> -->
       <div class="col-12 mt-5">
         <button class="btn btn-primary" type="submit">Create</button>
       </div>
@@ -468,7 +297,6 @@ const getTimeStamp = (date) => {
   return timestamp;
 };
 export default {
-  
   data() {
     return {
       isModal: false,
@@ -494,17 +322,6 @@ export default {
         claimsHistory: ``,
         previousInsurer: ``,
       },
-      // vehiclePayload: {
-      //   userId: ``,
-      //   details: ``,
-      //   year: ``,
-      //   regNumber: ``,
-      //   vin: ``,
-      //   engine: ``,
-      //   retailValue: ``,
-      //   trackingDevice: ``,
-      //   useCase: ``,
-      // },
     };
   },
   mounted() {
@@ -578,15 +395,6 @@ export default {
         this.userPayload.yearOfIssueDriverLicense !== `` &&
         this.userPayload.claimsHistory !== `` &&
         this.userPayload.previousInsurer !== ``
-        // &&
-        // this.vehiclePayload.details !== `` &&
-        // this.vehiclePayload.year !== `` &&
-        // this.vehiclePayload.regNumber !== `` &&
-        // this.vehiclePayload.vin !== `` &&
-        // this.vehiclePayload.engine !== `` &&
-        // this.vehiclePayload.retailValue !== `` &&
-        // this.vehiclePayload.trackingDevice !== `` &&
-        // this.vehiclePayload.useCase !== ``
       ) {
         return true;
       }
@@ -605,10 +413,10 @@ export default {
               this.resetForm();
               this.isUserCreated = true;
             } else {
-              console.log(`Oops, something went wrong`);
               setTimeout(() => {
                 this.modalMsg =
-                  this.$store.state.new_user.response.data.message;
+                  this.$store.state.new_user.response.data.message ??
+                  `Oops, something went wrong`;
                 this.isModal = true;
                 this.isUserCreated = false;
               }, 1000);

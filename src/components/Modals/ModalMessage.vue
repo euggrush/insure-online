@@ -13,7 +13,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p class="text-black">{{ modalInfo.msg }}</p>
+          <p class="text-black text-capitalize">{{ modalInfo.msg }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" @click="closeModal">
@@ -44,6 +44,7 @@ export default {
 .msg-popup {
   min-width: 60%;
   margin-top: 9em;
+  z-index: 3;
 }
 .btn {
   min-width: 10em;

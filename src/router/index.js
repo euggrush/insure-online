@@ -14,6 +14,17 @@ import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
 import MyAccount from '../views/ClientSide/MyAccount.vue'
 import MyOrder from '../views/ClientSide/MyOrder.vue';
 
+
+const isTokenExpired = (tokenExpiration) => {
+  const dayjs = require("dayjs");
+  let tokenTime = dayjs(tokenExpiration).valueOf();
+  let currentTime = Date.now();
+  if (tokenTime < currentTime) {
+    return true;
+  }
+  return false;
+};
+
 const routes = [{
     path: '/login',
     name: 'Login',
@@ -86,7 +97,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    if (store.state.token === ``) {
+    if (store.state.token === `` || isTokenExpired(store.state.toke_expiration_time)) {
       next('/login')
     } else if (to.meta.adminAuth) {
       if (store.state.my_role === `admin`) {

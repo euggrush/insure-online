@@ -1,15 +1,17 @@
 <template>
   <section class="container-fluid my-account p-3 position-relative">
-    <router-link to="/my-order" class="btn btn-info btn-lg">Insure</router-link>
+    <router-link to="/my-order" class="btn btn-dark btn-lg"
+      >Get Quote</router-link
+    >
 
-    <div class="row mt-3 my-account_info">
+    <div class="row mt-1 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <div>
           <label for="formFile" class="form-label fw-bold user-avatar-wrap">
             <img
               :src="`${FILE_URL}${avatar}`"
               alt="avatar"
-              class="img user-avatar-photo"
+              class="img user-avatar-photo rounded"
               width="100"
               height="100"
             />
@@ -76,7 +78,7 @@
     </div>
     <p class="mt-5 pb-3 border-bottom">
       <button
-        class="btn btn-primary"
+        class="btn btn-dark text-capitalize"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseExample"
@@ -208,14 +210,12 @@
                 v-model="changeUserObj.claimsHistory"
               />
             </label>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" class="btn btn-dark mt-3">Submit</button>
           </form>
         </form>
       </div>
     </div>
-    <MyVehicles
-      :myProps="{ myVehicles: myAccountInfo.vehicles, accountId: accountId }"
-    />
+    <MyVehicles />
     <ModalMessage />
   </section>
 </template>
@@ -290,27 +290,29 @@ export default {
       const formData = new FormData();
       formData.append(
         `meta`,
-        JSON.stringify({ fileType: `photo`, description: `` })
+        JSON.stringify({
+          fileType: `avatar`,
+          description: `avatar`,
+          relatedTo: `avatar`,
+          relationId: this.accountId,
+        })
       );
-      formData.append("asset", asset);
-      this.$store.dispatch(`UPLOAD`, formData).then(() => {
-        setTimeout(() => {
-          if (
-            this.$store.state.uploaded_file &&
-            this.$store.state.uploaded_file.state == `ok`
-          ) {
-            this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
-            this.changeAccount();
-          } else {
-            this.$store.commit(`SET_MODAL`, {
-              isModal: true,
-              msg:
-                this.$store.state.uploaded_file.data.message ||
-                `File upload error, please try later`,
-            });
-          }
-        }, 1000);
-      });
+      formData.append("asset[]", asset);
+      this.$store
+        .dispatch(`UPLOAD`, formData)
+        .then(() => {
+          setTimeout(() => {
+            this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+          }, 1000);
+        })
+        .catch(() => {
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg:
+              this.$store.state.general_errors ??
+              `File upload error, please try later`,
+          });
+        });
     },
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;
@@ -318,7 +320,7 @@ export default {
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
         .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
-        .catch((err) => alert(err))
+        .catch((err) => console.log(err))
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
         );
@@ -328,7 +330,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-info {
+.btn {
   min-width: 8em;
 }
 .my-account {

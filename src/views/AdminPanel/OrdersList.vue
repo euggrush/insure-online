@@ -1,44 +1,74 @@
 <template>
   <section class="container orders-list-wrapper pb-3">
     <h3 class="mt-3">Orders:</h3>
+    <div class="d-flex justify-content-between flex-wrap align-items-center">
+      <button
+        class="btn btn-primary mt-1"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseWidthExample"
+        aria-expanded="false"
+        aria-controls="collapseWidthExample"
+      >
+        Create order
+      </button>
+      <div
+        class="btn-group d-flex flex-wrap"
+        role="group"
+        aria-label="Basic radio toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio0"
+          autocomplete="off"
+          value=""
+          v-model="orderStatus"
+          checked
+        />
+        <label class="btn btn-outline-dark" for="btnradio0">All</label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio1"
+          autocomplete="off"
+          value="pending"
+          v-model="orderStatus"
+        />
+        <label class="btn btn-outline-dark" for="btnradio1">Pending</label>
 
-    <button
-      class="btn btn-primary mt-1"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseWidthExample"
-      aria-expanded="false"
-      aria-controls="collapseWidthExample"
-    >
-      Create order
-    </button>
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio2"
+          value="approved"
+          v-model="orderStatus"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-dark" for="btnradio2">Approved</label>
 
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio3"
+          value="rejected"
+          v-model="orderStatus"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-dark" for="btnradio3">Rejected</label>
+      </div>
+    </div>
     <div class="mt-3">
       <div class="collapse" id="collapseWidthExample">
         <div class="card card-body">
           <form @submit.prevent="getEstimation">
             <!-- CUSTOMER START -->
             <p class="fw-bold">Customer</p>
-            <div class="input-group mt-3 mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Customer's first and last name"
-                aria-label="Customer's first and last name"
-                aria-describedby="button-addon2"
-                v-model="accountUsername"
-                :required="!isUserSelected"
-                v-on:keyup.enter="getAccount"
-              />
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
-                @click="getAccount"
-              >
-                Find
-              </button>
-            </div>
+            <SearchAccount class="w-100 mb-3" />
             <div
               v-if="isAccountInfo"
               class="
@@ -102,147 +132,10 @@
 
                 <div class="collapse mt-3" id="collapseExample">
                   <div class="card card-body">
-                    <form @submit.prevent="createCar(accountInfo.accountId)">
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputEmail1"
-                          class="form-label text-black"
-                          >Make and model:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          v-model="vehicleInfo.details"
-                          minlength="5"
-                          maxlength="30"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputEmail2"
-                          class="form-label text-black"
-                          >Year:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputEmail2"
-                          v-model="vehicleInfo.year"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword1"
-                          class="form-label text-black"
-                          >Registration license plate:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          v-model="vehicleInfo.regNumber"
-                          minlength="2"
-                          maxlength="10"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword2"
-                          class="form-label text-black"
-                          >VIN:</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="exampleInputPassword2"
-                          v-model="vehicleInfo.vin"
-                          minlength="17"
-                          maxlength="17"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword3"
-                          class="form-label text-black"
-                          >Engine size:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputPassword3"
-                          v-model="vehicleInfo.engine"
-                          step="0.1"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputPassword4"
-                          class="form-label text-black"
-                          >Retail value:</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="exampleInputPassword4"
-                          v-model="vehicleInfo.retailValue"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <span class="text-black">Tracking device:</span>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="tracking"
-                            value="Yes"
-                            v-model="vehicleInfo.trackingDevice"
-                            required
-                          />
-                          Yes
-                        </label>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="tracking"
-                            value="No"
-                            v-model="vehicleInfo.trackingDevice"
-                          />
-                          No
-                        </label>
-                      </div>
-                      <div class="mb-3">
-                        <span class="text-black">Use:</span>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="use"
-                            value="Private"
-                            v-model="vehicleInfo.useCase"
-                            required
-                          />
-                          Private
-                        </label>
-                        <label class="ms-3 text-black">
-                          <input
-                            type="radio"
-                            name="use"
-                            value="Business"
-                            v-model="vehicleInfo.useCase"
-                          />
-                          Business
-                        </label>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary">
-                        Submit
-                      </button>
-                    </form>
+                    <CreateVehicleForm
+                      :myProps="{ accountId: accountInfo.accountId }"
+                      class="text-black"
+                    />
                   </div>
                 </div>
               </div>
@@ -342,15 +235,24 @@
         </div>
       </div>
     </div>
-    <OrdersInfo :componentKey="componentKey" />
+    <OrdersInfo
+      :myProps="{
+        componentKey: componentKey,
+        orderStatus: `orderStatus=${orderStatus}`,
+      }"
+    />
   </section>
 </template>
 
 <script>
 import OrdersInfo from "../AdminPanel/OrdersInfo.vue";
+import SearchAccount from "../../components/Forms/SearchAccount.vue";
+import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 export default {
   components: {
     OrdersInfo,
+    SearchAccount,
+    CreateVehicleForm,
   },
   data() {
     return {
@@ -359,7 +261,6 @@ export default {
       isUserSelected: false,
       isCarSelected: false,
       isSubProducts: false,
-      accountUsername: ``,
       selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
@@ -372,18 +273,19 @@ export default {
       isCarCategorySelected: false,
       shoNullEstimation: true,
       componentKey: 0,
-      vehicleInfo: {
-        accountId: ``,
-        details: ``,
-        year: ``,
-        regNumber: ``,
-        vin: ``,
-        engine: ``,
-        retailValue: ``,
-        trackingDevice: ``,
-        useCase: ``,
-      },
+      orderStatus: ``,
     };
+  },
+  watch: {
+    accountInfo() {
+      if (this.$store.state.users_array.accounts.length == 1) {
+        this.isAccountInfo = true;
+        this.isUserSelected = true;
+      } else {
+        this.isAccountInfo = false;
+        this.isUserSelected = false;
+      }
+    },
   },
   computed: {
     categoriesList() {
@@ -421,20 +323,6 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
-    createCar(accId) {
-      this.vehicleInfo.accountId = accId;
-      this.$store
-        .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
-        .then(() => {
-          this.vehicleInfo = {};
-          this.getAccount();
-        })
-        .catch((err) => console.log(err))
-        .then(() => {
-          this.vehicleInfo = {};
-          this.getAccount();
-        });
-    },
     selectCategory() {
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
@@ -465,33 +353,6 @@ export default {
           console.log(err);
         });
     },
-    getAccount() {
-      let query = this.accountUsername.split(` `);
-
-      let firstName = query[0];
-      let lastName = [];
-
-      for (let i = 1; i <= query.length; i++) {
-        lastName.push(query[i]);
-      }
-      if (this.accountUsername !== ``) {
-        this.$store
-          .dispatch(
-            `GET_USERS`,
-            `?firstName=${firstName}&lastName=${lastName.join(` `)}`
-          )
-          .then((res) => {
-            (this.isAccountInfo = true),
-              (this.isUserSelected = true),
-              console.log(res);
-          })
-          .catch(
-            (err) => alert(err.response.data.message),
-            (this.isAccountInfo = false),
-            (this.isUserSelected = false)
-          );
-      }
-    },
     getEstimation() {
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
@@ -520,15 +381,12 @@ export default {
         })
         .then(
           (this.componentKey += 1),
-          this.$store.dispatch(`GET_ORDERS`, ``, this.resetForm()),
+          this.resetForm(),
           (this.isCategorySelected = false),
           (this.isMainProductSelected = false),
           (this.isUserSelected = false)
         )
-        .catch((err) => alert(err))
-        .then(() => {
-          this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
-        });
+        .catch((err) => alert(err));
     },
     resetForm() {
       (this.isCategorySelected = false),
@@ -536,18 +394,26 @@ export default {
         (this.isUserSelected = false),
         (this.selectedCategory = `Select category...`),
         (this.isAccountInfo = false),
-        (this.accountUsername = ``),
         (this.selectedMainProduct = ``),
         (this.isSubProducts = false);
       (this.shoNullEstimation = true),
         (this.showEstimate = false),
         (this.selectedCarId = ``);
+      this.$store.dispatch(`GET_USERS`, ``);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.btn-outline-dark {
+  margin-top: 1em;
+  border-radius: 0;
+  @include media-breakpoint-up(lg) {
+    margin-top: 0.25rem;
+    border-radius: 50px;
+  }
+}
 .orders-list-wrapper {
   min-height: 53vh;
 }

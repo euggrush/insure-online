@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
     state: {
         status: ``,
         token: ``,
+        toke_expiration_time: ``,
         user: ``,
         my_role: ``,
         product_categories: [],
@@ -40,12 +41,19 @@ export const store = new Vuex.Store({
             msg: ``
         },
         uploaded_file: [],
-        general_errors: {}
+        general_errors: {},
+        modals_toggle: {
+            isEditVehicleOpen: false
+        },
+        date_range: {
+            createdFrom: 0,
+            createdTo: new Date().getTime()
+        }
     },
     plugins: [
         createLogger(),
         createPersistedState({
-            paths: ['my_role', 'token', 'user', 'status'],
+            paths: ['my_role', 'token', 'user', 'status', 'toke_expiration_time'],
             storage: {
                 getItem: (key) => ls.get(key),
                 setItem: (key, value) =>
@@ -57,6 +65,9 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_MODALS_TOGGLE(state, payload) {
+            state.modals_toggle = payload;
+        },
         SET_GENERAL_ERRORS(state, payload) {
             if (payload.response) {
                 state.general_errors = {
@@ -75,11 +86,15 @@ export const store = new Vuex.Store({
             }
             console.log(payload.config);
         },
+        SET_DATE_RANGE(state, payload) {
+            state.date_range = payload;
+        },
         auth_success(state, payload) {
             state.status = 'success'
             state.token = payload.token
             state.user = payload.user;
             state.my_role = payload.role;
+            state.toke_expiration_time = payload.tokenExpirationTime;
         },
         auth_error(state) {
             state.status = 'error'
@@ -89,6 +104,7 @@ export const store = new Vuex.Store({
             state.token = ``;
             state.user = ``;
             state.my_role = ``;
+            state.toke_expiration_time = ``;
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
@@ -145,6 +161,7 @@ export const store = new Vuex.Store({
                     .then(resp => {
 
                         const token = resp.data.token;
+                        const tokenExpirationTime = resp.data.tokenExpirationTime;
                         const user = resp.data;
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -152,7 +169,8 @@ export const store = new Vuex.Store({
                         commit('auth_success', {
                             token,
                             user,
-                            role
+                            role,
+                            tokenExpirationTime
                         });
                         commit(`SET_ORDERS`, []);
                         resolve(resp);
@@ -257,8 +275,9 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_NEW_USER`, data);
                 }
-            ).catch((err) => {
-                context.commit(`SET_NEW_USER`, err);
+            ).catch((error) => {
+                context.commit(`SET_NEW_USER`, error);
+                context.commit(`SET_GENERAL_ERRORS`, error);
             })
         },
         UPLOAD: async (context, payload) => {
@@ -268,23 +287,7 @@ export const store = new Vuex.Store({
                     context.commit(`SET_UPLOADED_FILE`, data);
                 }
             ).catch((error) => {
-                if (error.response) {
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        data: error.response.data,
-                        status: error.response.status,
-                        headers: error.response.headers
-                    });
-                } else if (error.request) {
-
-                    console.log(error.request);
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        request: error.request
-                    });
-                } else {
-                    context.commit(`SET_UPLOADED_FILE`, {
-                        message: error.message
-                    });
-                }
+                context.commit(`SET_GENERAL_ERRORS`, error);
             })
         }
     },

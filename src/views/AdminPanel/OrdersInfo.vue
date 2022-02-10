@@ -10,6 +10,11 @@
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
+                >Created:</span
+              ><span class="fst-italic">{{ getDate(order.orderCreated) }}</span>
+            </div>
+            <div class="col border-bottom border-start">
+              <span class="d-block fw-bold text-decoration-underline"
                 >Order status:</span
               >
               <span
@@ -181,16 +186,17 @@
           >
           <span>R{{ order.vehicleRetailValue }}</span
           ><br />
-
-          <a
-            v-for="(file, index) in order.documents"
-            :href="`${FILE_URL}${file}`"
-            :key="index"
-            class="btn btn-light btn-pdf mt-3"
-            target="_blank"
-          >
-            Banking Details
-          </a>
+          <div class="d-flex flex-wrap">
+            <a
+              v-for="(file, index) in order.assets"
+              :key="index"
+              :href="`${FILE_URL}${file.path}`"
+              class="btn btn-outline-dark btn-pdf text-end me-3"
+              target="_blank"
+            >
+              {{ file.description }}
+            </a>
+          </div>
 
           <div class="row row-cols-auto">
             <div class="col">
@@ -234,14 +240,23 @@ export default {
     };
   },
   props: {
-    componentKey: {
-      type: Number,
-      default: 0,
+    myProps: {
+      type: Object,
+      default: () => {},
     },
   },
   watch: {
     componentRerenderKey() {
-      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
+      this.$store.dispatch(
+        `GET_ORDERS`,
+        `?order=desc&${this.myProps.orderStatus}`
+      );
+    },
+    toggleStatus() {
+      this.$store.dispatch(
+        `GET_ORDERS`,
+        `?order=desc&${this.myProps.orderStatus}`
+      );
     },
   },
   computed: {
@@ -249,7 +264,10 @@ export default {
       return this.$store.state.orders.orders || [];
     },
     componentRerenderKey() {
-      return this.componentKey;
+      return this.myProps.componentKey;
+    },
+    toggleStatus() {
+      return this.myProps.orderStatus;
     },
   },
   mounted() {
@@ -342,10 +360,19 @@ br {
   margin-top: 0;
 }
 .btn-pdf {
+  min-width: 100%;
   border-radius: 0;
   background-image: url("../../assets/img/icon-pdf.png");
   background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: 5% center;
+  margin-bottom: 10px;
+  padding-left: 40px;
+  @include media-breakpoint-up(md) {
+    min-width: 11em;
+  }
+}
+.btn-pdf:hover {
+  background-image: url("../../assets/img/icon-pdf.svg");
 }
 </style>
