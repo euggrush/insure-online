@@ -20,7 +20,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       return new Promise(function (_resolve, _reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch(`logout`);
+          this.$store.dispatch(`LOGOUT`);
         }
         throw err;
       });

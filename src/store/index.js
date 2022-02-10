@@ -19,22 +19,11 @@ import {
     BASE_URL
 } from '../constants';
 
-// const dayjs = require("dayjs");
-
-// const isTokenExpired = (tokenExpiration) => {
-//     let tokenTime = dayjs(tokenExpiration).valueOf();
-//     let currentTime = Date.now();
-//     if (tokenTime < currentTime) {
-//         return true;
-//     }
-//     return false;
-// };
-
 export const store = new Vuex.Store({
     state: {
         status: ``,
         token: ``,
-        // is_token_expired: ``,
+        toke_expiration_time: ``,
         user: ``,
         my_role: ``,
         product_categories: [],
@@ -64,7 +53,7 @@ export const store = new Vuex.Store({
     plugins: [
         createLogger(),
         createPersistedState({
-            paths: ['my_role', 'token', 'user', 'status'],
+            paths: ['my_role', 'token', 'user', 'status', 'toke_expiration_time'],
             storage: {
                 getItem: (key) => ls.get(key),
                 setItem: (key, value) =>
@@ -105,7 +94,7 @@ export const store = new Vuex.Store({
             state.token = payload.token
             state.user = payload.user;
             state.my_role = payload.role;
-            // state.is_token_expired = isTokenExpired(payload.tokenExpirationTime);
+            state.toke_expiration_time = payload.tokenExpirationTime;
         },
         auth_error(state) {
             state.status = 'error'
@@ -115,7 +104,7 @@ export const store = new Vuex.Store({
             state.token = ``;
             state.user = ``;
             state.my_role = ``;
-            // state.is_token_expired = ``;
+            state.toke_expiration_time = ``;
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
@@ -172,7 +161,7 @@ export const store = new Vuex.Store({
                     .then(resp => {
 
                         const token = resp.data.token;
-                        // const tokenExpirationTime = resp.data.tokenExpirationTime;
+                        const tokenExpirationTime = resp.data.tokenExpirationTime;
                         const user = resp.data;
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -181,7 +170,7 @@ export const store = new Vuex.Store({
                             token,
                             user,
                             role,
-                            // tokenExpirationTime
+                            tokenExpirationTime
                         });
                         commit(`SET_ORDERS`, []);
                         resolve(resp);
