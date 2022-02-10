@@ -19,10 +19,22 @@ import {
     BASE_URL
 } from '../constants';
 
+// const dayjs = require("dayjs");
+
+// const isTokenExpired = (tokenExpiration) => {
+//     let tokenTime = dayjs(tokenExpiration).valueOf();
+//     let currentTime = Date.now();
+//     if (tokenTime < currentTime) {
+//         return true;
+//     }
+//     return false;
+// };
+
 export const store = new Vuex.Store({
     state: {
         status: ``,
         token: ``,
+        // is_token_expired: ``,
         user: ``,
         my_role: ``,
         product_categories: [],
@@ -93,6 +105,7 @@ export const store = new Vuex.Store({
             state.token = payload.token
             state.user = payload.user;
             state.my_role = payload.role;
+            // state.is_token_expired = isTokenExpired(payload.tokenExpirationTime);
         },
         auth_error(state) {
             state.status = 'error'
@@ -102,6 +115,7 @@ export const store = new Vuex.Store({
             state.token = ``;
             state.user = ``;
             state.my_role = ``;
+            // state.is_token_expired = ``;
         },
         SET_REGISTRATION(state, payload) {
             state.user = payload;
@@ -158,6 +172,7 @@ export const store = new Vuex.Store({
                     .then(resp => {
 
                         const token = resp.data.token;
+                        // const tokenExpirationTime = resp.data.tokenExpirationTime;
                         const user = resp.data;
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -165,7 +180,8 @@ export const store = new Vuex.Store({
                         commit('auth_success', {
                             token,
                             user,
-                            role
+                            role,
+                            // tokenExpirationTime
                         });
                         commit(`SET_ORDERS`, []);
                         resolve(resp);
