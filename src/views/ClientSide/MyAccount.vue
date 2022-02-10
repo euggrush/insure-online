@@ -1,6 +1,8 @@
 <template>
   <section class="container-fluid my-account p-3 position-relative">
-    <router-link to="/my-order" class="btn btn-dark btn-lg">Get Quote</router-link>
+    <router-link to="/my-order" class="btn btn-dark btn-lg"
+      >Get Quote</router-link
+    >
 
     <div class="row mt-1 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
@@ -288,15 +290,19 @@ export default {
       const formData = new FormData();
       formData.append(
         `meta`,
-        JSON.stringify({ fileType: `photo`, description: `` })
+        JSON.stringify({
+          fileType: `avatar`,
+          description: `avatar`,
+          relatedTo: `avatar`,
+          relationId: this.accountId,
+        })
       );
-      formData.append("asset", asset);
+      formData.append("asset[]", asset);
       this.$store
         .dispatch(`UPLOAD`, formData)
         .then(() => {
           setTimeout(() => {
-            this.changeUserObj.avatar = this.$store.state.uploaded_file.path;
-            this.changeAccount();
+            this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
           }, 1000);
         })
         .catch(() => {
