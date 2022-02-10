@@ -79,7 +79,9 @@ export default {
         this.$store
           .dispatch(
             `GET_USERS`,
-            `?${this.accountSearchOption}=${this.searchUser}`
+            `?${this.accountSearchOption}=${encodeURIComponent(
+              this.searchUser
+            )}`
           )
           .then(
             (this.searchUser = ``),
