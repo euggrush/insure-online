@@ -6,8 +6,10 @@
       justify-content-between
       align-items-center
       range-wrap
+      position-relative
     "
   >
+    <ModalMessage />
     <div class="d-flex justify-content-end align-items-center from-wrap">
       <span class="me-1">From:</span>
       <Datepicker v-model="dateFrom" />
@@ -33,10 +35,12 @@
 
 <script>
 import Datepicker from "vue3-datepicker";
+import ModalMessage from "../Modals/ModalMessage.vue";
 import { ref } from "vue";
 export default {
   components: {
     Datepicker,
+    ModalMessage,
   },
   data() {
     return {
@@ -50,6 +54,12 @@ export default {
         createdFrom: this.dateFrom.getTime(),
         createdTo: this.dateTo.getTime(),
       };
+      if (timestampFromTo.createdFrom > timestampFromTo.createdTo) {
+        this.$store.commit(`SET_MODAL`, {
+          msg: `"From" cannot be later than "To". Please Select another Time Period.`,
+          isModal: true,
+        });
+      }
       this.$store.commit(`SET_DATE_RANGE`, timestampFromTo);
     },
     resetRange() {

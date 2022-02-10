@@ -88,7 +88,11 @@ export default {
             (this.searchBtnInputDisabled = true)
           )
           .catch((err) => {
-            alert(err.response.data.message), (this.showAllusers = false);
+            this.$store.commit(`SET_MODAL`, {
+              msg: err.response.data.message,
+              isModal: true,
+            }),
+              (this.showAllusers = false);
           });
       }
     },
