@@ -13,51 +13,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1.99%</th>
-          <td>25 to 45</td>
-          <td><strong>R</strong>0 to <strong>R</strong>100 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.95%</th>
-          <td>25 to 45</td>
-          <td><strong>R</strong>100 001 to <strong>R</strong>350 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.71%</th>
-          <td>25 to 45</td>
-          <td><strong>R</strong>350 001 to <strong>R</strong>700 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.65%</th>
-          <td>25 to 45</td>
-          <td><strong>R</strong>700 001 to <strong>R</strong>1 000 000</td>
-        </tr>
-        <tr>
-          <th scope="row"></th>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <th scope="row">1.40%</th>
-          <td>46 to 85</td>
-          <td><strong>R</strong>0 to <strong>R</strong>100 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.36%</th>
-          <td>46 to 85</td>
-          <td><strong>R</strong>100 001 to <strong>R</strong>350 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.20%</th>
-          <td>46 to 85</td>
-          <td><strong>R</strong>350 001 to <strong>R</strong>700 000</td>
-        </tr>
-        <tr>
-          <th scope="row">1.15%</th>
-          <td>46 to 85</td>
-          <td><strong>R</strong>700 001 to <strong>R</strong>1 000 000</td>
+        <tr v-for="(item, index) in ratingDataList" :key="index">
+          <th scope="row">{{ (item.value * 100).toFixed(2) }}%</th>
+          <td>{{ item.data.ageRange }}</td>
+          <td>{{ item.data.carValueRange }}</td>
         </tr>
       </tbody>
     </table>
@@ -68,37 +27,61 @@
 export default {
   data() {
     return {
-      resourcesKeysAndData: [],
-      resourcesKeysArray: [
-        `rating_age25-45_price100000`,
-        `rating_age25-45_price100000-350000`,
-        `rating_age25-45_price350000-700000`,
-        `rating_age25-45_price700000-1000000`,
-        `rating_age45-85_price100000`,
-        `rating_age45-85_price100000-350000`,
-        `rating_age45-85_price350000-700000`,
-        `rating_age45-85_price700000-1000000`,
-      ],
-      resourcesObject: {},
+      resourcesKeysMap: new Map(),
+      dataArray: [],
     };
   },
   computed: {
-    ratingList() {
-      return this.$store.state.rating.resources;
+    ratingDataList() {
+      return this.dataArray;
     },
   },
   mounted() {
-    this.resourcesKeysAndData = new Map();
+    this.resourcesKeysMap.set(`rating_age25-45_price100000`, {
+      ageRange: `25 to 45`,
+      carValueRange: `R0 to R100 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age25-45_price100000-350000`, {
+      ageRange: `25 to 45`,
+      carValueRange: `R100 001 to R350 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age25-45_price350000-700000`, {
+      ageRange: `25 to 45`,
+      carValueRange: `R350 001 to R700 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age25-45_price700000-1000000`, {
+      ageRange: `25 to 45`,
+      carValueRange: `R700 001 to R1 000 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age45-85_price100000`, {
+      ageRange: `46 to 85`,
+      carValueRange: `R0 to R100 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age45-85_price100000-350000`, {
+      ageRange: `46 to 85`,
+      carValueRange: `R100 001 to R350 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age45-85_price350000-700000`, {
+      ageRange: `46 to 85`,
+      carValueRange: `R350 001 to R700 000`,
+    });
+    this.resourcesKeysMap.set(`rating_age45-85_price700000-1000000`, {
+      ageRange: `46 to 85`,
+      carValueRange: `R700 001 to R1 000 000`,
+    });
+
     this.$store.dispatch(`GET_RATING`, ``).then(() => {
       setTimeout(() => {
         if (this.$store.state.rating.resources) {
           this.$store.state.rating.resources.map((item) => {
-            this.resourcesObject[item.resourceKey] = item.resourceValue;
-            this.resourcesKeysAndData.set(item.resourceKey, item.resourceValue);
+            this.dataArray.push({
+              key: item.resourceKey,
+              value: item.resourceValue,
+              data: this.resourcesKeysMap.get(item.resourceKey),
+            });
           });
         }
-        console.log(this.resourcesKeysAndData);
-      }, 1000);
+      }, 100);
     });
   },
 };
