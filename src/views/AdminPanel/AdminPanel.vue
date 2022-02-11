@@ -47,6 +47,13 @@
       >
         Orders
       </button>
+      <button
+        class="nav-link fw-bold"
+        :class="{ active: isResources }"
+        @click="showResources"
+      >
+        Resources
+      </button>
     </nav>
 
     <section class="mt-1">
@@ -56,6 +63,7 @@
       <SubProducts v-if="isSubProducts" />
       <EstimationsList v-if="isEstimations" />
       <OrdersList v-if="isOrders" />
+      <Resources v-if="isResources" />
     </section>
   </section>
 </template>
@@ -67,6 +75,7 @@ import ProductsList from "../AdminPanel/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
 import EstimationsList from "../AdminPanel/EstimationsList.vue";
 import OrdersList from "../AdminPanel/OrdersList.vue";
+import Resources from "../AdminPanel/Resources.vue";
 export default {
   name: `AdminPanel`,
   components: {
@@ -76,6 +85,7 @@ export default {
     SubProducts,
     EstimationsList,
     OrdersList,
+    Resources,
   },
   data() {
     return {
@@ -85,6 +95,7 @@ export default {
       isSubProducts: false,
       isEstimations: false,
       isOrders: false,
+      isResources: false,
       loggedUser: `John Doe`,
     };
   },
@@ -96,6 +107,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showCategories() {
       this.isAccounts = false;
@@ -104,6 +116,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showProducts() {
       this.isAccounts = false;
@@ -112,6 +125,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showSubProducts() {
       this.isAccounts = false;
@@ -120,6 +134,7 @@ export default {
       this.isSubProducts = true;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showEstimations() {
       this.isAccounts = false;
@@ -128,6 +143,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = true;
       this.isOrders = false;
+      this.isResources = false;
     },
     showOrders() {
       this.isAccounts = false;
@@ -136,6 +152,16 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = true;
+      this.isResources = false;
+    },
+    showResources() {
+      this.isAccounts = false;
+      this.isCategories = false;
+      this.isProducts = false;
+      this.isSubProducts = false;
+      this.isEstimations = false;
+      this.isOrders = false;
+      this.isResources = true;
     },
   },
 };
