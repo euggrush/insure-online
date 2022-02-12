@@ -300,6 +300,9 @@ export const store = new Vuex.Store({
             } = await Axios.get(`${BASE_URL}/resources${payload}`);
             context.commit(`SET_RATING`, data);
 
-        }
+        },
+        MODIFY_RATING: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/resources`, payload);
+        },
     },
 });

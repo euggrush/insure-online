@@ -1,10 +1,15 @@
 <template>
-  <section class="container-fluid">
-    <table class="table table-dark table-striped caption-top table-hover">
-      <caption class="fw-bold">
-        Rating
-      </caption>
-
+  <section class="container">
+    <h3 class="mt-3">Rating:</h3>
+    <button type="button" class="btn btn-dark mt-1" @click="show = !show">
+      Change Rating
+    </button>
+    <Transition>
+      <div class="bg-light mt-3 p-3" v-if="show">
+        <EditRating :myProps="dataArray" />
+      </div>
+    </Transition>
+    <table class="table table-dark table-striped caption-top table-hover mt-3">
       <thead>
         <tr>
           <th scope="col">Annual Rate</th>
@@ -24,14 +29,29 @@
 </template>
 
 <script>
+import EditRating from "../../components/Forms/EditRating.vue";
 export default {
+  components: {
+    EditRating,
+  },
   data() {
     return {
+      show: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };
   },
+  watch: {
+    rawRatingData() {
+      // this.getAllData();
+
+      // this.$forceUpdate();
+    },
+  },
   computed: {
+    rawRatingData() {
+      return this.$store.state.rating.resources;
+    },
     ratingDataList() {
       return this.dataArray;
     },
@@ -69,20 +89,24 @@ export default {
       ageRange: `46 to 85`,
       carValueRange: `R700 001 to R1 000 000`,
     });
-
-    this.$store.dispatch(`GET_RATING`, ``).then(() => {
-      setTimeout(() => {
-        if (this.$store.state.rating.resources) {
-          this.$store.state.rating.resources.map((item) => {
-            this.dataArray.push({
-              key: item.resourceKey,
-              value: item.resourceValue,
-              data: this.resourcesKeysMap.get(item.resourceKey),
+    this.getAllData();
+  },
+  methods: {
+    getAllData() {
+      this.$store.dispatch(`GET_RATING`, ``).then(() => {
+        setTimeout(() => {
+          if (this.$store.state.rating.resources) {
+            this.$store.state.rating.resources.map((item) => {
+              this.dataArray.push({
+                key: item.resourceKey,
+                value: item.resourceValue,
+                data: this.resourcesKeysMap.get(item.resourceKey),
+              });
             });
-          });
-        }
-      }, 100);
-    });
+          }
+        }, 100);
+      });
+    },
   },
 };
 </script>
@@ -90,5 +114,17 @@ export default {
 <style lang="scss" scoped>
 th {
   cursor: pointer;
+}
+.btn {
+  min-width: 12em;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
