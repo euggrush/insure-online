@@ -1,12 +1,15 @@
 <template>
   <section class="container">
+    <div>
+      {{ dataArray }}
+    </div>
     <h3 class="mt-3">Rating:</h3>
     <button type="button" class="btn btn-dark mt-1" @click="show = !show">
       Change Rating
     </button>
     <Transition>
       <div class="bg-light mt-3 p-3" v-if="show">
-        <EditRating :myProps="dataArray" />
+        <EditRating :myProps="dataArray" @updateData="updateDataArray" />
       </div>
     </Transition>
     <table class="table table-dark table-striped caption-top table-hover mt-3">
@@ -18,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in ratingDataList" :key="index">
+        <tr v-for="item in ratingDataList" :key="item.value">
           <th scope="row">{{ (item.value * 100).toFixed(2) }}%</th>
           <td>{{ item.data.ageRange }}</td>
           <td>{{ item.data.carValueRange }}</td>
@@ -41,17 +44,8 @@ export default {
       dataArray: [],
     };
   },
-  watch: {
-    rawRatingData() {
-      // this.getAllData();
 
-      // this.$forceUpdate();
-    },
-  },
   computed: {
-    rawRatingData() {
-      return this.$store.state.rating.resources;
-    },
     ratingDataList() {
       return this.dataArray;
     },
@@ -92,9 +86,13 @@ export default {
     this.getAllData();
   },
   methods: {
+    updateDataArray() {
+      this.getAllData();
+    },
     getAllData() {
-      this.$store.dispatch(`GET_RATING`, ``).then(() => {
-        setTimeout(() => {
+      this.dataArray = [];
+      this.$nextTick(() => {
+        this.$store.dispatch(`GET_RATING`, ``).then(() => {
           if (this.$store.state.rating.resources) {
             this.$store.state.rating.resources.map((item) => {
               this.dataArray.push({
@@ -104,7 +102,7 @@ export default {
               });
             });
           }
-        }, 100);
+        });
       });
     },
   },

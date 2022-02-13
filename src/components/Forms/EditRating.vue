@@ -60,8 +60,11 @@ export default {
         resourceValue: this.ratingAmount / 100,
       };
       this.$store.dispatch(`MODIFY_RATING`, payload).then(() => {
-        this.$store.dispatch(`GET_RATING`, ``);
+        this.selectedKey = ``;
+        this.ratingAmount = ``;
       });
+      // eslint-disable-next-line vue/custom-event-name-casing
+      this.$emit(`updateData`, {});
     },
   },
 };
