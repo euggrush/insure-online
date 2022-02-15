@@ -1,15 +1,12 @@
 <template>
   <section class="container">
-    <div>
-      {{ dataArray }}
-    </div>
     <h3 class="mt-3">Rating:</h3>
     <button type="button" class="btn btn-dark mt-1" @click="show = !show">
       Change Rating
     </button>
     <Transition>
       <div class="bg-light mt-3 p-3" v-if="show">
-        <EditRating :myProps="dataArray" />
+        <EditRating :myProps="dataArray" @closeForm="closeRatingForm" />
       </div>
     </Transition>
     <table class="table table-dark table-striped caption-top table-hover mt-3">
@@ -94,9 +91,9 @@ export default {
     this.fetchAllData();
   },
   methods: {
-    // updateDataArray() {
-    //   this.getAllData();
-    // },
+    closeRatingForm() {
+      this.show = false;
+    },
     fetchAllData() {
       this.dataArray = [];
       this.$nextTick(() => {

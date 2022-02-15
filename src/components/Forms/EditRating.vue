@@ -65,7 +65,7 @@ export default {
         this.$store.dispatch(`GET_RATING`, ``);
       });
       // eslint-disable-next-line vue/custom-event-name-casing
-      // this.$emit(`updateData`, {});
+      this.$emit(`closeForm`, {});
     },
   },
 };
