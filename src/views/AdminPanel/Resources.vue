@@ -9,7 +9,7 @@
     </button>
     <Transition>
       <div class="bg-light mt-3 p-3" v-if="show">
-        <EditRating :myProps="dataArray" @updateData="updateDataArray" />
+        <EditRating :myProps="dataArray" />
       </div>
     </Transition>
     <table class="table table-dark table-striped caption-top table-hover mt-3">
@@ -44,10 +44,18 @@ export default {
       dataArray: [],
     };
   },
-
+  watch: {
+    ratingRawData() {
+      return this.fillDataArr();
+    },
+  },
   computed: {
+    ratingRawData() {
+      return this.$store.state.rating.resources;
+    },
     ratingDataList() {
-      return this.dataArray;
+      return this.fillDataArr();
+      // return this.dataArray;
     },
   },
   mounted() {
@@ -83,11 +91,31 @@ export default {
       ageRange: `46 to 85`,
       carValueRange: `R700 001 to R1 000 000`,
     });
-    this.getAllData();
+    this.fetchAllData();
   },
   methods: {
-    updateDataArray() {
-      this.getAllData();
+    // updateDataArray() {
+    //   this.getAllData();
+    // },
+    fetchAllData() {
+      this.dataArray = [];
+      this.$nextTick(() => {
+        this.$store.dispatch(`GET_RATING`, ``);
+      });
+    },
+    fillDataArr() {
+      this.dataArray = [];
+
+      if (this.$store.state.rating.resources) {
+        this.$store.state.rating.resources.map((item) => {
+          this.dataArray.push({
+            key: item.resourceKey,
+            value: item.resourceValue,
+            data: this.resourcesKeysMap.get(item.resourceKey),
+          });
+        });
+      }
+      return this.dataArray;
     },
     getAllData() {
       this.dataArray = [];

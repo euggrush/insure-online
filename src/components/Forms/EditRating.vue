@@ -62,9 +62,10 @@ export default {
       this.$store.dispatch(`MODIFY_RATING`, payload).then(() => {
         this.selectedKey = ``;
         this.ratingAmount = ``;
+        this.$store.dispatch(`GET_RATING`, ``);
       });
       // eslint-disable-next-line vue/custom-event-name-casing
-      this.$emit(`updateData`, {});
+      // this.$emit(`updateData`, {});
     },
   },
 };
