@@ -26,39 +26,39 @@
               <span class="d-block fw-bold text-decoration-underline"
                 >Customer:</span
               >
-              <span>{{ order.firstName }}</span>
-              <span>&nbsp;{{ order.lastName }}</span>
+              <span>{{ order.estimations[0].firstName }}</span>
+              <span>&nbsp;{{ order.estimations[0].lastName }}</span>
             </div>
 
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
-                >Car:</span
+                >Cars:</span
               >
-              <span>{{ order.vehicleDetails }}</span>
+              <span>{{ order.estimations[0].vehicleDetails }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Car value:</span
               >
-              <span>{{ order.vehicleRetailValue }}</span>
+              <span>{{ order.estimations[0].vehicleRetailValue }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Category:</span
               >
-              <span>{{ order.categoryName }}</span>
+              <span>{{ order.estimations[0].categoryName }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product:</span
               >
-              <span>{{ order.mainProductName }}</span>
+              <span>{{ order.estimations[0].mainProductName }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Total:</span
               >
-              <span>R{{ order.totalCost }}</span>
+              <span>R{{ order.allEstimationsTotalCost }}</span>
             </div>
             <div
               v-if="order.adjustedCost > 0"

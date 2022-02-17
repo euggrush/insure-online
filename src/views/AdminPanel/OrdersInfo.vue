@@ -31,34 +31,34 @@
               <span class="d-block fw-bold text-decoration-underline"
                 >Customer:</span
               >
-              <span>{{ order.firstName }}</span>
-              <span>&nbsp;{{ order.lastName }}</span>
+              <span>{{ order.estimations[0].firstName }}</span>
+              <span>&nbsp;{{ order.estimations[0].lastName }}</span>
             </div>
 
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Car:</span
               >
-              <span>{{ order.vehicleDetails }}</span>
+              <span>{{ order.estimations[0].vehicleDetails }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Car value:</span
               >
-              <span>{{ order.vehicleRetailValue }}</span>
+              <span>{{ order.estimations[0].vehicleRetailValue }}</span>
             </div>
 
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Product:</span
               >
-              <span>{{ order.mainProductName }}</span>
+              <span>{{ order.estimations[0].mainProductName }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Total:</span
               >
-              <span>R{{ order.totalCost }}</span>
+              <span>R{{ order.allEstimationsTotalCost }}</span>
             </div>
             <div
               v-if="order.adjustedCost > 0"
@@ -96,18 +96,18 @@
           ></button>
           <h5>Order details:</h5>
           <span class="fw-bold text-decoration-underline">Product:&nbsp;</span>
-          <span>{{ order.mainProductName }}</span
+          <span>{{ order.estimations[0].mainProductName }}</span
           ><br />
           <span class="d-inline-block mt-1 fw-bold text-decoration-underline"
             >The Minimum Premium is:&nbsp;</span
           >
-          <span>R{{ order.mainProductCost }}</span>
+          <span>R{{ order.estimations[0].mainProductCost }}</span>
           <h6 class="fw-bold text-decoration-underline mt-3">
             Coverages Included:
           </h6>
           <ul class="list-group">
             <li
-              v-for="(sub, index) in order.subProducts"
+              v-for="(sub, index) in order.estimations[0].subProducts"
               :key="index"
               class="list-group-item"
             >
@@ -119,7 +119,7 @@
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
             >Total:&nbsp;</span
           >
-          <span>R{{ order.totalCost }}</span
+          <span>R{{ order.allEstimationsTotalCost }}</span
           ><br />
           <span
             v-if="order.adjustedCost > 0"
@@ -174,17 +174,20 @@
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
             >Customer:&nbsp;</span
           >
-          <span>{{ order.firstName }}&nbsp;{{ order.lastName }}</span
+          <span
+            >{{ order.estimations[0].firstName }}&nbsp;{{
+              order.estimations[0].lastName
+            }}</span
           ><br />
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
             >Vehicle:&nbsp;</span
           >
-          <span>{{ order.vehicleDetails }}</span
+          <span>{{ order.estimations[0].vehicleDetails }}</span
           ><br />
           <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
             >Value:&nbsp;</span
           >
-          <span>R{{ order.vehicleRetailValue }}</span
+          <span>R{{ order.estimations[0].vehicleRetailValue }}</span
           ><br />
           <div class="d-flex flex-wrap">
             <a

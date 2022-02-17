@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid my-account p-3 position-relative">
     <router-link to="/my-order" class="btn btn-dark btn-lg"
-      >Get Quote</router-link
+      >Quotes</router-link
     >
 
     <div class="row mt-1 my-account_info">
