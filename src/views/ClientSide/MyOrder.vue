@@ -124,7 +124,50 @@
         </div>
       </div>
     </Transition>
-
+    <button class="btn btn-dark mt-3" @click="showMyQuites = !showMyQuites">
+      Show My Quotes</button
+    ><br />
+    <Transition>
+      <div v-if="showMyQuites" class="bg-light mt-3 p-3">
+        <ul class="list-group">
+          <li
+            v-for="(item, index) in estimationsList"
+            :key="item.estimationId"
+            class="list-group-item"
+          >
+            <div class="row">
+              <div class="col">
+                <strong>Car:</strong> {{ item.vehicleDetails }}
+              </div>
+              <div class="col">
+                <strong>Product:</strong> {{ item.mainProductName }}
+              </div>
+              <div class="col">
+                <strong>Total:</strong> {{ item.totalCost }}
+              </div>
+              <div class="form-check col">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :value="item.estimationId"
+                  :id="`flexCheckDefault${index}`"
+                  v-model="estimationIdsArray"
+                />
+                <label
+                  class="form-check-label"
+                  :for="`flexCheckDefault${index}`"
+                >
+                  Add To Order
+                </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-primary mt-3" @click="createOrder">
+          Create Order
+        </button>
+      </div>
+    </Transition>
     <button class="btn btn-dark mt-3" @click="showMyOrders = !showMyOrders">
       Show My Orders
     </button>
@@ -189,6 +232,7 @@ export default {
     return {
       showMyOrders: false,
       showGetQuoteMenu: false,
+      showMyQuites: false,
       isCreateOrderPopup: false,
       isCategorySelected: false,
       isMainProductSelected: false,
@@ -206,6 +250,7 @@ export default {
       isCarCategorySelected: false,
       shoNullEstimation: true,
       carInsuranceCategory: ``,
+      estimationIdsArray: [],
     };
   },
   computed: {
@@ -236,6 +281,7 @@ export default {
     this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
     this.$store.dispatch(`GET_VEHICLES`, ``);
+    this.$store.dispatch(`GET_ESTIMATIONS`, `?limit=3`);
   },
   methods: {
     scrollToTop() {
@@ -271,7 +317,15 @@ export default {
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
         })
-        .then((this.showEstimate = true), (this.shoNullEstimation = false))
+        .then(
+          (this.showEstimate = true),
+          (this.shoNullEstimation = false),
+          setTimeout(() => {
+            this.estimationIdsArray.push(
+              this.$store.state.current_estimation.estimationId
+            );
+          }, 1000)
+        )
         .catch((err) => console.log(err));
     },
     selectCar() {
@@ -281,14 +335,11 @@ export default {
       this.isCarSelected = false;
     },
     createOrder() {
-      const estimationsArray = [];
-      let estimationId = this.$store.state.current_estimation.estimationId;
+      // let estimationId = this.$store.state.current_estimation.estimationId;
       // let accountId = this.$store.state.current_estimation.accountId;
-      estimationsArray.push(estimationId);
       this.$store
         .dispatch(`CREATE_ORDER`, {
-          // accountId: accountId,
-          estimationIds: estimationsArray,
+          estimationIds: this.estimationIdsArray,
         })
         .then(
           (this.isCreateOrderPopup = true),

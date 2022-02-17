@@ -95,17 +95,17 @@
           ></button>
           <h5>Order details:</h5>
           <span class="fw-bold text-decoration-underline">Product:</span>
-          <p>{{ order.mainProductName }}</p>
+          <p>{{ order.estimations[0].mainProductName }}</p>
           <span class="fw-bold text-decoration-underline"
             >The Minimum Premium is:</span
           >
-          <span>&nbsp;R{{ order.mainProductCost }}</span>
+          <span>&nbsp;R{{ order.estimations[0].mainProductCost }}</span>
           <h6 class="fw-bold text-decoration-underline mt-3">
             Coverages Included:
           </h6>
           <ul class="list-group pb-3">
             <li
-              v-for="(sub, index) in order.subProducts"
+              v-for="(sub, index) in order.estimations[0].subProducts"
               :key="index"
               class="list-group-item"
             >
@@ -114,7 +114,7 @@
             </li>
           </ul>
           <span class="fw-bold text-decoration-underline">Total:</span>
-          <p>R{{ order.totalCost }}</p>
+          <p>R{{ order.allEstimationsTotalCost }}</p>
           <span class="fw-bold text-decoration-underline">Order created:</span>
           <p>{{ getDate(order.orderCreated) }}</p>
           <span class="fw-bold text-decoration-underline">Order status:</span>
@@ -129,9 +129,9 @@
           </p>
 
           <span class="fw-bold text-decoration-underline">Vehicle:</span>
-          <p>{{ order.vehicleDetails }}</p>
+          <p>{{ order.estimations[0].vehicleDetails }}</p>
           <span class="fw-bold text-decoration-underline">Vehicle value:</span>
-          <p>R{{ order.vehicleRetailValue }}</p>
+          <p>R{{ order.estimations[0].vehicleRetailValue }}</p>
           <div class="d-flex flex-wrap">
             <a
               v-for="(file, index) in order.assets"
