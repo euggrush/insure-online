@@ -117,16 +117,20 @@
             type="button"
             class="btn btn-success mt-5"
             :disabled="!isCategorySelected || !isMainProductSelected"
-            @click="createOrder"
+            @click="quoteToOrder"
           >
-            Submit order
+            Add To Order
           </button>
         </div>
       </div>
     </Transition>
-    <button class="btn btn-dark mt-3" @click="showMyQuites = !showMyQuites">
-      Show My Quotes</button
-    ><br />
+    <button
+      v-if="estimationsList.length > 0"
+      class="d-block btn btn-dark mt-3"
+      @click="showMyQuites = !showMyQuites"
+    >
+      Show My Quotes
+    </button>
     <Transition>
       <div v-if="showMyQuites" class="bg-light mt-3 p-3">
         <ul class="list-group">
@@ -251,6 +255,7 @@ export default {
       shoNullEstimation: true,
       carInsuranceCategory: ``,
       estimationIdsArray: [],
+      dateNow: Date.now(),
     };
   },
   computed: {
@@ -281,7 +286,10 @@ export default {
     this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
     this.$store.dispatch(`GET_VEHICLES`, ``);
-    this.$store.dispatch(`GET_ESTIMATIONS`, `?limit=3`);
+    this.$store.dispatch(
+      `GET_ESTIMATIONS`,
+      `?order=desc&createdFrom=${this.dateNow - 10800000}`
+    );
   },
   methods: {
     scrollToTop() {
@@ -334,6 +342,16 @@ export default {
       }
       this.isCarSelected = false;
     },
+    quoteToOrder() {
+      this.showGetQuoteMenu = false;
+      this.showMyQuites = true;
+      this.resetForm();
+      this.$store.dispatch(
+        `GET_ESTIMATIONS`,
+        `?order=desc&createdFrom=${this.dateNow - 10800000}`
+      );
+    },
+
     createOrder() {
       // let estimationId = this.$store.state.current_estimation.estimationId;
       // let accountId = this.$store.state.current_estimation.accountId;
