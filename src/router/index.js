@@ -12,7 +12,7 @@ import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
 import NotFound from '../components/Errors/404.vue';
 import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
 import MyAccount from '../views/ClientSide/MyAccount.vue'
-import MyOrder from '../views/ClientSide/MyOrder.vue';
+import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 
 
 const isTokenExpired = (tokenExpiration) => {
@@ -59,8 +59,8 @@ const routes = [{
     }
   },
   {
-    path: '/my-order',
-    component: MyOrder,
+    path: '/my-quotes',
+    component: MyOrdersPage,
     meta: {
       requiresAuth: true,
       adminAuth: false,

@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid my-account p-3 position-relative">
-    <router-link to="/my-order" class="btn btn-dark btn-lg"
+    <router-link to="/my-quotes" class="btn btn-dark btn-lg"
       >Quotes</router-link
     >
 

@@ -255,7 +255,6 @@ export default {
       shoNullEstimation: true,
       carInsuranceCategory: ``,
       estimationIdsArray: [],
-      dateNow: Date.now(),
     };
   },
   computed: {
@@ -286,10 +285,7 @@ export default {
     this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
     this.$store.dispatch(`GET_VEHICLES`, ``);
-    this.$store.dispatch(
-      `GET_ESTIMATIONS`,
-      `?order=desc&createdFrom=${this.dateNow - 10800000}`
-    );
+    this.$store.dispatch(`GET_ESTIMATIONS`, ``);
   },
   methods: {
     scrollToTop() {
@@ -346,15 +342,10 @@ export default {
       this.showGetQuoteMenu = false;
       this.showMyQuites = true;
       this.resetForm();
-      this.$store.dispatch(
-        `GET_ESTIMATIONS`,
-        `?order=desc&createdFrom=${this.dateNow - 10800000}`
-      );
+      this.$store.dispatch(`GET_ESTIMATIONS`, ``);
     },
 
     createOrder() {
-      // let estimationId = this.$store.state.current_estimation.estimationId;
-      // let accountId = this.$store.state.current_estimation.accountId;
       this.$store
         .dispatch(`CREATE_ORDER`, {
           estimationIds: this.estimationIdsArray,
@@ -365,10 +356,16 @@ export default {
           (this.isCategorySelected = false),
           (this.isMainProductSelected = false),
           (this.isUserSelected = false),
+          this.$store.dispatch(`GET_ESTIMATIONS`, ``),
+          (this.showMyQuites = !this.showMyQuites),
+          (this.showMyOrders = !this.showMyOrders),
           this.scrollToTop()
         )
         .catch((err) => console.log(err))
-        .then(this.$store.dispatch(`GET_ORDERS`, `?order=desc`));
+        .then(
+          this.$store.dispatch(`GET_ORDERS`, `?order=desc`),
+          this.$store.dispatch(`GET_ESTIMATIONS`, ``)
+        );
     },
     resetForm() {
       (this.isCategorySelected = false),
