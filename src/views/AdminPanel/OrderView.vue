@@ -1,6 +1,6 @@
 <template>
   <div
-    class="order-modal w-100 h-100 p-3 border"
+    class="w-100 h-100 p-3 border"
     :class="{
       'border-info': order.orderStatus == `approved`,
       'border-danger': order.orderStatus == `rejected`,
@@ -8,29 +8,57 @@
   >
     <button
       type="button"
-      class="btn-close float-end"
+      class="btn-close"
       aria-label="Close"
       @click="closeOrderModal"
     ></button>
-    <h5>Order details:</h5>
-    <span class="fw-bold text-decoration-underline">Product:&nbsp;</span>
-    <span>{{ order.estimations[0].mainProductName }}</span
-    ><br />
-    <span class="d-inline-block mt-1 fw-bold text-decoration-underline"
-      >The Minimum Premium is:&nbsp;</span
+
+    <div
+      class="row border p-3"
+      v-for="(mainProduct, index) in order.estimations"
+      :key="index"
     >
-    <span>R{{ order.estimations[0].mainProductCost }}</span>
-    <h6 class="fw-bold text-decoration-underline mt-3">Coverages Included:</h6>
-    <ul class="list-group">
-      <li
-        v-for="(sub, index) in order.estimations[0].subProducts"
-        :key="index"
-        class="list-group-item"
-      >
-        <span>{{ sub.subProductName }}&nbsp;</span>
-        <span class="fw-bold">R{{ sub.subProductCost }}</span>
-      </li>
-    </ul>
+      <div class="col">
+        <strong
+          >{{ mainProduct.vehicleDetails }}, R{{
+            mainProduct.vehicleRetailValue
+          }}</strong
+        >
+        <img
+          src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
+          class="d-block vehicle-image p-5"
+          alt="image"
+          width="200"
+          height="200"
+        />
+      </div>
+      <div class="col">
+        <strong
+          >{{ mainProduct.mainProductName }} R{{
+            mainProduct.mainProductCost
+          }}</strong
+        >
+        <div
+          v-for="(sub, index) in mainProduct.subProducts"
+          :key="index"
+          class="form-check form-switch mt-1 ms-1"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            :id="`flexSwitchCheckCheckedDisabled${index}`"
+            checked
+            disabled
+          />
+          <label
+            class="form-check-label"
+            :for="`flexSwitchCheckCheckedDisabled${index}`"
+            >{{ sub.subProductName }} R{{ sub.subProductCost }}</label
+          >
+        </div>
+      </div>
+    </div>
 
     <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
       >Total:&nbsp;</span
@@ -68,40 +96,8 @@
       Adjust Premium
     </button>
     <br />
-    <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-      >Created:&nbsp;</span
-    >
-    <span>{{ getDate(order.orderCreated) }}</span
-    ><br />
-    <span class="fw-bold text-decoration-underline">Status:&nbsp;</span>
-    <span
-      class="d-inline-block mt-3 fw-bold text-uppercase"
-      :class="{
-        'text-info': order.orderStatus == `approved`,
-        'text-danger': order.orderStatus == `rejected`,
-      }"
-    >
-      {{ order.orderStatus }} </span
-    ><br />
-    <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-      >Customer:&nbsp;</span
-    >
-    <span
-      >{{ order.estimations[0].firstName }}&nbsp;{{
-        order.estimations[0].lastName
-      }}</span
-    ><br />
-    <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-      >Vehicle:&nbsp;</span
-    >
-    <span>{{ order.estimations[0].vehicleDetails }}</span
-    ><br />
-    <span class="d-inline-block mt-3 fw-bold text-decoration-underline"
-      >Value:&nbsp;</span
-    >
-    <span>R{{ order.estimations[0].vehicleRetailValue }}</span
-    ><br />
-    <div class="d-flex flex-wrap">
+
+    <div class="d-flex flex-wrap mt-3">
       <a
         v-for="(file, index) in order.assets"
         :key="index"
@@ -224,10 +220,6 @@ export default {
 .btn {
   min-width: 12em;
 }
-
-.order-modal {
-  height: auto;
-}
 .order-item {
   background-color: $mainGreen;
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
@@ -260,5 +252,12 @@ br {
 }
 .btn-pdf:hover {
   background-image: url("../../assets/img/icon-pdf.svg");
+}
+.vehicle-image {
+  width: 100%;
+  height: auto;
+}
+.btn-close {
+  margin: 0 auto 0 98%;
 }
 </style>
