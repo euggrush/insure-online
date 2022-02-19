@@ -82,17 +82,11 @@
 
 <script>
 import MyOrderView from "../ClientSide/MyOrderView.vue";
-import { FILE_URL } from "../../constants";
 export default {
   components: { MyOrderView },
   data() {
     return {
-      myId: ``,
       isOrderModal: false,
-      errMsg: ``,
-      isUploadError: false,
-      documentsArray: [],
-      FILE_URL: FILE_URL,
     };
   },
   computed: {

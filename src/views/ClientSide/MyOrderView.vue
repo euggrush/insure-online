@@ -13,29 +13,6 @@
       aria-label="Close"
       @click="closeOrderModal"
     ></button>
-    <h5>Order details:</h5>
-    <span class="fw-bold text-decoration-underline">Product:</span>
-    <p>{{ order.estimations[0].mainProductName }}</p>
-    <span class="fw-bold text-decoration-underline"
-      >The Minimum Premium is:</span
-    >
-    <span>&nbsp;R{{ order.estimations[0].mainProductCost }}</span>
-    <h6 class="fw-bold text-decoration-underline mt-3">Coverages Included:</h6>
-    <ul class="list-group pb-3">
-      <li
-        v-for="(sub, index) in order.estimations[0].subProducts"
-        :key="index"
-        class="list-group-item"
-      >
-        <span>{{ sub.subProductName }}:</span>
-        <span class="fw-bold">&nbsp;R{{ sub.subProductCost }}</span>
-      </li>
-    </ul>
-    <span class="fw-bold text-decoration-underline">Total:</span>
-    <p>R{{ order.allEstimationsTotalCost }}</p>
-    <span class="fw-bold text-decoration-underline">Order created:</span>
-    <p>{{ getDate(order.orderCreated) }}</p>
-    <span class="fw-bold text-decoration-underline">Order status:</span>
     <p
       class="fw-bold text-uppercase"
       :class="{
@@ -45,11 +22,60 @@
     >
       {{ order.orderStatus }}
     </p>
+    <span class="fw-bold fst-italic"
+      >Created At {{ getDate(order.orderCreated) }}</span
+    >
+    <p class="fw-bold mt-3 mb-0">Total R{{ order.allEstimationsTotalCost }}</p>
 
-    <span class="fw-bold text-decoration-underline">Vehicle:</span>
+    <div
+      class="row border mt-3 p-3"
+      v-for="(mainProduct, index) in order.estimations"
+      :key="index"
+    >
+      <div class="col">
+        <strong>{{ mainProduct.vehicleDetails }}</strong>
+        <span> <strong>, R</strong>{{ mainProduct.vehicleRetailValue }}</span>
+        <img
+          src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
+          class="d-block vehicle-image p-5"
+          alt="image"
+          width="200"
+          height="200"
+        />
+      </div>
+      <div class="col">
+        <strong class="d-inline-block text-uppercase mt-3 border-bottom"
+          >{{ mainProduct.mainProductName }}&nbsp;R{{
+            mainProduct.mainProductCost
+          }}</strong
+        >
+        <div
+          class="form-check form-switch mt-1 ms-1"
+          v-for="(sub, index) in mainProduct.subProducts"
+          :key="index"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            :id="`flexSwitchCheckCheckedDisabled${index}`"
+            checked
+            disabled
+          />
+          <label
+            class="form-check-label"
+            :for="`flexSwitchCheckCheckedDisabled${index}`"
+            >{{ sub.subProductName }}&nbsp;<strong>R</strong>
+            {{ sub.subProductCost }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- <span class="fw-bold text-decoration-underline">Vehicle:</span>
     <p>{{ order.estimations[0].vehicleDetails }}</p>
     <span class="fw-bold text-decoration-underline">Vehicle value:</span>
-    <p>R{{ order.estimations[0].vehicleRetailValue }}</p>
+    <p>R{{ order.estimations[0].vehicleRetailValue }}</p> -->
     <div class="d-flex flex-wrap">
       <a
         v-for="(file, index) in order.assets"
@@ -200,11 +226,7 @@ const dayjs = require("dayjs");
 export default {
   data() {
     return {
-      //   myId: ``,
-      //   isOrderModal: false,
-      //   errMsg: ``,
       isUploadError: false,
-      //   documentsArray: [],
       FILE_URL: FILE_URL,
     };
   },
@@ -227,8 +249,6 @@ export default {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
     closeOrderModal() {
-      // this.isOrderModal = false;
-      // this.$store.dispatch(`GET_ORDERS`, ``);
       this.$emit(`closeOrderView`, {});
     },
     closeModal() {
@@ -270,4 +290,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.vehicle-image {
+  width: 100%;
+  height: auto;
+}
 </style>
