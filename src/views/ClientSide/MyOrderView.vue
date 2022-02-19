@@ -71,12 +71,7 @@
         </div>
       </div>
     </div>
-
-    <!-- <span class="fw-bold text-decoration-underline">Vehicle:</span>
-    <p>{{ order.estimations[0].vehicleDetails }}</p>
-    <span class="fw-bold text-decoration-underline">Vehicle value:</span>
-    <p>R{{ order.estimations[0].vehicleRetailValue }}</p> -->
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap mt-3">
       <a
         v-for="(file, index) in order.assets"
         :key="index"

@@ -81,7 +81,11 @@
             </button>
           </div>
           <div class="col col-lg-2">
-            <router-link to="/my-quotes" type="button" class="btn btn-info mt-3">
+            <router-link
+              to="/my-quotes"
+              type="button"
+              class="btn btn-info mt-3"
+            >
               Insure vehicle
             </router-link>
           </div>
@@ -185,6 +189,7 @@ export default {
         retailValue: vehicle.retailValue,
         trackingDevice: vehicle.trackingDevice,
         useCase: vehicle.useCase,
+        accessories: vehicle.accessories,
       };
     },
 
