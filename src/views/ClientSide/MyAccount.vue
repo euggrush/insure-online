@@ -313,7 +313,9 @@ export default {
           document.getElementById("avatar").src = e.target.result;
         };
         reader.readAsDataURL(file);
-        this.resizeImage(file);
+        setTimeout(() => {
+          this.resizeImage(file);
+        }, 1000);
       }
     },
     resizeImage(file) {
@@ -352,9 +354,10 @@ export default {
           ctx.drawImage(img, 0, 0, width, height);
 
           let dataurl = canvas.toDataURL(file);
-
-          let asset = this.dataURItoBlob(dataurl);
-          this.uploadAvatar(asset);
+          setTimeout(() => {
+            let asset = this.dataURItoBlob(dataurl);
+            this.uploadAvatar(asset);
+          }, 1000);
         };
         reader.readAsDataURL(file);
       }
