@@ -9,6 +9,7 @@
         <div>
           <label for="formFile" class="form-label fw-bold user-avatar-wrap">
             <img
+              id="avatar"
               :src="`${FILE_URL}${avatar}`"
               alt="avatar"
               class="img user-avatar-photo rounded"
@@ -17,9 +18,10 @@
             />
             <input
               type="file"
+              accept="image/*"
               id="formFile"
               name="asset"
-              @change="uploadAvatar($event)"
+              @change="getAvatar($event)"
               v-show="showInput"
             />
           </label>
@@ -241,6 +243,8 @@ export default {
   },
   data() {
     return {
+      // avatarFile: ``,
+
       FILE_URL: FILE_URL,
       showInput: false,
       avatar: DEFAULT_AVATAR,
@@ -285,8 +289,77 @@ export default {
     getDate(date) {
       return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
-    uploadAvatar(event) {
-      const asset = event.target.files[0];
+    dataURItoBlob(dataURI) {
+      let byteString;
+      if (dataURI.split(",")[0].indexOf("base64") >= 0)
+        byteString = atob(dataURI.split(",")[1]);
+      else byteString = unescape(dataURI.split(",")[1]);
+
+      let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+      let ia = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      return new Blob([ia], { type: mimeString });
+    },
+    getAvatar(event) {
+      let files = event.target.files;
+      let file = files[0];
+      if (file) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("avatar").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        this.resizeImage(file);
+      }
+    },
+    resizeImage(file) {
+      if (file) {
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+          let img = document.createElement("img");
+          img.src = e.target.result;
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+
+          ctx.drawImage(img, 0, 0);
+
+          const MAX_WIDTH = 125;
+          const MAX_HEIGHT = 125;
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let dataurl = canvas.toDataURL(file);
+
+          let asset = this.dataURItoBlob(dataurl);
+          this.uploadAvatar(asset);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    uploadAvatar(asset) {
       const formData = new FormData();
       formData.append(
         `meta`,
@@ -375,7 +448,7 @@ li {
   }
 }
 .user-avatar-wrap:hover {
-  outline: solid 1px $mainBlue;
+  outline: solid 1px #212529;
   background-image: url("../../assets/img/icon-change-avatar.png");
   background-position: center;
   background-repeat: no-repeat;
