@@ -25,18 +25,31 @@
         </tr>
       </tbody>
     </table>
+    <button
+      type="button"
+      class="btn btn-dark mt-1"
+      @click="showEditTabs = !showEditTabs"
+    >
+      Edit Tabs
+    </button>
+    <Transition>
+      <div v-if="showEditTabs"><EditTabs /></div>
+    </Transition>
   </section>
 </template>
 
 <script>
 import EditRating from "../../components/Forms/EditRating.vue";
+import EditTabs from "../../components/Forms/EditTabs.vue";
 export default {
   components: {
     EditRating,
+    EditTabs,
   },
   data() {
     return {
       show: false,
+      showEditTabs: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };
@@ -52,7 +65,6 @@ export default {
     },
     ratingDataList() {
       return this.fillDataArr();
-      // return this.dataArray;
     },
   },
   mounted() {
@@ -105,30 +117,16 @@ export default {
 
       if (this.$store.state.rating.resources) {
         this.$store.state.rating.resources.map((item) => {
-          this.dataArray.push({
-            key: item.resourceKey,
-            value: item.resourceValue,
-            data: this.resourcesKeysMap.get(item.resourceKey),
-          });
-        });
-      }
-      return this.dataArray;
-    },
-    getAllData() {
-      this.dataArray = [];
-      this.$nextTick(() => {
-        this.$store.dispatch(`GET_RATING`, ``).then(() => {
-          if (this.$store.state.rating.resources) {
-            this.$store.state.rating.resources.map((item) => {
-              this.dataArray.push({
-                key: item.resourceKey,
-                value: item.resourceValue,
-                data: this.resourcesKeysMap.get(item.resourceKey),
-              });
+          if (this.resourcesKeysMap.get(item.resourceKey)) {
+            this.dataArray.push({
+              key: item.resourceKey,
+              value: item.resourceValue,
+              data: this.resourcesKeysMap.get(item.resourceKey),
             });
           }
         });
-      });
+      }
+      return this.dataArray;
     },
   },
 };

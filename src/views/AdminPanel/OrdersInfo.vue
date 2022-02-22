@@ -75,14 +75,12 @@
               >
               <span>R{{ order.allEstimationsTotalCost }}</span>
             </div>
-            <div
-              v-if="order.adjustedCost > 0"
-              class="col border-bottom border-start"
-            >
+            <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline fst-italic"
                 >Adjusted:</span
               >
-              <span class="fst-italic">R{{ order.adjustedCost }}</span>
+              <span v-if="order.adjustedCost>0" class="fst-italic">R{{ order.adjustedCost }}</span>
+              <span v-else class="text-nowrap">Not Adjusted</span>
             </div>
             <div class="col">
               <button
