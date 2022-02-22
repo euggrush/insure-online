@@ -17,42 +17,42 @@
         aria-current="page"
         @click="showAccounts"
       >
-        Accounts
+        {{ tabs.accountsTab ?? `Accounts` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
-        Categories
+        {{ tabs.categoriesTab ?? `Categories` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
-        Products
+        {{ tabs.productsTab ?? `Products` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isEstimations }"
         @click="showEstimations"
       >
-        Quotes
+        {{ tabs.quotesTab ?? `Quotes` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isOrders }"
         @click="showOrders"
       >
-        Orders
+        {{ tabs.ordersTab ?? `Orders` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isResources }"
         @click="showResources"
       >
-        Resources
+        {{ tabs.resoursesTab ?? `Resources` }}
       </button>
     </nav>
 
@@ -89,6 +89,7 @@ export default {
   },
   data() {
     return {
+      tabs: {},
       isAccounts: true,
       isCategories: false,
       isProducts: false,
@@ -98,6 +99,23 @@ export default {
       isResources: false,
       loggedUser: `John Doe`,
     };
+  },
+  mounted() {
+    this.$store.dispatch(`GET_RATING`, ``).then(() => {
+      this.$store.state.rating.resources.map((item) => {
+        if (
+          item.resourceKey === `accountsTab` ||
+          item.resourceKey === `categoriesTab` ||
+          item.resourceKey === `productsTab` ||
+          item.resourceKey === `quotesTab` ||
+          item.resourceKey === `ordersTab` ||
+          item.resourceKey === `resoursesTab`
+        ) {
+          this.tabs[item.resourceKey] = item.resourceValue;
+        }
+      });
+    });
+    console.log(this.tabs);
   },
   methods: {
     showAccounts() {
