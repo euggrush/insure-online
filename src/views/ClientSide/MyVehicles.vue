@@ -102,9 +102,21 @@
           <div class="col-sm-4">
             <label class="car-photo-wrap">
               <img
-                id="car-photo-input"
-                :src="vehiclePhoto"
+                v-if="vehicle.assets.length > 0"
+                :id="`car-photo-input${index}`"
+                :src="`${FILE_URL}${
+                  vehicle.assets[vehicle.assets.length - 1].path
+                }`"
                 alt="image"
+                width="100"
+                height="100"
+                class="car-photo"
+              />
+              <img
+                v-else
+                :id="`car-photo-input${index}`"
+                :src="vehiclePhoto"
+                alt="alt"
                 width="100"
                 height="100"
                 class="car-photo"
@@ -112,7 +124,7 @@
               <input
                 type="file"
                 v-show="showInput"
-                @change="getCarPhoto($event, vehicle)"
+                @change="getCarPhoto($event, vehicle, index)"
               />
             </label>
           </div>
@@ -179,6 +191,8 @@
 <script>
 import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 import EditVehicleForm from "../../components/Forms/EditVehicleForm.vue";
+import { FILE_URL } from "../../constants";
+
 export default {
   components: {
     CreateVehicleForm,
@@ -186,6 +200,7 @@ export default {
   },
   data() {
     return {
+      FILE_URL: FILE_URL,
       accountId: ``,
       changeVehicleObj: {},
       isRemovePopup: false,
@@ -246,13 +261,14 @@ export default {
         });
       console.log(index);
     },
-    getCarPhoto(event, vehicle) {
+    getCarPhoto(event, vehicle, index) {
       let files = event.target.files;
       let file = files[0];
       if (file) {
         let reader = new FileReader();
         reader.onload = function (e) {
-          document.getElementById("car-photo-input").src = e.target.result;
+          document.getElementById(`car-photo-input${index}`).src =
+            e.target.result;
         };
         reader.readAsDataURL(file);
         setTimeout(() => {
@@ -272,8 +288,8 @@ export default {
 
           ctx.drawImage(img, 0, 0);
 
-          const MAX_WIDTH = 125;
-          const MAX_HEIGHT = 125;
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 400;
 
           let width = img.width;
           let height = img.height;
@@ -311,25 +327,26 @@ export default {
         JSON.stringify({
           fileType: `photo`,
           description: `car photo`,
-          relatedTo: `vehicle`,
+          relatedTo: `vehicles`,
           relationId: vehicle.vehicleId,
         })
       );
       formData.append("asset[]", asset);
-      this.$store.dispatch(`UPLOAD`, formData);
-      // .then(() => {
-      //   setTimeout(() => {
-      //     this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
-      //   }, 1000);
-      // })
-      // .catch(() => {
-      //   this.$store.commit(`SET_MODAL`, {
-      //     isModal: true,
-      //     msg:
-      //       this.$store.state.general_errors ??
-      //       `File upload error, please try later`,
-      //   });
-      // });
+      this.$store
+        .dispatch(`UPLOAD`, formData)
+        .then(() => {
+          setTimeout(() => {
+            this.$store.dispatch(`GET_VEHICLES`, ``);
+          }, 1000);
+        })
+        .catch(() => {
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg:
+              this.$store.state.general_errors ??
+              `File upload error, please try later`,
+          });
+        });
     },
   },
 };
@@ -341,24 +358,30 @@ export default {
 }
 .car-photo-wrap {
   width: 255px;
+  height: 222px;
   margin-top: 20px;
   cursor: pointer;
-  object-fit: cover;
   @include media-breakpoint-up(sm) {
     width: 155px;
+    height: 130px;
+
     margin-top: 10px;
   }
   @include media-breakpoint-up(md) {
     width: 220px;
+    height: 190px;
   }
   @include media-breakpoint-up(lg) {
     width: 295px;
+    height: 245px;
   }
   @include media-breakpoint-up(xl) {
     width: 360px;
+    height: 285px;
   }
   @include media-breakpoint-up(xxl) {
     width: 420px;
+    height: 300px;
   }
 }
 .car-photo-wrap:hover {
@@ -371,7 +394,7 @@ export default {
 .car-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .car-photo:hover {
   opacity: 0.5;
