@@ -135,7 +135,6 @@
 </template>
 
 <script>
-const dayjs = require("dayjs");
 import { FILE_URL } from "../../constants";
 
 export default {
@@ -164,9 +163,6 @@ export default {
     closeOrderModal() {
       // eslint-disable-next-line vue/custom-event-name-casing
       this.$emit("closeOrder", {});
-    },
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
     getOrder(id) {
       this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);

@@ -225,17 +225,8 @@
 <script>
 import { FILE_URL, DEFAULT_AVATAR } from "../../constants";
 import ModalMessage from "../../components/Modals/ModalMessage.vue";
-
 import MyVehicles from "./MyVehicles.vue";
-const dayjs = require("dayjs");
-const getTimeStamp = (date) => {
-  let myDate = date;
-  myDate = myDate.split("-");
-  const timestamp = +new Date(
-    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
-  ).getTime();
-  return timestamp;
-};
+
 export default {
   components: {
     MyVehicles,
@@ -243,8 +234,6 @@ export default {
   },
   data() {
     return {
-      // avatarFile: ``,
-
       FILE_URL: FILE_URL,
       showInput: false,
       avatar: DEFAULT_AVATAR,
@@ -286,24 +275,6 @@ export default {
     this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
   },
   methods: {
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
-    },
-    dataURItoBlob(dataURI) {
-      let byteString;
-      if (dataURI.split(",")[0].indexOf("base64") >= 0)
-        byteString = atob(dataURI.split(",")[1]);
-      else byteString = unescape(dataURI.split(",")[1]);
-
-      let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-      let ia = new Uint8Array(byteString.length);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-
-      return new Blob([ia], { type: mimeString });
-    },
     getAvatar(event) {
       let files = event.target.files;
       let file = files[0];
@@ -330,8 +301,8 @@ export default {
 
           ctx.drawImage(img, 0, 0);
 
-          const MAX_WIDTH = 125;
-          const MAX_HEIGHT = 125;
+          const MAX_WIDTH = 300;
+          const MAX_HEIGHT = 300;
 
           let width = img.width;
           let height = img.height;
@@ -392,7 +363,7 @@ export default {
     },
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;
-      this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
+      this.changeUserObj.birthDate = this.getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
         .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))

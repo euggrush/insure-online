@@ -312,14 +312,7 @@
 <script>
 import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 import EditVehicleForm from "../../components/Forms/EditVehicleForm.vue";
-const getTimeStamp = (date) => {
-  let myDate = date;
-  myDate = myDate.split("-");
-  const timestamp = +new Date(
-    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
-  ).getTime();
-  return timestamp;
-};
+
 export default {
   components: {
     CreateVehicleForm,
@@ -366,7 +359,7 @@ export default {
   methods: {
     changeAccount() {
       this.changeUserObj.accountId = this.accountId;
-      this.changeUserObj.birthDate = getTimeStamp(this.dateOfBirth);
+      this.changeUserObj.birthDate = this.getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
         .then(

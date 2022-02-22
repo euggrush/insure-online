@@ -98,8 +98,6 @@
 </template>
 
 <script>
-const dayjs = require("dayjs");
-
 import AccountInfo from "./AccountInfo.vue";
 import DateRange from "../../components/Forms/DateRange.vue";
 import SearchAccount from "../../components/Forms/SearchAccount.vue";
@@ -142,10 +140,6 @@ export default {
     this.$store.dispatch(`GET_USERS`, `?order=desc`);
   },
   methods: {
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
-    },
-
     showAccountInfo(account, index) {
       this.showCreateAccount = false;
       this.isInfo = true;

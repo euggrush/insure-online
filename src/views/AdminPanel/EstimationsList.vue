@@ -90,7 +90,6 @@
 
 <script>
 import DateRange from "../../components/Forms/DateRange.vue";
-const dayjs = require("dayjs");
 
 export default {
   components: {
@@ -115,11 +114,6 @@ export default {
 
   mounted() {
     this.$store.dispatch(`GET_ESTIMATIONS`, ``);
-  },
-  methods: {
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
-    },
   },
 };
 </script>

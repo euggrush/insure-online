@@ -216,7 +216,6 @@
 
 <script>
 import { FILE_URL } from "../../constants";
-const dayjs = require("dayjs");
 
 export default {
   data() {
@@ -239,9 +238,6 @@ export default {
   methods: {
     getOrder(id) {
       this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
-    },
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
     },
     closeOrderModal() {
       this.$emit(`closeOrderView`, {});

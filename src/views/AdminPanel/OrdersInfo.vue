@@ -106,7 +106,6 @@
 </template>
 
 <script>
-const dayjs = require("dayjs");
 import OrderView from "../AdminPanel/OrderView.vue";
 export default {
   components: { OrderView },
@@ -151,9 +150,6 @@ export default {
     this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
   },
   methods: {
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
-    },
     getOrder(id) {
       this.$store
         .dispatch(`GET_ORDERS`, `?orderId=${id}`)

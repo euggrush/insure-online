@@ -102,13 +102,18 @@
           <div class="col-sm-4">
             <label class="car-photo-wrap">
               <img
+                id="car-photo-input"
                 :src="vehiclePhoto"
                 alt="image"
                 width="100"
                 height="100"
                 class="car-photo"
               />
-              <input type="file" v-show="showInput" />
+              <input
+                type="file"
+                v-show="showInput"
+                @change="getCarPhoto($event, vehicle)"
+              />
             </label>
           </div>
         </div>
@@ -240,6 +245,91 @@ export default {
           this.$store.dispatch(`GET_VEHICLES`, ``);
         });
       console.log(index);
+    },
+    getCarPhoto(event, vehicle) {
+      let files = event.target.files;
+      let file = files[0];
+      if (file) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("car-photo-input").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        setTimeout(() => {
+          this.resizeImage(file, vehicle);
+        }, 1000);
+      }
+    },
+    resizeImage(file, vehicle) {
+      if (file) {
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+          let img = document.createElement("img");
+          img.src = e.target.result;
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+
+          ctx.drawImage(img, 0, 0);
+
+          const MAX_WIDTH = 125;
+          const MAX_HEIGHT = 125;
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let dataurl = canvas.toDataURL(file);
+          setTimeout(() => {
+            let asset = this.dataURItoBlob(dataurl);
+            this.uploadCarPhoto(asset, vehicle);
+          }, 1000);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    uploadCarPhoto(asset, vehicle) {
+      const formData = new FormData();
+      formData.append(
+        `meta`,
+        JSON.stringify({
+          fileType: `photo`,
+          description: `car photo`,
+          relatedTo: `vehicle`,
+          relationId: vehicle.vehicleId,
+        })
+      );
+      formData.append("asset[]", asset);
+      this.$store.dispatch(`UPLOAD`, formData);
+      // .then(() => {
+      //   setTimeout(() => {
+      //     this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+      //   }, 1000);
+      // })
+      // .catch(() => {
+      //   this.$store.commit(`SET_MODAL`, {
+      //     isModal: true,
+      //     msg:
+      //       this.$store.state.general_errors ??
+      //       `File upload error, please try later`,
+      //   });
+      // });
     },
   },
 };
