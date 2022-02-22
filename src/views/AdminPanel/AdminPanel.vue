@@ -100,24 +100,36 @@ export default {
       loggedUser: `John Doe`,
     };
   },
+  watch: {
+    getTabs() {
+      this.getTabsTitles();
+    },
+  },
+  computed: {
+    getTabs() {
+      return this.$store.state.rating.resources;
+    },
+  },
   mounted() {
-    this.$store.dispatch(`GET_RATING`, ``).then(() => {
-      this.$store.state.rating.resources.map((item) => {
-        if (
-          item.resourceKey === `accountsTab` ||
-          item.resourceKey === `categoriesTab` ||
-          item.resourceKey === `productsTab` ||
-          item.resourceKey === `quotesTab` ||
-          item.resourceKey === `ordersTab` ||
-          item.resourceKey === `resoursesTab`
-        ) {
-          this.tabs[item.resourceKey] = item.resourceValue;
-        }
-      });
-    });
-    console.log(this.tabs);
+    this.getTabsTitles();
   },
   methods: {
+    getTabsTitles() {
+      this.$store.dispatch(`GET_RATING`, ``).then(() => {
+        this.$store.state.rating.resources.map((item) => {
+          if (
+            item.resourceKey === `accountsTab` ||
+            item.resourceKey === `categoriesTab` ||
+            item.resourceKey === `productsTab` ||
+            item.resourceKey === `quotesTab` ||
+            item.resourceKey === `ordersTab` ||
+            item.resourceKey === `resoursesTab`
+          ) {
+            this.tabs[item.resourceKey] = item.resourceValue;
+          }
+        });
+      });
+    },
     showAccounts() {
       this.isAccounts = true;
       this.isCategories = false;

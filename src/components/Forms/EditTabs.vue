@@ -7,12 +7,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameAccounts"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`accountsTab`, tabName)"
+          @click="editTab(`accountsTab`, tabNameAccounts)"
         >
           Change
         </button>
@@ -23,12 +23,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameCategories"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`categoriesTab`, tabName)"
+          @click="editTab(`categoriesTab`, tabNameCategories)"
         >
           Change
         </button>
@@ -39,12 +39,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameProducts"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`productsTab`, tabName)"
+          @click="editTab(`productsTab`, tabNameProducts)"
         >
           Change
         </button>
@@ -55,12 +55,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameQuotes"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`quotesTab`, tabName)"
+          @click="editTab(`quotesTab`, tabNameQuotes)"
         >
           Change
         </button>
@@ -71,12 +71,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameOrders"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`ordersTab`, tabName)"
+          @click="editTab(`ordersTab`, tabNameOrders)"
         >
           Change
         </button>
@@ -87,12 +87,12 @@
           class="form-control mt-3"
           type="text"
           placeholder="Tab Name"
-          v-model="tabName"
+          v-model="tabNameResourses"
         />
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
-          @click="editTab(`resoursesTab`, tabName)"
+          @click="editTab(`resoursesTab`, tabNameResourses)"
         >
           Change
         </button>
@@ -105,7 +105,12 @@
 export default {
   data() {
     return {
-      tabName: ``,
+      tabNameAccounts: ``,
+      tabNameCategories: ``,
+      tabNameProducts: ``,
+      tabNameQuotes: ``,
+      tabNameOrders: ``,
+      tabNameResourses: ``,
     };
   },
   methods: {
