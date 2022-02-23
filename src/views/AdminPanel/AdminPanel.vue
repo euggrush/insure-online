@@ -100,11 +100,11 @@ export default {
       loggedUser: `John Doe`,
     };
   },
-  watch: {
-    getTabs() {
-      this.getTabsTitles();
-    },
-  },
+  // watch: {
+  //   getTabs() {
+  //     this.getTabsTitles();
+  //   },
+  // },
   computed: {
     getTabs() {
       return this.$store.state.rating.resources;

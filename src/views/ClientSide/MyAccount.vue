@@ -3,82 +3,77 @@
     <router-link to="/my-quotes" class="btn btn-dark btn-lg"
       >Quotes</router-link
     >
-
     <div class="row mt-1 my-account_info">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <div>
-          <label for="formFile" class="form-label fw-bold user-avatar-wrap">
-            <img
-              id="avatar"
-              :src="`${FILE_URL}${avatar}`"
-              alt="avatar"
-              class="img user-avatar-photo rounded"
-              width="100"
-              height="100"
-            />
-            <input
-              type="file"
-              accept="image/*"
-              id="formFile"
-              name="asset"
-              @change="getAvatar($event)"
-              v-show="showInput"
-            />
-          </label>
-        </div>
+        <label for="formFile" class="form-label fw-bold user-avatar-wrap">
+          <img
+            id="avatar"
+            :src="`${FILE_URL}${avatar}`"
+            alt="avatar"
+            class="img user-avatar-photo img-thumbnail"
+            width="100"
+            height="100"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            id="formFile"
+            name="asset"
+            @change="getAvatar($event)"
+            v-show="showInput"
+          />
+        </label>
+        <h2 class="fs-3 text-center mt-1">
+          {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
+        </h2>
+        <p class="text-center fw-bold">
+          {{ myAccountInfo.email }}
+        </p>
+        <p class="fw-bold fst-italic text-center">
+          Age&nbsp;{{ myAccountInfo.age }}
+        </p>
+        <hr />
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
-        <div class="container" style="border-bottom: 1px solid black">
-          <h2 class="mt-1">
-            {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
-          </h2>
-        </div>
-        <hr />
-        <p>
-          <span class="fw-bold">Cell:&nbsp;</span>{{ myAccountInfo.cellphone }}
-        </p>
-        <p>
-          <span class="fw-bold">Phone:&nbsp;</span
-          >{{ myAccountInfo.phoneNumber }}
-        </p>
-        <p>
-          <span class="fw-bold">Email:&nbsp;</span>{{ myAccountInfo.email }}
-        </p>
-        <p><span class="fw-bold">Age:&nbsp;</span> {{ myAccountInfo.age }}</p>
-        <p>
-          <span class="fw-bold">Address:&nbsp;</span>{{ myAccountInfo.address }}
-        </p>
-        <p>
-          <span class="fw-bold">Client ID:&nbsp;</span
-          >{{ myAccountInfo.clientIdNumber }}
-        </p>
-        <p>
-          <span class="fw-bold">Marital Status:&nbsp;</span
-          >{{ myAccountInfo.maritalStatus }}
-        </p>
-        <p>
-          <span class="fw-bold">Country Of Residence:&nbsp;</span
-          >{{ myAccountInfo.countryOfResidence }}
-        </p>
-        <p>
-          <span class="fw-bold">Year Of Issue Driver License:&nbsp;</span
-          >{{ myAccountInfo.yearOfIssueDriverLicense }}
-        </p>
-        <p>
-          <span class="fw-bold">Claims History:&nbsp;</span
-          >{{ myAccountInfo.claimsHistory }}
-        </p>
-        <p>
-          <span class="fw-bold">Previous Insurer:&nbsp;</span
-          >{{ myAccountInfo.previousInsurer }}
-        </p>
-        <p>
-          <span class="fw-bold">Created:&nbsp;</span
-          >{{ getDate(myAccountInfo.created) }}
-        </p>
+        <table class="table table-dark table-striped">
+          <tbody>
+            <tr>
+              <th scope="row">Cell</th>
+              <td>{{ myAccountInfo.cellphone }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Address</th>
+              <td>{{ myAccountInfo.address }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Client ID</th>
+              <td colspan="2">{{ myAccountInfo.clientIdNumber }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Marital Status</th>
+              <td>{{ myAccountInfo.maritalStatus }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Country Of Residence</th>
+              <td>{{ myAccountInfo.countryOfResidence }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Year Of Issue Driver License</th>
+              <td>{{ myAccountInfo.yearOfIssueDriverLicense }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Claims History</th>
+              <td>{{ myAccountInfo.address }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Previous Insurer</th>
+              <td>{{ myAccountInfo.previousInsurer }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <p class="mt-5 pb-3 border-bottom">
+    <p class="mt-3 pb-3 border-bottom">
       <button
         class="btn btn-dark text-capitalize"
         type="button"
@@ -393,12 +388,14 @@ export default {
 li {
   margin-bottom: 10px;
 }
+// .my-account_info {
+//   outline: solid 3px red;
+// }
 .user-avatar-wrap {
   width: 290px;
   height: 290px;
   cursor: pointer;
   object-fit: cover;
-
   @include media-breakpoint-up(sm) {
     width: 180px;
     height: 180px;
@@ -435,5 +432,24 @@ li {
 }
 .user-avatar-photo:hover {
   opacity: 0.5;
+}
+.table-dark {
+  min-height: 290px;
+  @include media-breakpoint-up(sm) {
+    min-height: 180px;
+  }
+  @include media-breakpoint-up(md) {
+    margin-top: 11px;
+    min-height: 230px;
+  }
+  @include media-breakpoint-up(lg) {
+    min-height: 308px;
+  }
+  @include media-breakpoint-up(xl) {
+    min-height: 375px;
+  }
+  @include media-breakpoint-up(xxl) {
+    min-height: 445px;
+  }
 }
 </style>

@@ -110,7 +110,7 @@
                 alt="image"
                 width="100"
                 height="100"
-                class="car-photo"
+                class="car-photo img-thumbnail"
               />
               <img
                 v-else
@@ -119,7 +119,7 @@
                 alt="alt"
                 width="100"
                 height="100"
-                class="car-photo"
+                class="car-photo img-thumbnail"
               />
               <input
                 type="file"
