@@ -3,14 +3,14 @@
     <router-link to="/my-quotes" class="btn btn-dark btn-lg"
       >Quotes</router-link
     >
-    <div class="row mt-1 my-account_info">
+    <div class="row mt-3 my-account_info bg-dark bg-gradient text-white shadow-lg">
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <label for="formFile" class="form-label fw-bold user-avatar-wrap">
           <img
             id="avatar"
             :src="`${FILE_URL}${avatar}`"
             alt="avatar"
-            class="img user-avatar-photo img-thumbnail"
+            class="img user-avatar-photo img-thumbnail rounded-circle"
             width="100"
             height="100"
           />
@@ -35,7 +35,7 @@
         <hr />
       </div>
       <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
-        <table class="table table-dark table-striped">
+        <table class="table table-dark table-striped border-start">
           <tbody>
             <tr>
               <th scope="row">Cell</th>
@@ -63,7 +63,7 @@
             </tr>
             <tr>
               <th scope="row">Claims History</th>
-              <td>{{ myAccountInfo.address }}</td>
+              <td>{{ myAccountInfo.claimsHistory }}</td>
             </tr>
             <tr>
               <th scope="row">Previous Insurer</th>
@@ -86,131 +86,125 @@
       </button>
     </p>
     <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-        <form @submit.prevent="changeAccount">
-          <form
-            @submit.prevent="changeAccount()"
-            class="card card-body"
-            style="width: 300px"
+      <form
+        @submit.prevent="changeAccount()"
+        class="card card-body bg-dark bg-gradient shadow-lg text-white mb-3"
+        style="width: 300px"
+      >
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >First name:</span
           >
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >First name:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.firstName"
-                v-model="changeUserObj.firstName"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Last name:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.lastName"
-                v-model="changeUserObj.lastName"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Date of birth:</span
-              >
-              <input class="form-control" type="date" v-model="dateOfBirth" />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Address:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.address"
-                v-model="changeUserObj.address"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Cellphone:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.cellphone"
-                v-model="changeUserObj.cellphone"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Home phone:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.phoneNumber"
-                v-model="changeUserObj.phoneNumber"
-              />
-            </label>
-            <select
-              class="form-select mt-3"
-              aria-label="Default select example"
-              v-model="changeUserObj.maritalStatus"
-            >
-              <option value="" selected>Select marital status</option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-            </select>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Country Of Residence:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.countryOfResidence"
-                v-model="changeUserObj.countryOfResidence"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Previous Insurer:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.previousInsurer"
-                v-model="changeUserObj.previousInsurer"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Year of issue driver license:</span
-              >
-              <input
-                class="form-control"
-                type="number"
-                :placeholder="myAccountInfo.yearOfIssueDriverLicense"
-                v-model="changeUserObj.yearOfIssueDriverLicense"
-              />
-            </label>
-            <label>
-              <span class="fw-bold text-decoration-underline lh-lg"
-                >Claims history:</span
-              >
-              <input
-                class="form-control"
-                type="text"
-                :placeholder="myAccountInfo.claimsHistory"
-                v-model="changeUserObj.claimsHistory"
-              />
-            </label>
-            <button type="submit" class="btn btn-dark mt-3">Submit</button>
-          </form>
-        </form>
-      </div>
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.firstName"
+            v-model="changeUserObj.firstName"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Last name:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.lastName"
+            v-model="changeUserObj.lastName"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Date of birth:</span
+          >
+          <input class="form-control" type="date" v-model="dateOfBirth" />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg">Address:</span>
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.address"
+            v-model="changeUserObj.address"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Cellphone:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.cellphone"
+            v-model="changeUserObj.cellphone"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Home phone:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.phoneNumber"
+            v-model="changeUserObj.phoneNumber"
+          />
+        </label>
+        <select
+          class="form-select mt-3"
+          aria-label="Default select example"
+          v-model="changeUserObj.maritalStatus"
+        >
+          <option value="" selected>Select marital status</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+        </select>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Country Of Residence:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.countryOfResidence"
+            v-model="changeUserObj.countryOfResidence"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Previous Insurer:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.previousInsurer"
+            v-model="changeUserObj.previousInsurer"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Year of issue driver license:</span
+          >
+          <input
+            class="form-control"
+            type="number"
+            :placeholder="myAccountInfo.yearOfIssueDriverLicense"
+            v-model="changeUserObj.yearOfIssueDriverLicense"
+          />
+        </label>
+        <label>
+          <span class="fw-bold text-decoration-underline lh-lg"
+            >Claims history:</span
+          >
+          <input
+            class="form-control"
+            type="text"
+            :placeholder="myAccountInfo.claimsHistory"
+            v-model="changeUserObj.claimsHistory"
+          />
+        </label>
+        <button type="submit" class="btn btn-outline-warning mt-3">Submit</button>
+      </form>
     </div>
     <MyVehicles />
     <ModalMessage />
@@ -361,7 +355,10 @@ export default {
       this.changeUserObj.birthDate = this.getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
-        .then(this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`))
+        .then(
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
+          this.scrollToTop()
+        )
         .catch((err) => console.log(err))
         .then(
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)

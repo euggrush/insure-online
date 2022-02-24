@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createVehicle">
+  <form class="bg-dark bg-gradient shadow-lg text-white p-3 rounded" @submit.prevent="createVehicle">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Make and model:</label>
       <input
@@ -160,7 +160,7 @@
         "
       ></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-outline-warning">Submit</button>
   </form>
 </template>
 
@@ -202,7 +202,7 @@ export default {
         .then(
           this.$store.dispatch(`GET_VEHICLES`, ``),
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.vehicleInfo = {})
+          (this.vehicleInfo = {}, this.$emit(`closeForm`, {}))
         )
         .catch((error) => alert(error))
         .then(() => {

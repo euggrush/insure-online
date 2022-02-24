@@ -1,79 +1,71 @@
 <template>
   <section class="my-vehicles">
-    <h3 class="mt-3 fw-bold text-capitalize">Vehicles information:</h3>
-
     <button
-      class="btn btn-dark mt-3"
+      class="btn btn-dark mt-1"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseWidthExample"
-      aria-expanded="false"
-      aria-controls="collapseWidthExample"
+      @click="showAddCar = !showAddCar"
     >
       <span class="text-capitalize">Add vehicle</span>
     </button>
 
     <!-- CREATE VEHICLE FORN -->
-    <div>
-      <div class="collapse mt-3" id="collapseWidthExample">
-        <div class="card card-body">
-          <CreateVehicleForm :myProps="{ accountId: accountId }" />
-        </div>
-      </div>
-    </div>
+
+    <Transition>
+      <CreateVehicleForm
+        @closeForm="closeCreateCarForm"
+        class="mt-3"
+        v-if="showAddCar"
+        :myProps="{ accountId: accountId }"
+      />
+    </Transition>
     <!-- CREATE VEHICLE FORN END -->
     <!-- VEHICLES LIST -->
     <ul class="list-group position-relative">
       <li
         v-for="(vehicle, index) in myVehicles"
         :key="vehicle.vehicleId"
-        class="list-group-item mt-3 overflow-auto"
+        class="
+          list-group-item
+          mt-3
+          overflow-auto
+          bg-dark bg-gradient
+          rounded
+          text-light text-capitalize
+        "
         v-show="vehicle.deleted == false"
       >
         <div class="row">
           <div class="col-sm-8">
-            <span class="fw-bold text-decoration-underline"
-              >Vehicle make and model:</span
-            >
+            <span class="fw-bold">make and model:</span>
             <span>&nbsp;{{ vehicle.details }}</span> <br />
-            <span class="fw-bold text-decoration-underline">Vehicle year:</span>
+            <span class="fw-bold">year:</span>
             <span>&nbsp;{{ vehicle.year }}</span> <br />
-            <span class="fw-bold text-decoration-underline"
-              >Vehicle license plate nunber:</span
-            >
+            <span class="fw-bold">license plate:</span>
             <span>&nbsp;{{ vehicle.regNumber }}</span> <br />
-            <span class="fw-bold text-decoration-underline">Vehicle VIN:</span>
+            <span class="fw-bold"> VIN:</span>
             <span>&nbsp;{{ vehicle.vin }}</span> <br />
-            <span class="fw-bold text-decoration-underline"
-              >Vehicle engine:</span
-            >
-            <span>&nbsp;{{ vehicle.engine }}</span> <br />
-            <span class="fw-bold text-decoration-underline"
-              >Vehicle retail value:</span
-            >
+            <span class="fw-bold"> engine:</span>
+            <span>&nbsp;{{ vehicle.engine }}L</span> <br />
+            <span class="fw-bold"> retail value:</span>
             <span
               >&nbsp;<span class="fw-bold">R</span
               >{{ vehicle.retailValue }}</span
             >
             <br />
-            <span class="fw-bold text-decoration-underline"
-              >Tracking device:</span
-            >
+            <span class="fw-bold">Tracking device:</span>
             <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
-            <span class="fw-bold text-decoration-underline">Use case:</span>
+            <span class="fw-bold">Use case:</span>
             <span class="text-capitalize">&nbsp;{{ vehicle.useCase }}</span>
             <br />
-            <span class="fw-bold text-decoration-underline">Accessories:</span>
+            <span class="fw-bold">Accessories:</span>
             <span>&nbsp;{{ vehicle.accessories }}</span> <br />
-            <span class="fw-bold text-decoration-underline"
-              >Explanation Of The Business Use:</span
-            >
+            <span class="fw-bold">Explanation Of The Business Use:</span>
             <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
             <div class="row row-cols-auto">
               <div class="col">
                 <button
                   type="button"
-                  class="btn btn-secondary mt-3"
+                  class="btn btn-outline-info mt-3"
                   @click="openEditVehicle(vehicle)"
                 >
                   Edit vehicle
@@ -83,7 +75,7 @@
                 <button
                   @click="removePopup(vehicle, index)"
                   type="button"
-                  class="btn btn-danger mt-3"
+                  class="btn btn-outline-danger mt-3"
                 >
                   Remove vehicle
                 </button>
@@ -92,7 +84,7 @@
                 <router-link
                   to="/my-quotes"
                   type="button"
-                  class="btn btn-info mt-3"
+                  class="btn btn-outline-warning mt-3"
                 >
                   Insure vehicle
                 </router-link>
@@ -131,6 +123,7 @@
         </div>
 
         <EditVehicleForm
+          class="text-black"
           v-if="
             this.$store.state.modals_toggle.isEditVehicleOpen ==
             vehicle.vehicleId
@@ -145,6 +138,7 @@
             top-50
             start-50
             translate-middle
+            text-black
           "
           v-if="isRemovePopup == vehicle.vehicleId"
         >
@@ -200,6 +194,7 @@ export default {
   },
   data() {
     return {
+      showAddCar: false,
       FILE_URL: FILE_URL,
       accountId: ``,
       changeVehicleObj: {},
@@ -218,6 +213,9 @@ export default {
     this.accountId = this.$store.state.user.accountId;
   },
   methods: {
+    closeCreateCarForm() {
+      this.showAddCar = false;
+    },
     openEditVehicle(vehicle) {
       this.$store.commit(`SET_MODALS_TOGGLE`, {
         isEditVehicleOpen: vehicle.vehicleId,

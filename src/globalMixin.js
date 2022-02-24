@@ -2,6 +2,9 @@ const dayjs = require("dayjs");
 
 export default {
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
         getTimeStamp(date) {
             let myDate = date;
             myDate = myDate.split("-");

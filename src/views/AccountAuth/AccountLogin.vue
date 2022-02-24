@@ -13,8 +13,8 @@
   >
     <ModalMessage />
     <div class="signup-form">
-      <form autocomplete="off" @submit.prevent="login">
-        <h2>Login</h2>
+      <form class="bg-dark bg-gradient shadow-lg" autocomplete="off" @submit.prevent="login">
+        <h2 class="text-white">Login</h2>
         <hr />
         <div class="form-group">
           <div class="row">
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-lg">Login</button>
+          <button type="submit" class="btn btn-outline-warning btn-lg">Login</button>
         </div>
       </form>
     </div>
@@ -122,7 +122,6 @@ export default {
   color: #999;
   border-radius: 3px;
   background: #fff;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   padding: 30px;
 }
 .signup-form h2 {
@@ -148,13 +147,7 @@ export default {
 .signup-form .btn {
   font-size: 16px;
   font-weight: bold;
-  border: none;
   min-width: 140px;
-}
-.signup-form .btn:hover,
-.signup-form .btn:focus {
-  background: #2389cd !important;
-  outline: none;
 }
 .signup-form a {
   color: #fff;
