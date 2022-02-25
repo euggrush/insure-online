@@ -1,5 +1,5 @@
 <template>
-  <section class="admin-panel container-fluid pt-1 pb-5">
+  <section class="admin-panel container-fluid pb-5">
     <div
       class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom"
     >
@@ -204,6 +204,7 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  padding-top: 7em;
 }
 .nav-link {
   color: $colorWhite;

@@ -249,8 +249,9 @@ export default {
       this.$store
         .dispatch(`CREATE_VEHICLE`, {
           vehicleId: vehicle.vehicleId,
-          accountId: this.accountId,
+          // accountId: this.accountId,
           deleted: true,
+          // useCase: `private`,
         })
         .then((response) => {
           console.log(response.data);
