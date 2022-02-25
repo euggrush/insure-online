@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid my-order p-3 position-relative">
+  <section class="container-fluid my-order position-relative">
     <ModalMessage />
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
@@ -405,6 +405,8 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  padding-top: 7em;
+  padding-bottom: 3em;
 }
 .order-create-popup {
   min-width: 300px;

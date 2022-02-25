@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid my-account p-3 position-relative">
+  <section class="container-fluid my-account position-relative">
     <router-link to="/my-quotes" class="btn btn-dark btn-lg"
       >Quotes</router-link
     >
@@ -382,6 +382,8 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  padding-top: 7em;
+  padding-bottom: 3em;
 }
 .details li {
   list-style: none;

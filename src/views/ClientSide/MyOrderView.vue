@@ -48,7 +48,7 @@
           <input
             type="file"
             v-show="showCarPhotoInput"
-            @change="getCarPhoto($event, vehicle, index)"
+            @change="getCarPhoto($event, mainProduct.vehicleId, index)"
           />
         </label>
       </div>
@@ -289,7 +289,7 @@ export default {
       });
     },
     // CAR PHOTO UPLOAD
-    getCarPhoto(event, vehicle, index) {
+    getCarPhoto(event, vehicleId, index) {
       let files = event.target.files;
       let file = files[0];
       if (file) {
@@ -300,11 +300,11 @@ export default {
         };
         reader.readAsDataURL(file);
         setTimeout(() => {
-          this.resizeImage(file, vehicle);
+          this.resizeImage(file, vehicleId);
         }, 1000);
       }
     },
-    resizeImage(file, vehicle) {
+    resizeImage(file, vehicleId) {
       if (file) {
         let reader = new FileReader();
 
@@ -342,13 +342,13 @@ export default {
           let dataurl = canvas.toDataURL(file);
           setTimeout(() => {
             let asset = this.dataURItoBlob(dataurl);
-            this.uploadCarPhoto(asset, vehicle);
+            this.uploadCarPhoto(asset, vehicleId);
           }, 1000);
         };
         reader.readAsDataURL(file);
       }
     },
-    uploadCarPhoto(asset, vehicle) {
+    uploadCarPhoto(asset, vehicleId) {
       const formData = new FormData();
       formData.append(
         `meta`,
@@ -356,7 +356,7 @@ export default {
           fileType: `photo`,
           description: `car photo`,
           relatedTo: `vehicles`,
-          relationId: vehicle.vehicleId,
+          relationId: vehicleId,
         })
       );
       formData.append("asset[]", asset);

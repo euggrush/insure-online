@@ -1,77 +1,80 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
-    <router-link class="navbar-brand" to="/"
-      ><img
-        src="../../assets/tuffstuff_logo.png"
-        alt="logo"
-        class="rounded-circle"
-    /></router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/">Home</router-link>
-        </li>
-
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/">About</router-link>
-        </li>
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/registration">Sign Up</router-link>
-        </li>
-
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item"
-        >
-          <router-link
-            to="/login"
-            class="btn btn-warning login-btn rounded-pill"
-            >Login</router-link
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container px-4 px-lg-5">
+      <router-link class="navbar-brand" to="/">
+        <img
+          src="../../assets/tuffstuff_logo.png"
+          alt="logo"
+          class="rounded-circle"
+        />
+      </router-link>
+      <button
+        class="navbar-toggler navbar-toggler-right"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse align-items-center" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto my-2 my-lg-0">
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
           >
-        </li>
-
-        <li v-if="this.$store.state.status === 'success'" class="nav-item">
-          <button
-            class="logout-btn btn btn-warning rounded-pill"
-            type="button"
-            @click="logout"
+            <router-link class="nav-link" to="/">Home</router-link>
+          </li>
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
           >
-            Logout
-          </button>
-        </li>
-      </ul>
+            <router-link class="nav-link" to="/">About</router-link>
+          </li>
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
+          >
+            <router-link class="nav-link" to="/registration"
+              >Sign Up</router-link
+            >
+          </li>
+
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
+          >
+            <router-link
+              to="/login"
+              class="btn btn-warning login-btn rounded-pill"
+              >Login</router-link
+            >
+          </li>
+          <li v-if="this.$store.state.status === 'success'" class="nav-item">
+            <button
+              class="logout-btn btn btn-warning rounded-pill"
+              type="button"
+              @click="logout"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
@@ -79,8 +82,38 @@
 <script>
 export default {
   name: "Header",
-
+  mounted() {
+    this.shrinkNavbar();
+  },
   methods: {
+    shrinkNavbar() {
+      var navbarShrink = function () {
+        const navbarCollapsible = document.body.querySelector("#mainNav");
+        if (!navbarCollapsible) {
+          return;
+        }
+        if (window.scrollY === 0) {
+          navbarCollapsible.classList.remove("navbar-shrink");
+        } else {
+          navbarCollapsible.classList.add("navbar-shrink");
+        }
+      };
+
+      navbarShrink();
+
+      document.addEventListener("scroll", navbarShrink);
+      const navbarToggler = document.body.querySelector(".navbar-toggler");
+      const responsiveNavItems = [].slice.call(
+        document.querySelectorAll("#navbarResponsive .nav-link")
+      );
+      responsiveNavItems.map(function (responsiveNavItem) {
+        responsiveNavItem.addEventListener("click", () => {
+          if (window.getComputedStyle(navbarToggler).display !== "none") {
+            navbarToggler.click();
+          }
+        });
+      });
+    },
     logout() {
       this.$store
         .dispatch("LOGOUT")

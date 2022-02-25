@@ -243,7 +243,9 @@ export const store = new Vuex.Store({
             context.commit(`SET_VEHICLES`, data);
         },
         CREATE_VEHICLE: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/vehicles`, payload);
+            await Axios.post(`${BASE_URL}/vehicles`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
         },
         GET_ESTIMATIONS: async (context, payload) => {
             let {

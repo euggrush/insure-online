@@ -1,5 +1,6 @@
 <template>
-  <section class="my-vehicles">
+  <section class="my-vehicles position-relative">
+    <ModalMessage />
     <button
       class="btn btn-dark mt-1"
       type="button"
@@ -185,12 +186,14 @@
 <script>
 import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 import EditVehicleForm from "../../components/Forms/EditVehicleForm.vue";
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
 import { FILE_URL } from "../../constants";
 
 export default {
   components: {
     CreateVehicleForm,
     EditVehicleForm,
+    ModalMessage,
   },
   data() {
     return {
@@ -249,14 +252,15 @@ export default {
           accountId: this.accountId,
           deleted: true,
         })
-        .then(
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          (this.isRemovePopup = false)
-        )
-        .catch((err) => console.log(err))
-        .then(() => {
+        .then((response) => {
+          console.log(response.data);
           this.$store.dispatch(`GET_VEHICLES`, ``);
-        });
+        })
+        .catch((err) => {
+          this.geErrorMessage(err);
+        })
+        .then((this.isRemovePopup = false));
+
       console.log(index);
     },
     getCarPhoto(event, vehicle, index) {
