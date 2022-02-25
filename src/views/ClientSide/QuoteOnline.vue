@@ -1,5 +1,5 @@
 <template>
-  <section class="container pt-5 position-relative">
+  <section class="container position-relative">
     <!-- MODAL MESSAGE -->
     <div
       class="msg-popup position-absolute top-50 start-50 translate-middle"
@@ -424,6 +424,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   min-height: calc(100vh - 7.3em);
+  padding-top: 7em;
 }
 .estimation-form {
   width: 100%;

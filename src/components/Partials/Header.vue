@@ -19,24 +19,15 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse align-items-center" id="navbarResponsive">
-        <ul class="navbar-nav ms-auto my-2 my-lg-0">
-          <li
-            v-if="
-              this.$store.state.status === '' ||
-              this.$store.state.status === 'error'
-            "
-            class="nav-item"
-          >
+      <div
+        class="collapse navbar-collapse"
+        id="navbarResponsive"
+      >
+        <ul class="navbar-nav ms-auto my-2 my-lg-0  align-items-center">
+          <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <li
-            v-if="
-              this.$store.state.status === '' ||
-              this.$store.state.status === 'error'
-            "
-            class="nav-item"
-          >
+          <li class="nav-item">
             <router-link class="nav-link" to="/">About</router-link>
           </li>
           <li

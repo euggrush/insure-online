@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid reg-wrap">
-    <div class="signup-form pt-5">
+    <div class="signup-form">
       <form autocomplete="off" @submit.prevent="signUp">
         <h2>Registration</h2>
         <p>Please fill in this form to create an account!</p>
@@ -115,6 +115,7 @@ export default {
   border-radius: 3px;
 }
 .signup-form {
+  padding-top: 7em;
   margin: 0 auto;
   @include media-breakpoint-up(sm) {
     width: 400px;

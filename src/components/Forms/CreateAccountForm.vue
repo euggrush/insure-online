@@ -361,4 +361,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.estimation-form {
+  padding-top: 7em;
+}
 </style>

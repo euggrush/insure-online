@@ -374,6 +374,10 @@ export default {
         })
         .catch((err) => {
           this.geErrorMessage(err);
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_ESTIMATIONS`, ``),
+            (this.showMyQuites = !this.showMyQuites);
         });
     },
     resetForm() {

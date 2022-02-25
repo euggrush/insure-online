@@ -38,6 +38,16 @@
         <span> <strong>, R</strong>{{ mainProduct.vehicleRetailValue }}</span>
         <label class="car-photo-wrap">
           <img
+            v-if="mainProduct.vehicleAssets.length > 0"
+            :src="`${FILE_URL}${mainProduct.vehicleAssets[0].path}`"
+            :id="`car-photo-input${index}`"
+            class="d-block vehicle-image p-5"
+            alt="image"
+            width="200"
+            height="200"
+          />
+          <img
+            v-else
             :id="`car-photo-input${index}`"
             src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
             class="d-block vehicle-image p-5"
