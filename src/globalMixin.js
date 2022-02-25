@@ -2,6 +2,20 @@ const dayjs = require("dayjs");
 
 export default {
     methods: {
+        geErrorMessage(err) {
+            if (err.response) {
+                this.geErrorMessage(err.response, true);
+            } else if (err.request) {
+                this.geErrorMessage(err.request, true);
+            } else {
+                setTimeout(() => {
+                    this.$store.commit(`SET_MODAL`, {
+                        msg: this.$store.state.general_errors.data.message,
+                        isModal: true,
+                    });
+                }, 1000);
+            }
+        },
         scrollToTop() {
             window.scrollTo(0, 0);
         },

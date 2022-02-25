@@ -373,18 +373,7 @@ export default {
             this.scrollToTop();
         })
         .catch((err) => {
-          if (err.response) {
-            this.getModalMessage(err.response, true);
-          } else if (err.request) {
-            this.getModalMessage(err.request, true);
-          } else {
-            setTimeout(() => {
-              this.getModalMessage(
-                this.$store.state.general_errors.data.message,
-                true
-              );
-            }, 1000);
-          }
+          this.geErrorMessage(err);
         });
     },
     resetForm() {
@@ -401,9 +390,6 @@ export default {
     closeCreateOrderPopup() {
       this.isCreateOrderPopup = false;
       this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
-    },
-    getModalMessage(arg1, arg2) {
-      this.$store.commit(`SET_MODAL`, { msg: arg1, isModal: arg2 });
     },
   },
 };

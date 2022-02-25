@@ -116,6 +116,7 @@ export default {
 <style lang="scss" scoped>
 .btn {
   min-width: 10em;
+  width: 100%;
 }
 .btn-pdf {
   min-width: 100%;
