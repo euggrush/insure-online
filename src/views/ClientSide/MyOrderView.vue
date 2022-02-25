@@ -7,6 +7,7 @@
       border: order.orderStatus == `pending`,
     }"
   >
+    <ModalMessage />
     <button
       type="button"
       class="btn-close float-end"
@@ -35,13 +36,21 @@
       <div class="col">
         <strong>{{ mainProduct.vehicleDetails }}</strong>
         <span> <strong>, R</strong>{{ mainProduct.vehicleRetailValue }}</span>
-        <img
-          src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
-          class="d-block vehicle-image p-5"
-          alt="image"
-          width="200"
-          height="200"
-        />
+        <label class="car-photo-wrap">
+          <img
+            :id="`car-photo-input${index}`"
+            src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
+            class="d-block vehicle-image p-5"
+            alt="image"
+            width="200"
+            height="200"
+          />
+          <input
+            type="file"
+            v-show="showCarPhotoInput"
+            @change="getCarPhoto($event, vehicle, index)"
+          />
+        </label>
       </div>
       <div class="col">
         <strong class="d-inline-block text-uppercase mt-3 border-bottom"
@@ -216,10 +225,13 @@
 
 <script>
 import { FILE_URL } from "../../constants";
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
 
 export default {
+  components: { ModalMessage },
   data() {
     return {
+      showCarPhotoInput: false,
       isUploadError: false,
       FILE_URL: FILE_URL,
     };
@@ -276,13 +288,113 @@ export default {
         }, 1000);
       });
     },
+    // CAR PHOTO UPLOAD
+    getCarPhoto(event, vehicle, index) {
+      let files = event.target.files;
+      let file = files[0];
+      if (file) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById(`car-photo-input${index}`).src =
+            e.target.result;
+        };
+        reader.readAsDataURL(file);
+        setTimeout(() => {
+          this.resizeImage(file, vehicle);
+        }, 1000);
+      }
+    },
+    resizeImage(file, vehicle) {
+      if (file) {
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+          let img = document.createElement("img");
+          img.src = e.target.result;
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+
+          ctx.drawImage(img, 0, 0);
+
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 400;
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let dataurl = canvas.toDataURL(file);
+          setTimeout(() => {
+            let asset = this.dataURItoBlob(dataurl);
+            this.uploadCarPhoto(asset, vehicle);
+          }, 1000);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    uploadCarPhoto(asset, vehicle) {
+      const formData = new FormData();
+      formData.append(
+        `meta`,
+        JSON.stringify({
+          fileType: `photo`,
+          description: `car photo`,
+          relatedTo: `vehicles`,
+          relationId: vehicle.vehicleId,
+        })
+      );
+      formData.append("asset[]", asset);
+      this.$store
+        .dispatch(`UPLOAD`, formData)
+        .then(() => {
+          setTimeout(() => {
+            this.$store.dispatch(`GET_VEHICLES`, ``);
+          }, 1000);
+        })
+        .catch(() => {
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg:
+              this.$store.state.general_errors ??
+              `File upload error, please try later`,
+          });
+        });
+    },
+    // CAR PHOTO UPLOAD END
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.car-photo-wrap:hover {
+  outline: solid 1px #212529;
+  background-image: url("../../assets/img/icon-change-avatar.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+}
 .vehicle-image {
   width: 100%;
   height: auto;
+  cursor: pointer;
+}
+.vehicle-image:hover {
+  opacity: 0.5;
 }
 </style>

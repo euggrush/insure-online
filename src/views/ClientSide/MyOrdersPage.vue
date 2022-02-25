@@ -7,16 +7,15 @@
     <button
       class="btn btn-dark mt-3"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseWidthExample"
-      aria-expanded="false"
-      aria-controls="collapseWidthExample"
       @click="showGetQuoteMenu = !showGetQuoteMenu"
     >
       Get Quote</button
     ><br />
     <Transition>
-      <div v-if="showGetQuoteMenu" class="bg-light mt-3 p-3">
+      <div
+        v-if="showGetQuoteMenu"
+        class="bg-dark bg-gradient shadow-lg text-white mt-3 p-3 rounded"
+      >
         <form @submit.prevent="getEstimation">
           <p class="fw-bold">Category</p>
           <select
@@ -102,7 +101,7 @@
 
           <button
             type="submit"
-            class="btn btn-info mt-3"
+            class="btn btn-outline-warning mt-3"
             :disabled="!isCategorySelected || !isMainProductSelected"
           >
             Calculate
@@ -115,7 +114,7 @@
           <button
             v-if="showEstimate"
             type="button"
-            class="btn btn-success mt-5"
+            class="btn btn-outline-success mt-5"
             :disabled="!isCategorySelected || !isMainProductSelected"
             @click="quoteToOrder"
           >
@@ -132,12 +131,15 @@
       Show My Quotes
     </button>
     <Transition>
-      <div v-if="showMyQuites" class="bg-light mt-3 p-3">
+      <div
+        v-if="showMyQuites"
+        class="bg-dark bg-gradient shadow-lg mt-3 p-3 rounded"
+      >
         <ul class="list-group">
           <li
             v-for="(item, index) in estimationsList"
             :key="item.estimationId"
-            class="list-group-item"
+            class="list-group-item list-group-item-dark"
           >
             <div class="row">
               <div class="col">
@@ -167,7 +169,11 @@
             </div>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary mt-3" @click="createOrder">
+        <button
+          type="button"
+          class="btn btn-outline-warning mt-3"
+          @click="createOrder"
+        >
           Create Order
         </button>
       </div>

@@ -271,7 +271,9 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_CURRENT_ORDER`, data);
                 }
-            )
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
         },
         CREATE_USER: async (context, payload) => {
             Axios.post(`${BASE_URL}/accounts`, payload).then(

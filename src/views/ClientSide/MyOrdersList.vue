@@ -1,10 +1,10 @@
 <template>
-  <section class="my-orders-list">
+  <section class="my-orders-list bg-dark bg-gradient p-3 rounded">
     <ul class="list-group">
       <li
         v-for="(order, index) in ordersList"
         :key="index"
-        class="list-group-item"
+        class="list-group-item list-group-item-dark"
       >
         <div class="container">
           <div class="row border p-1 order-item">
@@ -49,19 +49,21 @@
               <span class="d-block fw-bold text-decoration-underline"
                 >Total:</span
               >
-              <span>R{{ order.allEstimationsTotalCost }}</span>
+              <span
+                ><strong>R</strong> {{ order.allEstimationsTotalCost }}</span
+              >
             </div>
-            <div
-              v-if="order.adjustedCost > 0"
-              class="col border-bottom border-start"
-            >
+            <div class="col border-bottom border-start">
               <span class="d-block fw-bold fst-italic">Adjusted:</span>
-              <span>R{{ order.adjustedCost }}</span>
+              <span v-if="order.adjustedCost > 0"
+                ><strong>R</strong> {{ order.adjustedCost }}</span
+              >
+              <span v-else>Not Adjusted</span>
             </div>
             <div class="col">
               <button
                 type="button"
-                class="btn btn-primary float-end mt-3"
+                class="btn btn-outline-success float-end mt-3"
                 @click="getOrder(order.orderId)"
               >
                 View order

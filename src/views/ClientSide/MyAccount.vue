@@ -3,7 +3,9 @@
     <router-link to="/my-quotes" class="btn btn-dark btn-lg"
       >Quotes</router-link
     >
-    <div class="row mt-3 my-account_info bg-dark bg-gradient text-white shadow-lg">
+    <div
+      class="row mt-3 my-account_info bg-dark bg-gradient text-white shadow-lg"
+    >
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
         <label for="formFile" class="form-label fw-bold user-avatar-wrap">
           <img
@@ -203,7 +205,9 @@
             v-model="changeUserObj.claimsHistory"
           />
         </label>
-        <button type="submit" class="btn btn-outline-warning mt-3">Submit</button>
+        <button type="submit" class="btn btn-outline-warning mt-3">
+          Submit
+        </button>
       </form>
     </div>
     <MyVehicles />
@@ -428,7 +432,7 @@ li {
   object-fit: cover;
 }
 .user-avatar-photo:hover {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 .table-dark {
   min-height: 290px;
