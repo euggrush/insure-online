@@ -1,5 +1,6 @@
 <template>
   <section class="container-fluid my-order p-3 position-relative">
+    <ModalMessage />
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
@@ -234,9 +235,11 @@
 <script>
 import { CAR_INSURANCE_CATEGORY } from "../../constants";
 import MyOrdersList from "./MyOrdersList.vue";
+import ModalMessage from "../../components/Modals/ModalMessage.vue";
 export default {
   components: {
     MyOrdersList,
+    ModalMessage,
   },
   data() {
     return {
@@ -356,22 +359,33 @@ export default {
         .dispatch(`CREATE_ORDER`, {
           estimationIds: this.estimationIdsArray,
         })
-        .then(
-          (this.isCreateOrderPopup = true),
-          this.$store.dispatch(`GET_ORDERS`, `?order=desc`, this.resetForm()),
-          (this.isCategorySelected = false),
-          (this.isMainProductSelected = false),
-          (this.isUserSelected = false),
-          this.$store.dispatch(`GET_ESTIMATIONS`, ``),
-          (this.showMyQuites = !this.showMyQuites),
-          (this.showMyOrders = !this.showMyOrders),
-          this.scrollToTop()
-        )
-        .catch((err) => console.log(err))
-        .then(
-          this.$store.dispatch(`GET_ORDERS`, `?order=desc`),
-          this.$store.dispatch(`GET_ESTIMATIONS`, ``)
-        );
+        .then((response) => {
+          console.log(response.data),
+            (this.isCreateOrderPopup = true),
+            this.$store.dispatch(`GET_ORDERS`, `?order=desc`),
+            this.resetForm(),
+            (this.isCategorySelected = false),
+            (this.isMainProductSelected = false),
+            (this.isUserSelected = false),
+            this.$store.dispatch(`GET_ESTIMATIONS`, ``),
+            (this.showMyQuites = !this.showMyQuites),
+            (this.showMyOrders = !this.showMyOrders),
+            this.scrollToTop();
+        })
+        .catch((err) => {
+          if (err.response) {
+            this.getModalMessage(err.response, true);
+          } else if (err.request) {
+            this.getModalMessage(err.request, true);
+          } else {
+            setTimeout(() => {
+              this.getModalMessage(
+                this.$store.state.general_errors.data.message,
+                true
+              );
+            }, 1000);
+          }
+        });
     },
     resetForm() {
       (this.isCategorySelected = false),
@@ -387,6 +401,9 @@ export default {
     closeCreateOrderPopup() {
       this.isCreateOrderPopup = false;
       this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
+    },
+    getModalMessage(arg1, arg2) {
+      this.$store.commit(`SET_MODAL`, { msg: arg1, isModal: arg2 });
     },
   },
 };
