@@ -13,7 +13,11 @@
   >
     <ModalMessage />
     <div class="signup-form">
-      <form class="bg-dark bg-gradient shadow-lg" autocomplete="off" @submit.prevent="login">
+      <form
+        class="bg-dark bg-gradient shadow-lg"
+        autocomplete="off"
+        @submit.prevent="login"
+      >
         <h2 class="text-white">Login</h2>
         <hr />
         <div class="form-group">
@@ -42,7 +46,9 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-outline-warning btn-lg">Login</button>
+          <button type="submit" class="btn btn-outline-warning btn-lg">
+            Login
+          </button>
         </div>
       </form>
     </div>
@@ -62,6 +68,9 @@ export default {
       email: ``,
       password: ``,
     };
+  },
+  mounted() {
+    this.hideMenu();
   },
   methods: {
     login() {
