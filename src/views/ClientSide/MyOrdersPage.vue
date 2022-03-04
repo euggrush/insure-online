@@ -409,8 +409,11 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  padding-top: 7em;
+  padding-top: 9em;
   padding-bottom: 3em;
+  @include media-breakpoint-up(md) {
+    padding-top: 8em;
+  }
 }
 .order-create-popup {
   min-width: 300px;

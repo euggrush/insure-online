@@ -187,7 +187,7 @@
         "
       />
     </div>
-    <div
+    <!-- <div
       class="mt-3 mb-3"
       v-if="!order.assets.some((e) => e.description === 'Photo Of Vehicle')"
     >
@@ -201,7 +201,7 @@
         name="asset"
         @change="uploadFile($event, order.orderId, `Photo Of Vehicle`, `photo`)"
       />
-    </div>
+    </div> -->
     <div
       class="msg-popup position-absolute top-50 start-50 translate-middle"
       tabindex="-1"

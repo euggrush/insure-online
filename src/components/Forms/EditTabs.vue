@@ -115,10 +115,15 @@ export default {
   },
   methods: {
     editTab(arg1, arg2) {
-      this.$store.dispatch(`MODIFY_RATING`, {
-        resourceKey: arg1,
-        resourceValue: arg2,
-      });
+      this.$store
+        .dispatch(`MODIFY_RATING`, {
+          resourceKey: arg1,
+          resourceValue: arg2,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_RATING`, ``);
+          this.scrollToTop();
+        });
     },
   },
 };

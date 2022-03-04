@@ -100,22 +100,28 @@ export default {
       loggedUser: `John Doe`,
     };
   },
-  // watch: {
-  //   getTabs() {
-  //     this.getTabsTitles();
-  //   },
-  // },
+  watch: {
+    getTabs() {
+      this.fillTabs();
+    },
+  },
   computed: {
     getTabs() {
       return this.$store.state.rating.resources;
     },
   },
   mounted() {
-    this.getTabsTitles();
+    this.fetchTabs();
+    this.$nextTick(() => {
+      this.fillTabs();
+    });
   },
   methods: {
-    getTabsTitles() {
-      this.$store.dispatch(`GET_RATING`, ``).then(() => {
+    fetchTabs() {
+      this.$store.dispatch(`GET_RATING`, ``);
+    },
+    fillTabs() {
+      if (this.$store.state.rating.resources) {
         this.$store.state.rating.resources.map((item) => {
           if (
             item.resourceKey === `accountsTab` ||
@@ -128,7 +134,8 @@ export default {
             this.tabs[item.resourceKey] = item.resourceValue;
           }
         });
-      });
+      }
+      return this.tabs;
     },
     showAccounts() {
       this.isAccounts = true;
