@@ -1,13 +1,16 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container-fluid px-4 px-lg-5">
-      <router-link class="navbar-brand" to="/">
+      <button
+        class="navbar-brand border-0 bg-transparent"
+        @click="getLogoButtonAction"
+      >
         <img
           src="../../assets/tuffstuff_logo.png"
           alt="logo"
           class="rounded-circle"
         />
-      </router-link>
+      </button>
       <button
         class="navbar-toggler navbar-toggler-right"
         type="button"
@@ -19,11 +22,8 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarResponsive"
-      >
-        <ul class="navbar-nav ms-auto my-2 my-lg-0  align-items-center">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
@@ -77,6 +77,13 @@ export default {
     this.shrinkNavbar();
   },
   methods: {
+    getLogoButtonAction() {
+      if (this.$store.state.status === ``) {
+        this.$router.push(`/`);
+      } else {
+        this.$router.push({ query: { type: 2 } });
+      }
+    },
     logout() {
       this.$store
         .dispatch("LOGOUT")
