@@ -183,9 +183,11 @@
         >
         <input
           type="date"
+          pattern=""
           class="form-control"
           id="validationCustom111"
           v-model="birth"
+          placeholder="DD.MM.YYYY"
           required
         />
         <div class="invalid-feedback">Please enter your date of birth</div>

@@ -51,13 +51,13 @@
           >
             <router-link
               to="/login"
-              class="btn btn-warning login-btn rounded-pill"
+              class="btn btn-outline-warning login-btn rounded-pill"
               >Login</router-link
             >
           </li>
           <li v-if="this.$store.state.status === 'success'" class="nav-item">
             <button
-              class="logout-btn btn btn-warning rounded-pill"
+              class="logout-btn btn btn-outline-warning rounded-pill"
               type="button"
               @click="logout"
             >

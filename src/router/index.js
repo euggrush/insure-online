@@ -6,12 +6,12 @@ import {
   store
 } from '../store/index.js'
 import Home from '../views/Home.vue'
-import AccountLogin from '../views/AccountAuth/AccountLogin.vue'
-import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
-import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
+import LoginForm from '../components/Forms/LoginForm.vue';
+import AdminPanel from '../views/AdminPanel/AdminPanel.vue';
+import InsurancePage from '../views/InsurancePage/InsurancePage.vue';
 import NotFound from '../components/Errors/404.vue';
-import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
-import MyAccount from '../views/ClientSide/MyAccount.vue'
+import RegistrationForm from '../components/Forms/RegistrationForm.vue';
+import MyAccount from '../views/ClientSide/MyAccount.vue';
 import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 
 
@@ -28,7 +28,7 @@ const isTokenExpired = (tokenExpiration) => {
 const routes = [{
     path: '/login',
     name: 'Login',
-    component: AccountLogin,
+    component: LoginForm,
     meta: {
       requiresAuth: false,
       adminAuth: false,
@@ -86,7 +86,7 @@ const routes = [{
   },
   {
     path: "/registration",
-    component: QuoteOnline
+    component: RegistrationForm
   }
 ]
 

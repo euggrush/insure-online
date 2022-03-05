@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
+import ModalMessage from "../Modals/ModalMessage.vue";
 
 export default {
   components: {
