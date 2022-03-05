@@ -30,9 +30,7 @@ const routes = [{
     name: 'Login',
     component: LoginForm,
     meta: {
-      requiresAuth: false,
-      adminAuth: false,
-      residentAuth: false
+      requiresAuth: false
     }
   },
   {
@@ -40,9 +38,7 @@ const routes = [{
     name: 'Home',
     component: Home,
     meta: {
-      requiresAuth: false,
-      adminAuth: false,
-      residentAuth: false
+      requiresAuth: false
     }
   },
   {

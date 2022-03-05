@@ -394,18 +394,15 @@ export default {
 li {
   margin-bottom: 10px;
 }
-// .my-account_info {
-//   outline: solid 3px red;
-// }
 .user-avatar-wrap {
-  width: 290px;
-  height: 290px;
+  width: 100%;
+  height: auto;
   cursor: pointer;
   object-fit: cover;
+  margin-top: 10px;
   @include media-breakpoint-up(sm) {
     width: 180px;
     height: 180px;
-    margin-top: 10px;
   }
   @include media-breakpoint-up(md) {
     width: 230px;
