@@ -28,18 +28,12 @@ const isTokenExpired = (tokenExpiration) => {
 const routes = [{
     path: '/login',
     name: 'Login',
-    component: LoginForm,
-    meta: {
-      requiresAuth: false
-    }
+    component: LoginForm
   },
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta: {
-      requiresAuth: false
-    }
+    component: Home
   },
   {
     path: '/our-products',
