@@ -251,8 +251,6 @@
 </template>
 
 <script>
-const dayjs = require("dayjs");
-
 export default {
   data() {
     return {
@@ -301,9 +299,6 @@ export default {
       });
   },
   methods: {
-    getDate(date) {
-      return dayjs(date).format("MMMM D, YYYY h:mm A");
-    },
     getUniqueArr(arr) {
       if (!arr) {
         this.availableCoveragesToAdd = 0;

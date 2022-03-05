@@ -48,7 +48,8 @@ export const store = new Vuex.Store({
         date_range: {
             createdFrom: 0,
             createdTo: new Date().getTime()
-        }
+        },
+        rating: []
     },
     plugins: [
         createLogger(),
@@ -146,6 +147,9 @@ export const store = new Vuex.Store({
         },
         SET_UPLOADED_FILE(state, payload) {
             state.uploaded_file = payload;
+        },
+        SET_RATING(state, payload) {
+            state.rating = payload;
         }
     },
     actions: {
@@ -239,7 +243,9 @@ export const store = new Vuex.Store({
             context.commit(`SET_VEHICLES`, data);
         },
         CREATE_VEHICLE: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/vehicles`, payload);
+            await Axios.post(`${BASE_URL}/vehicles`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
         },
         GET_ESTIMATIONS: async (context, payload) => {
             let {
@@ -267,7 +273,9 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_CURRENT_ORDER`, data);
                 }
-            )
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
         },
         CREATE_USER: async (context, payload) => {
             Axios.post(`${BASE_URL}/accounts`, payload).then(
@@ -289,6 +297,16 @@ export const store = new Vuex.Store({
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
             })
-        }
+        },
+        GET_RATING: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/resources${payload}`);
+            context.commit(`SET_RATING`, data);
+
+        },
+        MODIFY_RATING: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/resources`, payload);
+        },
     },
 });

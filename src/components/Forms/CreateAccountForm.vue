@@ -250,14 +250,6 @@
 </template>
 
 <script>
-const getTimeStamp = (date) => {
-  let myDate = date;
-  myDate = myDate.split("-");
-  const timestamp = +new Date(
-    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
-  ).getTime();
-  return timestamp;
-};
 export default {
   data() {
     return {
@@ -347,7 +339,7 @@ export default {
     createUserAccount() {
       if (this.validatePayloads()) {
         this.userPayload.username = this.userPayload.email;
-        this.userPayload.birthDate = getTimeStamp(this.birth);
+        this.userPayload.birthDate = this.getTimeStamp(this.birth);
 
         this.$store.dispatch(`CREATE_USER`, this.userPayload).then(() => {
           setTimeout(() => {
@@ -369,4 +361,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.estimation-form {
+  padding-top: 7em;
+}
 </style>

@@ -1,9 +1,15 @@
-import { createApp } from 'vue'
+import {
+    createApp
+} from 'vue'
 import App from './App.vue'
 import router from './router'
-import {store} from './store'
+import {
+    store
+} from './store'
 
 import axios from "axios";
+
+import globalMixin from "./globalMixin"
 
 axios.interceptors.request.use(
     (config) => {
@@ -17,5 +23,4 @@ axios.interceptors.request.use(
         Promise.reject(error)
     });
 
-
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).mixin(globalMixin).use(store).use(router).mount('#app')

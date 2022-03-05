@@ -1,5 +1,5 @@
 <template>
-  <section class="admin-panel container-fluid pt-1 pb-5">
+  <section class="admin-panel container-fluid pb-5">
     <div
       class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom"
     >
@@ -17,35 +17,42 @@
         aria-current="page"
         @click="showAccounts"
       >
-        Accounts
+        {{ tabs.accountsTab ?? `Accounts` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
-        Categories
+        {{ tabs.categoriesTab ?? `Categories` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
-        Products
+        {{ tabs.productsTab ?? `Products` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isEstimations }"
         @click="showEstimations"
       >
-        Quotes
+        {{ tabs.quotesTab ?? `Quotes` }}
       </button>
       <button
         class="nav-link fw-bold"
         :class="{ active: isOrders }"
         @click="showOrders"
       >
-        Orders
+        {{ tabs.ordersTab ?? `Orders` }}
+      </button>
+      <button
+        class="nav-link fw-bold"
+        :class="{ active: isResources }"
+        @click="showResources"
+      >
+        {{ tabs.resoursesTab ?? `Resources` }}
       </button>
     </nav>
 
@@ -56,6 +63,7 @@
       <SubProducts v-if="isSubProducts" />
       <EstimationsList v-if="isEstimations" />
       <OrdersList v-if="isOrders" />
+      <Resources v-if="isResources" />
     </section>
   </section>
 </template>
@@ -67,6 +75,7 @@ import ProductsList from "../AdminPanel/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
 import EstimationsList from "../AdminPanel/EstimationsList.vue";
 import OrdersList from "../AdminPanel/OrdersList.vue";
+import Resources from "../AdminPanel/Resources.vue";
 export default {
   name: `AdminPanel`,
   components: {
@@ -76,19 +85,58 @@ export default {
     SubProducts,
     EstimationsList,
     OrdersList,
+    Resources,
   },
   data() {
     return {
+      tabs: {},
       isAccounts: true,
       isCategories: false,
       isProducts: false,
       isSubProducts: false,
       isEstimations: false,
       isOrders: false,
+      isResources: false,
       loggedUser: `John Doe`,
     };
   },
+  watch: {
+    getTabs() {
+      this.fillTabs();
+    },
+  },
+  computed: {
+    getTabs() {
+      return this.$store.state.rating.resources;
+    },
+  },
+  mounted() {
+    this.fetchTabs();
+    this.$nextTick(() => {
+      this.fillTabs();
+    });
+  },
   methods: {
+    fetchTabs() {
+      this.$store.dispatch(`GET_RATING`, ``);
+    },
+    fillTabs() {
+      if (this.$store.state.rating.resources) {
+        this.$store.state.rating.resources.map((item) => {
+          if (
+            item.resourceKey === `accountsTab` ||
+            item.resourceKey === `categoriesTab` ||
+            item.resourceKey === `productsTab` ||
+            item.resourceKey === `quotesTab` ||
+            item.resourceKey === `ordersTab` ||
+            item.resourceKey === `resoursesTab`
+          ) {
+            this.tabs[item.resourceKey] = item.resourceValue;
+          }
+        });
+      }
+      return this.tabs;
+    },
     showAccounts() {
       this.isAccounts = true;
       this.isCategories = false;
@@ -96,6 +144,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showCategories() {
       this.isAccounts = false;
@@ -104,6 +153,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showProducts() {
       this.isAccounts = false;
@@ -112,6 +162,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showSubProducts() {
       this.isAccounts = false;
@@ -120,6 +171,7 @@ export default {
       this.isSubProducts = true;
       this.isEstimations = false;
       this.isOrders = false;
+      this.isResources = false;
     },
     showEstimations() {
       this.isAccounts = false;
@@ -128,6 +180,7 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = true;
       this.isOrders = false;
+      this.isResources = false;
     },
     showOrders() {
       this.isAccounts = false;
@@ -136,6 +189,16 @@ export default {
       this.isSubProducts = false;
       this.isEstimations = false;
       this.isOrders = true;
+      this.isResources = false;
+    },
+    showResources() {
+      this.isAccounts = false;
+      this.isCategories = false;
+      this.isProducts = false;
+      this.isSubProducts = false;
+      this.isEstimations = false;
+      this.isOrders = false;
+      this.isResources = true;
     },
   },
 };
@@ -148,6 +211,7 @@ export default {
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  padding-top: 7em;
 }
 .nav-link {
   color: $colorWhite;

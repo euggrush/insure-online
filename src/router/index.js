@@ -6,13 +6,13 @@ import {
   store
 } from '../store/index.js'
 import Home from '../views/Home.vue'
-import AccountLogin from '../views/AccountAuth/AccountLogin.vue'
-import AdminPanel from '../views/AdminPanel/AdminPanel.vue'
-import InsurancePage from '../views/InsurancePage/InsurancePage.vue'
+import LoginForm from '../components/Forms/LoginForm.vue';
+import AdminPanel from '../views/AdminPanel/AdminPanel.vue';
+import InsurancePage from '../views/InsurancePage/InsurancePage.vue';
 import NotFound from '../components/Errors/404.vue';
-import QuoteOnline from '../views/ClientSide/QuoteOnline.vue'
-import MyAccount from '../views/ClientSide/MyAccount.vue'
-import MyOrder from '../views/ClientSide/MyOrder.vue';
+import RegistrationForm from '../components/Forms/RegistrationForm.vue';
+import MyAccount from '../views/ClientSide/MyAccount.vue';
+import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 
 
 const isTokenExpired = (tokenExpiration) => {
@@ -28,11 +28,9 @@ const isTokenExpired = (tokenExpiration) => {
 const routes = [{
     path: '/login',
     name: 'Login',
-    component: AccountLogin,
+    component: LoginForm,
     meta: {
-      requiresAuth: false,
-      adminAuth: false,
-      residentAuth: false
+      requiresAuth: false
     }
   },
   {
@@ -40,9 +38,7 @@ const routes = [{
     name: 'Home',
     component: Home,
     meta: {
-      requiresAuth: false,
-      adminAuth: false,
-      residentAuth: false
+      requiresAuth: false
     }
   },
   {
@@ -59,8 +55,8 @@ const routes = [{
     }
   },
   {
-    path: '/my-order',
-    component: MyOrder,
+    path: '/my-quotes',
+    component: MyOrdersPage,
     meta: {
       requiresAuth: true,
       adminAuth: false,
@@ -86,7 +82,7 @@ const routes = [{
   },
   {
     path: "/registration",
-    component: QuoteOnline
+    component: RegistrationForm
   }
 ]
 

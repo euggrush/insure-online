@@ -282,7 +282,6 @@ li {
   width: 100%;
   min-height: 100%;
   background: $bgLight;
-  // outline: solid 5px blue;
 }
 .btn {
   min-width: 12em;

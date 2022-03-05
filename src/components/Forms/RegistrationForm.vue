@@ -1,6 +1,5 @@
 <template>
-  <section class="container pt-5 position-relative">
-    <!-- MODAL MESSAGE -->
+  <section class="container-fluid position-relative registration">
     <div
       class="msg-popup position-absolute top-50 start-50 translate-middle"
       tabindex="-1"
@@ -29,14 +28,12 @@
         </div>
       </div>
     </div>
-    <!-- MODAL END -->
     <h1 class="fs-3 text-center">Create Account</h1>
     <form
       class="row needs-validation estimation-form mx-auto mt-5 pb-5"
       novalidate
       @submit.prevent="createUserAccount"
     >
-      <!-- BLOCK 01 -->
       <p class="fw-bold">Account Details:</p>
       <div class="col-md-6">
         <label for="validationCustom01" class="form-label mt-1"
@@ -51,11 +48,8 @@
           v-model="userPayload.firstName"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter first name</div>
       </div>
-      <!-- BLOCK 02 -->
-
       <div class="col-md-6">
         <label for="validationCustom02" class="form-label mt-1"
           >Last name</label
@@ -69,12 +63,8 @@
           v-model="userPayload.lastName"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter last name</div>
       </div>
-
-      <!-- BLOCK 03 -->
-
       <div class="col-md-6">
         <label for="validationCustom03" class="form-label mt-1"
           >Area & Postal Code</label
@@ -88,12 +78,8 @@
           v-model="userPayload.address"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
-
         <div class="invalid-feedback">Please provide a valid postal code</div>
       </div>
-      <!-- BLOCK 04 -->
-
       <div class="col-md-3">
         <label for="validationCustom04" class="form-label mt-1"
           >Country of Residence
@@ -109,8 +95,6 @@
         </select>
         <div class="invalid-feedback">Please select a valid state.</div>
       </div>
-      <!-- BLOCK 05 -->
-
       <div class="col-md-3">
         <label for="validationCustom05" class="form-label mt-1"
           >Telephone number</label
@@ -124,8 +108,6 @@
         />
         <div class="invalid-feedback">Please provide a valid number.</div>
       </div>
-      <!-- BLOCK 06 -->
-
       <div class="col-md-4">
         <label for="validationCustom06" class="form-label mt-1"
           >Cell number</label
@@ -137,10 +119,7 @@
           v-model="userPayload.cellphone"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
       </div>
-      <!-- BLOCK 07 -->
-
       <div class="col-md-4">
         <label for="validationCustom07" class="form-label mt-1"
           >ID Number</label
@@ -154,10 +133,7 @@
           v-model="userPayload.clientIdNumber"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
       </div>
-      <!-- BLOCK 08 -->
-
       <div class="col-md-4">
         <label for="validationCustom08" class="form-label mt-1"
           >Marital Status</label
@@ -174,8 +150,6 @@
         </select>
         <div class="invalid-feedback">Please select a marital status.</div>
       </div>
-      <!-- BLOCK 09 -->
-
       <div class="col-md-4">
         <label for="validationCustom09" class="form-label mt-1"
           >Year of issue of driver's license</label
@@ -187,11 +161,8 @@
           v-model="userPayload.yearOfIssueDriverLicense"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter a year.</div>
       </div>
-      <!-- BLOCK 11 -->
-
       <div class="col-md-4">
         <label for="validationCustom11" class="form-label mt-1"
           >Previous Insurer</label
@@ -204,27 +175,23 @@
           v-model="userPayload.previousInsurer"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter your previous insurer.</div>
       </div>
-      <!-- BLOCK 111 -->
-
       <div class="col-md-4">
         <label for="validationCustom111" class="form-label mt-1"
           >Date Of Birth</label
         >
         <input
           type="date"
+          pattern=""
           class="form-control"
           id="validationCustom111"
           v-model="birth"
+          placeholder="DD.MM.YYYY"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter your date of birth</div>
       </div>
-      <!-- BLOCK 10 -->
-
       <div class="col-md-12">
         <label for="validationCustom10" class="form-label mt-1"
           >Claims History over the immediate past 3 years</label
@@ -236,11 +203,8 @@
           v-model="userPayload.claimsHistory"
           required
         />
-        <!-- <div class="valid-feedback">Looks good!</div> -->
         <div class="invalid-feedback">Please enter your claims history.</div>
       </div>
-      <!-- BLOCK 020 -->
-
       <div class="col-md-6">
         <label for="validationCustomUsername" class="form-label mt-1"
           >Email</label
@@ -258,14 +222,11 @@
           <div class="invalid-feedback">Please enter email</div>
         </div>
       </div>
-      <!-- BLOCK 0202 -->
-
       <div class="col-md-6">
         <label for="validationCustomUsername0202" class="form-label mt-1"
           >Password</label
         >
         <div class="input-group has-validation">
-          <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
           <input
             type="password"
             class="form-control"
@@ -288,14 +249,6 @@
 </template>
 
 <script>
-const getTimeStamp = (date) => {
-  let myDate = date;
-  myDate = myDate.split("-");
-  const timestamp = +new Date(
-    Date.UTC(myDate[0], myDate[1] - 1, myDate[2])
-  ).getTime();
-  return timestamp;
-};
 export default {
   data() {
     return {
@@ -327,6 +280,7 @@ export default {
   mounted() {
     this.validateForm();
     this.scrollToTop();
+    this.hideMenu();
   },
   methods: {
     scrollToTop() {
@@ -403,7 +357,7 @@ export default {
     createUserAccount() {
       if (this.validatePayloads()) {
         this.userPayload.username = this.userPayload.email;
-        this.userPayload.birthDate = getTimeStamp(this.birth);
+        this.userPayload.birthDate = this.getTimeStamp(this.birth);
 
         this.$store.dispatch(`CREATE_USER`, this.userPayload).then(() => {
           setTimeout(() => {
@@ -430,6 +384,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.registration {
+  padding-top: 10em;
+  background-image: url($mainBg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 .container {
   min-height: calc(100vh - 7.3em);
 }

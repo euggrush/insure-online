@@ -377,7 +377,7 @@ export default {
       this.$store
         .dispatch(`CREATE_ORDER`, {
           accountId: accountId,
-          estimationId: estimationId,
+          estimationIds: [estimationId],
         })
         .then(
           (this.componentKey += 1),

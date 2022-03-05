@@ -107,6 +107,7 @@
             class="form-control"
             placeholder="accessories"
             id="floatingTextarea"
+            v-model="changeVehicleObj.accessories"
           ></textarea>
         </label>
         <div class="col mt-3 form-check">

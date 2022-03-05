@@ -1,77 +1,71 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light container-fluid fw-bold">
-    <router-link class="navbar-brand" to="/"
-      ><img
-        src="../../assets/tuffstuff_logo.png"
-        alt="logo"
-        class="rounded-circle"
-    /></router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/">Home</router-link>
-        </li>
-
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/">About</router-link>
-        </li>
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item me-5"
-        >
-          <router-link class="nav-link" to="/registration">Sign Up</router-link>
-        </li>
-
-        <li
-          v-if="
-            this.$store.state.status === '' ||
-            this.$store.state.status === 'error'
-          "
-          class="nav-item"
-        >
-          <router-link
-            to="/login"
-            class="btn btn-warning login-btn rounded-pill"
-            >Login</router-link
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container-fluid px-4 px-lg-5">
+      <router-link class="navbar-brand" to="/">
+        <img
+          src="../../assets/tuffstuff_logo.png"
+          alt="logo"
+          class="rounded-circle"
+        />
+      </router-link>
+      <button
+        class="navbar-toggler navbar-toggler-right"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarResponsive"
+      >
+        <ul class="navbar-nav ms-auto my-2 my-lg-0  align-items-center">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">About</router-link>
+          </li>
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
           >
-        </li>
+            <router-link class="nav-link" to="/registration"
+              >Sign Up</router-link
+            >
+          </li>
 
-        <li v-if="this.$store.state.status === 'success'" class="nav-item">
-          <button
-            class="logout-btn btn btn-warning rounded-pill"
-            type="button"
-            @click="logout"
+          <li
+            v-if="
+              this.$store.state.status === '' ||
+              this.$store.state.status === 'error'
+            "
+            class="nav-item"
           >
-            Logout
-          </button>
-        </li>
-      </ul>
+            <router-link
+              to="/login"
+              class="btn btn-outline-warning login-btn rounded-pill"
+              >Login</router-link
+            >
+          </li>
+          <li v-if="this.$store.state.status === 'success'" class="nav-item">
+            <button
+              class="logout-btn btn btn-outline-warning rounded-pill"
+              type="button"
+              @click="logout"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
@@ -79,7 +73,9 @@
 <script>
 export default {
   name: "Header",
-
+  mounted() {
+    this.shrinkNavbar();
+  },
   methods: {
     logout() {
       this.$store
