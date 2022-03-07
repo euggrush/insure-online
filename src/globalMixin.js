@@ -37,13 +37,25 @@ export default {
         },
         geErrorMessage(err) {
             if (err.response) {
-                this.geErrorMessage(err.response, true);
+                // this.geErrorMessage(err.response, true);
+                setTimeout(() => {
+                    this.$store.commit(`SET_MODAL`, {
+                        msg: `an unexpected error occurred, sorry for the inconvenience`,
+                        isModal: true,
+                    });
+                }, 1000);
             } else if (err.request) {
-                this.geErrorMessage(err.request, true);
+                // this.geErrorMessage(err.request, true);
+                setTimeout(() => {
+                    this.$store.commit(`SET_MODAL`, {
+                        msg: `an unexpected error occurred, sorry for the inconvenience`,
+                        isModal: true,
+                    });
+                }, 1000);
             } else {
                 setTimeout(() => {
                     this.$store.commit(`SET_MODAL`, {
-                        msg: this.$store.state.general_errors.data.message,
+                        msg: this.$store.state.general_errors.data.message ?? `an unexpected error occurred, sorry for the inconvenience`,
                         isModal: true,
                     });
                 }, 1000);

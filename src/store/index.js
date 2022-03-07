@@ -250,7 +250,10 @@ export const store = new Vuex.Store({
         GET_ESTIMATIONS: async (context, payload) => {
             let {
                 data
-            } = await Axios.get(`${BASE_URL}/estimations${payload}`);
+            } = await Axios.get(`${BASE_URL}/estimations${payload}`).catch((error) => {
+                console.log(error);
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
             context.commit(`SET_ESTIMATIONS`, data);
         },
         CREATE_ESTIMATION: async (context, payload) => {

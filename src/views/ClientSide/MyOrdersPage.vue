@@ -297,9 +297,6 @@ export default {
     this.$store.dispatch(`GET_ESTIMATIONS`, ``);
   },
   methods: {
-    scrollToTop() {
-      window.scrollTo(0, 0);
-    },
     selectCategory() {
       this.checkedSubProducts = [];
       this.selectedMainProduct = ``;
@@ -362,22 +359,21 @@ export default {
         .then((response) => {
           console.log(response.data),
             (this.isCreateOrderPopup = true),
-            this.$store.dispatch(`GET_ORDERS`, `?order=desc`),
+            this.$store.dispatch(`GET_ORDERS`, ``),
             this.resetForm(),
             (this.isCategorySelected = false),
             (this.isMainProductSelected = false),
             (this.isUserSelected = false),
-            this.$store.dispatch(`GET_ESTIMATIONS`, ``),
             (this.showMyQuites = !this.showMyQuites),
             (this.showMyOrders = !this.showMyOrders),
             this.scrollToTop();
         })
         .catch((err) => {
+          this.scrollToTop();
           this.geErrorMessage(err);
         })
         .then(() => {
-          this.$store.dispatch(`GET_ESTIMATIONS`, ``),
-            (this.showMyQuites = !this.showMyQuites);
+          this.showMyQuites = !this.showMyQuites;
         });
     },
     resetForm() {
@@ -393,7 +389,7 @@ export default {
     },
     closeCreateOrderPopup() {
       this.isCreateOrderPopup = false;
-      this.$store.dispatch(`GET_ORDERS`, `?order=desc`);
+      this.$store.dispatch(`GET_ORDERS`, ``);
     },
   },
 };
