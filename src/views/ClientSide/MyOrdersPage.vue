@@ -244,7 +244,7 @@ export default {
   data() {
     return {
       showMyOrders: false,
-      showGetQuoteMenu: false,
+      showGetQuoteMenu: true,
       showMyQuites: false,
       isCreateOrderPopup: false,
       isCategorySelected: false,
