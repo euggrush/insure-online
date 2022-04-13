@@ -35,7 +35,7 @@ body {
 }
 #app {
   min-height: 100vh;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Neometric Alt", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $colorDark;

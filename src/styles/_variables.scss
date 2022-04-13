@@ -21,3 +21,24 @@ $font-size-large : 17px;
 $font-size-xxl : 18px;
 
 $mainBg: "https://phonoteka.org/uploads/posts/2021-06/1623444215_32-phonoteka_org-p-oranzhevii-gradient-tekstura-krasivo-33.jpg";
+
+@font-face {
+  font-family: "Neometric Alt";
+  font-weight: 300;
+  font-style: normal;
+  src: url("~@/assets/fonts/NEOMETRICALT-LIGHT.TTF") format("ttf");
+}
+
+@font-face {
+  font-family: "Neometric Alt";
+  font-weight: 400;
+  font-style: normal;
+  src: url("~@/assets/fonts/NEOMETRICALT-REGULAR.TTF") format("ttf");
+}
+
+@font-face {
+  font-family: "Neometric Alt";
+  font-weight: 700;
+  font-style: normal;
+  src: url("~@/assets/fonts/NEOMETRIC-BOLD.TTF") format("ttf");
+}
