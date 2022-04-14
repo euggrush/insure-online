@@ -21,17 +21,15 @@
         <h2 class="text-white">Login</h2>
         <hr />
         <div class="form-group">
-          <div class="row">
-            <div class="col">
-              <input
-                v-model="email"
-                type="text"
-                class="form-control shadow-lg"
-                name="email"
-                placeholder="Email"
-                required="required"
-              />
-            </div>
+          <div class="col">
+            <input
+              v-model="email"
+              type="text"
+              class="form-control shadow-lg"
+              name="email"
+              placeholder="Email"
+              required="required"
+            />
           </div>
         </div>
         <div class="form-group">
@@ -41,6 +39,19 @@
             class="form-control shadow-lg"
             name="password"
             placeholder="Password"
+            required="required"
+          />
+        </div>
+
+        <div
+          v-if="this.$store.state.account_validation.isRequired"
+          class="form-group"
+        >
+          <input
+            v-model="validationCode"
+            type="text"
+            class="form-control shadow-lg"
+            placeholder="Validation Code"
             required="required"
           />
         </div>
@@ -67,7 +78,21 @@ export default {
     return {
       email: ``,
       password: ``,
+      validationCode: ``,
     };
+  },
+  watch: {
+    requireValidation() {
+      this.$store.commit(`SET_MODAL`, {
+        isModal: true,
+        msg: `Your account required validation. We have sent confirmation code to your email`,
+      });
+    },
+  },
+  computed: {
+    requireValidation() {
+      return this.$store.state.account_validation.isRequired;
+    },
   },
   mounted() {
     this.hideMenu();
@@ -78,6 +103,7 @@ export default {
         .dispatch("LOGIN", {
           email: this.email,
           password: this.password,
+          validationCode: this.validationCode
         })
         .then(() => {
           let myRole = this.$store.state.my_role;

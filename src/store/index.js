@@ -49,7 +49,11 @@ export const store = new Vuex.Store({
             createdFrom: 0,
             createdTo: new Date().getTime()
         },
-        rating: []
+        rating: [],
+        account_validation: {
+            isRequired: false,
+            msg: ``
+        }
     },
     plugins: [
         createLogger(),
@@ -66,6 +70,9 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_ACCOUNT_VALIDATION(state, payload) {
+            state.account_validation = payload;
+        },
         SET_MODALS_TOGGLE(state, payload) {
             state.modals_toggle = payload;
         },
@@ -170,14 +177,25 @@ export const store = new Vuex.Store({
                         const role = resp.data.role;
                         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-                        commit('auth_success', {
-                            token,
-                            user,
-                            role,
-                            tokenExpirationTime
-                        });
-                        commit(`SET_ORDERS`, []);
-                        resolve(resp);
+                        if (resp.data.token) {
+                            commit('auth_success', {
+                                token,
+                                user,
+                                role,
+                                tokenExpirationTime
+                            });
+                            commit(`SET_ORDERS`, []);
+                            resolve(resp);
+                        } else {
+                            if (resp.data.actionRequired) {
+                                commit('auth_error');
+                                commit(`SET_ACCOUNT_VALIDATION`, {
+                                    isRequired: true,
+                                    msg: resp.data.actionRequired
+                                })
+                            }
+                        }
+
                     })
                     .catch(err => {
                         commit('auth_error')
