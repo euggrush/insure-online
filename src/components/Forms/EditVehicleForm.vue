@@ -25,7 +25,7 @@
       @click="closeEdit()"
     ></button>
     <div class="container p-0">
-      <div class="row row-cols-auto">
+      <div class="row row-cols-auto row-cols-md-4">
         <label class="col mt-3">
           <span class="fw-bold text-decoration-underline lh-lg">
             Vehicle make and model:
@@ -189,6 +189,39 @@
               changeVehicleObj.useCase == 'Private And Business'
             "
           ></textarea>
+        </div>
+
+        <div class="col mt-3">
+          <span class="d-block fw-bold text-decoration-underline lh-lg"
+            >Financed vehicle:</span
+          >
+          <label class="ms-3">
+            <input
+              type="radio"
+              name="financed"
+              value="1"
+              v-model="changeVehicleObj.financed"
+              required
+            />
+            Yes
+          </label>
+          <label class="ms-3">
+            <input
+              type="radio"
+              name="financed"
+              value="0"
+              v-model="changeVehicleObj.financed"
+            />
+            No
+          </label>
+          <div v-if="changeVehicleObj.financed == '1'">
+            <textarea
+              class="form-control"
+              placeholder="Name f the finance house"
+              :required="changeVehicleObj.financed == '1'"
+              v-model="changeVehicleObj.financeHouse"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>

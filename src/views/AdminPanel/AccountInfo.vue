@@ -232,8 +232,17 @@
         <span class="text-capitalize">&nbsp;{{ vehicle.useCase }}</span> <br />
         <span class="fw-bold text-decoration-underline">Accessories:</span>
         <span>&nbsp;{{ vehicle.accessories }}</span> <br />
-        <span class="fw-bold text-decoration-underline">Explanation Of The Business Use:</span>
+        <span class="fw-bold text-decoration-underline"
+          >Explanation Of The Business Use:</span
+        >
         <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
+
+        <span class="fw-bold text-decoration-underline">Financed vehicle:</span>
+        <span>&nbsp;{{ vehicle.financed }}</span> <br />
+        <span class="fw-bold text-decoration-underline"
+          >Name of the finance house:</span
+        >
+        <span>&nbsp;{{ vehicle.financeHouse }}</span> <br />
         <button
           type="button"
           class="btn btn-secondary mt-3 me-3"
@@ -384,6 +393,8 @@ export default {
         retailValue: vehicle.retailValue,
         trackingDevice: vehicle.trackingDevice,
         useCase: vehicle.useCase,
+        financed: vehicle.financed,
+        financeHouse: vehicle.financeHouse,
       };
     },
 

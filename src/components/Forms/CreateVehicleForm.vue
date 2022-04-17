@@ -1,5 +1,8 @@
 <template>
-  <form class="bg-dark bg-gradient shadow-lg text-white p-3 rounded" @submit.prevent="createVehicle">
+  <form
+    class="bg-dark bg-gradient shadow-lg text-white p-3 rounded"
+    @submit.prevent="createVehicle"
+  >
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Make and model:</label>
       <input
@@ -160,6 +163,36 @@
         "
       ></textarea>
     </div>
+    <div class="mb-3">
+      <span>Financed vehicle:</span>
+      <label class="ms-3">
+        <input
+          type="radio"
+          name="financed"
+          value="1"
+          v-model="vehicleInfo.financed"
+          required
+        />
+        Yes
+      </label>
+      <label class="ms-3">
+        <input
+          type="radio"
+          name="financed"
+          value="0"
+          v-model="vehicleInfo.financed"
+        />
+        No
+      </label>
+      <div v-if="vehicleInfo.financed == '1'">
+        <textarea
+          class="form-control"
+          placeholder="Name f the finance house"
+          :required="vehicleInfo.financed == '1'"
+          v-model="vehicleInfo.financeHouse"
+        ></textarea>
+      </div>
+    </div>
     <button type="submit" class="btn btn-outline-warning">Submit</button>
   </form>
 </template>
@@ -181,6 +214,8 @@ export default {
         useCase: ``,
         accessories: ``,
         businessDescription: ``,
+        financed: false,
+        financeHouse: ``,
       },
     };
   },
@@ -202,7 +237,7 @@ export default {
         .then(
           this.$store.dispatch(`GET_VEHICLES`, ``),
           this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          (this.vehicleInfo = {}, this.$emit(`closeForm`, {}))
+          ((this.vehicleInfo = {}), this.$emit(`closeForm`, {}))
         )
         .catch((error) => alert(error))
         .then(() => {

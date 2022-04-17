@@ -62,6 +62,11 @@
             <span>&nbsp;{{ vehicle.accessories }}</span> <br />
             <span class="fw-bold">Explanation Of The Business Use:</span>
             <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
+
+            <span class="fw-bold">Financed vehicle:</span>
+            <span>&nbsp;{{ vehicle.financed }}</span> <br />
+            <span class="fw-bold">Name of the finance house:</span>
+            <span>&nbsp;{{ vehicle.financeHouse }}</span> <br />
             <div class="row row-cols-auto">
               <div class="col">
                 <button
@@ -235,6 +240,8 @@ export default {
         trackingDevice: vehicle.trackingDevice,
         useCase: vehicle.useCase,
         accessories: vehicle.accessories,
+        financed: vehicle.financed,
+        financeHouse: vehicle.financeHouse,
       };
     },
 
