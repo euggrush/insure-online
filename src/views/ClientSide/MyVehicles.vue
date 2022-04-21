@@ -60,10 +60,15 @@
             <br />
             <span class="fw-bold">Accessories:</span>
             <span
-              v-for="accessory in vehicle.accessories"
+              v-for="(accessory, index) in vehicle.accessories"
               :key="accessory.accessoryId"
               >&nbsp;<span>{{ accessory.name }}</span
-              >&nbsp;<strong>R{{ accessory.cost }},</strong></span
+              >&nbsp;<strong
+                >R{{ accessory.cost
+                }}<span v-if="index !== vehicle.accessories.length - 1"
+                  >,</span
+                ></strong
+              ></span
             >
             <br />
             <span class="fw-bold">Explanation Of The Business Use:</span>
