@@ -81,15 +81,6 @@
       />
     </div>
     <div class="mb-3">
-      <label for="floatingTextarea" class="form-label">Accessories: </label>
-      <textarea
-        class="form-control"
-        placeholder="Accessories"
-        id="floatingTextarea"
-        v-model="vehicleInfo.accessories"
-      ></textarea>
-    </div>
-    <div class="mb-3">
       <span>Tracking device:</span>
       <label class="ms-3">
         <input

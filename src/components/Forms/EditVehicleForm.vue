@@ -101,14 +101,43 @@
         </label>
         <label class="col mt-3">
           <span class="fw-bold text-decoration-underline lh-lg">
-            Accessories:
-          </span>
-          <textarea
-            class="form-control"
-            placeholder="accessories"
-            id="floatingTextarea"
-            v-model="changeVehicleObj.accessories"
-          ></textarea>
+            Accessories: </span
+          ><br />
+          <span
+            v-for="accessory in accessoriesList"
+            :key="accessory.accessoryId"
+            ><span
+              >{{ accessory.name }}&nbsp;<strong>R{{ accessory.cost }}</strong
+              >,
+            </span></span
+          >
+          <form @submit.prevent="createAccessory" class="input-group mt-1">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="name..."
+              aria-label="name"
+              aria-describedby="button-addon2"
+              v-model="accessoryName"
+              required
+            />
+            <input
+              type="number"
+              class="form-control"
+              placeholder="0"
+              aria-label="Accessory cost"
+              aria-describedby="button-addon2"
+              v-model="accessoryCost"
+              required
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="submit"
+              id="button-addon2"
+            >
+              Add
+            </button>
+          </form>
         </label>
         <div class="col mt-3 form-check">
           <span class="d-block fw-bold text-decoration-underline lh-lg">
@@ -237,7 +266,14 @@ export default {
     return {
       accountId: ``,
       changeVehicleObj: {},
+      accessoryName: ``,
+      accessoryCost: 0,
     };
+  },
+  computed: {
+    accessoriesList() {
+      return this.$store.state.accessories.accessories;
+    },
   },
   props: {
     myProps: {
@@ -247,8 +283,27 @@ export default {
   },
   mounted() {
     this.changeVehicleObj = this.myProps.changeVehicleObj;
+    this.$store.dispatch(
+      `GET_ACCESSORIES`,
+      `?vehicleId=${this.changeVehicleObj.vehicleId}`
+    );
   },
   methods: {
+    createAccessory() {
+      this.$store
+        .dispatch(`CREATE_ACCESSORY`, {
+          vehicleId: this.changeVehicleObj.vehicleId,
+          name: this.accessoryName,
+          cost: this.accessoryCost,
+        })
+        .then(() => {
+          (this.accessoryName = ``), (this.accessoryCost = 0);
+          this.$store.dispatch(
+            `GET_ACCESSORIES`,
+            `?vehicleId=${this.changeVehicleObj.vehicleId}`
+          );
+        });
+    },
     editVehicle(vehicle, index) {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)

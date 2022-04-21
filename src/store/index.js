@@ -53,7 +53,9 @@ export const store = new Vuex.Store({
         account_validation: {
             isRequired: false,
             msg: ``
-        }
+        },
+        accessories: [],
+        new_accessory: []
     },
     plugins: [
         createLogger(),
@@ -157,6 +159,12 @@ export const store = new Vuex.Store({
         },
         SET_RATING(state, payload) {
             state.rating = payload;
+        },
+        SET_ACCESSORIES(state, payload) {
+            state.accessories = payload;
+        },
+        SET_NEW_ACCESSORY(state, payload) {
+            state.new_accessory = payload;
         }
     },
     actions: {
@@ -329,5 +337,21 @@ export const store = new Vuex.Store({
         MODIFY_RATING: async (context, payload) => {
             await Axios.post(`${BASE_URL}/resources`, payload);
         },
+        GET_ACCESSORIES: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/accessories${payload}`);
+            context.commit(`SET_ACCESSORIES`, data);
+        },
+        CREATE_ACCESSORY: async (context, payload) => {
+            Axios.post(`${BASE_URL}/accessories`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_NEW_ACCESSORY`, data);
+                }
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
+        }
     },
 });

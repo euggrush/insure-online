@@ -59,7 +59,13 @@
             <span class="text-capitalize">&nbsp;{{ vehicle.useCase }}</span>
             <br />
             <span class="fw-bold">Accessories:</span>
-            <span>&nbsp;{{ vehicle.accessories }}</span> <br />
+            <span
+              v-for="accessory in vehicle.accessories"
+              :key="accessory.accessoryId"
+              >&nbsp;<span>{{ accessory.name }}</span
+              >&nbsp;<strong>R{{ accessory.cost }},</strong></span
+            >
+            <br />
             <span class="fw-bold">Explanation Of The Business Use:</span>
             <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
 
