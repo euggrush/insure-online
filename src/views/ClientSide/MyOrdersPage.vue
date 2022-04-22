@@ -142,7 +142,8 @@
               estimate.estimationType == `estimation`
                 ? `Quote for vehicle`
                 : `Quote for accessories`
-            }}</span>,
+            }}</span
+            >,
             <span> Monthly payment: R{{ estimate.totalCost || 0 }}</span>
           </div>
         </form>
@@ -181,8 +182,20 @@
               <div class="col">
                 <strong>Car:</strong> {{ item.vehicleDetails }}
               </div>
-              <div class="col">
+              <div v-if="item.mainProductName" class="col">
                 <strong>Product:</strong> {{ item.mainProductName }}
+              </div>
+              <div v-else class="col">
+                <strong>Accessories:</strong>&nbsp;
+                <span
+                  class="text-capitalize"
+                  v-for="(accessory, index) in item.accessories"
+                  :key="accessory.accessoryId"
+                  >{{ accessory.accessoryName
+                  }}<span v-if="index != item.accessories.length - 1"
+                    >,&nbsp;</span
+                  >
+                </span>
               </div>
               <div class="col">
                 <strong>Total:</strong> {{ item.totalCost }}
