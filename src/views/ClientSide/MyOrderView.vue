@@ -62,7 +62,7 @@
           />
         </label>
       </div>
-      <div class="col">
+      <div v-if="mainProduct.mainProductName" class="col">
         <strong class="d-inline-block text-uppercase mt-3 border-bottom"
           >{{ mainProduct.mainProductName }}&nbsp;R{{
             mainProduct.mainProductCost
@@ -86,6 +86,34 @@
             :for="`flexSwitchCheckCheckedDisabled${index}`"
             >{{ sub.subProductName }}&nbsp;<strong>R</strong>
             {{ sub.subProductCost }}</label
+          >
+        </div>
+      </div>
+
+      <div v-else class="col">
+        <strong class="d-inline-block text-uppercase mt-3 border-bottom"
+          >Accessories, total:&nbsp;R{{
+            mainProduct.totalCost
+          }}</strong
+        >
+        <div
+          class="form-check form-switch mt-1 ms-1"
+          v-for="(sub, index) in mainProduct.accessories"
+          :key="index"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            :id="`flexSwitchCheckCheckedDisabled${index}`"
+            checked
+            disabled
+          />
+          <label
+            class="form-check-label"
+            :for="`flexSwitchCheckCheckedDisabled${index}`"
+            >{{ sub.accessoryName }}&nbsp;<strong>R</strong>
+            {{ sub.accessoryCost }}</label
           >
         </div>
       </div>
