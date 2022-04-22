@@ -43,7 +43,7 @@
             class="form-select mt-3"
             aria-label="Default select example"
             v-model="selectedCarId"
-            @change="selectCar"
+            @change="selectCar(selectedCarId)"
             required
           >
             <option value="" selected>Select customer's car...</option>
@@ -55,6 +55,28 @@
               {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
             </option>
           </select>
+          <Transition>
+            <div v-if="isCarSelected">
+              <p class="mt-3">select accessories:</p>
+              <div
+                v-for="(accessory, index) in accessoriesList"
+                :key="accessory.accessoryId"
+                class="form-check form-switch"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  :id="`flexSwitchCheckDefault${index}`"
+                />
+                <label
+                  class="form-check-label"
+                  :for="`flexSwitchCheckDefault${index}`"
+                  >{{ accessory.name }}</label
+                >
+              </div>
+            </div>
+          </Transition>
           <p class="fw-bold mt-3">Product</p>
           <select
             @change="selectMainProduct()"
@@ -243,6 +265,7 @@ export default {
   },
   data() {
     return {
+      estimationType: `estimation`,
       showMyOrders: false,
       showGetQuoteMenu: true,
       showMyQuites: false,
@@ -264,6 +287,7 @@ export default {
       shoNullEstimation: true,
       carInsuranceCategory: ``,
       estimationIdsArray: [],
+      showAccessoriesCreateForm: false,
     };
   },
   computed: {
@@ -288,6 +312,9 @@ export default {
     },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
+    },
+    accessoriesList() {
+      return this.$store.state.accessories.accessories ?? [];
     },
   },
   mounted() {
@@ -326,6 +353,7 @@ export default {
           mainProductId: this.selectedMainProduct.mainProductId,
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCarId,
+          estimationType: this.estimationType,
         })
         .then(
           (this.showEstimate = true),
@@ -338,11 +366,19 @@ export default {
         )
         .catch((err) => console.log(err));
     },
-    selectCar() {
-      if (this.selectedCarId !== ``) {
+    selectCar(id) {
+      if (id != ``) {
         this.isCarSelected = true;
+        this.getAccessories();
+      } else {
+        this.isCarSelected = false;
       }
-      this.isCarSelected = false;
+    },
+    getAccessories() {
+      this.$store.dispatch(
+        `GET_ACCESSORIES`,
+        `?vehicleId=${this.selectedCarId}`
+      );
     },
     quoteToOrder() {
       this.showGetQuoteMenu = false;
