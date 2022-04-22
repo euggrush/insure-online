@@ -67,12 +67,15 @@
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
+                  :value="accessory.accessoryId"
                   :id="`flexSwitchCheckDefault${index}`"
+                  v-model="checkedAccessoriesIds"
                 />
                 <label
                   class="form-check-label"
                   :for="`flexSwitchCheckDefault${index}`"
-                  >{{ accessory.name }}</label
+                  ><span class="text-capitalize">{{ accessory.name }}</span
+                  >, <strong>R{{ accessory.cost }}</strong></label
                 >
               </div>
             </div>
@@ -124,14 +127,24 @@
 
           <button
             type="submit"
-            class="btn btn-outline-warning mt-3"
+            class="btn btn-outline-warning mt-3 mb-5"
             :disabled="!isCategorySelected || !isMainProductSelected"
           >
             Calculate
           </button>
-          <span v-if="showEstimate" class="d-block mt-5"
-            >Monthly payment: R{{ currentEstimation.totalCost || 0 }}</span
+          <div
+            v-show="showEstimate"
+            v-for="estimate in newEstimationsList"
+            :key="estimate.estimationId"
+            class="d-block mt-1"
           >
+            <span>{{
+              estimate.estimationType == `estimation`
+                ? `Quote for vehicle`
+                : `Quote for accessories`
+            }}</span>,
+            <span> Monthly payment: R{{ estimate.totalCost || 0 }}</span>
+          </div>
         </form>
         <div>
           <button
@@ -288,6 +301,7 @@ export default {
       carInsuranceCategory: ``,
       estimationIdsArray: [],
       showAccessoriesCreateForm: false,
+      checkedAccessoriesIds: [],
     };
   },
   computed: {
@@ -304,11 +318,11 @@ export default {
     estimationsList() {
       return this.$store.state.estimations.estimations || [];
     },
-    currentEstimation() {
+    newEstimationsList() {
       if (this.shoNullEstimation) {
         return 0;
       }
-      return this.$store.state.current_estimation;
+      return this.$store.state.new_estimations;
     },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
@@ -359,6 +373,14 @@ export default {
           (this.showEstimate = true),
           (this.shoNullEstimation = false),
           setTimeout(() => {
+            if (this.checkedAccessoriesIds.length > 0) {
+              this.$store.dispatch(`CREATE_ESTIMATION`, {
+                accountId: this.$store.state.user.accountId,
+                accessoriesIds: Object.values(this.checkedAccessoriesIds),
+                vehicleId: this.selectedCarId,
+                estimationType: `accessory`,
+              });
+            }
             this.estimationIdsArray.push(
               this.$store.state.current_estimation.estimationId
             );

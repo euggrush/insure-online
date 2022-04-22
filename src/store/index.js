@@ -32,6 +32,7 @@ export const store = new Vuex.Store({
         sub_products: [],
         estimations: [],
         current_estimation: [],
+        new_estimations: [],
         orders: [],
         current_order: [],
         new_user: [],
@@ -137,6 +138,9 @@ export const store = new Vuex.Store({
         },
         SET_CURRENT_ESTIMATION(state, payload) {
             state.current_estimation = payload;
+        },
+        SET_NEW_ESTIMATIONS(state, payload) {
+            state.new_estimations.push(payload);
         },
         SET_ORDERS(state, payload) {
             state.orders = payload;
@@ -286,7 +290,8 @@ export const store = new Vuex.Store({
             Axios.post(`${BASE_URL}/estimations`, payload).then(
                 resp => {
                     let data = resp.data;
-                    context.commit(`SET_CURRENT_ESTIMATION`, data)
+                    context.commit(`SET_CURRENT_ESTIMATION`, data);
+                    context.commit(`SET_NEW_ESTIMATIONS`, data);
                 }
             )
         },
