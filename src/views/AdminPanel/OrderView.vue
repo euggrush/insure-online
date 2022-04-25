@@ -25,14 +25,16 @@
           }}</strong
         >
         <img
-          src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
+          :src="`${FILE_URL}${
+            mainProduct.vehicleAssets[mainProduct.vehicleAssets.length - 1].path
+          }`"
           class="d-block vehicle-image p-5"
           alt="image"
           width="200"
           height="200"
         />
       </div>
-      <div class="col">
+      <div v-if="mainProduct.estimationType == 'estimation'" class="col">
         <strong
           >{{ mainProduct.mainProductName }} R{{
             mainProduct.mainProductCost
@@ -55,6 +57,32 @@
             class="form-check-label"
             :for="`flexSwitchCheckCheckedDisabled${index}`"
             >{{ sub.subProductName }} R{{ sub.subProductCost }}</label
+          >
+        </div>
+      </div>
+      <div v-else class="col">
+        <strong
+          >Insuranse for the {{ mainProduct.estimationType }}, Total R{{
+            mainProduct.totalCost
+          }}</strong
+        >
+        <div
+          v-for="(accessory, index) in mainProduct.accessories"
+          :key="index"
+          class="form-check form-switch mt-1 ms-1"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            :id="`flexSwitchCheckCheckedDisabled${index}`"
+            checked
+            disabled
+          />
+          <label
+            class="form-check-label"
+            :for="`flexSwitchCheckCheckedDisabled${index}`"
+            >{{ accessory.accessoryName }} R{{ accessory.accessoryCost }}</label
           >
         </div>
       </div>
