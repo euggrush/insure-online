@@ -31,39 +31,13 @@
       />
     </div>
     <div class="mb-3">
-      <label for="exampleInputEmail3" class="form-label">Trim:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="exampleInputEmail3"
-        v-model="trim"
-        placeholder="Trim..."
-        minlength="2"
-        maxlength="30"
-        required
-      />
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputEmail4" class="form-label">Body Type:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="exampleInputEmail4"
-        v-model="type"
-        placeholder="Body Type..."
-        minlength="2"
-        maxlength="30"
-        required
-      />
-    </div>
-    <div class="mb-3">
       <label for="exampleInputEmail5" class="form-label">Year:</label>
       <input
         type="number"
         class="form-control"
         id="exampleInputEmail5"
         v-model="year"
-        placeholder="0000"
+        placeholder="YEAR"
         minlength="2"
         maxlength="30"
         required
@@ -76,6 +50,7 @@
         type="radio"
         name="flexRadioDefault"
         id="flexRadioDefault1"
+        value="1"
         v-model="trackingDeviceIsRequired"
       />
       <label class="form-check-label" for="flexRadioDefault1"> Yes </label>
@@ -86,6 +61,7 @@
         type="radio"
         name="flexRadioDefault"
         id="flexRadioDefault2"
+        value="0"
         v-model="trackingDeviceIsRequired"
         checked
       />
@@ -111,8 +87,6 @@ export default {
     return {
       make: ``,
       model: ``,
-      trim: ``,
-      type: ``,
       year: ``,
       trackingDeviceIsRequired: false,
       vehicleInsuranceType: ``,
@@ -124,13 +98,18 @@ export default {
         .dispatch(`CREATE_VEHICLES_DATA`, {
           make: this.make,
           model: this.model,
-          trim: this.trim,
-          type: this.type,
           year: this.year,
           trackingDeviceIsRequired: this.trackingDeviceIsRequired,
           vehicleInsuranceType: this.vehicleInsuranceType,
         })
-        .then(this.$store.dispatch(`GET_VEHICLES_DATA`))
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES_DATA`);
+          this.make = ``;
+          this.model = ``;
+          this.year = ``;
+          this.trackingDeviceIsRequired = false;
+          this.vehicleInsuranceType = ``;
+        })
         .catch((error) => alert(error))
         .then(() => {
           this.$store.dispatch(`GET_VEHICLES_DATA`);

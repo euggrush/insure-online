@@ -5,22 +5,31 @@
         <tr>
           <th scope="col">make</th>
           <th scope="col">model</th>
-          <th scope="col">trim</th>
-          <th scope="col">type</th>
           <th scope="col">year</th>
           <th scope="col">Tracking Device Required</th>
           <th scope="col">Insurance Type</th>
+          <th scope="col">X</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="vehicle in vehiclesDataList" :key="vehicle.vehicleDataId">
           <td>{{ vehicle.make }}</td>
           <td>{{ vehicle.model }}</td>
-          <td>{{ vehicle.trim }}</td>
-          <td>{{ vehicle.type }}</td>
           <td>{{ vehicle.year }}</td>
-          <td>{{ vehicle.trackingDeviceIsRequired }}</td>
+          <td>
+            <span v-if="vehicle.trackingDeviceIsRequired">Yes</span>
+            <span v-else>No</span>
+          </td>
           <td>{{ vehicle.vehicleInsuranceType }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click="removeVehiclesData(vehicle.vehicleDataId)"
+            >
+              Remove
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -36,6 +45,18 @@ export default {
   },
   mounted() {
     this.$store.dispatch(`GET_VEHICLES_DATA`);
+  },
+  methods: {
+    removeVehiclesData(id) {
+      this.$store
+        .dispatch(`CREATE_VEHICLES_DATA`, {
+          vehicleDataId: id,
+          deleted: true,
+        })
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES_DATA`);
+        });
+    },
   },
 };
 </script>
