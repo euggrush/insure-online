@@ -203,7 +203,7 @@
 import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
 import EditVehicleForm from "../../components/Forms/EditVehicleForm.vue";
 import ModalMessage from "../../components/Modals/ModalMessage.vue";
-import { FILE_URL } from "../../constants";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
 
 export default {
   components: {
@@ -219,7 +219,7 @@ export default {
       changeVehicleObj: {},
       isRemovePopup: false,
       showInput: false,
-      vehiclePhoto: `https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png`,
+      vehiclePhoto: CAR_DEFAULT_IMAGE,
     };
   },
   computed: {

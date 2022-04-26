@@ -56,7 +56,8 @@ export const store = new Vuex.Store({
             msg: ``
         },
         accessories: [],
-        new_accessory: []
+        new_accessory: [],
+        vehicles_data: []
     },
     plugins: [
         createLogger(),
@@ -169,6 +170,9 @@ export const store = new Vuex.Store({
         },
         SET_NEW_ACCESSORY(state, payload) {
             state.new_accessory = payload;
+        },
+        SET_VEHICLES_DATA(state, payload) {
+            state.vehicles_data = payload
         }
     },
     actions: {
@@ -357,6 +361,12 @@ export const store = new Vuex.Store({
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
             })
+        },
+        GET_VEHICLES_DATA: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/vehiclesData`);
+            context.commit(`SET_VEHICLES_DATA`, data);
         }
     },
 });

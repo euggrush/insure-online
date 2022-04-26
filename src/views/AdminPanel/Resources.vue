@@ -1,7 +1,11 @@
 <template>
   <section class="container">
     <h3 class="mt-3">Rating:</h3>
-    <button type="button" class="btn btn-dark mt-1" @click="show = !show">
+    <button
+      type="button"
+      class="btn btn-outline-dark mt-1"
+      @click="show = !show"
+    >
       Change Rating
     </button>
     <Transition>
@@ -27,7 +31,7 @@
     </table>
     <button
       type="button"
-      class="btn btn-dark mt-1"
+      class="btn btn-outline-dark mt-1"
       @click="showEditTabs = !showEditTabs"
     >
       Edit Tabs
@@ -35,21 +39,35 @@
     <Transition>
       <div v-if="showEditTabs"><EditTabs /></div>
     </Transition>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      @click="showVehicleData = !showVehicleData"
+    >
+      Vehicles Data
+    </button>
+    <Transition>
+      <VehiclesData v-if="showVehicleData" />
+    </Transition>
   </section>
 </template>
 
 <script>
 import EditRating from "../../components/Forms/EditRating.vue";
 import EditTabs from "../../components/Forms/EditTabs.vue";
+import VehiclesData from "../../components/Partials/VehiclesData.vue";
 export default {
   components: {
     EditRating,
     EditTabs,
+    VehiclesData,
   },
   data() {
     return {
       show: false,
       showEditTabs: false,
+      showVehicleData: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };
