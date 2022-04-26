@@ -116,6 +116,28 @@
                   {{ vehicle.details }}
                 </option>
               </select>
+              <div v-if="isCarSelected" class="mt-3">
+                <p>Accessories:</p>
+                <div
+                  class="form-check form-switch"
+                  v-for="(accessory, index) in accessoriesList"
+                  :key="accessory.accessoryId"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    :id="`flexSwitchCheckDefault${index}`"
+                    :value="accessory.accessoryId"
+                    v-model="checkedAccessoriesIds"
+                  />
+                  <label
+                    class="form-check-label"
+                    :for="`flexSwitchCheckDefault${index}`"
+                    >{{ accessory.name }}, R{{ accessory.cost }}</label
+                  >
+                </div>
+              </div>
               <!-- ADD CAR -->
               <div v-if="isCarCategorySelected">
                 <button
@@ -192,7 +214,7 @@
                   id="flexSwitchCheckCheckedDisabled"
                   :value="subProduct.subProductId"
                   v-model="checkedSubProducts"
-                  :required="isCarCategorySelected"
+                  :required="subProduct.isRequired"
                 />
                 <label
                   class="form-check-label"
@@ -215,9 +237,17 @@
             >
               Calculate
             </button>
-            <span v-if="showEstimate" class="d-block mt-5"
-              >Estimation: R{{ currentEstimation.totalCost || 0 }}</span
-            >
+            <div v-if="showEstimate" class="mt-5">
+              <div
+                v-for="quote in newAccessoryEstimation"
+                :key="quote"
+                class="mt-1"
+              >
+                Estimation<span v-if="quote.estimationType == 'accessory'">
+                  for {{ quote.estimationType }}</span
+                >: <strong>R{{ quote.totalCost || 0 }}</strong>
+              </div>
+            </div>
           </form>
           <div>
             <button
@@ -274,11 +304,12 @@ export default {
       shoNullEstimation: true,
       componentKey: 0,
       orderStatus: ``,
+      checkedAccessoriesIds: [],
     };
   },
   watch: {
     accountInfo() {
-      if (this.$store.state.users_array.accounts.length == 1) {
+      if (this.$store.state.users_array.accounts.length > 0) {
         this.isAccountInfo = true;
         this.isUserSelected = true;
       } else {
@@ -312,11 +343,11 @@ export default {
     estimationsList() {
       return this.$store.state.estimations.estimations || [];
     },
-    currentEstimation() {
-      if (this.shoNullEstimation) {
-        return 0;
-      }
-      return this.$store.state.current_estimation;
+    newAccessoryEstimation() {
+      return this.$store.state.new_estimations;
+    },
+    accessoriesList() {
+      return this.$store.state.accessories.accessories ?? [];
     },
   },
   mounted() {
@@ -354,30 +385,62 @@ export default {
         });
     },
     getEstimation() {
-      this.$store
-        .dispatch(`CREATE_ESTIMATION`, {
-          accountId: this.selectedAccountId,
-          mainProductId: this.selectedMainProduct,
-          subProductsIds: Object.values(this.checkedSubProducts),
-          vehicleId: this.selectedCarId,
-        })
-        .then((this.showEstimate = true), (this.shoNullEstimation = false))
-        .catch((err) => alert(err));
+      if (this.checkedAccessoriesIds.length <= 0) {
+        this.$store
+          .dispatch(`CREATE_ESTIMATION`, {
+            accountId: this.selectedAccountId,
+            mainProductId: this.selectedMainProduct,
+            subProductsIds: Object.values(this.checkedSubProducts),
+            vehicleId: this.selectedCarId,
+            estimationType: `estimation`,
+          })
+          .then((this.showEstimate = true), (this.shoNullEstimation = false))
+          .catch((err) => alert(err));
+      } else {
+        this.$store
+          .dispatch(`CREATE_ESTIMATION`, {
+            accountId: this.selectedAccountId,
+            accessoriesIds: Object.values(this.checkedAccessoriesIds),
+            vehicleId: this.selectedCarId,
+            estimationType: `accessory`,
+          })
+          .then(() => {
+            (this.showEstimate = true),
+              (this.shoNullEstimation = false),
+              this.$store.dispatch(`CREATE_ESTIMATION`, {
+                accountId: this.selectedAccountId,
+                mainProductId: this.selectedMainProduct,
+                subProductsIds: Object.values(this.checkedSubProducts),
+                vehicleId: this.selectedCarId,
+                estimationType: `estimation`,
+              });
+          })
+          .catch((err) => alert(err));
+      }
     },
     selectCar() {
       if (this.selectedCarId.length === 0) {
         this.isCarSelected = false;
       } else {
         this.isCarSelected = true;
+        this.$store.dispatch(
+          `GET_ACCESSORIES`,
+          `?vehicleId=${this.selectedCarId}`
+        );
       }
     },
     createOrder() {
-      let estimationId = this.$store.state.current_estimation.estimationId;
+      let estimationIds = [];
       let accountId = this.$store.state.current_estimation.accountId;
+
+      this.$store.state.new_estimations.map((item) => {
+        estimationIds.push(item.estimationId);
+      });
+
       this.$store
         .dispatch(`CREATE_ORDER`, {
           accountId: accountId,
-          estimationIds: [estimationId],
+          estimationIds: estimationIds,
         })
         .then(
           (this.componentKey += 1),

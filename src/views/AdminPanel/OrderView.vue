@@ -15,33 +15,38 @@
 
     <div
       class="row border p-3"
-      v-for="(mainProduct, index) in order.estimations"
+      v-for="(quote, index) in order.estimations"
       :key="index"
     >
       <div class="col">
         <strong
-          >{{ mainProduct.vehicleDetails }}, R{{
-            mainProduct.vehicleRetailValue
-          }}</strong
+          >{{ quote.vehicleDetails }}, R{{ quote.vehicleRetailValue }}</strong
         >
         <img
+          v-if="quote.vehicleAssets.length > 0"
           :src="`${FILE_URL}${
-            mainProduct.vehicleAssets[mainProduct.vehicleAssets.length - 1].path
+            quote.vehicleAssets[quote.vehicleAssets.length - 1].path
           }`"
           class="d-block vehicle-image p-5"
           alt="image"
           width="200"
           height="200"
         />
+        <img
+          v-else
+          :src="CAR_DEFAULT_IMAGE"
+          alt="image"
+          class="d-block vehicle-image p-5"
+          width="200"
+          height="200"
+        />
       </div>
-      <div v-if="mainProduct.estimationType == 'estimation'" class="col">
+      <div v-if="quote.estimationType == 'estimation'" class="col">
         <strong
-          >{{ mainProduct.mainProductName }} R{{
-            mainProduct.mainProductCost
-          }}</strong
+          >{{ quote.mainProductName }}</strong
         >
         <div
-          v-for="(sub, index) in mainProduct.subProducts"
+          v-for="(sub, index) in quote.subProducts"
           :key="index"
           class="form-check form-switch mt-1 ms-1"
         >
@@ -56,18 +61,16 @@
           <label
             class="form-check-label"
             :for="`flexSwitchCheckCheckedDisabled${index}`"
-            >{{ sub.subProductName }} R{{ sub.subProductCost }}</label
+            >{{ sub.subProductName }}</label
           >
         </div>
       </div>
       <div v-else class="col">
         <strong
-          >Insuranse for the {{ mainProduct.estimationType }}, Total R{{
-            mainProduct.totalCost
-          }}</strong
+          >Insuranse for the {{ quote.estimationType }}</strong
         >
         <div
-          v-for="(accessory, index) in mainProduct.accessories"
+          v-for="(accessory, index) in quote.accessories"
           :key="index"
           class="form-check form-switch mt-1 ms-1"
         >
@@ -82,7 +85,7 @@
           <label
             class="form-check-label"
             :for="`flexSwitchCheckCheckedDisabled${index}`"
-            >{{ accessory.accessoryName }} R{{ accessory.accessoryCost }}</label
+            >{{ accessory.accessoryName }}, <strong>R{{ accessory.accessoryCost }}</strong></label
           >
         </div>
       </div>
@@ -163,7 +166,7 @@
 </template>
 
 <script>
-import { FILE_URL } from "../../constants";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
 
 export default {
   data() {
@@ -171,6 +174,7 @@ export default {
       isAdjust: false,
       adjustedCost: ``,
       FILE_URL: FILE_URL,
+      CAR_DEFAULT_IMAGE: CAR_DEFAULT_IMAGE,
     };
   },
   props: {
