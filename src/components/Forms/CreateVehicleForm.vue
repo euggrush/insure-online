@@ -14,6 +14,7 @@
         minlength="5"
         maxlength="30"
         required
+        @change="fetchAndCheckVehiclesData"
       />
     </div>
     <div class="mb-3">
@@ -208,6 +209,7 @@ export default {
         financed: false,
         financeHouse: ``,
       },
+      vehicleNotes: ``,
     };
   },
   props: {
@@ -234,6 +236,26 @@ export default {
         .then(() => {
           this.$store.dispatch(`GET_VEHICLES`, ``);
         });
+    },
+    fetchAndCheckVehiclesData() {
+      this.vehicleNotes = ``;
+      this.$store.dispatch(`GET_VEHICLES_DATA`, ``).then(() => {
+        this.$store.state.vehicles_data.vehiclesData.map((item) => {
+          if (
+            this.vehicleInfo.details
+              .toLowerCase()
+              .includes(item.make.toLowerCase()) ||
+            this.vehicleInfo.details
+              .toLowerCase()
+              .includes(item.model.toLowerCase())
+          ) {
+            this.vehicleNotes = `Required tracking device: ${item.trackingDeviceIsRequired}, Insurance type: ${item.vehicleInsuranceType}`;
+          }
+        });
+      });
+      setTimeout(() => {
+        console.log(this.vehicleNotes);
+      }, 1000);
     },
   },
 };

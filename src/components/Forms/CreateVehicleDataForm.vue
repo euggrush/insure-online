@@ -103,7 +103,7 @@ export default {
           vehicleInsuranceType: this.vehicleInsuranceType,
         })
         .then(() => {
-          this.$store.dispatch(`GET_VEHICLES_DATA`);
+          this.$store.dispatch(`GET_VEHICLES_DATA`, ``);
           this.make = ``;
           this.model = ``;
           this.year = ``;
@@ -112,7 +112,7 @@ export default {
         })
         .catch((error) => alert(error))
         .then(() => {
-          this.$store.dispatch(`GET_VEHICLES_DATA`);
+          this.$store.dispatch(`GET_VEHICLES_DATA`, ``);
         });
     },
   },

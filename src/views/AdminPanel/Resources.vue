@@ -13,22 +13,36 @@
         <EditRating :myProps="dataArray" @closeForm="closeRatingForm" />
       </div>
     </Transition>
-    <table class="table table-dark table-striped caption-top table-hover mt-3">
-      <thead>
-        <tr>
-          <th scope="col">Annual Rate</th>
-          <th scope="col">Age</th>
-          <th scope="col">Vehicle Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in ratingDataList" :key="item.value">
-          <th scope="row">{{ (item.value * 100).toFixed(2) }}%</th>
-          <td>{{ item.data.ageRange }}</td>
-          <td>{{ item.data.carValueRange }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark mt-1"
+      @click="showRatingTable = !showRatingTable"
+    >
+      Show Rating
+    </button>
+    <Transition>
+      <table
+        v-if="showRatingTable"
+        class="table table-dark table-striped caption-top table-hover mt-3"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Annual Rate</th>
+            <th scope="col">Age</th>
+            <th scope="col">Vehicle Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in ratingDataList" :key="item.value">
+            <th scope="row">{{ (item.value * 100).toFixed(2) }}%</th>
+            <td>{{ item.data.ageRange }}</td>
+            <td>{{ item.data.carValueRange }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </Transition>
+    <hr />
     <button
       type="button"
       class="btn btn-outline-dark mt-1"
@@ -79,6 +93,7 @@ export default {
   data() {
     return {
       show: false,
+      showRatingTable: false,
       showEditTabs: false,
       showVehicleData: false,
       showCreateVehiclesData: false,

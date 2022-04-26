@@ -44,7 +44,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_VEHICLES_DATA`);
+    this.$store.dispatch(`GET_VEHICLES_DATA`, ``);
   },
   methods: {
     removeVehiclesData(id) {
@@ -54,7 +54,7 @@ export default {
           deleted: true,
         })
         .then(() => {
-          this.$store.dispatch(`GET_VEHICLES_DATA`);
+          this.$store.dispatch(`GET_VEHICLES_DATA`, ``);
         });
     },
   },
