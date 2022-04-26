@@ -50,6 +50,17 @@
     <Transition>
       <VehiclesData v-if="showVehicleData" />
     </Transition>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      @click="showCreateVehiclesData = !showCreateVehiclesData"
+    >
+      Add Vehicles Data
+    </button>
+    <Transition>
+      <CreateVehicleDataForm v-if="showCreateVehiclesData" />
+    </Transition>
   </section>
 </template>
 
@@ -57,17 +68,20 @@
 import EditRating from "../../components/Forms/EditRating.vue";
 import EditTabs from "../../components/Forms/EditTabs.vue";
 import VehiclesData from "../../components/Partials/VehiclesData.vue";
+import CreateVehicleDataForm from "../../components/Forms/CreateVehicleDataForm.vue";
 export default {
   components: {
     EditRating,
     EditTabs,
     VehiclesData,
+    CreateVehicleDataForm,
   },
   data() {
     return {
       show: false,
       showEditTabs: false,
       showVehicleData: false,
+      showCreateVehiclesData: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };
