@@ -18,6 +18,20 @@
       />
     </div>
     <div class="mb-3">
+      <label for="exampleInputEmail11" class="form-label">Vehicle Type:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail11"
+        v-model="vehicleType"
+        placeholder="4x4, AWD, SUV, etc"
+        minlength="2"
+        maxlength="30"
+        required
+        @change="checkVehiclesData"
+      />
+    </div>
+    <div class="mb-3">
       <label for="exampleInputEmail2" class="form-label">Year:</label>
       <input
         type="number"
@@ -212,6 +226,7 @@ export default {
       },
       fetchedVahiclesData: [],
       vehicleNotes: ``,
+      vehicleType: ``,
     };
   },
   props: {
@@ -258,9 +273,10 @@ export default {
             .includes(item.make.toLowerCase()) &&
           this.vehicleInfo.details
             .toLowerCase()
-            .includes(item.model.toLowerCase())
+            .includes(item.model.toLowerCase()) &&
+          this.vehicleType.toLowerCase().includes(item.type.toLowerCase())
         ) {
-          this.vehicleNotes = `Required tracking device: ${item.trackingDeviceIsRequired}, Insurance type: ${item.vehicleInsuranceType}`;
+          this.vehicleNotes = `isTrackingDeviceRequired: ${item.trackingDeviceIsRequired}, insuranceTypeRecommended: ${item.vehicleInsuranceType}, vehicleClass: ${this.vehicleType}`;
         }
       });
       setTimeout(() => {
