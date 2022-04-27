@@ -14,7 +14,7 @@
         minlength="5"
         maxlength="30"
         required
-        @change="fetchAndCheckVehiclesData"
+        @change="checkVehiclesData"
       />
     </div>
     <div class="mb-3">
@@ -208,7 +208,9 @@ export default {
         businessDescription: ``,
         financed: false,
         financeHouse: ``,
+        overnightParkingVehicle: ``,
       },
+      fetchedVahiclesData: [],
       vehicleNotes: ``,
     };
   },
@@ -220,11 +222,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch(`GET_VEHICLES`, ``);
+    this.fetchData();
   },
   methods: {
     createVehicle() {
       this.accountId = this.myProps.accountId;
       this.vehicleInfo.accountId = this.myProps.accountId;
+      this.vehicleInfo.overnightParkingVehicle = this.vehicleNotes;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
@@ -237,21 +241,27 @@ export default {
           this.$store.dispatch(`GET_VEHICLES`, ``);
         });
     },
-    fetchAndCheckVehiclesData() {
-      this.vehicleNotes = ``;
+    fetchData() {
       this.$store.dispatch(`GET_VEHICLES_DATA`, ``).then(() => {
-        this.$store.state.vehicles_data.vehiclesData.map((item) => {
-          if (
-            this.vehicleInfo.details
-              .toLowerCase()
-              .includes(item.make.toLowerCase()) ||
-            this.vehicleInfo.details
-              .toLowerCase()
-              .includes(item.model.toLowerCase())
-          ) {
-            this.vehicleNotes = `Required tracking device: ${item.trackingDeviceIsRequired}, Insurance type: ${item.vehicleInsuranceType}`;
-          }
-        });
+        setTimeout(() => {
+          this.fetchedVahiclesData =
+            this.$store.state.vehicles_data.vehiclesData;
+        }, 1000);
+      });
+    },
+    checkVehiclesData() {
+      this.vehicleNotes = ``;
+      this.fetchedVahiclesData.map((item) => {
+        if (
+          this.vehicleInfo.details
+            .toLowerCase()
+            .includes(item.make.toLowerCase()) &&
+          this.vehicleInfo.details
+            .toLowerCase()
+            .includes(item.model.toLowerCase())
+        ) {
+          this.vehicleNotes = `Required tracking device: ${item.trackingDeviceIsRequired}, Insurance type: ${item.vehicleInsuranceType}`;
+        }
       });
       setTimeout(() => {
         console.log(this.vehicleNotes);

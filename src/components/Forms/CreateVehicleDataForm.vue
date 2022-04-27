@@ -43,6 +43,19 @@
         required
       />
     </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail6" class="form-label">Type:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail6"
+        v-model="type"
+        placeholder="Type..."
+        minlength="2"
+        maxlength="30"
+        required
+      />
+    </div>
     <p>Is tracking Device Required</p>
     <div class="form-check">
       <input
@@ -88,6 +101,7 @@ export default {
       make: ``,
       model: ``,
       year: ``,
+      type: ``,
       trackingDeviceIsRequired: false,
       vehicleInsuranceType: ``,
     };
@@ -99,6 +113,7 @@ export default {
           make: this.make,
           model: this.model,
           year: this.year,
+          type: this.type,
           trackingDeviceIsRequired: this.trackingDeviceIsRequired,
           vehicleInsuranceType: this.vehicleInsuranceType,
         })
@@ -107,6 +122,7 @@ export default {
           this.make = ``;
           this.model = ``;
           this.year = ``;
+          this.type = ``;
           this.trackingDeviceIsRequired = false;
           this.vehicleInsuranceType = ``;
         })

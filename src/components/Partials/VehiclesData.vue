@@ -3,25 +3,27 @@
     <table class="table table-dark table-striped">
       <thead>
         <tr>
-          <th scope="col">make</th>
-          <th scope="col">model</th>
-          <th scope="col">year</th>
-          <th scope="col">Tracking Device Required</th>
-          <th scope="col">Insurance Type</th>
-          <th scope="col">X</th>
+          <th class="text-capitalize" scope="col">make</th>
+          <th class="text-capitalize" scope="col">model</th>
+          <th class="text-capitalize" scope="col">year</th>
+          <th class="text-capitalize" scope="col">vehicle type</th>
+          <th class="text-capitalize" scope="col">Tracking Device Required</th>
+          <th class="text-capitalize" scope="col">Insurance Type</th>
+          <th class="text-capitalize" scope="col">X</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="vehicle in vehiclesDataList" :key="vehicle.vehicleDataId">
-          <td>{{ vehicle.make }}</td>
-          <td>{{ vehicle.model }}</td>
-          <td>{{ vehicle.year }}</td>
-          <td>
+          <td class="text-uppercase">{{ vehicle.make }}</td>
+          <td class="text-uppercase">{{ vehicle.model }}</td>
+          <td class="text-uppercase">{{ vehicle.year }}</td>
+          <td class="text-uppercase">{{ vehicle.type }}</td>
+          <td class="text-uppercase">
             <span v-if="vehicle.trackingDeviceIsRequired">Yes</span>
             <span v-else>No</span>
           </td>
-          <td>{{ vehicle.vehicleInsuranceType }}</td>
-          <td>
+          <td class="text-uppercase">{{ vehicle.vehicleInsuranceType }}</td>
+          <td class="text-uppercase">
             <button
               type="button"
               class="btn btn-outline-danger"
