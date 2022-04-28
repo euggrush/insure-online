@@ -259,8 +259,10 @@ export default {
     fetchData() {
       this.$store.dispatch(`GET_VEHICLES_DATA`, ``).then(() => {
         setTimeout(() => {
-          this.fetchedVahiclesData =
-            this.$store.state.vehicles_data.vehiclesData;
+          if (this.$store.state.vehicles_data.vehiclesData) {
+            this.fetchedVahiclesData =
+              this.$store.state.vehicles_data.vehiclesData;
+          }
         }, 1000);
       });
     },

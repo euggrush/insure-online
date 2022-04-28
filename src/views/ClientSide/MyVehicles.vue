@@ -37,6 +37,7 @@
       >
         <div class="row">
           <div class="col-sm-8">
+            <div>{{ getTrackingRequre(vehicle.overnightParkingVehicle) }}</div>
             <span class="fw-bold">make and model:</span>
             <span>&nbsp;{{ vehicle.details }}</span> <br />
             <span class="fw-bold">year:</span>
@@ -368,6 +369,11 @@ export default {
               `File upload error, please try later`,
           });
         });
+    },
+    getTrackingRequre(arg) {
+      const obj1 = Object.fromEntries(arg.split(",").map((i) => i.split(":")));
+      
+      return obj1;
     },
   },
 };
