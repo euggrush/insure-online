@@ -44,7 +44,6 @@
                 vehicle.trackingDevice == 'No'
               "
               class="
-                tracking-device-message
                 border border-danger
                 rounded
                 border-3
@@ -54,7 +53,8 @@
                 fw-bold
               "
             >
-              this vehicle has been identified as a required tracking device
+              this vehicle has been identified as a required tracking device.
+              Please contact our office for further assistance.
             </div>
             <span class="fw-bold">make and model:</span>
             <span>&nbsp;{{ vehicle.details }}</span> <br />
@@ -121,6 +121,7 @@
                   to="/my-quotes"
                   type="button"
                   class="btn btn-outline-warning mt-3"
+                  v-if="!vehicle.isTrackingDeviceRequired"
                 >
                   Insure vehicle
                 </router-link>
@@ -438,8 +439,5 @@ export default {
 }
 .car-photo:hover {
   opacity: 0.5;
-}
-.tracking-device-message {
-  max-width: 38em;
 }
 </style>

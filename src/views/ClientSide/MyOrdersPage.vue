@@ -51,6 +51,7 @@
               v-for="(vehicle, index) in vehiclesList"
               :key="index"
               :value="vehicle.vehicleId"
+              :disabled="vehicle.isTrackingDeviceRequired"
             >
               {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
             </option>
