@@ -37,7 +37,25 @@
       >
         <div class="row">
           <div class="col-sm-8">
-            <div>{{ getTrackingRequre(vehicle.overnightParkingVehicle) }}</div>
+            <div
+              v-if="
+                vehicle.isTrackingDeviceRequired &&
+                vehicle.trackingDevice &&
+                vehicle.trackingDevice == 'No'
+              "
+              class="
+                tracking-device-message
+                border border-danger
+                rounded
+                border-3
+                text-uppercase text-danger
+                p-3
+                mb-3
+                fw-bold
+              "
+            >
+              this vehicle has been identified as a required tracking device
+            </div>
             <span class="fw-bold">make and model:</span>
             <span>&nbsp;{{ vehicle.details }}</span> <br />
             <span class="fw-bold">year:</span>
@@ -370,11 +388,6 @@ export default {
           });
         });
     },
-    getTrackingRequre(arg) {
-      const obj1 = Object.fromEntries(arg.split(",").map((i) => i.split(":")));
-      
-      return obj1;
-    },
   },
 };
 </script>
@@ -425,5 +438,8 @@ export default {
 }
 .car-photo:hover {
   opacity: 0.5;
+}
+.tracking-device-message {
+  max-width: 38em;
 }
 </style>

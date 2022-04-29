@@ -223,9 +223,11 @@ export default {
         financed: false,
         financeHouse: ``,
         overnightParkingVehicle: ``,
+        isTrackingDeviceRequired: ``,
+        insuranceTypeRecommended: ``,
+        vehicleClass: ``,
       },
       fetchedVahiclesData: [],
-      vehicleNotes: ``,
       vehicleType: ``,
     };
   },
@@ -243,7 +245,6 @@ export default {
     createVehicle() {
       this.accountId = this.myProps.accountId;
       this.vehicleInfo.accountId = this.myProps.accountId;
-      this.vehicleInfo.overnightParkingVehicle = this.vehicleNotes;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
         .then(
@@ -267,7 +268,10 @@ export default {
       });
     },
     checkVehiclesData() {
-      this.vehicleNotes = ``;
+      this.vehicleInfo.isTrackingDeviceRequired = ``;
+      this.vehicleInfo.insuranceTypeRecommended = ``;
+      this.vehicleInfo.vehicleClass = ``;
+
       this.fetchedVahiclesData.map((item) => {
         if (
           this.vehicleInfo.details
@@ -278,12 +282,12 @@ export default {
             .includes(item.model.toLowerCase()) &&
           this.vehicleType.toLowerCase().includes(item.type.toLowerCase())
         ) {
-          this.vehicleNotes = `isTrackingDeviceRequired: ${item.trackingDeviceIsRequired}, insuranceTypeRecommended: ${item.vehicleInsuranceType}, vehicleClass: ${this.vehicleType}`;
+          this.vehicleInfo.isTrackingDeviceRequired =
+            item.trackingDeviceIsRequired;
+          this.vehicleInfo.insuranceTypeRecommended = item.vehicleInsuranceType;
+          this.vehicleInfo.vehicleClass = this.vehicleType;
         }
       });
-      setTimeout(() => {
-        console.log(this.vehicleNotes);
-      }, 1000);
     },
   },
 };
