@@ -75,6 +75,31 @@
     <Transition>
       <CreateVehicleDataForm v-if="showCreateVehiclesData" />
     </Transition>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      @click="showPolicyCreation = !showPolicyCreation"
+    >
+      Privacy Policy
+    </button>
+    <Transition>
+      <CreatePolicy v-if="showPolicyCreation" class="mt-3" />
+    </Transition>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      @click="showTermsAndConditionCreation = !showTermsAndConditionCreation"
+    >
+      Terms And Condition
+    </button>
+    <Transition>
+      <CreateTermsAndConditions
+        v-if="showTermsAndConditionCreation"
+        class="mt-3"
+      />
+    </Transition>
   </section>
 </template>
 
@@ -83,12 +108,16 @@ import EditRating from "../../components/Forms/EditRating.vue";
 import EditTabs from "../../components/Forms/EditTabs.vue";
 import VehiclesData from "../../components/Partials/VehiclesData.vue";
 import CreateVehicleDataForm from "../../components/Forms/CreateVehicleDataForm.vue";
+import CreatePolicy from "../../components/Forms/CreatePolicy.vue";
+import CreateTermsAndConditions from "../../components/Forms/CreateTermsAndConditions.vue";
 export default {
   components: {
     EditRating,
     EditTabs,
     VehiclesData,
     CreateVehicleDataForm,
+    CreatePolicy,
+    CreateTermsAndConditions,
   },
   data() {
     return {
@@ -97,6 +126,8 @@ export default {
       showEditTabs: false,
       showVehicleData: false,
       showCreateVehiclesData: false,
+      showPolicyCreation: false,
+      showTermsAndConditionCreation: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };
