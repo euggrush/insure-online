@@ -10,6 +10,12 @@
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
+                >Ref #</span
+              >
+              <span>{{ order.referenceNumber }}</span>
+            </div>
+            <div class="col border-bottom border-start">
+              <span class="d-block fw-bold text-decoration-underline"
                 >Created:</span
               ><span class="fst-italic">{{ getDate(order.orderCreated) }}</span>
             </div>
@@ -43,7 +49,7 @@
                 class="d-block"
                 v-for="(car, index) in order.estimations"
                 :key="index"
-                >{{ car.vehicleDetails }}</span
+                >{{ car.vehicleDetails }}, </span
               >
             </div>
             <div class="col border-bottom border-start">
@@ -54,7 +60,7 @@
                 class="d-block"
                 v-for="(car, index) in order.estimations"
                 :key="index"
-                >{{ car.vehicleRetailValue }}</span
+                >{{ car.vehicleRetailValue }}, </span
               >
             </div>
 
@@ -88,7 +94,7 @@
                 class="btn btn-primary float-end mt-3"
                 @click="getOrder(order.orderId)"
               >
-                View order
+                More
               </button>
             </div>
           </div>
@@ -162,9 +168,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  min-width: 12em;
-}
+// .btn {
+//   min-width: 12em;
+// }
 
 // .order-modal {
 //   height: auto;
