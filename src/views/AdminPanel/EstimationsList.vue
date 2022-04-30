@@ -29,17 +29,38 @@
             >
             <span class="fst-italic">{{ getDate(estimation.created) }}</span>
           </div>
-          <div class="col border-bottom border-start">
+          <div
+            v-if="estimation.estimationType == 'estimation'"
+            class="col border-bottom border-start"
+          >
             <span class="d-block fw-bold text-decoration-underline"
               >Category:</span
             >
             <span>{{ estimation.categoryName }}</span>
           </div>
-          <div class="col border-bottom border-start">
+          <div v-else class="col border-bottom border-start">
+            <span class="d-block fw-bold">Quote for the accessories</span>
+            <!-- <span>{{ estimation.estimationType }}</span> -->
+          </div>
+          <div
+            v-if="estimation.estimationType == 'estimation'"
+            class="col border-bottom border-start"
+          >
             <span class="d-block fw-bold text-decoration-underline"
               >Product:</span
             >
             <span>{{ estimation.mainProductName }}</span>
+          </div>
+          <div v-else class="col border-bottom border-start">
+            <span class="d-block fw-bold text-decoration-underline"
+              >Accessories:</span
+            >
+            <span
+              v-for="(accessory, index) in estimation.accessories"
+              :key="accessory"
+              >{{ accessory.accessoryName
+              }}<span v-if="index < estimation.accessories.length - 1">, </span>
+            </span>
           </div>
           <div class="col border-bottom border-start">
             <span class="d-block fw-bold text-decoration-underline"
