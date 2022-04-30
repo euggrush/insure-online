@@ -219,10 +219,36 @@
             </div>
           </li>
         </ul>
+        <textarea
+          v-if="estimationIdsArray.length !== 0"
+          class="form-control mt-3"
+          :placeholder="termsAndConditionsData"
+          id="floatingTextarea"
+          disabled
+        ></textarea>
+        <div class="form-check mt-3" v-if="estimationIdsArray.length !== 0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            v-model="termsAndConditionsChecked"
+            required
+          />
+          <label
+            class="form-check-label text-white text-capitalize"
+            for="flexCheckDefault"
+          >
+            terms and conditions
+          </label>
+        </div>
         <button
           type="button"
           class="btn btn-outline-warning mt-3"
           @click="createOrder"
+          :disabled="
+            estimationIdsArray.length == 0 || !termsAndConditionsChecked
+          "
         >
           Create Order
         </button>
@@ -316,6 +342,7 @@ export default {
       estimationIdsArray: [],
       showAccessoriesCreateForm: false,
       checkedAccessoriesIds: [],
+      termsAndConditionsChecked: false,
     };
   },
   computed: {
@@ -344,14 +371,27 @@ export default {
     accessoriesList() {
       return this.$store.state.accessories.accessories ?? [];
     },
+    termsAndConditionsData() {
+      return this.getTermsAndConditions();
+    },
   },
   mounted() {
     this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
     this.$store.dispatch(`GET_VEHICLES`, ``);
     this.$store.dispatch(`GET_ESTIMATIONS`, ``);
+    this.$store.dispatch(`GET_RATING`, ``);
   },
   methods: {
+    getTermsAndConditions() {
+      let termsAndConditions = ``;
+      this.$store.state.rating.resources.map((item) => {
+        if (item.resourceKey == `termsAndConditions`) {
+          termsAndConditions = item.resourceValue;
+        }
+      });
+      return termsAndConditions;
+    },
     selectCategory() {
       this.checkedSubProducts = [];
       this.selectedMainProduct = ``;
