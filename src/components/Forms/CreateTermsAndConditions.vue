@@ -10,7 +10,7 @@
           style="height: 100px"
           v-model="termsAndConditionsText"
         ></textarea>
-        <label for="floatingTextarea2">Terms aAnd Conditions</label>
+        <label for="floatingTextarea2">Terms And Conditions</label>
       </div>
       <button type="submit" class="btn btn-secondary mt-3">Submit</button>
     </form>

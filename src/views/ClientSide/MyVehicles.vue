@@ -49,6 +49,7 @@
                 border-3
                 text-uppercase text-danger
                 p-3
+                mt-1
                 mb-3
                 fw-bold
               "

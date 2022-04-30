@@ -264,7 +264,7 @@ export default {
             this.fetchedVahiclesData =
               this.$store.state.vehicles_data.vehiclesData;
           }
-        }, 1000);
+        }, 5000);
       });
     },
     checkVehiclesData() {

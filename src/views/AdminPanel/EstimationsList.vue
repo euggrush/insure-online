@@ -1,9 +1,15 @@
 <template>
   <section class="container estimations-list-wrapper mt-3">
     <h3>Quotes:</h3>
-    <div class="date-range-wrap">
-      <DateRange class="mt-0" />
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="date-range-wrap">
+        <DateRange class="mt-0" />
+      </div>
+      <div class="search-wrap mt-3 mt-xl-0">
+        <SearchEstimation />
+      </div>
     </div>
+
     <ul class="list-group mt-3">
       <li
         v-for="(estimation, index) in estimationsList"
@@ -11,6 +17,12 @@
         class="list-group-item shadow-lg"
       >
         <div class="row quote-item p-1">
+          <div class="col border-bottom border-start">
+            <span class="d-block fw-bold text-decoration-underline"
+              >reference #</span
+            >
+            <span class="fw-bold">{{ estimation.referenceNumber }}</span>
+          </div>
           <div class="col border-bottom border-start">
             <span class="d-block fw-bold text-decoration-underline"
               >Created at:</span
@@ -90,10 +102,12 @@
 
 <script>
 import DateRange from "../../components/Forms/DateRange.vue";
+import SearchEstimation from "../../components/Forms/SearchEstimation.vue";
 
 export default {
   components: {
     DateRange,
+    SearchEstimation,
   },
   watch: {
     getTimeRange() {
