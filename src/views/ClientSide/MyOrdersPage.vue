@@ -42,15 +42,15 @@
             v-if="isCarCategorySelected"
             class="form-select mt-3"
             aria-label="Default select example"
-            v-model="selectedCarId"
-            @change="selectCar(selectedCarId)"
+            v-model="selectedCar"
+            @change="selectCar(selectedCar.vehicleId)"
             required
           >
             <option value="" selected>Select customer's car...</option>
             <option
               v-for="(vehicle, index) in vehiclesList"
               :key="index"
-              :value="vehicle.vehicleId"
+              :value="vehicle"
               :disabled="vehicle.isTrackingDeviceRequired"
             >
               {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
@@ -60,7 +60,7 @@
             <div v-if="isCarSelected">
               <p class="mt-3">select accessories:</p>
               <div
-                v-for="(accessory, index) in accessoriesList"
+                v-for="(accessory, index) in selectedCar.accessories"
                 :key="accessory.accessoryId"
                 class="form-check form-switch"
               >
@@ -179,50 +179,6 @@
     <Transition>
       <MyOrdersList class="mt-3" v-if="showMyOrders" />
     </Transition>
-
-    <!-- MODAL -->
-    <div
-      class="
-        order-create-popup
-        position-absolute
-        top-0
-        start-50
-        translate-middle-x
-      "
-      tabindex="-1"
-      v-if="isCreateOrderPopup"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">The order has been created.</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click="closeCreateOrderPopup"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>
-              Your order is under review now, we will contact you for further
-              information.
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="closeCreateOrderPopup"
-            >
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- MODAL END -->
   </section>
 </template>
 
@@ -242,24 +198,23 @@ export default {
       showMyOrders: false,
       showGetQuoteMenu: true,
       showMyQuites: false,
-      isCreateOrderPopup: false,
       isCategorySelected: false,
       isMainProductSelected: false,
-      isUserSelected: false,
+      // isUserSelected: false,
       isCarSelected: false,
-      accountUsername: ``,
+      // accountUsername: ``,
       selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
-      selectedAccountId: ``,
-      selectedCarId: ``,
+      // selectedAccountId: ``,
+      selectedCar: ``,
       showEstimate: false,
-      isCalcBtnDisabled: true,
-      resetSelectMainProduct: true,
+      // isCalcBtnDisabled: true,
+      // resetSelectMainProduct: true,
       isCarCategorySelected: false,
       shoNullEstimation: true,
       carInsuranceCategory: ``,
-      showAccessoriesCreateForm: false,
+      // showAccessoriesCreateForm: false,
       checkedAccessoriesIds: [],
     };
   },
@@ -271,9 +226,9 @@ export default {
       return this.$store.state.main_products.mainProducts || [];
     },
 
-    accountInfo() {
-      return this.$store.state.user;
-    },
+    // accountInfo() {
+    //   return this.$store.state.user;
+    // },
     newEstimationsList() {
       if (this.shoNullEstimation) {
         return 0;
@@ -282,9 +237,6 @@ export default {
     },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
-    },
-    accessoriesList() {
-      return this.$store.state.accessories.accessories ?? [];
     },
   },
   mounted() {
@@ -315,13 +267,20 @@ export default {
       this.isMainProductSelected = true;
       this.checkedSubProducts = [];
     },
+    selectCar(id) {
+      if (id != ``) {
+        this.isCarSelected = true;
+      } else {
+        this.isCarSelected = false;
+      }
+    },
     getEstimation() {
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
           accountId: this.$store.state.user.accountId,
           mainProductId: this.selectedMainProduct.mainProductId,
           subProductsIds: Object.values(this.checkedSubProducts),
-          vehicleId: this.selectedCarId,
+          vehicleId: this.selectedCar.vehicleId,
           estimationType: `estimation`,
         })
         .then(
@@ -332,7 +291,7 @@ export default {
               this.$store.dispatch(`CREATE_ESTIMATION`, {
                 accountId: this.$store.state.user.accountId,
                 accessoriesIds: Object.values(this.checkedAccessoriesIds),
-                vehicleId: this.selectedCarId,
+                vehicleId: this.selectedCar.vehicleId,
                 estimationType: `accessory`,
               });
             }
@@ -340,20 +299,7 @@ export default {
         )
         .catch((err) => console.log(err));
     },
-    selectCar(id) {
-      if (id != ``) {
-        this.isCarSelected = true;
-        this.getAccessories();
-      } else {
-        this.isCarSelected = false;
-      }
-    },
-    getAccessories() {
-      this.$store.dispatch(
-        `GET_ACCESSORIES`,
-        `?vehicleId=${this.selectedCarId}`
-      );
-    },
+
     quoteToOrder() {
       this.showGetQuoteMenu = false;
       this.showMyQuites = true;
@@ -363,30 +309,30 @@ export default {
     createOrder(payload) {
       if (payload.isOrderCreated) {
         this.$store.dispatch(`GET_ORDERS`, ``);
-        this.isCreateOrderPopup = true;
         this.resetForm();
         this.isCategorySelected = false;
         this.isMainProductSelected = false;
-        this.isUserSelected = false;
+        // this.isUserSelected = false;
         this.showMyQuites = !this.showMyQuites;
         this.showMyOrders = !this.showMyOrders;
         this.scrollToTop();
+        this.$store.commit(`SET_MODAL`, {
+          isModal: true,
+          msg: `Your order is under review now, we will contact you for further
+              information.`,
+        });
       }
     },
     resetForm() {
       (this.isCategorySelected = false),
         (this.isMainProductSelected = false),
-        (this.isUserSelected = false),
+        // (this.isUserSelected = false),
         (this.selectedCategory = `Select category...`),
-        (this.accountUsername = ``),
+        // (this.accountUsername = ``),
         (this.selectedMainProduct = ``),
         (this.shoNullEstimation = true),
         (this.showEstimate = false),
-        (this.selectedCarId = ``);
-    },
-    closeCreateOrderPopup() {
-      this.isCreateOrderPopup = false;
-      this.$store.dispatch(`GET_ORDERS`, ``);
+        (this.selectedCar = ``);
     },
   },
 };
