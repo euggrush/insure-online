@@ -46,6 +46,17 @@
     <button
       type="button"
       class="btn btn-outline-dark mt-1"
+      @click="showAccessoriesRating = !showAccessoriesRating"
+    >
+      Accessiries Rating
+    </button>
+    <Transition>
+      <div v-if="showAccessoriesRating" class="mt-3"><AccessoriesRating /></div>
+    </Transition>
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-dark mt-1"
       @click="showEditTabs = !showEditTabs"
     >
       Edit Tabs
@@ -110,6 +121,7 @@ import VehiclesData from "../../components/Partials/VehiclesData.vue";
 import CreateVehicleDataForm from "../../components/Forms/CreateVehicleDataForm.vue";
 import CreatePolicy from "../../components/Forms/CreatePolicy.vue";
 import CreateTermsAndConditions from "../../components/Forms/CreateTermsAndConditions.vue";
+import AccessoriesRating from "../../components/Partials/AccessoriesRating.vue";
 export default {
   components: {
     EditRating,
@@ -118,6 +130,7 @@ export default {
     CreateVehicleDataForm,
     CreatePolicy,
     CreateTermsAndConditions,
+    AccessoriesRating,
   },
   data() {
     return {
@@ -128,6 +141,7 @@ export default {
       showCreateVehiclesData: false,
       showPolicyCreation: false,
       showTermsAndConditionCreation: false,
+      showAccessoriesRating: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
     };

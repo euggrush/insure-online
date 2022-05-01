@@ -49,8 +49,8 @@
                 class="d-block"
                 v-for="(car, index) in order.estimations"
                 :key="index"
-                >{{ car.vehicleDetails }}, </span
-              >
+                >{{ car.vehicleDetails }},
+              </span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
@@ -60,8 +60,8 @@
                 class="d-block"
                 v-for="(car, index) in order.estimations"
                 :key="index"
-                >{{ car.vehicleRetailValue }}, </span
-              >
+                >{{ car.vehicleRetailValue }},
+              </span>
             </div>
 
             <div class="col border-bottom border-start">
@@ -70,10 +70,13 @@
               >
               <span
                 class="d-block"
-                v-for="(mainProduct, index) in order.estimations"
+                v-for="(estimation, index) in order.estimations"
                 :key="index"
-                >{{ mainProduct.mainProductName }}</span
-              >
+                ><span v-if="estimation.estimationType == 'estimation'">{{
+                  estimation.mainProductName
+                }}</span>
+                <span v-else>Accessories,</span>
+              </span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
@@ -85,7 +88,9 @@
               <span class="d-block fw-bold text-decoration-underline fst-italic"
                 >Adjusted:</span
               >
-              <span v-if="order.adjustedCost>0" class="fst-italic">R{{ order.adjustedCost }}</span>
+              <span v-if="order.adjustedCost > 0" class="fst-italic"
+                >R{{ order.adjustedCost }}</span
+              >
               <span v-else class="text-nowrap">Not Adjusted</span>
             </div>
             <div class="col">
