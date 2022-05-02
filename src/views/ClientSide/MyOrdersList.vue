@@ -27,10 +27,13 @@
               >
               <span
                 class="d-block"
-                v-for="(mainProduct, index) in order.estimations"
+                v-for="(item, index) in order.estimations"
                 :key="index"
-                >{{ mainProduct.mainProductName }}</span
-              >
+                ><span v-if="item.estimationType == 'estimation'">{{
+                  item.mainProductName
+                }}</span>
+                <span v-else>Asseccories</span>
+              </span>
             </div>
 
             <div class="col border-bottom border-start">
@@ -60,13 +63,23 @@
               >
               <span v-else>Not Adjusted</span>
             </div>
-            <div class="col">
+            <div class="col-12 col-lg-3 col-xl-2">
               <button
                 type="button"
-                class="btn btn-outline-success float-end mt-3"
+                class="btn btn-outline-success float-end mt-1 mt-lg-0"
                 @click="getOrder(order.orderId)"
               >
                 View order
+              </button>
+              <button type="button" class="btn btn-outline-info mt-1">
+                Pay Online
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-dark mt-1"
+                @click="getCallRequest"
+              >
+                Request Call
               </button>
             </div>
           </div>
@@ -109,13 +122,19 @@ export default {
       this.isOrderModal = false;
       this.$store.dispatch(`GET_ORDERS`, ``);
     },
+    getCallRequest() {
+      this.$store.commit(`SET_MODAL`, {
+        isModal: true,
+        msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .btn {
-  min-width: 10em;
+  // min-width: 10em;
   width: 100%;
 }
 .btn-pdf {
