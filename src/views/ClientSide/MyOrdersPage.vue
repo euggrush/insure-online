@@ -4,9 +4,9 @@
     <router-link to="/my-account" class="btn btn-secondary"
       >Back to my account</router-link
     >
-    <h3 class="mt-3">Orders:</h3>
+    <hr />
     <button
-      class="btn btn-dark mt-3"
+      class="btn btn-dark mt-1"
       type="button"
       @click="showGetQuoteMenu = !showGetQuoteMenu"
     >
@@ -17,7 +17,7 @@
         v-if="showGetQuoteMenu"
         class="bg-dark bg-gradient shadow-lg text-white mt-3 p-3 rounded"
       >
-        <form @submit.prevent="getEstimation">
+        <form @submit.prevent="createEstimation">
           <p class="fw-bold">Category</p>
           <select
             @change="selectCategory()"
@@ -135,7 +135,7 @@
           </button>
           <div
             v-show="showEstimate"
-            v-for="estimate in newEstimationsList"
+            v-for="estimate in estimationsArr"
             :key="estimate.estimationId"
             class="d-block mt-1"
           >
@@ -200,22 +200,17 @@ export default {
       showMyQuites: false,
       isCategorySelected: false,
       isMainProductSelected: false,
-      // isUserSelected: false,
       isCarSelected: false,
-      // accountUsername: ``,
       selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
-      // selectedAccountId: ``,
       selectedCar: ``,
       showEstimate: false,
-      // isCalcBtnDisabled: true,
-      // resetSelectMainProduct: true,
       isCarCategorySelected: false,
       shoNullEstimation: true,
       carInsuranceCategory: ``,
-      // showAccessoriesCreateForm: false,
       checkedAccessoriesIds: [],
+      estimationsArr: [],
     };
   },
   computed: {
@@ -225,16 +220,12 @@ export default {
     productsList() {
       return this.$store.state.main_products.mainProducts || [];
     },
-
-    // accountInfo() {
-    //   return this.$store.state.user;
+    // newEstimationsList() {
+    //   if (this.shoNullEstimation) {
+    //     return 0;
+    //   }
+    //   return this.estimationsArr;
     // },
-    newEstimationsList() {
-      if (this.shoNullEstimation) {
-        return 0;
-      }
-      return this.$store.state.new_estimations;
-    },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
     },
@@ -274,7 +265,8 @@ export default {
         this.isCarSelected = false;
       }
     },
-    getEstimation() {
+    createEstimation() {
+      this.estimationsArr = [];
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
           accountId: this.$store.state.user.accountId,
@@ -283,20 +275,32 @@ export default {
           vehicleId: this.selectedCar.vehicleId,
           estimationType: `estimation`,
         })
-        .then(
-          (this.showEstimate = true),
-          (this.shoNullEstimation = false),
+        .then(() => {
+          setTimeout(() => {
+            this.estimationsArr.push(this.$store.state.current_estimation);
+          }, 1000);
+
+          this.showEstimate = true;
+          this.shoNullEstimation = false;
           setTimeout(() => {
             if (this.checkedAccessoriesIds.length > 0) {
-              this.$store.dispatch(`CREATE_ESTIMATION`, {
-                accountId: this.$store.state.user.accountId,
-                accessoriesIds: Object.values(this.checkedAccessoriesIds),
-                vehicleId: this.selectedCar.vehicleId,
-                estimationType: `accessory`,
-              });
+              this.$store
+                .dispatch(`CREATE_ESTIMATION`, {
+                  accountId: this.$store.state.user.accountId,
+                  accessoriesIds: Object.values(this.checkedAccessoriesIds),
+                  vehicleId: this.selectedCar.vehicleId,
+                  estimationType: `accessory`,
+                })
+                .then(() => {
+                  setTimeout(() => {
+                    this.estimationsArr.push(
+                      this.$store.state.current_estimation
+                    );
+                  }, 1000);
+                });
             }
-          }, 1000)
-        )
+          }, 1000);
+        })
         .catch((err) => console.log(err));
     },
 
@@ -312,7 +316,6 @@ export default {
         this.resetForm();
         this.isCategorySelected = false;
         this.isMainProductSelected = false;
-        // this.isUserSelected = false;
         this.showMyQuites = !this.showMyQuites;
         this.showMyOrders = !this.showMyOrders;
         this.scrollToTop();
@@ -324,15 +327,13 @@ export default {
       }
     },
     resetForm() {
-      (this.isCategorySelected = false),
-        (this.isMainProductSelected = false),
-        // (this.isUserSelected = false),
-        (this.selectedCategory = `Select category...`),
-        // (this.accountUsername = ``),
-        (this.selectedMainProduct = ``),
-        (this.shoNullEstimation = true),
-        (this.showEstimate = false),
-        (this.selectedCar = ``);
+      this.isCategorySelected = false;
+      this.isMainProductSelected = false;
+      this.selectedCategory = `Select category...`;
+      this.selectedMainProduct = ``;
+      this.shoNullEstimation = true;
+      this.showEstimate = false;
+      this.selectedCar = ``;
     },
   },
 };
