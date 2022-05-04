@@ -52,7 +52,7 @@
           >
             <router-link
               to="/login"
-              class="btn btn-outline-warning login-btn rounded-pill"
+              class="btn btn-outline-danger login-btn rounded-pill"
               >Login</router-link
             >
           </li>
