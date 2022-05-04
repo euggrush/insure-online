@@ -35,7 +35,7 @@ body {
 }
 #app {
   min-height: 100vh;
-  font-family: "Neometric Alt", sans-serif;
+  font-family: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto", "Arial", "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $colorDark;

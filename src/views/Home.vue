@@ -23,7 +23,9 @@
             <p class="text-white-75 mb-5">
               Find out how we're continuing to be there for you on the road.
             </p>
-            <button class="btn btn-danger btn-xl" @click="scrollToContent">Find Out More</button>
+            <button class="btn btn-danger btn-xl" @click="scrollToContent">
+              Find Out More
+            </button>
           </div>
         </div>
       </div>
@@ -182,7 +184,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -236,6 +238,9 @@ export default {
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
+
+  --bs-body-font-family: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto", "Arial", "sans-serif";
+  --bs-font-sans-serif: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto", "Arial", "sans-serif";
 }
 
 *,
@@ -289,9 +294,7 @@ h1,
 .h1 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-family: "Neometric Alt", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--bs-body-font-family);
   font-weight: 500;
   line-height: 1.2;
 }
@@ -452,7 +455,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-font-monospace);
+  font-family: var(--bs-body-font-family);
   font-size: 1em;
   direction: ltr /* rtl:ignore */;
   unicode-bidi: bidi-override;
@@ -3262,9 +3265,7 @@ textarea.form-control.is-invalid {
 
 .btn {
   display: inline-block;
-  font-family: "Neometric Alt", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--bs-body-font-family);
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
@@ -6243,9 +6244,7 @@ fieldset:disabled .btn {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: "Neometric Alt", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--bs-body-font-family);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6359,9 +6358,7 @@ fieldset:disabled .btn {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: "Neometric Alt", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--bs-body-font-family);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -8122,9 +8119,9 @@ fieldset:disabled .btn {
   padding-left: 3rem !important;
 }
 
-.font-monospace {
-  font-family: var(--bs-font-monospace) !important;
-}
+// .font-monospace {
+//   font-family: var(--bs-font-monospace) !important;
+// }
 
 .fs-1 {
   font-size: calc(1.375rem + 1.5vw) !important;
@@ -11977,9 +11974,7 @@ header.masthead .h1 {
   .portfolio-box
   .portfolio-box-caption
   .project-category {
-  font-family: "Neometric Alt", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--bs-body-font-family);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
