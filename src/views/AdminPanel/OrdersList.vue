@@ -351,6 +351,12 @@ export default {
     this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
+    // fillEstimationsArray() {
+    //   setTimeout(() => {
+    //     this.estimationsArr.push(this.$store.state.current_estimation);
+    //   }, 1000);
+    // },
+
     selectCategory() {
       this.selectedMainProduct = ``;
       this.isSubProducts = false;
@@ -381,42 +387,43 @@ export default {
           console.log(err);
         });
     },
+    postEstimation(arg) {
+      let payload = {};
+      const payloadEstimation = {
+        accountId: this.selectedAccountId,
+        mainProductId: this.selectedMainProduct,
+        subProductsIds: Object.values(this.checkedSubProducts),
+        vehicleId: this.selectedCarId,
+        estimationType: arg,
+      };
+
+      const payloadAccessories = {
+        accountId: this.selectedAccountId,
+        accessoriesIds: Object.values(this.checkedAccessoriesIds),
+        vehicleId: this.selectedCarId,
+        estimationType: arg,
+      };
+      if (arg == `estimation`) {
+        payload = payloadEstimation;
+      } else {
+        payload = payloadAccessories;
+      }
+      this.$store.dispatch(`CREATE_ESTIMATION`, payload).then(() => {
+        this.showEstimate = true;
+        this.shoNullEstimation = false;
+        setTimeout(() => {
+          this.estimationsArr.push(this.$store.state.current_estimation);
+        }, 1000);
+      });
+    },
     createEstimation() {
       this.estimationsArr = [];
-      this.$store
-        .dispatch(`CREATE_ESTIMATION`, {
-          accountId: this.selectedAccountId,
-          mainProductId: this.selectedMainProduct,
-          subProductsIds: Object.values(this.checkedSubProducts),
-          vehicleId: this.selectedCarId,
-          estimationType: `estimation`,
-        })
-        .then(() => {
-          setTimeout(() => {
-            this.estimationsArr.push(this.$store.state.current_estimation);
-          }, 1000);
-          this.showEstimate = true;
-          this.shoNullEstimation = false;
-
-          if (this.checkedAccessoriesIds.length > 0) {
-            this.$store
-              .dispatch(`CREATE_ESTIMATION`, {
-                accountId: this.selectedAccountId,
-                accessoriesIds: Object.values(this.checkedAccessoriesIds),
-                vehicleId: this.selectedCarId,
-                estimationType: `accessory`,
-              })
-              .then(() => {
-                this.showEstimate = true;
-                this.shoNullEstimation = false;
-                setTimeout(() => {
-                  this.estimationsArr.push(
-                    this.$store.state.current_estimation
-                  );
-                }, 1000);
-              });
-          }
-        });
+      this.postEstimation(`estimation`);
+      setTimeout(() => {
+        if (this.checkedAccessoriesIds.length > 0) {
+          this.postEstimation(`accessory`);
+        }
+      }, 1000);
     },
 
     selectCar() {
@@ -443,26 +450,26 @@ export default {
           accountId: accountId,
           estimationIds: estimationIds,
         })
-        .then(
-          (this.componentKey += 1),
-          this.resetForm(),
-          (this.isCategorySelected = false),
-          (this.isMainProductSelected = false),
-          (this.isUserSelected = false)
-        )
+        .then(() => {
+          this.componentKey += 1;
+          this.resetForm();
+          this.isCategorySelected = false;
+          this.isMainProductSelected = false;
+          this.isUserSelected = false;
+        })
         .catch((err) => alert(err));
     },
     resetForm() {
-      (this.isCategorySelected = false),
-        (this.isMainProductSelected = false),
-        (this.isUserSelected = false),
-        (this.selectedCategory = `Select category...`),
-        (this.isAccountInfo = false),
-        (this.selectedMainProduct = ``),
-        (this.isSubProducts = false);
-      (this.shoNullEstimation = true),
-        (this.showEstimate = false),
-        (this.selectedCarId = ``);
+      this.isCategorySelected = false;
+      this.isMainProductSelected = false;
+      this.isUserSelected = false;
+      this.selectedCategory = `Select category...`;
+      this.isAccountInfo = false;
+      this.selectedMainProduct = ``;
+      this.isSubProducts = false;
+      this.shoNullEstimation = true;
+      this.showEstimate = false;
+      this.selectedCarId = ``;
       this.$store.dispatch(`GET_USERS`, ``);
     },
   },
