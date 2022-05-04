@@ -6,9 +6,10 @@
         @click="getLogoButtonAction"
       >
         <img
-          src="../../assets/tuffstuff_logo.png"
+          src="../../assets/tuffstuff_logo2.png"
           alt="logo"
           class="rounded-circle"
+          width="100"
         />
       </button>
       <button
