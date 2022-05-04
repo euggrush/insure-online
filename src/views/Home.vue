@@ -11876,7 +11876,7 @@ header.masthead {
       rgba(92, 77, 66, 0.8) 0%,
       rgba(92, 77, 66, 0.8) 100%
     ),
-    url("https://i.ibb.co/Vp2jZnc/bg2.jpg");
+    url($bgMainCar);
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

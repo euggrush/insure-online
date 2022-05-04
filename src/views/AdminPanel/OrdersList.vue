@@ -65,7 +65,7 @@
     <div class="mt-3">
       <div class="collapse" id="collapseWidthExample">
         <div class="card card-body">
-          <form @submit.prevent="getEstimation">
+          <form @submit.prevent="createEstimation">
             <!-- CUSTOMER START -->
             <p class="fw-bold">Customer</p>
             <SearchAccount class="w-100 mb-3" />
@@ -238,11 +238,7 @@
               Calculate
             </button>
             <div v-if="showEstimate" class="mt-5">
-              <div
-                v-for="quote in newAccessoryEstimation"
-                :key="quote"
-                class="mt-1"
-              >
+              <div v-for="quote in estimationsArr" :key="quote" class="mt-1">
                 Estimation<span v-if="quote.estimationType == 'accessory'">
                   for {{ quote.estimationType }}</span
                 >: <strong>R{{ quote.totalCost || 0 }}</strong>
@@ -305,6 +301,7 @@ export default {
       componentKey: 0,
       orderStatus: ``,
       checkedAccessoriesIds: [],
+      estimationsArr: [],
     };
   },
   watch: {
@@ -343,9 +340,9 @@ export default {
     estimationsList() {
       return this.$store.state.estimations.estimations || [];
     },
-    newAccessoryEstimation() {
-      return this.$store.state.new_estimations;
-    },
+    // newAccessoryEstimation() {
+    //   return this.$store.state.new_estimations;
+    // },
     accessoriesList() {
       return this.$store.state.accessories.accessories ?? [];
     },
@@ -384,40 +381,44 @@ export default {
           console.log(err);
         });
     },
-    getEstimation() {
-      if (this.checkedAccessoriesIds.length <= 0) {
-        this.$store
-          .dispatch(`CREATE_ESTIMATION`, {
-            accountId: this.selectedAccountId,
-            mainProductId: this.selectedMainProduct,
-            subProductsIds: Object.values(this.checkedSubProducts),
-            vehicleId: this.selectedCarId,
-            estimationType: `estimation`,
-          })
-          .then((this.showEstimate = true), (this.shoNullEstimation = false))
-          .catch((err) => alert(err));
-      } else {
-        this.$store
-          .dispatch(`CREATE_ESTIMATION`, {
-            accountId: this.selectedAccountId,
-            accessoriesIds: Object.values(this.checkedAccessoriesIds),
-            vehicleId: this.selectedCarId,
-            estimationType: `accessory`,
-          })
-          .then(() => {
-            (this.showEstimate = true),
-              (this.shoNullEstimation = false),
-              this.$store.dispatch(`CREATE_ESTIMATION`, {
+    createEstimation() {
+      this.estimationsArr = [];
+      this.$store
+        .dispatch(`CREATE_ESTIMATION`, {
+          accountId: this.selectedAccountId,
+          mainProductId: this.selectedMainProduct,
+          subProductsIds: Object.values(this.checkedSubProducts),
+          vehicleId: this.selectedCarId,
+          estimationType: `estimation`,
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.estimationsArr.push(this.$store.state.current_estimation);
+          }, 1000);
+          this.showEstimate = true;
+          this.shoNullEstimation = false;
+
+          if (this.checkedAccessoriesIds.length > 0) {
+            this.$store
+              .dispatch(`CREATE_ESTIMATION`, {
                 accountId: this.selectedAccountId,
-                mainProductId: this.selectedMainProduct,
-                subProductsIds: Object.values(this.checkedSubProducts),
+                accessoriesIds: Object.values(this.checkedAccessoriesIds),
                 vehicleId: this.selectedCarId,
-                estimationType: `estimation`,
+                estimationType: `accessory`,
+              })
+              .then(() => {
+                this.showEstimate = true;
+                this.shoNullEstimation = false;
+                setTimeout(() => {
+                  this.estimationsArr.push(
+                    this.$store.state.current_estimation
+                  );
+                }, 1000);
               });
-          })
-          .catch((err) => alert(err));
-      }
+          }
+        });
     },
+
     selectCar() {
       if (this.selectedCarId.length === 0) {
         this.isCarSelected = false;
