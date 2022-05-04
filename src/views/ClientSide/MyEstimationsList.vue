@@ -132,7 +132,7 @@ export default {
       this.$store.dispatch(`CREATE_ESTIMATION`, {
         estimationId: id,
         deleted: true,
-        estimationType: `estimation`,
+        // estimationType: `estimation`,
       });
     },
   },

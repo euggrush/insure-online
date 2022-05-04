@@ -71,7 +71,11 @@
               >
                 View order
               </button>
-              <button type="button" class="btn btn-outline-info mt-1">
+              <button
+                type="button"
+                class="btn btn-outline-info mt-1"
+                @click="goToPaymentPage"
+              >
                 Pay Online
               </button>
               <button
@@ -123,10 +127,14 @@ export default {
       this.$store.dispatch(`GET_ORDERS`, ``);
     },
     getCallRequest() {
+      this.scrollToTop();
       this.$store.commit(`SET_MODAL`, {
         isModal: true,
         msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
       });
+    },
+    goToPaymentPage() {
+      this.$router.push(`/my-payment`);
     },
   },
 };
