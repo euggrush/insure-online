@@ -94,7 +94,7 @@ export default {
             });
         },
          lessThanOneHourAgo(date) {
-            const HOUR = 1000 * 60 * 60;
+            const HOUR = 1000 * 60 * 60 * 24;
             const anHourAgo = Date.now() - HOUR;
             return Date.parse(date) > anHourAgo
         }

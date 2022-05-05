@@ -2,6 +2,26 @@
   <section
     class="my-orders-list bg-dark bg-gradient p-3 rounded position-relative"
   >
+    <div
+      v-if="isInceptionDateOfCoverModal"
+      class="
+        position-absolute
+        top-0
+        start-50
+        translate-middle
+        inception-date-wrap
+        bg-light bg-gradient
+        p-1
+      "
+    >
+      <button
+        type="button"
+        class="btn-close float-end"
+        aria-label="Close"
+        @click="closeInceptionDateOfCoverForm"
+      ></button>
+      <InceptionDateOfCoverForm :myProps="{ orderId: orderIdToPass }" />
+    </div>
     <ul class="list-group">
       <li
         v-for="(order, index) in ordersList"
@@ -76,7 +96,7 @@
               <button
                 type="button"
                 class="btn btn-outline-info mt-1"
-                @click="goToPaymentPage"
+                @click="goToPaymentPage(order.orderId)"
               >
                 Pay Online
               </button>
@@ -98,26 +118,23 @@
         />
       </li>
     </ul>
-
-    <!-- <Transition>
-      <MyPaymentPage
-        v-if="isPaymentModal"
-        class="position-absolute top-50 start-50 translate-middle"
-      />
-    </Transition> -->
   </section>
 </template>
 
 <script>
 import MyOrderView from "../ClientSide/MyOrderView.vue";
-// import MyPaymentPage from "../ClientSide/MyPaymentPage.vue";
+import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
-  components: { MyOrderView },
+  components: {
+    MyOrderView,
+    InceptionDateOfCoverForm,
+  },
   data() {
     return {
       isOrderModal: false,
-      isPaymentModal: true,
+      isInceptionDateOfCoverModal: false,
+      orderIdToPass: ``,
     };
   },
   computed: {
@@ -145,9 +162,14 @@ export default {
         msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
       });
     },
-    goToPaymentPage() {
-      // this.isPaymentModal = true;
-      this.$router.push(`/my-payment`);
+    goToPaymentPage(id) {
+      this.scrollToTop();
+      this.isInceptionDateOfCoverModal = true;
+      this.orderIdToPass = id;
+      // this.$router.push(`/my-payment`);
+    },
+    closeInceptionDateOfCoverForm() {
+      this.isInceptionDateOfCoverModal = false;
     },
   },
 };
@@ -173,5 +195,27 @@ export default {
 }
 .btn-pdf:hover {
   background-image: url("../../assets/img/icon-pdf.svg");
+}
+.inception-date-wrap {
+  width: 100%;
+  height: 200px;
+  outline: solid 3px red;
+  z-index: 2;
+  @include media-breakpoint-up(md) {
+    width: 500px;
+    height: 200px;
+  }
+  // @include media-breakpoint-up(lg) {
+  //   width: 250px;
+  //   height: 150px;
+  // }
+  // @include media-breakpoint-up(xl) {
+  //   width: 250px;
+  //   height: 150px;
+  // }
+  // @include media-breakpoint-up(xxl) {
+  //   width: 250px;
+  //   height: 150px;
+  // }
 }
 </style>
