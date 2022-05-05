@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const dayjs = require("dayjs");
 
 export default {
@@ -92,5 +93,10 @@ export default {
                 type: mimeString
             });
         },
+         lessThanOneHourAgo(date) {
+            const HOUR = 1000 * 60 * 60;
+            const anHourAgo = Date.now() - HOUR;
+            return Date.parse(date) > anHourAgo
+        }
     }
 }

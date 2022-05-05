@@ -4,21 +4,22 @@
       <li
         v-for="(item, index) in estimationsList"
         :key="item.estimationId"
+        v-show="lessThanOneHourAgo(item.created)"
         class="list-group-item list-group-item-dark"
       >
         <div class="row">
-          <div class="col col-12 col-md-2 col-lg-1">
-            {{ item.referenceNumber }}
+          <div class="col">
+            <strong>Ref #</strong> {{ item.referenceNumber }}
           </div>
 
-          <div class="col col-12 col-md-3">
+          <div class="col">
             <strong>Car:</strong> {{ item.vehicleDetails }}
           </div>
 
-          <div v-if="item.mainProductName" class="col col-12 col-md-2">
+          <div v-if="item.mainProductName" class="col">
             <strong>Product:</strong> {{ item.mainProductName }}
           </div>
-          <div v-else class="col col-12 col-md-2">
+          <div v-else class="col">
             <strong>Accessories:</strong>&nbsp;
             <span
               class="text-capitalize"
@@ -28,10 +29,10 @@
               }}<span v-if="index != item.accessories.length - 1">,&nbsp;</span>
             </span>
           </div>
-          <div class="col col-12 col-md-2">
+          <div class="col">
             <strong>Total:</strong> R{{ item.totalCost }}
           </div>
-          <div class="form-check col col-12 col-md-2">
+          <div class="form-check col col-12 col-md-2 mt-3 mt-md-0">
             <input
               class="form-check-input"
               type="checkbox"
@@ -42,15 +43,6 @@
             <label class="form-check-label" :for="`flexCheckDefault${index}`">
               Add To Order
             </label>
-          </div>
-          <div class="col-12 col-md-2">
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              @click="deleteEstimation(item.estimationId)"
-            >
-              Delete
-            </button>
           </div>
         </div>
       </li>
@@ -127,13 +119,6 @@ export default {
         .then(() => {
           this.$emit(`createdOrderConfirm`, { isOrderCreated: true });
         });
-    },
-    deleteEstimation(id) {
-      this.$store.dispatch(`CREATE_ESTIMATION`, {
-        estimationId: id,
-        deleted: true,
-        // estimationType: `estimation`,
-      });
     },
   },
 };

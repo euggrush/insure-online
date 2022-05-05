@@ -1,5 +1,7 @@
 <template>
-  <section class="my-orders-list bg-dark bg-gradient p-3 rounded">
+  <section
+    class="my-orders-list bg-dark bg-gradient p-3 rounded position-relative"
+  >
     <ul class="list-group">
       <li
         v-for="(order, index) in ordersList"
@@ -96,16 +98,26 @@
         />
       </li>
     </ul>
+
+    <!-- <Transition>
+      <MyPaymentPage
+        v-if="isPaymentModal"
+        class="position-absolute top-50 start-50 translate-middle"
+      />
+    </Transition> -->
   </section>
 </template>
 
 <script>
 import MyOrderView from "../ClientSide/MyOrderView.vue";
+// import MyPaymentPage from "../ClientSide/MyPaymentPage.vue";
+
 export default {
   components: { MyOrderView },
   data() {
     return {
       isOrderModal: false,
+      isPaymentModal: true,
     };
   },
   computed: {
@@ -134,6 +146,7 @@ export default {
       });
     },
     goToPaymentPage() {
+      // this.isPaymentModal = true;
       this.$router.push(`/my-payment`);
     },
   },

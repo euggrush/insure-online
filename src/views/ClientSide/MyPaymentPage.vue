@@ -1,6 +1,6 @@
 <template>
-  <section class="container my-payment">
-    <div id="smart-button-container">
+  <section class="container-fluid my-payment bg-light bg-gradient">
+    <div id="smart-button-container" class="paypal-wrap mx-auto">
       <div style="text-align: center">
         <div id="paypal-button-container"></div>
       </div>
@@ -62,6 +62,9 @@ export default {
 <style lang="scss" scoped>
 .my-payment {
   min-height: 100vh;
-  padding-top: 10em;
+  padding-top: 15em;
+}
+.paypal-wrap {
+  max-width: 500px;
 }
 </style>
