@@ -45,10 +45,15 @@
                   border border-danger border-3
                   text-danger text-uppercase text-center
                   fw-bold
-                  p-3
+                  pt-1
+                  ps-3
+                  pb-1
+                  pe-3
                 "
               >
-                Paid offline. Conatc client ASAP
+                Paid offline.
+                <hr />
+                Contact client ASAP
                 <a
                   class="link-email text-dark fw-light text-lowercase"
                   :href="`mailto:${order.estimations[0].username}`"
