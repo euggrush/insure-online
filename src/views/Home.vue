@@ -23,7 +23,10 @@
             <p class="text-white-75 mb-5">
               Find out how we're continuing to be there for you on the road.
             </p>
-            <button class="btn btn-danger pt-3 pb-3 ps-5 pe-5" @click="scrollToContent">
+            <button
+              class="btn btn-danger pt-3 pb-3 ps-5 pe-5 custom-btn"
+              @click="scrollToContent"
+            >
               Find Out More
             </button>
           </div>
@@ -40,7 +43,9 @@
             <p class="text-white-75 mb-4">
               We’ll take care of all your car insurance needs.
             </p>
-            <router-link class="btn btn-light pt-3 pb-3 ps-5 pe-5" to="/registration"
+            <router-link
+              class="btn btn-light pt-3 pb-3 ps-5 pe-5"
+              to="/registration"
               >Get insurance online</router-link
             >
           </div>
@@ -11127,5 +11132,76 @@ header.masthead .h1 {
 #portfolio .container-xl .portfolio-box:hover .portfolio-box-caption,
 #portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
   opacity: 1;
+}
+
+.custom-btn {
+  position: relative;
+  vertical-align: middle;
+  overflow: hidden;
+  -webkit-transition: ease 0.3s;
+  transition: ease 0.3s;
+}
+
+.custom-btn:after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 300px;
+  margin-left: 60px;
+  background: #fff;
+  background: -moz-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3ffffff', endColorstr='#b3ffffff', GradientType=0);
+  position: absolute;
+  left: -40px;
+  top: -150px;
+  z-index: 1;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-animation-name: slideme;
+  animation-name: slideme;
+  -webkit-animation-duration: 3s;
+  animation-duration: 3s;
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes slideme {
+  0% {
+    left: -30px;
+    margin-left: 0px;
+  }
+
+  30% {
+    left: 110%;
+    margin-left: 80px;
+  }
+
+  100% {
+    left: 110%;
+    margin-left: 80px;
+  }
 }
 </style>
