@@ -42,21 +42,12 @@
               >Sign Up</router-link
             >
           </li>
-
           <li
             v-if="
-              this.$store.state.status === '' ||
-              this.$store.state.status === 'error'
+              this.$store.state.status === 'success' && !tokenExpirationTime
             "
             class="nav-item"
           >
-            <router-link
-              to="/login"
-              class="btn btn-outline-danger login-btn rounded-pill"
-              >Login</router-link
-            >
-          </li>
-          <li v-if="this.$store.state.status === 'success'" class="nav-item">
             <button
               class="logout-btn btn btn-outline-warning rounded-pill"
               type="button"
@@ -64,6 +55,13 @@
             >
               Logout
             </button>
+          </li>
+          <li v-else class="nav-item">
+            <router-link
+              to="/login"
+              class="btn btn-outline-danger login-btn rounded-pill"
+              >Login</router-link
+            >
           </li>
         </ul>
       </div>
@@ -74,6 +72,11 @@
 <script>
 export default {
   name: "Header",
+  computed: {
+    tokenExpirationTime() {
+      return this.isTokenExpired(this.$store.state.toke_expiration_time);
+    },
+  },
   mounted() {
     this.shrinkNavbar();
   },
@@ -82,7 +85,9 @@ export default {
       if (this.$store.state.status === ``) {
         this.$router.push(`/`);
       } else {
-        this.$router.push({ query: { type: 2 } });
+        this.$store.dispatch("LOGOUT").then(() => {
+          this.$router.push("/");
+        });
       }
     },
     logout() {

@@ -97,6 +97,14 @@ export default {
             const HOUR = 1000 * 60 * 60 * 24;
             const anHourAgo = Date.now() - HOUR;
             return Date.parse(date) > anHourAgo
-        }
+        },
+        isTokenExpired(tokenExpiration) {
+            let tokenTime = dayjs(tokenExpiration).valueOf();
+            let currentTime = Date.now();
+            if (tokenTime < currentTime) {
+              return true;
+            }
+            return false;
+          }
     }
 }

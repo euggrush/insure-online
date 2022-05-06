@@ -9,6 +9,10 @@ import Header from "./components/Partials/Header.vue";
 import Footer from "./components/Partials/Footer.vue";
 import axios from "axios";
 
+window.onbeforeunload = () => {
+  localStorage.removeItem("vuex");
+};
+
 export default {
   name: "Home",
   components: {
@@ -35,7 +39,8 @@ body {
 }
 #app {
   min-height: 100vh;
-  font-family: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto", "Arial", "sans-serif";
+  font-family: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto",
+    "Arial", "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $colorDark;
