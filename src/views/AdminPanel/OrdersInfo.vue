@@ -39,6 +39,22 @@
               >
               <span>{{ order.estimations[0].firstName }}</span>
               <span>&nbsp;{{ order.estimations[0].lastName }}</span>
+              <div
+                v-if="order.paidBy == 'offline'"
+                class="
+                  border border-danger border-3
+                  text-danger text-uppercase text-center
+                  fw-bold
+                  p-3
+                "
+              >
+                Paid offline. Conatc client ASAP
+                <a
+                  class="link-email text-dark fw-light text-lowercase"
+                  :href="`mailto:${order.estimations[0].username}`"
+                  >{{ order.estimations[0].username }}</a
+                >
+              </div>
             </div>
 
             <div class="col border-bottom border-start">
@@ -173,44 +189,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .btn {
-//   min-width: 12em;
-// }
-
-// .order-modal {
-//   height: auto;
-// }
 .order-item {
   background-color: $mainGreen;
   box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
   -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
 }
-// .adjust-input {
-//   width: 11em;
-// }
-// .adjust-btn {
-//   min-width: auto;
-// }
+
 br {
   display: block;
   content: "";
   margin-top: 0;
 }
-// .btn-pdf {
-//   min-width: 100%;
-//   border-radius: 0;
-//   background-image: url("../../assets/img/icon-pdf.png");
-//   background-size: 27px 27px;
-//   background-repeat: no-repeat;
-//   background-position: 5% center;
-//   margin-bottom: 10px;
-//   padding-left: 40px;
-//   @include media-breakpoint-up(md) {
-//     min-width: 11em;
-//   }
-// }
-// .btn-pdf:hover {
-//   background-image: url("../../assets/img/icon-pdf.svg");
-// }
+.link-email {
+  @include media-breakpoint-up(md) {
+    background-image: url("../../assets/img/icon-mail.svg");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 0px 1px;
+    padding-left: 25px;
+  }
+}
 </style>

@@ -34,6 +34,9 @@ export default {
         })
         .then(() => {
           this.$store.dispatch(`GET_ORDERS`, ``);
+          setTimeout(() => {
+            this.$router.push(`/my-payment`);
+          }, 1000);
         });
     },
   },

@@ -31,6 +31,22 @@
         <div class="container">
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
+              <span class="fw-bold d-block fw-bold text-decoration-underline"
+                >Created:</span
+              >
+              <span>{{ getDate(order.created) }}</span>
+            </div>
+            <div class="col border-bottom border-start">
+              <span class="fw-bold">Ref # </span>
+              <span>{{ order.referenceNumber }}</span>
+            </div>
+            <div class="col border-bottom border-start">
+              <span class="fw-bold d-block fw-bold text-decoration-underline"
+                >Inception date:</span
+              >
+              <span>{{ getDate(order.inceptionDateOfCover) }}</span>
+            </div>
+            <div class="col border-bottom border-start">
               <span class="d-block fw-bold text-decoration-underline"
                 >Order status:</span
               >
@@ -103,7 +119,7 @@
               <button
                 type="button"
                 class="btn btn-outline-dark mt-1"
-                @click="getCallRequest"
+                @click="getCallRequest(order.orderId)"
               >
                 Request Call
               </button>
@@ -155,18 +171,25 @@ export default {
       this.isOrderModal = false;
       this.$store.dispatch(`GET_ORDERS`, ``);
     },
-    getCallRequest() {
-      this.scrollToTop();
-      this.$store.commit(`SET_MODAL`, {
-        isModal: true,
-        msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
-      });
+    getCallRequest(id) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: id,
+          paidBy: `offline`,
+        })
+        .then(() => {
+          this.scrollToTop();
+          this.$store.dispatch(`GET_ORDERS`, ``);
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
+          });
+        });
     },
     goToPaymentPage(id) {
       this.scrollToTop();
       this.isInceptionDateOfCoverModal = true;
       this.orderIdToPass = id;
-      // this.$router.push(`/my-payment`);
     },
     closeInceptionDateOfCoverForm() {
       this.isInceptionDateOfCoverModal = false;
