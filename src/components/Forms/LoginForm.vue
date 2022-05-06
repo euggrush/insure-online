@@ -7,7 +7,8 @@
       justify-content-center
       align-items-center
       reg-wrap
-      bg-dark
+      bg-secondary
+      bg-gradient
       position-relative
     "
   >
@@ -127,10 +128,10 @@ export default {
 <style lang="scss" scoped>
 .reg-wrap {
   min-height: calc(100vh - 127px);
-  color: #fff;
-  background-image: url($mainBg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  // color: #fff;
+  // background-image: url($mainBg);
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
 }
 .form-control {
   height: 41px;
