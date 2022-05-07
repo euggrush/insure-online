@@ -15,7 +15,7 @@
     <ModalMessage />
     <div class="signup-form">
       <form
-        class="bg-dark bg-gradient shadow-lg"
+        class="bg-dark bg-gradient shadow-lg rounded"
         autocomplete="off"
         @submit.prevent="login"
       >

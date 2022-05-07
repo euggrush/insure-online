@@ -110,8 +110,8 @@
       </div>
     </section>
     <!-- Portfolio-->
-
-    <div id="portfolio">
+    <Contact />
+    <!-- <div id="portfolio">
       <div class="container-fluid pb-0 ps-0 pe-0 pt-0">
         <div class="row g-0">
           <div class="col-lg-4 col-sm-6">
@@ -170,12 +170,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </body>
 </template>
 
 <script>
+import Contact from "../components/Partials/Contact.vue";
 export default {
+  components: { Contact },
   methods: {
     scrollToContent() {
       window.scrollTo(
