@@ -1,6 +1,6 @@
 <template>
   <!-- Contact-->
-  <section class="page-section bg-dark" id="contact">
+  <section class="page-section" id="contact">
     <div class="container px-4 px-lg-5">
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-lg-8 col-xl-6 text-center">
@@ -22,7 +22,7 @@
           <!-- https://startbootstrap.com/solution/contact-forms-->
           <!-- to get an API token!-->
           <form
-            class="bg-danger p-3 shadow-lg rounded"
+            class="p-3 shadow-lg rounded"
             id="contactForm"
             data-sb-form-api-token="API_TOKEN"
           >
@@ -137,4 +137,10 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+#contactForm {
+  background-color: $colorRed;
+}
+#contact {
+  background-color: $colorBlack;
+}
 </style>

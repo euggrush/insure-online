@@ -24,7 +24,7 @@
               Find out how we're continuing to be there for you on the road.
             </p>
             <button
-              class="btn btn-danger pt-3 pb-3 ps-5 pe-5 custom-btn"
+              class="btn pt-3 pb-3 ps-5 pe-5 custom-btn text-light"
               @click="scrollToContent"
             >
               Find Out More
@@ -109,9 +109,10 @@
         </div>
       </div>
     </section>
+        <Contact />
+
     <!-- Portfolio-->
-    <Contact />
-    <!-- <div id="portfolio">
+    <div id="portfolio">
       <div class="container-fluid pb-0 ps-0 pe-0 pt-0">
         <div class="row g-0">
           <div class="col-lg-4 col-sm-6">
@@ -170,7 +171,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </body>
 </template>
 
@@ -7483,8 +7484,8 @@ textarea.form-control.is-invalid {
 }
 
 .bg-primary {
-  --bs-bg-opacity: 1;
-  background-color: rgb(189, 39, 26) !important;
+  // --bs-bg-opacity: 1;
+  background-color: $colorRed !important;
 }
 
 .bg-secondary {
@@ -10997,7 +10998,7 @@ hr.divider {
   height: 0.2rem;
   max-width: 3.25rem;
   margin: 1.5rem auto;
-  background-color: #f4623a;
+  background-color: $colorRed;
   opacity: 1;
 }
 
@@ -11137,6 +11138,7 @@ header.masthead .h1 {
 }
 
 .custom-btn {
+  background-color: $colorRed;
   position: relative;
   vertical-align: middle;
   overflow: hidden;
