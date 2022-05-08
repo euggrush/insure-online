@@ -1,5 +1,13 @@
 <template>
-  <section class="container-fluid position-relative registration">
+  <section
+    class="
+      container-fluid
+      position-relative
+      registration
+      bg-secondary bg-gradient
+      pb-5
+    "
+  >
     <div
       class="msg-popup position-absolute top-50 start-50 translate-middle"
       tabindex="-1"
@@ -30,13 +38,23 @@
     </div>
     <h1 class="fs-3 text-center">Create Account</h1>
     <form
-      class="row needs-validation estimation-form mx-auto mt-5 pb-5"
+      class="
+        row
+        needs-validation
+        estimation-form
+        mx-auto
+        mt-5
+        p-3
+        bg-dark bg-gradient
+        shadow-lg
+        rounded
+      "
       novalidate
       @submit.prevent="createUserAccount"
     >
-      <p class="fw-bold">Account Details:</p>
+      <p class="fw-bold text-white">Account Details:</p>
       <div class="col-md-6">
-        <label for="validationCustom01" class="form-label mt-1"
+        <label for="validationCustom01" class="form-label mt-1 text-white"
           >First name</label
         >
         <input
@@ -51,7 +69,7 @@
         <div class="invalid-feedback">Please enter first name</div>
       </div>
       <div class="col-md-6">
-        <label for="validationCustom02" class="form-label mt-1"
+        <label for="validationCustom02" class="form-label mt-1 text-white"
           >Last name</label
         >
         <input
@@ -66,7 +84,7 @@
         <div class="invalid-feedback">Please enter last name</div>
       </div>
       <div class="col-md-6">
-        <label for="validationCustom03" class="form-label mt-1"
+        <label for="validationCustom03" class="form-label mt-1 text-white"
           >Area & Postal Code</label
         >
         <input
@@ -81,7 +99,7 @@
         <div class="invalid-feedback">Please provide a valid postal code</div>
       </div>
       <div class="col-md-3">
-        <label for="validationCustom04" class="form-label mt-1"
+        <label for="validationCustom04" class="form-label mt-1 text-white"
           >Country of Residence
         </label>
         <select
@@ -96,7 +114,7 @@
         <div class="invalid-feedback">Please select a valid state.</div>
       </div>
       <div class="col-md-3">
-        <label for="validationCustom05" class="form-label mt-1"
+        <label for="validationCustom05" class="form-label mt-1 text-white"
           >Telephone number</label
         >
         <input
@@ -109,7 +127,7 @@
         <div class="invalid-feedback">Please provide a valid number.</div>
       </div>
       <div class="col-md-4">
-        <label for="validationCustom06" class="form-label mt-1"
+        <label for="validationCustom06" class="form-label mt-1 text-white"
           >Cell number</label
         >
         <input
@@ -121,7 +139,7 @@
         />
       </div>
       <div class="col-md-4">
-        <label for="validationCustom07" class="form-label mt-1"
+        <label for="validationCustom07" class="form-label mt-1 text-white"
           >ID Number</label
         >
         <input
@@ -135,7 +153,7 @@
         />
       </div>
       <div class="col-md-4">
-        <label for="validationCustom08" class="form-label mt-1"
+        <label for="validationCustom08" class="form-label mt-1 text-white"
           >Marital Status</label
         >
         <select
@@ -151,7 +169,7 @@
         <div class="invalid-feedback">Please select a marital status.</div>
       </div>
       <div class="col-md-4">
-        <label for="validationCustom09" class="form-label mt-1"
+        <label for="validationCustom09" class="form-label mt-1 text-white"
           >Year of issue of driver's license</label
         >
         <input
@@ -164,7 +182,7 @@
         <div class="invalid-feedback">Please enter a year.</div>
       </div>
       <div class="col-md-4">
-        <label for="validationCustom11" class="form-label mt-1"
+        <label for="validationCustom11" class="form-label mt-1 text-white"
           >Previous Insurer</label
         >
         <input
@@ -178,7 +196,7 @@
         <div class="invalid-feedback">Please enter your previous insurer.</div>
       </div>
       <div class="col-md-4">
-        <label for="validationCustom111" class="form-label mt-1"
+        <label for="validationCustom111" class="form-label mt-1 text-white"
           >Date Of Birth</label
         >
         <input
@@ -193,7 +211,7 @@
         <div class="invalid-feedback">Please enter your date of birth</div>
       </div>
       <div class="col-md-12">
-        <label for="validationCustom10" class="form-label mt-1"
+        <label for="validationCustom10" class="form-label mt-1 text-white"
           >Claims History over the immediate past 3 years</label
         >
         <textarea
@@ -206,7 +224,7 @@
         <div class="invalid-feedback">Please enter your claims history.</div>
       </div>
       <div class="col-md-6">
-        <label for="validationCustomUsername" class="form-label mt-1"
+        <label for="validationCustomUsername" class="form-label mt-1 text-white"
           >Email</label
         >
         <div class="input-group has-validation">
@@ -223,7 +241,9 @@
         </div>
       </div>
       <div class="col-md-6">
-        <label for="validationCustomUsername0202" class="form-label mt-1"
+        <label
+          for="validationCustomUsername0202"
+          class="form-label mt-1 text-white"
           >Password</label
         >
         <div class="input-group has-validation">
@@ -242,7 +262,7 @@
         </div>
       </div>
       <div class="col-12 mt-5">
-        <button class="btn btn-primary" type="submit">Create</button>
+        <button class="btn btn-outline-warning" type="submit">Create</button>
       </div>
     </form>
   </section>
@@ -386,9 +406,9 @@ export default {
 <style lang="scss" scoped>
 .registration {
   padding-top: 10em;
-  background-image: url($mainBg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  // background-image: url($mainBg);
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
 }
 .container {
   min-height: calc(100vh - 7.3em);

@@ -112,7 +112,7 @@ export default {
       this.errorMsg = arg;
       setTimeout(() => {
         this.disabled = false;
-        this.warnDisabled = ``;
+        this.errorMsg = ``;
       }, 1500);
     },
     login() {
