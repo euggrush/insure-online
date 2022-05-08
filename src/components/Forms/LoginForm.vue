@@ -7,8 +7,7 @@
       justify-content-center
       align-items-center
       reg-wrap
-      bg-secondary
-      bg-gradient
+      bg-secondary bg-gradient
       position-relative
     "
   >
@@ -58,9 +57,16 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-outline-warning btn-lg">
+          <button
+            type="submit"
+            class="btn btn-outline-warning btn-lg"
+            :class="{ shake: disabled }"
+          >
             Login
           </button>
+          <span v-if="disabled" class="ms-3 text-danger fw-bold">{{
+            errorMsg
+          }}</span>
         </div>
       </form>
     </div>
@@ -80,6 +86,8 @@ export default {
       email: ``,
       password: ``,
       validationCode: ``,
+      disabled: false,
+      errorMsg: ``,
     };
   },
   watch: {
@@ -99,12 +107,20 @@ export default {
     this.hideMenu();
   },
   methods: {
+    warnDisabled(arg) {
+      this.disabled = true;
+      this.errorMsg = arg;
+      setTimeout(() => {
+        this.disabled = false;
+        this.warnDisabled = ``;
+      }, 1500);
+    },
     login() {
       this.$store
         .dispatch("LOGIN", {
           email: this.email,
           password: this.password,
-          validationCode: this.validationCode
+          validationCode: this.validationCode,
         })
         .then(() => {
           let myRole = this.$store.state.my_role;
@@ -115,10 +131,11 @@ export default {
           }
         })
         .catch((err) => {
-          this.$store.commit(`SET_MODAL`, {
-            isModal: true,
-            msg: err.response.data.message,
-          });
+          this.warnDisabled(err.response.data.message);
+          // this.$store.commit(`SET_MODAL`, {
+          //   isModal: true,
+          //   msg: err.response.data.message,
+          // });
         });
     },
   },
@@ -128,10 +145,6 @@ export default {
 <style lang="scss" scoped>
 .reg-wrap {
   min-height: calc(100vh - 127px);
-  // color: #fff;
-  // background-image: url($mainBg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
 }
 .form-control {
   height: 41px;
@@ -205,5 +218,32 @@ export default {
 }
 .btn {
   border-radius: 50rem;
+}
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 </style>
