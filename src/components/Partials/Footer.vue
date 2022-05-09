@@ -9,10 +9,11 @@
         <!--Grid row-->
         <div class="row">
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Company name</h6>
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+              {{ COMPANY_NAME }}
+            </h6>
             <p>
-              Here you can use rows and columns to organize your footer content.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              {{ COMPANY_FOOTER_CONTENT }}
             </p>
           </div>
 
@@ -56,10 +57,10 @@
 
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-            <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-            <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
-            <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-            <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+            <p><i class="fas fa-home mr-3"></i> {{ CORPORATE_ADDRESS }}</p>
+            <p><i class="fas fa-envelope mr-3"></i> {{ CORPORATE_EMAIL }}</p>
+            <p><i class="fas fa-phone mr-3"></i> {{ CORPORATE_PHONE }}</p>
+            <p><i class="fas fa-print mr-3"></i> {{ CORPORATE_FAX }}</p>
           </div>
         </div>
       </section>
@@ -107,7 +108,28 @@
 </template>
 
 <script>
-export default {};
+import {
+  CORPORATE_ADDRESS,
+  CORPORATE_CELLPHONE,
+  CORPORATE_PHONE,
+  CORPORATE_EMAIL,
+  CORPORATE_FAX,
+  COMPANY_NAME,
+  COMPANY_FOOTER_CONTENT,
+} from "../../constants";
+export default {
+  data() {
+    return {
+      CORPORATE_ADDRESS,
+      CORPORATE_CELLPHONE,
+      CORPORATE_PHONE,
+      CORPORATE_EMAIL,
+      CORPORATE_FAX,
+      COMPANY_NAME,
+      COMPANY_FOOTER_CONTENT,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
