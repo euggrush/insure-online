@@ -11,3 +11,7 @@ export const CORPORATE_ADDRESS = `397 Roslyn Avenue, Waterkloof Glen, Pretoria, 
 export const CORPORATE_FAX = `+27 11 394 8917`;
 export const COMPANY_NAME = `TUFFSTUFF`;
 export const COMPANY_FOOTER_CONTENT = `TUFFSTUFF is underwritten by Western National Insurance Company Limited. FSP no. 9465. TUFFSTUFF is administered and marketed by REAM Insurance Brokers (Pty) Ltd. FSP no. 1422. This website is managed by REAM Insurance Brokers (Pty) Ltd. TUFFSTUFF is a specialised insurance product and registered trademark.`;
+export const LINK_GET_QUOTE = `https://www.tuffstuff.co.za/insurance/quote`;
+export const LINK_RENT_SATELITE_PHONE = `https://www.tuffstuff.co.za/insurance/satelitephone-enquiry`;
+export const LINK_CARBON_FOOTPRINT = `https://www.tuffstuff.co.za/insurance/co2-calculator`;
+export const LINK_PRIVACY_POLICY = `https://www.tuffstuff.co.za/insurance/website-privacy-policy`;

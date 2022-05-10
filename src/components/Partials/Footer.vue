@@ -40,16 +40,30 @@
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
             <p>
-              <a class="text-white">Your Account</a>
+              <a class="text-white" :href="LINK_GET_QUOTE" target="_blank"
+                >Get a Quote</a
+              >
             </p>
             <p>
-              <a class="text-white">Become an Affiliate</a>
+              <a
+                class="text-white"
+                :href="LINK_RENT_SATELITE_PHONE"
+                target="_blank"
+                >Rent a Satelite phone</a
+              >
             </p>
             <p>
-              <a class="text-white">Shipping Rates</a>
+              <a
+                class="text-white"
+                :href="LINK_CARBON_FOOTPRINT"
+                target="_blank"
+                >Your Carbon Footprint</a
+              >
             </p>
             <p>
-              <a class="text-white">Help</a>
+              <a class="text-white" :href="LINK_PRIVACY_POLICY" target="_blank"
+                >Website Privacy Policy</a
+              >
             </p>
           </div>
 
@@ -116,6 +130,10 @@ import {
   CORPORATE_FAX,
   COMPANY_NAME,
   COMPANY_FOOTER_CONTENT,
+  LINK_GET_QUOTE,
+  LINK_RENT_SATELITE_PHONE,
+  LINK_CARBON_FOOTPRINT,
+  LINK_PRIVACY_POLICY,
 } from "../../constants";
 export default {
   data() {
@@ -127,6 +145,10 @@ export default {
       CORPORATE_FAX,
       COMPANY_NAME,
       COMPANY_FOOTER_CONTENT,
+      LINK_GET_QUOTE,
+      LINK_RENT_SATELITE_PHONE,
+      LINK_CARBON_FOOTPRINT,
+      LINK_PRIVACY_POLICY,
     };
   },
 };
