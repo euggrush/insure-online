@@ -17,7 +17,7 @@
         v-if="showGetQuoteMenu"
         class="bg-dark bg-gradient shadow-lg text-white mt-3 p-3 rounded"
       >
-        <form @submit.prevent="createEstimation">
+        <form>
           <p class="fw-bold">Category</p>
           <select
             @change="selectCategory()"
@@ -127,25 +127,45 @@
           </div>
 
           <button
-            type="submit"
-            class="btn btn-outline-warning mt-3 mb-5"
+            type="button"
+            class="btn btn-outline-warning mt-3"
             :disabled="!isCategorySelected || !isMainProductSelected"
+            @click="createEstimation"
           >
             Calculate
           </button>
-          <div
-            v-show="showEstimate"
-            v-for="estimate in estimationsArr"
-            :key="estimate.estimationId"
-            class="d-block mt-1"
-          >
-            <span>{{
-              estimate.estimationType == `estimation`
-                ? `Quote for vehicle`
-                : `Quote for accessories`
-            }}</span
-            >,
-            <span> Monthly payment: R{{ estimate.totalCost || 0 }}</span>
+          <hr />
+
+          <div v-if="showEstimate" class="d-block mt-1">
+            <span>Quote for vehicle</span>,
+            <span> Monthly payment: R{{ estimationsData.totalCost ?? 0 }}</span>
+            <hr v-if="checkedAccessoriesIds.length > 0" />
+            <button
+              v-if="checkedAccessoriesIds.length > 0"
+              type="button"
+              class="btn btn-outline-danger"
+              @click="createAccessoryEstimation"
+            >
+              Accessories Quote
+            </button>
+            <hr />
+            <span
+              v-if="
+                checkedAccessoriesIds.length > 0 &&
+                estimationAccessoriesData != ``
+              "
+              >Quote for accessories,</span
+            >
+            <span
+              v-if="
+                checkedAccessoriesIds.length > 0 &&
+                estimationAccessoriesData != ``
+              "
+            >
+              Monthly payment: R{{
+                estimationAccessoriesData.totalCost ?? 0
+              }}</span
+            >
           </div>
         </form>
         <div>
@@ -156,7 +176,7 @@
             :disabled="!isCategorySelected || !isMainProductSelected"
             @click="quoteToOrder"
           >
-            Add To Order
+            Go To Orders
           </button>
         </div>
       </div>
@@ -207,10 +227,10 @@ export default {
       selectedCar: ``,
       showEstimate: false,
       isCarCategorySelected: false,
-      shoNullEstimation: true,
       carInsuranceCategory: ``,
       checkedAccessoriesIds: [],
-      estimationsArr: [],
+      estimationsData: ``,
+      estimationAccessoriesData: ``,
     };
   },
   computed: {
@@ -220,12 +240,6 @@ export default {
     productsList() {
       return this.$store.state.main_products.mainProducts || [];
     },
-    // newEstimationsList() {
-    //   if (this.shoNullEstimation) {
-    //     return 0;
-    //   }
-    //   return this.estimationsArr;
-    // },
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
     },
@@ -242,7 +256,6 @@ export default {
       this.isCarCategorySelected = false;
       if (this.selectedCategory === `Select category...`) {
         this.isCategorySelected = false;
-        this.shoNullEstimation = true;
       } else {
         this.isCategorySelected = true;
       }
@@ -266,7 +279,7 @@ export default {
       }
     },
     createEstimation() {
-      this.estimationsArr = [];
+      this.estimationsData = ``;
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
           accountId: this.$store.state.user.accountId,
@@ -276,32 +289,27 @@ export default {
           estimationType: `estimation`,
         })
         .then(() => {
-          setTimeout(() => {
-            this.estimationsArr.push(this.$store.state.current_estimation);
-          }, 1000);
-
           this.showEstimate = true;
-          this.shoNullEstimation = false;
           setTimeout(() => {
-            if (this.checkedAccessoriesIds.length > 0) {
-              this.$store
-                .dispatch(`CREATE_ESTIMATION`, {
-                  accountId: this.$store.state.user.accountId,
-                  accessoriesIds: Object.values(this.checkedAccessoriesIds),
-                  vehicleId: this.selectedCar.vehicleId,
-                  estimationType: `accessory`,
-                })
-                .then(() => {
-                  setTimeout(() => {
-                    this.estimationsArr.push(
-                      this.$store.state.current_estimation
-                    );
-                  }, 1000);
-                });
-            }
+            this.estimationsData = this.$store.state.current_estimation;
           }, 1000);
+        });
+    },
+    createAccessoryEstimation() {
+      this.estimationAccessoriesData = ``;
+      this.$store
+        .dispatch(`CREATE_ESTIMATION`, {
+          accountId: this.$store.state.user.accountId,
+          accessoriesIds: Object.values(this.checkedAccessoriesIds),
+          vehicleId: this.selectedCar.vehicleId,
+          estimationType: `accessory`,
         })
-        .catch((err) => console.log(err));
+        .then(() => {
+          setTimeout(() => {
+            this.estimationAccessoriesData =
+              this.$store.state.current_estimation;
+          }, 1000);
+        });
     },
 
     quoteToOrder() {
@@ -331,7 +339,6 @@ export default {
       this.isMainProductSelected = false;
       this.selectedCategory = `Select category...`;
       this.selectedMainProduct = ``;
-      this.shoNullEstimation = true;
       this.showEstimate = false;
       this.selectedCar = ``;
     },

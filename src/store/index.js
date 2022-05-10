@@ -297,7 +297,9 @@ export const store = new Vuex.Store({
                     context.commit(`SET_CURRENT_ESTIMATION`, data);
                     context.commit(`SET_NEW_ESTIMATIONS`, data);
                 }
-            )
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+            })
         },
         GET_ORDERS: async (context, payload) => {
             let {
