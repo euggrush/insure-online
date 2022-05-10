@@ -20,18 +20,19 @@
           <hr class="w-100 clearfix d-md-none" />
 
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+            <h6 class="text-uppercase mb-4 font-weight-bold">GO TO OUR</h6>
             <p>
-              <a class="text-white">MDBootstrap</a>
+              <a class="text-white" :href="LINK_GALLERIES" target="_blank"
+                >Galleries</a
+              >
             </p>
             <p>
-              <a class="text-white">MDWordPress</a>
+              <a class="text-white" :href="LINK_EVENTS" target="_blank"
+                >Events
+              </a>
             </p>
             <p>
-              <a class="text-white">BrandFlow</a>
-            </p>
-            <p>
-              <a class="text-white">Bootstrap Angular</a>
+              <a class="text-white" :href="LINK_BLOG" target="_blank">Blog</a>
             </p>
           </div>
 
@@ -134,6 +135,9 @@ import {
   LINK_RENT_SATELITE_PHONE,
   LINK_CARBON_FOOTPRINT,
   LINK_PRIVACY_POLICY,
+  LINK_GALLERIES,
+  LINK_EVENTS,
+  LINK_BLOG,
 } from "../../constants";
 export default {
   data() {
@@ -149,6 +153,9 @@ export default {
       LINK_RENT_SATELITE_PHONE,
       LINK_CARBON_FOOTPRINT,
       LINK_PRIVACY_POLICY,
+      LINK_GALLERIES,
+      LINK_EVENTS,
+      LINK_BLOG,
     };
   },
 };

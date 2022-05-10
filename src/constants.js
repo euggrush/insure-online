@@ -15,3 +15,6 @@ export const LINK_GET_QUOTE = `https://www.tuffstuff.co.za/insurance/quote`;
 export const LINK_RENT_SATELITE_PHONE = `https://www.tuffstuff.co.za/insurance/satelitephone-enquiry`;
 export const LINK_CARBON_FOOTPRINT = `https://www.tuffstuff.co.za/insurance/co2-calculator`;
 export const LINK_PRIVACY_POLICY = `https://www.tuffstuff.co.za/insurance/website-privacy-policy`;
+export const LINK_GALLERIES = `https://www.tuffstuff.co.za/insurance/galleries`;
+export const LINK_EVENTS = `https://www.tuffstuff.co.za/insurance/events`;
+export const LINK_BLOG = `https://www.tuffstuff.co.za/blog/insurance`;
