@@ -72,10 +72,30 @@
 
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-            <p><i class="fas fa-home mr-3"></i> {{ CORPORATE_ADDRESS }}</p>
-            <p><i class="fas fa-envelope mr-3"></i> {{ CORPORATE_EMAIL }}</p>
-            <p><i class="fas fa-phone mr-3"></i> {{ CORPORATE_PHONE }}</p>
-            <p><i class="fas fa-print mr-3"></i> {{ CORPORATE_FAX }}</p>
+            <p>
+              <i class="fas fa-home mr-3"></i
+              ><a :href="LINK_GOOGLE_MAPS" target="_blank" class="link-light"
+                >&nbsp;{{ CORPORATE_ADDRESS }}</a
+              >
+            </p>
+            <p>
+              <i class="fas fa-envelope mr-3"></i
+              ><a :href="`mailto:${CORPORATE_EMAIL}`" class="link-light"
+                >&nbsp;{{ CORPORATE_EMAIL }}</a
+              >
+            </p>
+            <p>
+              <i class="fas fa-phone mr-3"></i
+              ><a :href="`tel:${CORPORATE_PHONE}`" class="link-light"
+                >&nbsp;{{ CORPORATE_PHONE }}</a
+              >
+            </p>
+            <p>
+              <i class="fas fa-print mr-3"></i
+              ><a :href="`fax:${CORPORATE_FAX}`" class="link-light"
+                >&nbsp;{{ CORPORATE_FAX }}</a
+              >
+            </p>
           </div>
         </div>
       </section>
@@ -138,6 +158,7 @@ import {
   LINK_GALLERIES,
   LINK_EVENTS,
   LINK_BLOG,
+  LINK_GOOGLE_MAPS,
 } from "../../constants";
 export default {
   data() {
@@ -156,6 +177,7 @@ export default {
       LINK_GALLERIES,
       LINK_EVENTS,
       LINK_BLOG,
+      LINK_GOOGLE_MAPS,
     };
   },
 };

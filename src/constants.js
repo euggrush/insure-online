@@ -18,3 +18,4 @@ export const LINK_PRIVACY_POLICY = `https://www.tuffstuff.co.za/insurance/websit
 export const LINK_GALLERIES = `https://www.tuffstuff.co.za/insurance/galleries`;
 export const LINK_EVENTS = `https://www.tuffstuff.co.za/insurance/events`;
 export const LINK_BLOG = `https://www.tuffstuff.co.za/blog/insurance`;
+export const LINK_GOOGLE_MAPS = `https://goo.gl/maps/tpWHxrSyxqbZ1JHM8`;
