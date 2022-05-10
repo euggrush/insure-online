@@ -125,7 +125,11 @@
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-lg-4 text-center mb-5 mb-lg-0">
           <i class="bi-phone fs-2 mb-3 text-white"></i>
-          <div class="text-white">+1 (555) 123-4567</div>
+          <div class="text-white">
+            <a :href="`tel:${CORPORATE_PHONE}`" class="link-light">{{
+              CORPORATE_PHONE
+            }}</a>
+          </div>
         </div>
       </div>
     </div>
@@ -133,7 +137,14 @@
 </template>
 
 <script>
-export default {};
+import { CORPORATE_PHONE } from "../../constants";
+export default {
+  data() {
+    return {
+      CORPORATE_PHONE,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

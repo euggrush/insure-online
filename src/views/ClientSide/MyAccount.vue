@@ -378,7 +378,7 @@ export default {
 }
 .my-account {
   min-height: calc(100vh - 10em);
-  background-color: $bgOrange;
+  background-color: $colorRed;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;

@@ -297,7 +297,8 @@ export default {
           cost: this.accessoryCost,
         })
         .then(() => {
-          (this.accessoryName = ``), (this.accessoryCost = 0);
+          this.accessoryName = ``;
+          this.accessoryCost = 0;
           this.$store.dispatch(
             `GET_ACCESSORIES`,
             `?vehicleId=${this.changeVehicleObj.vehicleId}`
@@ -307,18 +308,15 @@ export default {
     editVehicle(vehicle, index) {
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.changeVehicleObj)
-        .then(this.$store.dispatch(`GET_VEHICLES`, ``))
-        .catch((err) => console.log(err))
         .then(() => {
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-            this.$store.dispatch(
-              `GET_USERS`,
-              `?accountId=${this.changeVehicleObj.accountId}`
-            );
-          this.$store.commit(`SET_MODALS_TOGGLE`, {
-            isEditVehicleOpen: false,
-          });
-        });
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+          this.$store.dispatch(
+            `GET_USERS`,
+            `?accountId=${this.changeVehicleObj.accountId}`
+          );
+          this.closeEdit();
+        })
+        .catch((err) => console.log(err));
       console.log(index);
     },
     closeEdit() {

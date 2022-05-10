@@ -130,4 +130,13 @@ h6 {
 .v-leave-to {
   opacity: 0;
 }
+// .bg-main-gradient {
+//   background: rgb(2, 0, 36);
+//   background: radial-gradient(
+//     circle,
+//     rgba(2, 0, 36, 1) 0%,
+//     rgba(61, 21, 20, 0) 35%,
+//     rgba(106, 33, 33, 0) 100%
+//   );
+// }
 </style>
