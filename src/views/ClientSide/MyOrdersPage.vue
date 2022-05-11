@@ -125,11 +125,17 @@
               </label>
             </div>
           </div>
-
+          <Transition>
+            <InceptionDateOfCoverForm v-if="isCarCategorySelected" />
+          </Transition>
           <button
             type="button"
             class="btn btn-outline-warning mt-3"
-            :disabled="!isCategorySelected || !isMainProductSelected"
+            :disabled="
+              !isCategorySelected ||
+              !isMainProductSelected ||
+              !getInseptionDateOfCover.isSet
+            "
             @click="createEstimation"
           >
             Calculate
@@ -139,6 +145,12 @@
           <div v-if="showEstimate" class="d-block mt-1">
             <span>Quote for vehicle</span>,
             <span> Monthly payment: R{{ estimationsData.totalCost ?? 0 }}</span>
+            <span class="d-block mt-1">
+              You will pay from the inception date: R{{
+                estimationsData.totalCostCalculated ?? 0
+              }}</span
+            >
+
             <hr v-if="checkedAccessoriesIds.length > 0" />
             <button
               v-if="checkedAccessoriesIds.length > 0"
@@ -164,6 +176,17 @@
             >
               Monthly payment: R{{
                 estimationAccessoriesData.totalCost ?? 0
+              }}</span
+            >
+            <span
+              v-if="
+                checkedAccessoriesIds.length > 0 &&
+                estimationAccessoriesData != ``
+              "
+              class="d-block mt-1"
+            >
+              You will pay from the inception date: R{{
+                estimationAccessoriesData.totalCostCalculated ?? 0
               }}</span
             >
           </div>
@@ -207,11 +230,14 @@ import { CAR_INSURANCE_CATEGORY } from "../../constants";
 import MyOrdersList from "./MyOrdersList.vue";
 import ModalMessage from "../../components/Modals/ModalMessage.vue";
 import MyEstimationsList from "./MyEstimationsList.vue";
+import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
+
 export default {
   components: {
     MyOrdersList,
     ModalMessage,
     MyEstimationsList,
+    InceptionDateOfCoverForm,
   },
   data() {
     return {
@@ -234,6 +260,9 @@ export default {
     };
   },
   computed: {
+    getInseptionDateOfCover() {
+      return this.$store.state.inseption_date_of_cover;
+    },
     categoriesList() {
       return this.$store.state.product_categories.categories || [];
     },
@@ -287,6 +316,7 @@ export default {
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCar.vehicleId,
           estimationType: `estimation`,
+          startFrom: this.getInseptionDateOfCover.date,
         })
         .then(() => {
           this.showEstimate = true;
@@ -303,6 +333,7 @@ export default {
           accessoriesIds: Object.values(this.checkedAccessoriesIds),
           vehicleId: this.selectedCar.vehicleId,
           estimationType: `accessory`,
+          startFrom: this.getInseptionDateOfCover.date,
         })
         .then(() => {
           setTimeout(() => {

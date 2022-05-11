@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="setInceptionDate" class="p-3">
+  <form class="inseption-date p-3 border border-danger rounded shadow-lg">
     <label class="fw-bold" for="startDate">Set Inception Date Of Cover</label>
     <input
       id="startDate"
@@ -7,8 +7,10 @@
       type="date"
       v-model="inceptionDate"
       required
+      @change="setInceptionDate"
+      :min="today"
     />
-    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    <!-- <button type="submit" class="btn btn-outline-danger mt-3">Submit</button> -->
   </form>
 </template>
 
@@ -17,6 +19,7 @@ export default {
   data() {
     return {
       inceptionDate: ``,
+      today: new Date().toISOString().split("T")[0],
     };
   },
   props: {
@@ -27,24 +30,28 @@ export default {
   },
   methods: {
     setInceptionDate() {
-      this.$store
-        .dispatch(`CREATE_ORDER`, {
-          orderId: this.myProps.orderId,
-          inceptionDateOfCover: this.getTimeStamp(this.inceptionDate),
-        })
-        .then(() => {
-          this.$store.dispatch(
-            `GET_ORDERS`,
-            `?orderId=${this.myProps.orderId}`
-          );
-          setTimeout(() => {
-            this.$router.push(`/yoco-payment`);
-          }, 1000);
-        });
+      this.$store.commit(`SET_INSEPTION_DATE_OF_COVER`, {
+        date: this.getTimeStamp(this.inceptionDate),
+        isSet: true,
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.inseption-date {
+  @include media-breakpoint-up(md) {
+    width: 300px;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 400px;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 300px;
+  }
+  @include media-breakpoint-up(xxl) {
+    width: 300px;
+  }
+}
 </style>

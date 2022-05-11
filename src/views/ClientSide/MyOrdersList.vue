@@ -2,7 +2,7 @@
   <section
     class="my-orders-list bg-dark bg-gradient p-3 rounded position-relative"
   >
-    <div
+    <!-- <div
       v-if="isInceptionDateOfCoverModal"
       class="
         position-absolute
@@ -21,7 +21,7 @@
         @click="closeInceptionDateOfCoverForm"
       ></button>
       <InceptionDateOfCoverForm :myProps="{ orderId: orderIdToPass }" />
-    </div>
+    </div> -->
     <ul class="list-group">
       <li
         v-for="(order, index) in ordersList"
@@ -139,17 +139,17 @@
 
 <script>
 import MyOrderView from "../ClientSide/MyOrderView.vue";
-import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
+// import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
   components: {
     MyOrderView,
-    InceptionDateOfCoverForm,
+    // InceptionDateOfCoverForm,
   },
   data() {
     return {
       isOrderModal: false,
-      isInceptionDateOfCoverModal: false,
+      // isInceptionDateOfCoverModal: false,
       orderIdToPass: ``,
     };
   },
@@ -187,13 +187,24 @@ export default {
         });
     },
     goToPaymentPage(id) {
-      this.scrollToTop();
-      this.isInceptionDateOfCoverModal = true;
-      this.orderIdToPass = id;
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: id,
+          paidBy: `online`,
+        })
+        .then(() => {
+          this.scrollToTop();
+          this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
+          setTimeout(() => {
+            this.$router.push(`/yoco-payment`);
+          }, 1000);
+          // this.isInceptionDateOfCoverModal = true;
+          // this.orderIdToPass = id;
+        });
     },
-    closeInceptionDateOfCoverForm() {
-      this.isInceptionDateOfCoverModal = false;
-    },
+    // closeInceptionDateOfCoverForm() {
+    //   this.isInceptionDateOfCoverModal = false;
+    // },
   },
 };
 </script>

@@ -57,7 +57,11 @@ export const store = new Vuex.Store({
         },
         accessories: [],
         new_accessory: [],
-        vehicles_data: []
+        vehicles_data: [],
+        inseption_date_of_cover: {
+            date: 0,
+            isSet: false
+        }
     },
     plugins: [
         createLogger(),
@@ -74,6 +78,10 @@ export const store = new Vuex.Store({
         }),
     ],
     mutations: {
+        SET_INSEPTION_DATE_OF_COVER(state, payload) {
+            state.inseption_date_of_cover.date = payload.date;
+            state.inseption_date_of_cover.isSet = payload.isSet;
+        },
         SET_ACCOUNT_VALIDATION(state, payload) {
             state.account_validation = payload;
         },
