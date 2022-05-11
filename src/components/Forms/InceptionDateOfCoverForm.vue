@@ -33,9 +33,12 @@ export default {
           inceptionDateOfCover: this.getTimeStamp(this.inceptionDate),
         })
         .then(() => {
-          this.$store.dispatch(`GET_ORDERS`, ``);
+          this.$store.dispatch(
+            `GET_ORDERS`,
+            `?orderId=${this.myProps.orderId}`
+          );
           setTimeout(() => {
-            this.$router.push(`/my-payment`);
+            this.$router.push(`/yoco-payment`);
           }, 1000);
         });
     },

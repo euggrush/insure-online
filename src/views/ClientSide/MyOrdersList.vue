@@ -222,7 +222,7 @@ export default {
 .inception-date-wrap {
   width: 100%;
   height: 200px;
-  outline: solid 3px red;
+  // outline: solid 3px red;
   z-index: 2;
   @include media-breakpoint-up(md) {
     width: 500px;

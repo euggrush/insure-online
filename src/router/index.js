@@ -13,7 +13,8 @@ import NotFound from '../components/Errors/404.vue';
 import RegistrationForm from '../components/Forms/RegistrationForm.vue';
 import MyAccount from '../views/ClientSide/MyAccount.vue';
 import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
-import MyPaymentPage from "../views/ClientSide/MyPaymentPage";
+import PayPalPage from "../components/PaymentSystem/PayPalPage.vue";
+import YocoPayment from "../components/PaymentSystem/YocoPage.vue";
 
 const isTokenExpired = (tokenExpiration) => {
   const dayjs = require("dayjs");
@@ -59,7 +60,16 @@ const routes = [{
   },
   {
     path: '/my-payment',
-    component: MyPaymentPage,
+    component: PayPalPage,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      residentAuth: true
+    }
+  },
+  {
+    path: '/yoco-payment',
+    component: YocoPayment,
     meta: {
       requiresAuth: true,
       adminAuth: false,
