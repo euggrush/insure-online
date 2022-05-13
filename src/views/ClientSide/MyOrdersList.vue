@@ -31,25 +31,21 @@
         <div class="container">
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
-              <span class="fw-bold d-block fw-bold text-decoration-underline"
-                >Created:</span
-              >
+              <!-- <span class="fw-bold d-block fw-bold">Created:</span> -->
               <span>{{ getDate(order.created) }}</span>
             </div>
             <div class="col border-bottom border-start">
-              <span class="fw-bold">Ref # </span>
+              <span class="fw-bold">#</span>
               <span>{{ order.referenceNumber }}</span>
             </div>
-            <div class="col border-bottom border-start">
-              <span class="fw-bold d-block fw-bold text-decoration-underline"
+            <!-- <div class="col border-bottom border-start">
+              <span class="fw-bold d-block fw-bold "
                 >Inception date:</span
               >
               <span>{{ getDate(order.inceptionDateOfCover) }}</span>
-            </div>
+            </div> -->
             <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Order status:</span
-              >
+              <!-- <span class="d-block fw-bold">Order status:</span> -->
               <span
                 class="fw-bold text-uppercase"
                 :class="{
@@ -59,8 +55,8 @@
                 >{{ order.orderStatus }}</span
               >
             </div>
-            <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
+            <!-- <div class="col border-bottom border-start">
+              <span class="d-block fw-bold "
                 >Products:</span
               >
               <span
@@ -75,7 +71,7 @@
             </div>
 
             <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
+              <span class="d-block fw-bold "
                 >Cars:</span
               >
               <span
@@ -85,14 +81,10 @@
                 >{{ car.vehicleDetails }},&nbsp;<strong>R</strong
                 >{{ car.vehicleRetailValue }}</span
               >
-            </div>
+            </div> -->
             <div class="col border-bottom border-start">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Total:</span
-              >
-              <span
-                ><strong>R</strong> {{ order.allEstimationsTotalCost }}</span
-              >
+              <strong>Total Due: R</strong>
+              <span> {{ order.allEstimationsTotalCostCalculated }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="d-block fw-bold fst-italic">Adjusted:</span>

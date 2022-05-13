@@ -26,20 +26,29 @@
     <span class="fw-bold fst-italic"
       >Created At {{ getDate(order.orderCreated) }}</span
     >
-    <p class="fw-bold mt-3 mb-0">Total R{{ order.allEstimationsTotalCost }}</p>
+    <p class="fw-bold mt-3 mb-0">
+      Total R{{ order.allEstimationsTotalCostCalculated }}
+    </p>
 
     <div
       class="row border mt-3 p-3"
-      v-for="(mainProduct, index) in order.estimations"
+      v-for="(estimation, index) in order.estimations"
       :key="index"
     >
+      <strong class="d-inline"
+        >Inception date of cover:
+        {{ getDate(estimation.startFromFormatted) }}</strong
+      >
+      <br />
+      <strong>Total due: R{{ estimation.totalCostCalculated }}</strong>
+      <hr />
       <div class="col">
-        <strong>{{ mainProduct.vehicleDetails }}</strong>
-        <span> <strong>, R</strong>{{ mainProduct.vehicleRetailValue }}</span>
+        <strong>{{ estimation.vehicleDetails }}</strong>
+        <span> <strong>, R</strong>{{ estimation.vehicleRetailValue }}</span>
         <label class="car-photo-wrap">
           <img
-            v-if="mainProduct.vehicleAssets.length > 0"
-            :src="`${FILE_URL}${mainProduct.vehicleAssets[0].path}`"
+            v-if="estimation.vehicleAssets.length > 0"
+            :src="`${FILE_URL}${estimation.vehicleAssets[0].path}`"
             :id="`car-photo-input${index}`"
             class="d-block vehicle-image p-5"
             alt="image"
@@ -49,7 +58,7 @@
           <img
             v-else
             :id="`car-photo-input${index}`"
-            src="https://www.pinclipart.com/picdir/big/118-1187597_nouvelle-porsche-911-icon-avto-podbor-bel-clipart.png"
+            :src="CAR_DEFAULT_IMAGE"
             class="d-block vehicle-image p-5"
             alt="image"
             width="200"
@@ -58,19 +67,19 @@
           <input
             type="file"
             v-show="showCarPhotoInput"
-            @change="getCarPhoto($event, mainProduct.vehicleId, index)"
+            @change="getCarPhoto($event, estimation.vehicleId, index)"
           />
         </label>
       </div>
-      <div v-if="mainProduct.mainProductName" class="col">
+      <div v-if="estimation.estimationName" class="col">
         <strong class="d-inline-block text-uppercase mt-3 border-bottom"
-          >{{ mainProduct.mainProductName }}&nbsp;R{{
-            mainProduct.mainProductCost
+          >{{ estimation.estimationName }}&nbsp;R{{
+            estimation.estimationCost
           }}</strong
         >
         <div
           class="form-check form-switch mt-1 ms-1"
-          v-for="(sub, index) in mainProduct.subProducts"
+          v-for="(sub, index) in estimation.subProducts"
           :key="index"
         >
           <input
@@ -92,13 +101,11 @@
 
       <div v-else class="col">
         <strong class="d-inline-block text-uppercase mt-3 border-bottom"
-          >Accessories, total:&nbsp;R{{
-            mainProduct.totalCost
-          }}</strong
+          >Accessories, total:&nbsp;R{{ estimation.totalCost }}</strong
         >
         <div
           class="form-check form-switch mt-1 ms-1"
-          v-for="(sub, index) in mainProduct.accessories"
+          v-for="(sub, index) in estimation.accessories"
           :key="index"
         >
           <input
@@ -262,7 +269,7 @@
 </template>
 
 <script>
-import { FILE_URL } from "../../constants";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
 import ModalMessage from "../../components/Modals/ModalMessage.vue";
 
 export default {
@@ -272,6 +279,7 @@ export default {
       showCarPhotoInput: false,
       isUploadError: false,
       FILE_URL: FILE_URL,
+      CAR_DEFAULT_IMAGE,
     };
   },
   props: {

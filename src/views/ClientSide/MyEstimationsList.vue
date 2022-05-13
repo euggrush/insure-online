@@ -9,12 +9,10 @@
       >
         <div class="row">
           <div class="col">
-            <strong>Ref #</strong> {{ item.referenceNumber }}
+            <strong>#</strong> {{ item.referenceNumber }}
           </div>
 
-          <div class="col">
-            <strong>Car:</strong> {{ item.vehicleDetails }}
-          </div>
+          <div class="col"><strong>Car:</strong> {{ item.vehicleDetails }}</div>
 
           <div v-if="item.mainProductName" class="col">
             <strong>Product:</strong> {{ item.mainProductName }}
@@ -29,8 +27,12 @@
               }}<span v-if="index != item.accessories.length - 1">,&nbsp;</span>
             </span>
           </div>
+          <div class="col"><strong>Monthly:</strong> R{{ item.totalCost }}</div>
           <div class="col">
-            <strong>Total:</strong> R{{ item.totalCost }}
+            <strong>Start from:</strong> {{ getDate(item.startFromFormatted) }}
+          </div>
+          <div class="col">
+            <strong>Total Due:</strong> R{{ item.totalCostCalculated }}
           </div>
           <div class="form-check col col-12 col-md-2 mt-3 mt-md-0">
             <input
