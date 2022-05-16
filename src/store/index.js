@@ -222,8 +222,9 @@ export const store = new Vuex.Store({
 
                     })
                     .catch(err => {
-                        commit('auth_error')
-                        reject(err)
+                        alert(`Something went wrong. Please, try again later.`);
+                        commit('auth_error');
+                        reject(err);
                     })
             })
         },
