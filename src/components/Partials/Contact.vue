@@ -149,7 +149,7 @@ export default {
 
 <style lang="scss" scoped>
 #contactForm {
-  background-color: $colorRed;
+  background-color: $colorBrick;
 }
 #contact {
   background-color: $colorBlack;

@@ -7484,8 +7484,8 @@ textarea.form-control.is-invalid {
 }
 
 .bg-primary {
-  // --bs-bg-opacity: 1;
-  background-color: $colorRed !important;
+  --bs-bg-opacity: 1;
+  background-color: $colorBrick !important;
 }
 
 .bg-secondary {
@@ -10998,7 +10998,7 @@ hr.divider {
   height: 0.2rem;
   max-width: 3.25rem;
   margin: 1.5rem auto;
-  background-color: $colorRed;
+  background-color: $colorBrick;
   opacity: 1;
 }
 
@@ -11138,7 +11138,7 @@ header.masthead .h1 {
 }
 
 .custom-btn {
-  background-color: $colorRed;
+  background-color: $colorBrick;
   position: relative;
   vertical-align: middle;
   overflow: hidden;
