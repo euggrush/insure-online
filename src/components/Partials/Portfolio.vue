@@ -7,7 +7,7 @@
           <a class="portfolio-box" href="#" title="Project Name">
             <img
               class="img-fluid"
-              src="https://i.ibb.co/hgcQFfg/11.jpg"
+              src="../../assets/img/car-small1.jpg"
               alt="photo"
             />
           </a>
@@ -16,7 +16,7 @@
           <a class="portfolio-box" href="#" title="Project Name">
             <img
               class="img-fluid"
-              src="https://i.ibb.co/BLcgtqF/10.jpg"
+              src="../../assets/img/car-small2.jpg"
               alt="photo"
             />
           </a>
@@ -25,7 +25,7 @@
           <a class="portfolio-box" href="#" title="Project Name">
             <img
               class="img-fluid"
-              src="https://i.ibb.co/5sM3CNg/9.jpg"
+              src="../../assets/img/car-small3.jpg"
               alt="photo"
             />
           </a>
@@ -34,7 +34,7 @@
           <a class="portfolio-box gradient" href="#" title="Project Name">
             <img
               class="img-fluid"
-              src="https://i.ibb.co/X4rm2Y4/8.jpg"
+              src="../../assets/img/car-small4.jpg"
               alt="photo"
             />
           </a>
@@ -42,7 +42,7 @@
         <div class="col-lg-4 col-sm-6">
           <a class="portfolio-box gradient" href="#" title="Project Name">
             <img
-              class="img-fluid"
+              class="img-fluid black-white-filter"
               src="https://i.ibb.co/rMrc6JK/7.jpg"
               alt="photo"
             />
@@ -52,7 +52,7 @@
           <a class="portfolio-box gradient" href="#" title="Project Name">
             <img
               class="img-fluid"
-              src="https://i.ibb.co/4Kz5xDg/12.webp"
+              src="../../assets/img/car-small5.jpg"
               alt="photo"
             />
           </a>
@@ -155,5 +155,9 @@ export default {};
 #portfolio .container-xl .portfolio-box:hover .portfolio-box-caption,
 #portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
   opacity: 1;
+}
+.black-white-filter {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 </style>
