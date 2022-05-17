@@ -35,7 +35,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    scrollToContent() {
+      window.scrollTo(
+        0,
+        document.getElementById(`services`).getBoundingClientRect().y +
+          window.scrollY -
+          120
+      );
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
