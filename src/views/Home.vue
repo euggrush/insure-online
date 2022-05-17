@@ -1,38 +1,6 @@
 <template>
   <body id="page-top">
-    <!-- Masthead-->
-    <header class="masthead">
-      <div class="container px-4 px-lg-5 h-100">
-        <div
-          class="
-            row
-            gx-4 gx-lg-5
-            h-100
-            align-items-center
-            justify-content-center
-            text-center
-          "
-        >
-          <div class="col-lg-8 align-self-end">
-            <h1 class="text-white font-weight-bold">
-              YOUR SAFETY IS EVERYTHING TO US.
-            </h1>
-            <hr class="divider" />
-          </div>
-          <div class="col-lg-8 align-self-baseline">
-            <p class="text-white-75 mb-5">
-              Find out how we're continuing to be there for you on the road.
-            </p>
-            <button
-              class="btn pt-3 pb-3 ps-5 pe-5 custom-btn text-light"
-              @click="scrollToContent"
-            >
-              Find Out More
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
+    <Masthead />
     <!-- About-->
     <section class="page-section bg-primary" id="about">
       <div class="container px-4 px-lg-5">
@@ -109,76 +77,17 @@
         </div>
       </div>
     </section>
-        <Contact />
-
-    <!-- Portfolio-->
-    <div id="portfolio">
-      <div class="container-fluid pb-0 ps-0 pe-0 pt-0">
-        <div class="row g-0">
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/hgcQFfg/11.jpg"
-                alt="photo"
-              />
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/BLcgtqF/10.jpg"
-                alt="photo"
-              />
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/5sM3CNg/9.jpg"
-                alt="photo"
-              />
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box gradient" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/X4rm2Y4/8.jpg"
-                alt="photo"
-              />
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box gradient" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/rMrc6JK/7.jpg"
-                alt="photo"
-              />
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box gradient" href="#" title="Project Name">
-              <img
-                class="img-fluid"
-                src="https://i.ibb.co/4Kz5xDg/12.webp"
-                alt="photo"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Contact />
+    <Portfolio />
   </body>
 </template>
 
 <script>
 import Contact from "../components/Partials/Contact.vue";
+import Portfolio from "../components/Partials/Portfolio.vue";
+import Masthead from "../components/Partials/Masthead.vue";
 export default {
-  components: { Contact },
+  components: { Contact, Portfolio, Masthead },
   methods: {
     scrollToContent() {
       window.scrollTo(
@@ -11004,137 +10913,6 @@ hr.divider {
 
 hr.divider-light {
   background-color: #fff;
-}
-
-header.masthead {
-  padding-top: 10rem;
-  padding-bottom: calc(10rem - 4.5rem);
-  background: 
-  // linear-gradient(
-  //     to bottom,
-  //     rgba(92, 77, 66, 0.8) 0%,
-  //     rgba(92, 77, 66, 0.8) 100%
-  //   ),
-    url($bgMainCar);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-}
-header.masthead h1,
-header.masthead .h1 {
-  font-size: 2.25rem;
-}
-@media (min-width: 992px) {
-  header.masthead {
-    height: 100vh;
-    min-height: 40rem;
-    padding-top: 4.5rem;
-    padding-bottom: 0;
-  }
-  header.masthead p {
-    font-size: 1.15rem;
-  }
-  header.masthead h1,
-  header.masthead .h1 {
-    font-size: 3rem;
-  }
-}
-@media (min-width: 1200px) {
-  header.masthead h1,
-  header.masthead .h1 {
-    font-size: 3.5rem;
-  }
-}
-
-#portfolio .container-fluid,
-#portfolio .container-sm,
-#portfolio .container-md,
-#portfolio .container-lg,
-#portfolio .container-xl,
-#portfolio .container-xxl {
-  max-width: 1920px;
-}
-#portfolio .container-fluid .portfolio-box,
-#portfolio .container-sm .portfolio-box,
-#portfolio .container-md .portfolio-box,
-#portfolio .container-lg .portfolio-box,
-#portfolio .container-xl .portfolio-box,
-#portfolio .container-xxl .portfolio-box {
-  position: relative;
-  display: block;
-}
-#portfolio .container-fluid .portfolio-box .portfolio-box-caption,
-#portfolio .container-sm .portfolio-box .portfolio-box-caption,
-#portfolio .container-md .portfolio-box .portfolio-box-caption,
-#portfolio .container-lg .portfolio-box .portfolio-box-caption,
-#portfolio .container-xl .portfolio-box .portfolio-box-caption,
-#portfolio .container-xxl .portfolio-box .portfolio-box-caption {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-  opacity: 0;
-  color: #fff;
-  background: rgba(244, 98, 58, 0.9);
-  transition: opacity 0.25s ease;
-  text-align: center;
-}
-#portfolio
-  .container-fluid
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-sm
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-md
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-lg
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-xl
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-xxl
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category {
-  font-family: var(--bs-body-font-family);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-#portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-sm .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-md .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-lg .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-xl .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-xxl .portfolio-box .portfolio-box-caption .project-name {
-  font-size: 1.2rem;
-}
-#portfolio .container-fluid .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-sm .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-md .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-lg .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-xl .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
-  opacity: 1;
 }
 
 .custom-btn {
