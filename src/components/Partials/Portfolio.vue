@@ -43,7 +43,7 @@
           <a class="portfolio-box gradient" href="#" title="Project Name">
             <img
               class="img-fluid black-white-filter"
-              src="https://i.ibb.co/rMrc6JK/7.jpg"
+              src="../../assets/img/car-small6.jpg"
               alt="photo"
             />
           </a>
