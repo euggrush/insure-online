@@ -45,7 +45,7 @@
           <div class="mt-5">
             <div class="mb-2">
               <img
-                src="../../assets/img/icon-ev.png"
+                src="../../assets/img/icon-help.png"
                 alt="icon"
                 width="110"
                 height="100"
@@ -63,7 +63,7 @@
           <div class="mt-5">
             <div class="mb-2">
               <img
-                src="../../assets/img/icon-ev.png"
+                src="../../assets/img/icon-scale.png"
                 alt="icon"
                 width="110"
                 height="100"
