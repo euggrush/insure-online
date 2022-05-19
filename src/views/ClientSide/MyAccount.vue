@@ -7,7 +7,7 @@
       class="row mt-3 my-account_info bg-dark bg-gradient text-white shadow-lg"
     >
       <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <label for="formFile" class="form-label fw-bold user-avatar-wrap">
+        <label for="formFile" class="form-label fw-light user-avatar-wrap">
           <img
             id="avatar"
             :src="`${FILE_URL}${avatar}`"
@@ -28,10 +28,10 @@
         <h2 class="fs-3 text-center mt-1">
           {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
         </h2>
-        <p class="text-center fw-bold">
+        <p class="text-center fw-light">
           {{ myAccountInfo.email }}
         </p>
-        <p class="fw-bold fst-italic text-center">
+        <p class="fw-light fst-italic text-center">
           Age&nbsp;{{ myAccountInfo.age }}
         </p>
         <hr />
@@ -94,7 +94,7 @@
         style="width: 300px"
       >
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >First name:</span
           >
           <input
@@ -105,7 +105,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Last name:</span
           >
           <input
@@ -116,13 +116,13 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Date of birth:</span
           >
           <input class="form-control" type="date" v-model="dateOfBirth" />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg">Address:</span>
+          <span class="fw-light text-decoration-underline lh-lg">Address:</span>
           <input
             class="form-control"
             type="text"
@@ -131,7 +131,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Cellphone:</span
           >
           <input
@@ -142,7 +142,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Home phone:</span
           >
           <input
@@ -162,7 +162,7 @@
           <option value="Married">Married</option>
         </select>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Country Of Residence:</span
           >
           <input
@@ -173,7 +173,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Previous Insurer:</span
           >
           <input
@@ -184,7 +184,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Year of issue driver license:</span
           >
           <input
@@ -195,7 +195,7 @@
           />
         </label>
         <label>
-          <span class="fw-bold text-decoration-underline lh-lg"
+          <span class="fw-light text-decoration-underline lh-lg"
             >Claims history:</span
           >
           <input
@@ -373,12 +373,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+th {
+  font-weight: 300 !important;
+}
 .btn {
   min-width: 8em;
 }
 .my-account {
   min-height: calc(100vh - 10em);
-  background-color: $colorBrick;
+  background-color: grey;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;

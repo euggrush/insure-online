@@ -383,7 +383,7 @@ export default {
 }
 .my-order {
   min-height: calc(100vh - 10em);
-  background-color: $bgOrange;
+  background-color: grey;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
