@@ -1,7 +1,9 @@
 <template>
-  <section class="container-fluid my-order position-relative">
+  <section
+    class="container-fluid my-order position-relative bg-secondary bg-gradient"
+  >
     <ModalMessage />
-    <router-link to="/my-account" class="btn btn-secondary"
+    <router-link to="/my-account" class="btn btn-outline-dark"
       >Back to my account</router-link
     >
     <hr />
@@ -383,11 +385,11 @@ export default {
 }
 .my-order {
   min-height: calc(100vh - 10em);
-  background-color: grey;
+  // background-color: grey;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  padding-top: 9em;
+  padding-top: 10.4em;
   padding-bottom: 3em;
   @include media-breakpoint-up(md) {
     padding-top: 8em;

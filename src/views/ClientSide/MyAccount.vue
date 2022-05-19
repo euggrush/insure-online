@@ -1,6 +1,13 @@
 <template>
-  <section class="container-fluid my-account position-relative">
-    <router-link to="/my-quotes" class="btn btn-dark btn-lg"
+  <section
+    class="
+      container-fluid
+      my-account
+      position-relative
+      bg-secondary bg-gradient
+    "
+  >
+    <router-link to="/my-quotes" class="btn btn-dark"
       >Quotes</router-link
     >
     <div
@@ -377,15 +384,15 @@ th {
   font-weight: 300 !important;
 }
 .btn {
-  min-width: 8em;
+  min-width: 10em;
 }
 .my-account {
   min-height: calc(100vh - 10em);
-  background-color: grey;
+  // background-color: grey;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  padding-top: 9em;
+  padding-top: 10.4em;
   padding-bottom: 3em;
   @include media-breakpoint-up(md) {
     padding-top: 8em;
