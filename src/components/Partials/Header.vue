@@ -29,7 +29,7 @@
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/">About</router-link>
+            <router-link class="nav-link" to="/about-us">About Us</router-link>
           </li>
           <li
             v-if="
@@ -148,11 +148,11 @@ export default {
     color: #fff;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: $colorBrick;
     padding: 0 1rem;
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
-    color: #fff;
+    color: $colorDark;
   }
   #mainNav .navbar-nav .nav-item:last-child .nav-link {
     padding-right: 0;

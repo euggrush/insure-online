@@ -5,12 +5,13 @@ export default {
     methods: {
         hideMenu() {
             const navbarCollapsible =
-                document.body.querySelector("#navbarResponsive");
+            document.body.querySelector("#navbarResponsive");
             navbarCollapsible.classList.remove("show");
         },
         shrinkNavbar() {
             var navbarShrink = function () {
                 const navbarCollapsible = document.body.querySelector("#mainNav");
+
                 if (!navbarCollapsible) {
                     return;
                 }

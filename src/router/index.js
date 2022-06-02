@@ -15,6 +15,7 @@ import MyAccount from '../views/ClientSide/MyAccount.vue';
 import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 import PayPalPage from "../components/PaymentSystem/PayPalPage.vue";
 import YocoPayment from "../components/PaymentSystem/YocoPage.vue";
+import AboutUs from "../components/Partials/AboutUs";
 
 const isTokenExpired = (tokenExpiration) => {
   const dayjs = require("dayjs");
@@ -35,6 +36,10 @@ const routes = [{
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/about-us',
+    component: AboutUs
   },
   {
     path: '/our-products',
