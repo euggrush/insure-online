@@ -247,11 +247,12 @@ export default {
       this.vehicleInfo.accountId = this.myProps.accountId;
       this.$store
         .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
-        .then(
-          this.$store.dispatch(`GET_VEHICLES`, ``),
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          ((this.vehicleInfo = {}), this.$emit(`closeForm`, {}))
-        )
+        .then(() => {
+          this.$store.dispatch(`GET_VEHICLES`, ``);
+          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`);
+          this.vehicleInfo = {};
+          this.$emit(`closeForm`, {});
+        })
         .catch((error) => alert(error))
         .then(() => {
           this.$store.dispatch(`GET_VEHICLES`, ``);

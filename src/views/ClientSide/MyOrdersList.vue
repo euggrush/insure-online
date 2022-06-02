@@ -32,7 +32,7 @@
           <div class="row border p-1 order-item">
             <div class="col border-bottom border-start">
               <!-- <span class="fw-bold d-block fw-bold">Created:</span> -->
-              <span>{{ getDate(order.created) }}</span>
+              <span>{{ getDate(order.orderCreated) }}</span>
             </div>
             <div class="col border-bottom border-start">
               <span class="fw-bold">#</span>

@@ -7,14 +7,10 @@
       bg-secondary bg-gradient
     "
   >
-    <router-link to="/my-quotes" class="btn btn-dark"
-      >Quotes</router-link
-    >
-    <div
-      class="row mt-3 my-account_info bg-dark bg-gradient text-white shadow-lg"
-    >
-      <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-        <label for="formFile" class="form-label fw-light user-avatar-wrap">
+    <div class="m-5 my-account_info d-flex flex-wrap justify-content-lg-between">
+      <div class="my-account_one d-flex flex-column align-items-center">
+        <router-link to="/my-quotes" class="btn btn-outline-dark w-100 mt-3">Quotes</router-link>
+        <label for="formFile" class="form-label user-avatar-wrap">
           <img
             id="avatar"
             :src="`${FILE_URL}${avatar}`"
@@ -32,7 +28,7 @@
             v-show="showInput"
           />
         </label>
-        <h2 class="fs-3 text-center mt-1">
+        <h2 class="text-center">
           {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
         </h2>
         <p class="text-center fw-light">
@@ -43,8 +39,8 @@
         </p>
         <hr />
       </div>
-      <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
-        <table class="table table-dark border-start">
+      <div class="my-account_two">
+        <table class="table">
           <tbody>
             <tr>
               <th scope="row">Cell</th>
@@ -397,6 +393,25 @@ th {
   @include media-breakpoint-up(md) {
     padding-top: 8em;
   }
+}
+.my-account_info {
+  outline: solid 6px red;
+}
+.my-account_one {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: 45%;
+  }
+
+  outline: solid 6px blue;
+}
+.my-account_two {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: 45%;
+  }
+
+  outline: solid 6px green;
 }
 .details li {
   list-style: none;

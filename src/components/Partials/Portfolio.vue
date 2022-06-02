@@ -1,65 +1,26 @@
 <template>
   <!-- Portfolio-->
-  <div id="portfolio">
-    <div class="container-fluid pb-0 ps-0 pe-0 pt-0">
-      <div class="row g-0">
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="#" title="Project Name">
-            <img
-              class="img-fluid"
-              src="../../assets/img/car-small1.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="#" title="Project Name">
-            <img
-              class="img-fluid"
-              src="../../assets/img/car-small2.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="#" title="Project Name">
-            <img
-              class="img-fluid"
-              src="../../assets/img/car-small3.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box gradient" href="#" title="Project Name">
-            <img
-              class="img-fluid"
-              src="../../assets/img/car-small4.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box gradient" href="#" title="Project Name">
-            <img
-              class="img-fluid black-white-filter"
-              src="../../assets/img/car-small6.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box gradient" href="#" title="Project Name">
-            <img
-              class="img-fluid"
-              src="../../assets/img/car-small5.jpg"
-              alt="photo"
-            />
-          </a>
-        </div>
+
+  <section id="portfolio">
+    <div class="container">
+      <div class="card">
+        <img src="../../assets/img/car-small1.jpg" />
+        <div class="card__head">Sport Utility Vehicles (SUVs)</div>
+      </div>
+      <div class="card">
+        <img src="../../assets/img/car-small2.jpg" />
+        <div class="card__head">4x4's</div>
+      </div>
+      <div class="card">
+        <img src="../../assets/img/car-small3.jpg" />
+        <div class="card__head">Lifestyle Utility Vehicles (LUVs)</div>
+      </div>
+      <div class="card">
+        <img src="../../assets/img/car-small5.jpg" />
+        <div class="card__head">Sport Utility Vehicles</div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -67,97 +28,73 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-#portfolio .container-fluid,
-#portfolio .container-sm,
-#portfolio .container-md,
-#portfolio .container-lg,
-#portfolio .container-xl,
-#portfolio .container-xxl {
-  max-width: 1920px;
-}
-#portfolio .container-fluid .portfolio-box,
-#portfolio .container-sm .portfolio-box,
-#portfolio .container-md .portfolio-box,
-#portfolio .container-lg .portfolio-box,
-#portfolio .container-xl .portfolio-box,
-#portfolio .container-xxl .portfolio-box {
-  position: relative;
-  display: block;
-}
-#portfolio .container-fluid .portfolio-box .portfolio-box-caption,
-#portfolio .container-sm .portfolio-box .portfolio-box-caption,
-#portfolio .container-md .portfolio-box .portfolio-box-caption,
-#portfolio .container-lg .portfolio-box .portfolio-box-caption,
-#portfolio .container-xl .portfolio-box .portfolio-box-caption,
-#portfolio .container-xxl .portfolio-box .portfolio-box-caption {
+#portfolio {
+  margin: 0;
+  min-height: 100vh;
+  background: #000;
+  font-family: sans-serif;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-  opacity: 0;
-  color: #fff;
-  background: rgba(244, 98, 58, 0.9);
-  transition: opacity 0.25s ease;
-  text-align: center;
+  align-items: center;
 }
-#portfolio
-  .container-fluid
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-sm
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-md
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-lg
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-xl
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category,
-#portfolio
-  .container-xxl
-  .portfolio-box
-  .portfolio-box-caption
-  .project-category {
-  font-family: var(--bs-body-font-family);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-#portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-sm .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-md .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-lg .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-xl .portfolio-box .portfolio-box-caption .project-name,
-#portfolio .container-xxl .portfolio-box .portfolio-box-caption .project-name {
-  font-size: 1.2rem;
-}
-#portfolio .container-fluid .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-sm .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-md .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-lg .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-xl .portfolio-box:hover .portfolio-box-caption,
-#portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
-  opacity: 1;
-}
-.black-white-filter {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -4vmin;
+  overflow: hidden;
+  transform: skew(5deg);
+  @include media-breakpoint-up(sm) {
+    margin: 4vmin;
+  }
+  @include media-breakpoint-up(md) {
+    margin: 10vmin;
+  }
+  .card {
+    flex: 1;
+    transition: all 1s ease-in-out;
+    height: 75vmin;
+    position: relative;
+    .card__head {
+      color: black;
+      background: rgba(24, 23, 24, 0.75);
+      padding: 0.5em;
+      transform: rotate(-90deg);
+      transform-origin: 0% 0%;
+      transition: all 0.5s ease-in-out;
+      min-width: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 1em;
+      white-space: nowrap;
+    }
+
+    &:hover {
+      flex-grow: 10;
+      img {
+        filter: grayscale(0);
+      }
+      .card__head {
+        text-align: center;
+        top: calc(100% - 2em);
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 2em;
+        transform: rotate(0deg) skew(-5deg);
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 1s ease-in-out;
+      filter: grayscale(100%);
+    }
+    &:not(:nth-child(5)) {
+      margin-right: 1em;
+    }
+  }
 }
 </style>

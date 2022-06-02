@@ -4,7 +4,6 @@
       container-fluid
       d-flex
       flex-column
-      justify-content-center
       align-items-center
       reg-wrap
       bg-secondary bg-gradient
@@ -12,63 +11,67 @@
     "
   >
     <ModalMessage />
+
     <div class="signup-form">
-      <form
-        class="bg-dark bg-gradient shadow-lg rounded"
-        autocomplete="off"
-        @submit.prevent="login"
-      >
-        <h2 class="text-white">Login</h2>
-        <hr />
-        <div class="form-group">
-          <div class="col">
+      <Transition name="bounce">
+        <form
+          v-if="show"
+          class="bg-dark bg-gradient shadow-lg rounded"
+          autocomplete="off"
+          @submit.prevent="login"
+        >
+          <h2 class="text-white">Login</h2>
+          <hr />
+          <div class="form-group">
+            <div class="col">
+              <input
+                v-model="email"
+                type="text"
+                class="form-control shadow-lg"
+                name="email"
+                placeholder="Email"
+                required="required"
+              />
+            </div>
+          </div>
+          <div class="form-group">
             <input
-              v-model="email"
-              type="text"
+              v-model="password"
+              type="password"
               class="form-control shadow-lg"
-              name="email"
-              placeholder="Email"
+              name="password"
+              placeholder="Password"
               required="required"
             />
           </div>
-        </div>
-        <div class="form-group">
-          <input
-            v-model="password"
-            type="password"
-            class="form-control shadow-lg"
-            name="password"
-            placeholder="Password"
-            required="required"
-          />
-        </div>
 
-        <div
-          v-if="this.$store.state.account_validation.isRequired"
-          class="form-group"
-        >
-          <input
-            v-model="validationCode"
-            type="text"
-            class="form-control shadow-lg"
-            placeholder="Validation Code"
-            required="required"
-          />
-        </div>
-
-        <div class="form-group">
-          <button
-            type="submit"
-            class="btn btn-outline-warning btn-lg"
-            :class="{ shake: disabled }"
+          <div
+            v-if="this.$store.state.account_validation.isRequired"
+            class="form-group"
           >
-            Login
-          </button>
-          <span v-if="disabled" class="ms-3 text-danger fw-bold">{{
-            errorMsg
-          }}</span>
-        </div>
-      </form>
+            <input
+              v-model="validationCode"
+              type="text"
+              class="form-control shadow-lg"
+              placeholder="Validation Code"
+              required="required"
+            />
+          </div>
+
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-outline-warning btn-lg"
+              :class="{ shake: disabled }"
+            >
+              Login
+            </button>
+            <span v-if="disabled" class="ms-3 text-danger fw-bold">{{
+              errorMsg
+            }}</span>
+          </div>
+        </form>
+      </Transition>
     </div>
   </section>
 </template>
@@ -83,6 +86,7 @@ export default {
   name: `Login`,
   data() {
     return {
+      show: false,
       email: ``,
       password: ``,
       validationCode: ``,
@@ -104,7 +108,11 @@ export default {
     },
   },
   mounted() {
+    this.scrollToTop();
     this.hideMenu();
+    setTimeout(() => {
+      this.show = true;
+    }, 200);
   },
   methods: {
     warnDisabled(arg) {
@@ -143,9 +151,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reg-wrap {
-  min-height: calc(100vh - 127px);
-}
 .form-control {
   height: 41px;
   background: #f2f2f2;
@@ -160,6 +165,9 @@ export default {
   border-radius: 3px;
 }
 .signup-form {
+  margin-top: 150px;
+  margin-bottom: 150px;
+
   @include media-breakpoint-up(sm) {
     width: 400px;
   }
@@ -244,6 +252,24 @@ export default {
   40%,
   60% {
     transform: translate3d(4px, 0, 0);
+  }
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
