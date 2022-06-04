@@ -246,10 +246,14 @@ export const store = new Vuex.Store({
             })
         },
         REGISTRATION: async (context, payload) => {
-            let {
-                data
-            } = await Axios.post(`${BASE_URL}/accounts`, payload);
-            context.commit('SET_REGISTRATION', data);
+            await Axios.post(`${BASE_URL}/accounts`, payload).then((resp) => {
+                let data = resp.data;
+                context.commit('SET_REGISTRATION', data);
+
+            }).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_PRODUCT_CATEGORIES: async (context, payload) => {
             let {
@@ -258,7 +262,10 @@ export const store = new Vuex.Store({
             context.commit('SET_PRODUCT_CATEGORIES', data);
         },
         CREATE_PRODUCT_CATEGORY: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/categories`, payload);
+            await Axios.post(`${BASE_URL}/categories`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_USERS: async (context, payload) => {
             let {
@@ -267,7 +274,10 @@ export const store = new Vuex.Store({
             context.commit('SET_USERS_ARRAY', data);
         },
         MODIFY_USER: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/accounts`, payload);
+            await Axios.post(`${BASE_URL}/accounts`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_MAIN_PRODUCTS: async (context, payload) => {
             let {
@@ -276,7 +286,10 @@ export const store = new Vuex.Store({
             context.commit('SET_MAIN_PRODUCTS', data);
         },
         CREATE_MAIN_PRODUCT: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/mainProducts`, payload);
+            await Axios.post(`${BASE_URL}/mainProducts`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_SUB_PRODUCTS: async (context, payload) => {
             let {
@@ -285,7 +298,10 @@ export const store = new Vuex.Store({
             context.commit(`SET_SUB_PRODUCTS`, data);
         },
         CREATE_SUB_PRODUCT: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/subProducts`, payload);
+            await Axios.post(`${BASE_URL}/subProducts`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_VEHICLES: async (context, payload) => {
             let {
@@ -296,6 +312,7 @@ export const store = new Vuex.Store({
         CREATE_VEHICLE: async (context, payload) => {
             await Axios.post(`${BASE_URL}/vehicles`, payload).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         GET_ESTIMATIONS: async (context, payload) => {
@@ -316,6 +333,7 @@ export const store = new Vuex.Store({
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         GET_ORDERS: async (context, payload) => {
@@ -332,6 +350,7 @@ export const store = new Vuex.Store({
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         CREATE_USER: async (context, payload) => {
@@ -354,6 +373,7 @@ export const store = new Vuex.Store({
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         GET_RATING: async (context, payload) => {
@@ -364,7 +384,10 @@ export const store = new Vuex.Store({
 
         },
         MODIFY_RATING: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/resources`, payload);
+            await Axios.post(`${BASE_URL}/resources`, payload).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
         },
         GET_ACCESSORIES: async (context, payload) => {
             let {
@@ -380,6 +403,7 @@ export const store = new Vuex.Store({
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         GET_VEHICLES_DATA: async (context, payload) => {
@@ -391,6 +415,7 @@ export const store = new Vuex.Store({
         CREATE_VEHICLES_DATA: async (context, payload) => {
             await Axios.post(`${BASE_URL}/vehiclesData`, payload).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
             })
         },
         GET_PAYMENTS: async (context, payload) => {

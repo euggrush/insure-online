@@ -34,8 +34,9 @@
               />
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group position-relative">
             <input
+              id="user_password"
               v-model="password"
               type="password"
               class="form-control shadow-lg"
@@ -43,6 +44,14 @@
               placeholder="Password"
               required="required"
             />
+            <label
+              class="show-password-label position-absolute top-0 end-0"
+              for="show-password"
+              ><input
+                id="show-password"
+                type="checkbox"
+                @change="togglePasswordVisibility"
+            /></label>
           </div>
 
           <div
@@ -115,6 +124,16 @@ export default {
     }, 200);
   },
   methods: {
+    togglePasswordVisibility() {
+      let x = document.querySelector(`#user_password`);
+      let iconEye = document.querySelector(`.show-password-label`);
+      iconEye.classList.toggle(`visible`);
+      if (x.type === `password`) {
+        x.type = `text`;
+      } else {
+        x.type = `password`;
+      }
+    },
     warnDisabled(arg) {
       this.disabled = true;
       this.errorMsg = arg;
@@ -271,5 +290,20 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+.show-password-label {
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/img/icon-eye-close.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  cursor: pointer;
+}
+.visible {
+  background-image: url("../../assets/img/icon-eye.png");
+}
+#show-password {
+  display: none;
 }
 </style>
