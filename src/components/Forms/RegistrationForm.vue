@@ -36,7 +36,6 @@
         </div>
       </div>
     </div>
-    <h1 class="fs-3 text-center">Create Account</h1>
     <form
       class="
         row
@@ -405,7 +404,7 @@ export default {
 
 <style lang="scss" scoped>
 .registration {
-  padding-top: 10em;
+  padding-top: 6em;
   // background-image: url($mainBg);
   // background-repeat: no-repeat;
   // background-size: 100% 100%;

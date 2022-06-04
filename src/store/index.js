@@ -61,7 +61,9 @@ export const store = new Vuex.Store({
         inseption_date_of_cover: {
             date: 0,
             isSet: false
-        }
+        },
+        payments: [],
+        current_payment: []
     },
     plugins: [
         createLogger(),
@@ -181,6 +183,12 @@ export const store = new Vuex.Store({
         },
         SET_VEHICLES_DATA(state, payload) {
             state.vehicles_data = payload
+        },
+        SET_PAYMENTS(state, payload) {
+            state.payments = payload;
+        },
+        SET_CURRENT_PAYMENT(state, payload) {
+            state.current_payment = payload;
         }
     },
     actions: {
@@ -333,6 +341,7 @@ export const store = new Vuex.Store({
                     context.commit(`SET_NEW_USER`, data);
                 }
             ).catch((error) => {
+                alert(`A client with this ID Number or email already exists.`);
                 context.commit(`SET_NEW_USER`, error);
                 context.commit(`SET_GENERAL_ERRORS`, error);
             })
@@ -384,5 +393,22 @@ export const store = new Vuex.Store({
                 context.commit(`SET_GENERAL_ERRORS`, error);
             })
         },
+        GET_PAYMENTS: async (context, payload) => {
+            let {
+                data
+            } = await Axios.get(`${BASE_URL}/payment`);
+            context.commit(`SET_PAYMENTS`, data);
+        },
+        CREATE_PAYMENT: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/payment`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_CURRENT_PAYMENT`, data);
+                }
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
+        }
     },
 });
