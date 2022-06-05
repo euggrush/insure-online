@@ -22,41 +22,47 @@
         >
           <h4 class="text-white">Login</h4>
           <hr />
-          <div class="form-group">
-            <div class="col">
-              <input
-                v-model="email"
-                type="text"
-                class="form-control shadow-lg"
-                name="email"
-                placeholder="Email"
-                required="required"
-                :disabled="isFormDisabled"
-              />
-            </div>
+
+          <div class="input-group">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+            <input
+              v-model="email"
+              type="text"
+              class="form-control shadow-lg"
+              name="email"
+              placeholder="Email"
+              required="required"
+              :disabled="isFormDisabled"
+            />
           </div>
-          <div class="form-group position-relative">
+
+          <div class="input-group mt-3">
+            <label
+              class="input-group-text show-password-label"
+              :class="{ visible: passwordInputType == `text` }"
+              style="width: 40px"
+            >
+              <input
+                class="form-check-input mt-0 visually-hidden"
+                type="checkbox"
+                v-model="passwordInputType"
+                :true-value="'text'"
+                :false-value="'password'"
+              />
+            </label>
             <input
               id="user_password"
               v-model="password"
-              type="password"
+              :type="passwordInputType"
               class="form-control shadow-lg"
               name="password"
               placeholder="Password"
               required="required"
               :disabled="isFormDisabled"
             />
-            <label
-              class="show-password-label position-absolute top-0 end-0"
-              for="show-password"
-              ><input
-                id="show-password"
-                type="checkbox"
-                @change="togglePasswordVisibility"
-            /></label>
           </div>
 
-          <div class="form-group">
+          <div class="input-group mt-3">
             <button
               type="submit"
               class="btn btn-outline-danger btn-lg"
@@ -97,6 +103,8 @@ export default {
   name: `Login`,
   data() {
     return {
+      passwordInputType: `password`,
+
       isFormDisabled: false,
       show: false,
       email: ``,
@@ -144,16 +152,6 @@ export default {
     }, 200);
   },
   methods: {
-    togglePasswordVisibility() {
-      let x = document.querySelector(`#user_password`);
-      let iconEye = document.querySelector(`.show-password-label`);
-      iconEye.classList.toggle(`visible`);
-      if (x.type === `password`) {
-        x.type = `text`;
-      } else {
-        x.type = `password`;
-      }
-    },
     warnDisabled(arg) {
       this.disabled = true;
       this.errorMsg = arg;
@@ -194,7 +192,7 @@ export default {
   background-size: cover;
 }
 .form-control {
-  height: 41px;
+  height: 40px;
   background: #f2f2f2;
   box-shadow: none !important;
   border: none;
@@ -226,9 +224,6 @@ export default {
 }
 .login-form hr {
   margin: 0 -30px 20px;
-}
-.login-form .form-group {
-  margin-bottom: 20px;
 }
 .login-form input[type="checkbox"] {
   margin-top: 3px;
