@@ -96,14 +96,17 @@ export default {
   z-index: 2;
 }
 .card {
-  width: 300px;
+  width: 310px;
   border: none;
   height: 300px;
   box-shadow: 0px 5px 20px 0px #d2dae3;
-  z-index: 9;
+  // z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  @include media-breakpoint-up(sm) {
+    width: 510px;
+  }
   @include media-breakpoint-up(md) {
     width: 500px;
   }

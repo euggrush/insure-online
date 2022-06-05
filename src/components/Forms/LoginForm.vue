@@ -19,7 +19,6 @@
           autocomplete="off"
           @submit.prevent="login"
         >
-
           <h4 class="text-white">Login</h4>
           <hr />
           <div class="form-group">
@@ -75,8 +74,9 @@
               errorMsg
             }}</span>
           </div>
-                            <OtpInput class="position-absolute top-0 start-50 translate-middle-x" />
-
+          <OtpInput
+            class="position-absolute top-0 start-50 translate-middle-x"
+          />
         </form>
       </Transition>
     </div>
