@@ -149,7 +149,6 @@ export default {
   vertical-align: middle;
   text-align: center;
   color: #0000ff;
-  font-size: 14px;
   cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2 class="d-block fw-bold text-capitalize fs-4 mb-0">
+    <h2 class="d-block fw-bold text-capitalize mb-0">
       {{ product.mainProductName }}
     </h2>
 

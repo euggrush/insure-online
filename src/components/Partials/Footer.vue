@@ -9,7 +9,7 @@
         <!--Grid row-->
         <div class="row">
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">
+            <h6 class="text-uppercase mb-4">
               {{ COMPANY_NAME }}
             </h6>
             <p>
@@ -20,7 +20,7 @@
           <hr class="w-100 clearfix d-md-none" />
 
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">GO TO OUR</h6>
+            <h6 class="text-uppercase mb-4">GO TO OUR</h6>
             <p>
               <a class="text-white" :href="LINK_GALLERIES" target="_blank"
                 >Galleries</a
@@ -39,7 +39,7 @@
           <hr class="w-100 clearfix d-md-none" />
 
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
+            <h6 class="text-uppercase mb-4">Useful links</h6>
             <p>
               <a class="text-white" :href="LINK_GET_QUOTE" target="_blank"
                 >Get a Quote</a
@@ -71,7 +71,7 @@
           <hr class="w-100 clearfix d-md-none" />
 
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+            <h6 class="text-uppercase mb-4">Contact</h6>
             <p>
               <i class="fas fa-home mr-3"></i
               ><a :href="LINK_GOOGLE_MAPS" target="_blank" class="link-light"

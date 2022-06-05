@@ -159,10 +159,6 @@ export default {
         })
         .catch((err) => {
           this.warnDisabled(err.response.data.message);
-          // this.$store.commit(`SET_MODAL`, {
-          //   isModal: true,
-          //   msg: err.response.data.message,
-          // });
         });
     },
   },
@@ -202,7 +198,6 @@ export default {
 }
 .signup-form h2 {
   color: #333;
-  font-weight: bold;
   margin-top: 0;
 }
 .signup-form hr {
@@ -221,8 +216,6 @@ export default {
   padding-left: 10px;
 }
 .signup-form .btn {
-  font-size: 16px;
-  font-weight: bold;
   min-width: 140px;
 }
 .signup-form a {

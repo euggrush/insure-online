@@ -106,7 +106,6 @@ export default {
 }
 .btn {
   min-width: 8em;
-  font-weight: bold;
 }
 .login-btn,
 .logout-btn {
@@ -127,13 +126,10 @@ export default {
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
-  font-weight: 700;
   color: #212529;
 }
 #mainNav .navbar-nav .nav-item .nav-link {
   color: #6c757d;
-  font-weight: 700;
-  font-size: 0.9rem;
   padding: 0.75rem 0;
 }
 @media (min-width: 992px) {

@@ -240,37 +240,72 @@
         </div>
       </div>
       <div class="col-md-6">
-        <label
-          for="validationCustomUsername0202"
-          class="form-label mt-1 text-white"
-          >Password</label
+        <label for="password" class="form-label mt-1 text-white"
+          >Password&nbsp;
+          <strong
+            v-if="showPasswordStrength && userPayload.password.length > 0"
+            class="mt-1 text-capitalize"
+            :class="{
+              'text-danger':
+                passwordStrengthValues.tooWeak || passwordStrengthValues.weak,
+              'text-warning': passwordStrengthValues.medium,
+              'text-success': passwordStrengthValues.strong,
+            }"
+          >
+            {{ passwordStrengthMsg }}
+          </strong></label
         >
         <div class="input-group has-validation">
+          <label
+            class="input-group-text show-password-label"
+            :class="{ visible: passwordInputType == `text` }"
+            style="width: 40px"
+          >
+            <input
+              class="form-check-input mt-0 visually-hidden"
+              type="checkbox"
+              v-model="passwordInputType"
+              :true-value="'text'"
+              :false-value="'password'"
+            />
+          </label>
           <input
-            type="password"
+            :type="passwordInputType"
             class="form-control"
-            id="validationCustomUsername0202"
+            id="password"
             aria-describedby="inputGroupPrepend"
             v-model="userPayload.password"
             minlength="8"
             required
+            @input="checkPassword"
           />
+
           <div class="invalid-feedback">
             Please create password, it must be 8 characters long
           </div>
         </div>
       </div>
-      <div class="col-12 mt-5">
-        <button class="btn btn-outline-warning" type="submit">Create</button>
+      <div class="col-12 mt-3">
+        <button class="btn btn-outline-danger" type="submit">Create</button>
       </div>
     </form>
   </section>
 </template>
 
 <script>
+import { passwordStrength } from "check-password-strength";
 export default {
   data() {
     return {
+      passwordInputType: `password`,
+      showPasswordStrength: false,
+      passwordStrengthValues: {
+        tooWeak: false,
+        weak: false,
+        medium: false,
+        strong: false,
+      },
+      passwordStrengthMsg: ``,
       isModal: false,
       modalMsg: ``,
       isUserCreated: false,
@@ -302,6 +337,59 @@ export default {
     this.hideMenu();
   },
   methods: {
+    checkPassword() {
+      this.showPasswordStrength = true;
+      switch (passwordStrength(this.userPayload.password).value) {
+        case `Too weak`:
+          this.passwordStrengthValues.tooWeak = true;
+          this.passwordStrengthValues.weak = false;
+          this.passwordStrengthValues.medium = false;
+          this.passwordStrengthValues.strong = false;
+          this.passwordStrengthMsg = passwordStrength(
+            this.userPayload.password
+          ).value;
+          break;
+        case `Weak`:
+          this.passwordStrengthValues.tooWeak = false;
+          this.passwordStrengthValues.weak = true;
+          this.passwordStrengthValues.medium = false;
+          this.passwordStrengthValues.strong = false;
+          this.passwordStrengthMsg = passwordStrength(
+            this.userPayload.password
+          ).value;
+          break;
+
+        case `Medium`:
+          this.passwordStrengthValues.tooWeak = false;
+          this.passwordStrengthValues.weak = false;
+          this.passwordStrengthValues.medium = true;
+          this.passwordStrengthValues.strong = false;
+          this.passwordStrengthMsg = passwordStrength(
+            this.userPayload.password
+          ).value;
+          break;
+
+        case `Strong`:
+          this.passwordStrengthValues.tooWeak = false;
+          this.passwordStrengthValues.weak = false;
+          this.passwordStrengthValues.medium = false;
+          this.passwordStrengthValues.strong = true;
+          this.passwordStrengthMsg = passwordStrength(
+            this.userPayload.password
+          ).value;
+          break;
+        case ``:
+          this.showPasswordStrength = false;
+          this.passwordStrengthMsg = ``;
+          break;
+        default:
+          this.passwordStrengthValues.tooWeak = false;
+          this.passwordStrengthValues.weak = false;
+          this.passwordStrengthValues.medium = false;
+          this.passwordStrengthValues.strong = false;
+          this.passwordStrengthMsg = ``;
+      }
+    },
     scrollToTop() {
       window.scrollTo(0, 0);
     },
@@ -404,10 +492,7 @@ export default {
 
 <style lang="scss" scoped>
 .registration {
-  padding-top: 6em;
-  // background-image: url($mainBg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
+  padding-top: 9em;
 }
 .container {
   min-height: calc(100vh - 7.3em);
@@ -427,5 +512,17 @@ export default {
 }
 .btn {
   min-width: 10em;
+}
+.show-password-label {
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/img/icon-eye-close.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  cursor: pointer;
+}
+.visible {
+  background-image: url("../../assets/img/icon-eye.png");
 }
 </style>

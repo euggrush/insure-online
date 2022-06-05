@@ -10,6 +10,7 @@
     "kill": "npx kill-port 8080"
   },
   "dependencies": {
+    "check-password-strength": "2.0.5",
     "core-js": "3.6.5",
     "cross-env": "7.0.3",
     "dotenv": "10.0.0",

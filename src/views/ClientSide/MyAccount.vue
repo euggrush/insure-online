@@ -376,15 +376,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-th {
-  font-weight: 300 !important;
-}
 .btn {
   min-width: 10em;
 }
 .my-account {
   min-height: calc(100vh - 10em);
-  // background-color: grey;
   background-image: url($mainBg);
   background-repeat: no-repeat;
   background-size: 100% 100%;

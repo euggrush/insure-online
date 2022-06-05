@@ -14,7 +14,6 @@
                 width="110"
                 height="100"
               />
-              <!-- <i class="fas fa-truck-monster fs-1 text-primary"></i> -->
             </div>
             <h3 class="h4 mb-2">TUFFSTUFF 4x4 Insurance Product</h3>
             <p class="text-muted mb-0">
@@ -32,7 +31,6 @@
                 width="110"
                 height="100"
               />
-              <!-- <i class="fas fa-helicopter fs-1 text-primary"></i> -->
             </div>
             <h3 class="h4 mb-2">Airborne Medical Evacuation</h3>
             <p class="text-muted mb-0">
@@ -50,7 +48,6 @@
                 width="110"
                 height="100"
               />
-              <!-- <i class="fas fa-ambulance fs-1 text-primary"></i> -->
             </div>
             <h3 class="h4 mb-2">Emergency Accommodation</h3>
             <p class="text-muted mb-0">
@@ -68,7 +65,6 @@
                 width="110"
                 height="100"
               />
-              <!-- <i class="fas fa-balance-scale fs-1 text-primary"></i> -->
             </div>
             <h3 class="h4 mb-2">International Legal Assistance</h3>
             <p class="text-muted mb-0">

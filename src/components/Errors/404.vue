@@ -30,8 +30,7 @@ export default {};
 .page_404 {
   min-height: calc(100vh - 7em);
   background-size: 100%;
-
-  padding: 40px 0;
+  padding: 100px 0 0 0;
   background: #fff;
 }
 

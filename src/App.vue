@@ -103,8 +103,6 @@ body {
   background-color: $bgLight;
   margin: 0;
   font-family: var(--bs-body-font-family);
-  font-size: var(--bs-body-font-size);
-  // font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
@@ -114,8 +112,6 @@ body {
 }
 #app {
   min-height: 100vh;
-  font-family: "Neometric Alt", -apple-system, "Neometric Alt", "Roboto",
-    "Arial", "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $colorDark;
@@ -141,7 +137,6 @@ body {
   padding: 30px;
 
   a {
-    // font-weight: bold;
     color: $colorDark;
 
     &.router-link-exact-active {
@@ -195,6 +190,7 @@ h6 {
 }
 .btn {
   border-radius: 50rem;
+  font-size: inherit;
 }
 .v-enter-active,
 .v-leave-active {
@@ -255,8 +251,7 @@ h1,
 .h1 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-family: var(--bs-body-font-family);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.2;
 }
 
@@ -354,7 +349,7 @@ ul ol {
 }
 
 dt {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 dd {
@@ -368,7 +363,7 @@ blockquote {
 
 b,
 strong {
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 small,
@@ -416,7 +411,6 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-body-font-family);
   font-size: 1em;
   direction: ltr /* rtl:ignore */;
   unicode-bidi: bidi-override;
@@ -454,7 +448,7 @@ kbd {
 kbd kbd {
   padding: 0;
   font-size: 1em;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 figure {
@@ -4516,7 +4510,7 @@ textarea.form-control.is-invalid {
   display: inline-block;
   padding: 0.35em 0.65em;
   font-size: 0.75em;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   color: #fff;
   text-align: center;
@@ -4541,7 +4535,7 @@ textarea.form-control.is-invalid {
 }
 
 .alert-link {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .alert-dismissible {
@@ -5355,7 +5349,6 @@ textarea.form-control.is-invalid {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: var(--bs-body-font-family);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5469,7 +5462,6 @@ textarea.form-control.is-invalid {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: var(--bs-body-font-family);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -7220,34 +7212,9 @@ textarea.form-control.is-invalid {
   padding-left: 3rem !important;
 }
 
-// .font-monospace {
-//   font-family: var(--bs-font-monospace) !important;
-// }
-
-.fs-1 {
-  font-size: calc(1.375rem + 1.5vw) !important;
+.font-monospace {
+  font-family: var(--bs-font-monospace) !important;
 }
-
-.fs-2 {
-  font-size: calc(1.325rem + 0.9vw) !important;
-}
-
-.fs-3 {
-  font-size: calc(1.3rem + 0.6vw) !important;
-}
-
-.fs-4 {
-  font-size: calc(1.275rem + 0.3vw) !important;
-}
-
-.fs-5 {
-  font-size: 1.25rem !important;
-}
-
-.fs-6 {
-  font-size: 1rem !important;
-}
-
 .fst-italic {
   font-style: italic !important;
 }
@@ -7261,7 +7228,7 @@ textarea.form-control.is-invalid {
 }
 
 .fw-lighter {
-  font-weight: lighter !important;
+  font-weight: 300 !important;
 }
 
 .fw-normal {
@@ -7273,7 +7240,7 @@ textarea.form-control.is-invalid {
 }
 
 .fw-bolder {
-  font-weight: bolder !important;
+  font-weight: 700 !important;
 }
 
 .lh-1 {
@@ -10867,23 +10834,6 @@ textarea.form-control.is-invalid {
 
   .text-xxl-center {
     text-align: center !important;
-  }
-}
-@media (min-width: 1200px) {
-  .fs-1 {
-    font-size: 2.5rem !important;
-  }
-
-  .fs-2 {
-    font-size: 2rem !important;
-  }
-
-  .fs-3 {
-    font-size: 1.75rem !important;
-  }
-
-  .fs-4 {
-    font-size: 1.5rem !important;
   }
 }
 @media print {

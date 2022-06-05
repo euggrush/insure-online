@@ -32,7 +32,6 @@ export default {};
   margin: 0;
   min-height: 100vh;
   background: #000;
-  font-family: sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,7 +66,6 @@ export default {};
       position: absolute;
       bottom: 0;
       left: 0;
-      font-size: 1em;
       white-space: nowrap;
     }
 
@@ -81,7 +79,6 @@ export default {};
         top: calc(100% - 2em);
         color: white;
         background: rgba(0, 0, 0, 0.5);
-        font-size: 2em;
         transform: rotate(0deg) skew(-5deg);
       }
     }

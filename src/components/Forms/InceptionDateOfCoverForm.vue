@@ -1,5 +1,8 @@
 <template>
-  <form class="inseption-date p-3 border border-danger rounded shadow-lg">
+  <form
+    class="inseption-date p-3 rounded shadow-lg"
+    :class="{ border: !datePicked, 'border-danger': !datePicked }"
+  >
     <label class="fw-bold" for="startDate">Set Inception Date Of Cover</label>
     <input
       id="startDate"
@@ -10,7 +13,6 @@
       @change="setInceptionDate"
       :min="today"
     />
-    <!-- <button type="submit" class="btn btn-outline-danger mt-3">Submit</button> -->
   </form>
 </template>
 
@@ -18,6 +20,7 @@
 export default {
   data() {
     return {
+      datePicked: false,
       inceptionDate: ``,
       today: new Date().toISOString().split("T")[0],
     };
@@ -33,6 +36,9 @@ export default {
       this.$store.commit(`SET_INSEPTION_DATE_OF_COVER`, {
         date: this.getTimeStamp(this.inceptionDate),
         isSet: true,
+      });
+      this.$nextTick(() => {
+        this.datePicked = true;
       });
     },
   },
