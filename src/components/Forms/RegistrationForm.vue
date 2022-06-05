@@ -40,7 +40,7 @@
       class="
         row
         needs-validation
-        estimation-form
+        registration-form
         mx-auto
         mt-5
         p-3
@@ -52,7 +52,7 @@
       autocomplete="off"
       @submit.prevent="createUserAccount"
     >
-      <p class="fw-bold text-white">Account Details:</p>
+      <h4 class="text-white">Sign Up</h4>
       <div class="col-md-6">
         <label for="validationCustom01" class="form-label mt-1 text-white"
           >First name</label
@@ -523,7 +523,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.estimation-form {
+.registration-form {
   width: 100%;
 
   @include media-breakpoint-up(md) {

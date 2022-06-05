@@ -11,7 +11,7 @@
   >
     <ModalMessage class="modal-error" />
 
-    <div class="signup-form">
+    <div class="login-form position-relative">
       <Transition name="bounce">
         <form
           v-if="show"
@@ -19,7 +19,8 @@
           autocomplete="off"
           @submit.prevent="login"
         >
-          <h2 class="text-white">Login</h2>
+
+          <h4 class="text-white">Login</h4>
           <hr />
           <div class="form-group">
             <div class="col">
@@ -53,10 +54,7 @@
             /></label>
           </div>
 
-          <div
-            v-if="this.$store.state.account_validation.isRequired"
-            class="form-group"
-          >
+          <div v-if="requireValidation" class="form-group">
             <input
               v-model="validationCode"
               type="text"
@@ -65,7 +63,6 @@
               required="required"
             />
           </div>
-
           <div class="form-group">
             <button
               type="submit"
@@ -78,6 +75,8 @@
               errorMsg
             }}</span>
           </div>
+                            <OtpInput class="position-absolute top-0 start-50 translate-middle-x" />
+
         </form>
       </Transition>
     </div>
@@ -86,10 +85,11 @@
 
 <script>
 import ModalMessage from "../Modals/ModalMessage.vue";
-
+import OtpInput from "../Partials/OtpInput.vue";
 export default {
   components: {
     ModalMessage,
+    OtpInput,
   },
   name: `Login`,
   data() {
@@ -185,60 +185,57 @@ export default {
 .btn {
   border-radius: 3px;
 }
-.signup-form {
+.login-form {
+  width: 100%;
   margin-top: 150px;
   margin-bottom: 150px;
-
-  @include media-breakpoint-up(sm) {
-    width: 400px;
-  }
   @include media-breakpoint-up(md) {
     width: 500px;
   }
 }
-.signup-form form {
+.login-form form {
   color: #999;
   border-radius: 3px;
   background: #fff;
   padding: 30px;
 }
-.signup-form h2 {
+.login-form h2 {
   color: #333;
   margin-top: 0;
 }
-.signup-form hr {
+.login-form hr {
   margin: 0 -30px 20px;
 }
-.signup-form .form-group {
+.login-form .form-group {
   margin-bottom: 20px;
 }
-.signup-form input[type="checkbox"] {
+.login-form input[type="checkbox"] {
   margin-top: 3px;
 }
-.signup-form .row div:first-child {
+.login-form .row div:first-child {
   padding-right: 10px;
 }
-.signup-form .row div:last-child {
+.login-form .row div:last-child {
   padding-left: 10px;
 }
-.signup-form .btn {
+.login-form .btn {
   min-width: 140px;
 }
-.signup-form a {
+.login-form a {
   color: #fff;
   text-decoration: underline;
 }
-.signup-form a:hover {
+.login-form a:hover {
   text-decoration: none;
 }
-.signup-form form a {
+.login-form form a {
   color: #3598dc;
   text-decoration: none;
 }
-.signup-form form a:hover {
+.login-form form a:hover {
   text-decoration: underline;
 }
-.signup-form .hint-text {
+.login-form .hint-text {
   padding-bottom: 15px;
   text-align: center;
 }
