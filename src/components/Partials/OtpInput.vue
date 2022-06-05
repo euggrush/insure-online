@@ -18,9 +18,8 @@
             v-for="(item, index) in 6"
             :key="index"
             class="m-2 text-center form-control rounded"
-            type="text"
+            type="number"
             :id="`input${index}`"
-            maxlength="1"
             required
           />
         </div>
@@ -37,10 +36,14 @@
 <script>
 let arr1 = [];
 const returnNumber = (arg) => {
+
   if (arg == ``) {
     arr1.pop(arg);
   } else {
     arr1.push(arg);
+    if (arr1.length >= 6) {
+      document.querySelector(`.validate`).focus();
+    }
   }
   return arg;
 };
