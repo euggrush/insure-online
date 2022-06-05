@@ -56,15 +56,6 @@
             /></label>
           </div>
 
-          <!-- <div v-if="requireValidation" class="form-group">
-            <input
-              v-model="validationCode"
-              type="text"
-              class="form-control shadow-lg"
-              placeholder="Validation Code"
-              required="required"
-            />
-          </div> -->
           <div class="form-group">
             <button
               type="submit"
@@ -79,7 +70,7 @@
             }}</span>
           </div>
           <OtpInput
-            v-if="requireValidation"
+            v-if="requireValidation && isFormDisabled"
             class="
               position-absolute
               top-0
@@ -117,16 +108,32 @@ export default {
   },
   watch: {
     requireValidation() {
-      this.isFormDisabled = true;
-      this.$store.commit(`SET_MODAL`, {
-        isModal: true,
-        msg: `Your account required validation. We have sent confirmation code to your email`,
-      });
+      if (
+        this.$store.state.account_validation.isRequired &&
+        !this.$store.state.validation_code.isSet
+      ) {
+        this.isFormDisabled = true;
+        this.$store.commit(`SET_MODAL`, {
+          isModal: true,
+          msg: `Your account required validation. We have sent confirmation code to your email`,
+        });
+      } else {
+        this.isFormDisabled = false;
+      }
+    },
+    isSetValidationCode() {
+      this.isFormDisabled = false;
     },
   },
   computed: {
     requireValidation() {
       return this.$store.state.account_validation.isRequired;
+    },
+    validationCodeData() {
+      return this.$store.state.validation_code.code;
+    },
+    isSetValidationCode() {
+      return this.$store.state.validation_code.isSet;
     },
   },
   mounted() {
@@ -160,7 +167,7 @@ export default {
         .dispatch("LOGIN", {
           email: this.email,
           password: this.password,
-          validationCode: this.validationCode,
+          validationCode: this.validationCodeData,
         })
         .then(() => {
           let myRole = this.$store.state.my_role;
