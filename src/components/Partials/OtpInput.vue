@@ -7,51 +7,27 @@
           to verify your account
         </h6>
         <div>
-          <span>A code has been sent to</span> <small>*******9897</small>
+          <span>A code has been sent to</span>
+          <small>{{ myProps.email }}</small>
         </div>
         <div
           id="otp"
           class="inputs d-flex flex-row justify-content-center mt-2"
         >
           <input
+            v-for="(item, index) in 6"
+            :key="index"
             class="m-2 text-center form-control rounded"
             type="text"
-            id="first"
+            :id="`input${index}`"
             maxlength="1"
-          />
-          <input
-            class="m-2 text-center form-control rounded"
-            type="text"
-            id="second"
-            maxlength="1"
-          />
-          <input
-            class="m-2 text-center form-control rounded"
-            type="text"
-            id="third"
-            maxlength="1"
-          />
-          <input
-            class="m-2 text-center form-control rounded"
-            type="text"
-            id="fourth"
-            maxlength="1"
-          />
-          <input
-            class="m-2 text-center form-control rounded"
-            type="text"
-            id="fifth"
-            maxlength="1"
-          />
-          <input
-            class="m-2 text-center form-control rounded"
-            type="text"
-            id="sixth"
-            maxlength="1"
+            required
           />
         </div>
         <div class="mt-4">
-          <button class="btn btn-danger px-4 validate">Validate</button>
+          <button class="btn btn-danger px-4 validate" @click="getOtpValue">
+            Validate
+          </button>
         </div>
       </div>
     </div>
@@ -59,29 +35,64 @@
 </template>
 
 <script>
+let arr1 = [];
+const returnNumber = (arg) => {
+  if (arg == ``) {
+    arr1.pop(arg);
+  } else {
+    arr1.push(arg);
+  }
+  return arg;
+};
 export default {
+  data() {
+    return {
+      otpCode: [],
+    };
+  },
+  props: {
+    myProps: {
+      type: Object,
+      default: () => {},
+    },
+  },
   mounted() {
     this.getOtpInput();
   },
   methods: {
+    getOtpValue(e) {
+      this.otpCode = [];
+      e.preventDefault();
+      this.otpCode = arr1.join(``);
+      if (this.otpCode.length > 0) {
+        this.$store.commit(`SET_VALIDATION_CODE`, {
+          isSet: true,
+          code: this.otpCode,
+        });
+      }
+    },
     getOtpInput() {
       const inputs = document.querySelectorAll("#otp > *[id]");
       for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("keydown", function (event) {
           if (event.key === "Backspace") {
             inputs[i].value = "";
+            returnNumber(inputs[i].value);
             if (i !== 0) inputs[i - 1].focus();
           } else {
             if (i === inputs.length - 1 && inputs[i].value !== "") {
               return true;
             } else if (event.keyCode > 47 && event.keyCode < 58) {
               inputs[i].value = event.key;
+              this;
               if (i !== inputs.length - 1) inputs[i + 1].focus();
               event.preventDefault();
+              returnNumber(inputs[i].value);
             } else if (event.keyCode > 64 && event.keyCode < 91) {
               inputs[i].value = String.fromCharCode(event.keyCode);
               if (i !== inputs.length - 1) inputs[i + 1].focus();
               event.preventDefault();
+              returnNumber(inputs[i].value);
             }
           }
         });
@@ -100,7 +111,6 @@ export default {
   border: none;
   height: 300px;
   box-shadow: 0px 5px 20px 0px #d2dae3;
-  // z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,8 +125,8 @@ export default {
   color: $colorBrick;
 }
 .inputs input {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
   @include media-breakpoint-up(md) {
     width: 40px;
     height: 40px;

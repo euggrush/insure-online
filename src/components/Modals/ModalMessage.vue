@@ -16,7 +16,7 @@
           <p class="text-black text-capitalize">{{ modalInfo.msg }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="closeModal">
+          <button type="button" class="btn btn-outline-danger" @click="closeModal">
             Ok
           </button>
         </div>

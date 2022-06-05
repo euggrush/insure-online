@@ -16,6 +16,7 @@
         <form
           v-if="show"
           class="bg-dark bg-gradient shadow-lg rounded"
+          :class="{ 'form-faded': isFormDisabled }"
           autocomplete="off"
           @submit.prevent="login"
         >
@@ -30,6 +31,7 @@
                 name="email"
                 placeholder="Email"
                 required="required"
+                :disabled="isFormDisabled"
               />
             </div>
           </div>
@@ -42,6 +44,7 @@
               name="password"
               placeholder="Password"
               required="required"
+              :disabled="isFormDisabled"
             />
             <label
               class="show-password-label position-absolute top-0 end-0"
@@ -53,7 +56,7 @@
             /></label>
           </div>
 
-          <div v-if="requireValidation" class="form-group">
+          <!-- <div v-if="requireValidation" class="form-group">
             <input
               v-model="validationCode"
               type="text"
@@ -61,12 +64,13 @@
               placeholder="Validation Code"
               required="required"
             />
-          </div>
+          </div> -->
           <div class="form-group">
             <button
               type="submit"
               class="btn btn-outline-danger btn-lg"
               :class="{ shake: disabled }"
+              :disabled="isFormDisabled"
             >
               Login
             </button>
@@ -75,7 +79,15 @@
             }}</span>
           </div>
           <OtpInput
-            class="position-absolute top-0 start-50 translate-middle-x"
+            v-if="requireValidation"
+            class="
+              position-absolute
+              top-0
+              start-50
+              translate-middle-x
+              mt-3 mt-md-0
+            "
+            :myProps="{ email: email }"
           />
         </form>
       </Transition>
@@ -94,6 +106,7 @@ export default {
   name: `Login`,
   data() {
     return {
+      isFormDisabled: false,
       show: false,
       email: ``,
       password: ``,
@@ -104,6 +117,7 @@ export default {
   },
   watch: {
     requireValidation() {
+      this.isFormDisabled = true;
       this.$store.commit(`SET_MODAL`, {
         isModal: true,
         msg: `Your account required validation. We have sent confirmation code to your email`,
@@ -311,5 +325,8 @@ export default {
   @include media-breakpoint-up(xl) {
     width: 34%;
   }
+}
+.form-faded {
+  background-color: rgba(0, 0, 0, 0.6) !important;
 }
 </style>

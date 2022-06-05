@@ -63,7 +63,11 @@ export const store = new Vuex.Store({
             isSet: false
         },
         payments: [],
-        current_payment: []
+        current_payment: [],
+        validation_code: {
+            isSet: false,
+            code: ``
+        }
     },
     plugins: [
         createLogger(),
@@ -189,6 +193,9 @@ export const store = new Vuex.Store({
         },
         SET_CURRENT_PAYMENT(state, payload) {
             state.current_payment = payload;
+        },
+        SET_VALIDATION_CODE(state, payload) {
+            state.validation_code = payload;
         }
     },
     actions: {
