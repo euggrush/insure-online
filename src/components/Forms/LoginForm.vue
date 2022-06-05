@@ -5,12 +5,11 @@
       d-flex
       flex-column
       align-items-center
-      reg-wrap
-      bg-secondary bg-gradient
+      login-wrap
       position-relative
     "
   >
-    <ModalMessage />
+    <ModalMessage class="modal-error" />
 
     <div class="signup-form">
       <Transition name="bounce">
@@ -70,7 +69,7 @@
           <div class="form-group">
             <button
               type="submit"
-              class="btn btn-outline-warning btn-lg"
+              class="btn btn-outline-danger btn-lg"
               :class="{ shake: disabled }"
             >
               Login
@@ -166,6 +165,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-wrap {
+  min-height: 100vh;
+  background: url($bgMainCar);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .form-control {
   height: 41px;
   background: #f2f2f2;
@@ -298,5 +304,15 @@ export default {
 }
 #show-password {
   display: none;
+}
+.modal-error {
+  width: 100%;
+  margin-top: 128px;
+  @include media-breakpoint-up(md) {
+    width: 44%;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 34%;
+  }
 }
 </style>

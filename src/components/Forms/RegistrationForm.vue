@@ -4,12 +4,11 @@
       container-fluid
       position-relative
       registration
-      bg-secondary bg-gradient
       pb-5
     "
   >
     <div
-      class="msg-popup position-absolute top-50 start-50 translate-middle"
+      class="msg-popup position-absolute top-0 start-50 translate-middle-x"
       tabindex="-1"
       v-if="isModal"
     >
@@ -37,6 +36,7 @@
       </div>
     </div>
     <form
+      :class="{ 'form-faded': isFormDisabled }"
       class="
         row
         needs-validation
@@ -49,6 +49,7 @@
         rounded
       "
       novalidate
+      autocomplete="off"
       @submit.prevent="createUserAccount"
     >
       <p class="fw-bold text-white">Account Details:</p>
@@ -64,6 +65,7 @@
           maxlength="15"
           v-model="userPayload.firstName"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter first name</div>
       </div>
@@ -79,6 +81,7 @@
           maxlength="15"
           v-model="userPayload.lastName"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter last name</div>
       </div>
@@ -94,6 +97,7 @@
           maxlength="100"
           v-model="userPayload.address"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please provide a valid postal code</div>
       </div>
@@ -106,6 +110,7 @@
           id="validationCustom04"
           required
           v-model="userPayload.countryOfResidence"
+          :disabled="isFormDisabled"
         >
           <option selected disabled value="">Choose...</option>
           <option value="South Africa">South Africa</option>
@@ -122,6 +127,7 @@
           id="validationCustom05"
           v-model="userPayload.phoneNumber"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please provide a valid number.</div>
       </div>
@@ -135,6 +141,7 @@
           id="validationCustom06"
           v-model="userPayload.cellphone"
           required
+          :disabled="isFormDisabled"
         />
       </div>
       <div class="col-md-4">
@@ -149,6 +156,7 @@
           maxlength="15"
           v-model="userPayload.clientIdNumber"
           required
+          :disabled="isFormDisabled"
         />
       </div>
       <div class="col-md-4">
@@ -177,6 +185,7 @@
           id="validationCustom09"
           v-model="userPayload.yearOfIssueDriverLicense"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter a year.</div>
       </div>
@@ -191,6 +200,7 @@
           maxlength="50"
           v-model="userPayload.previousInsurer"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter your previous insurer.</div>
       </div>
@@ -206,6 +216,7 @@
           v-model="birth"
           placeholder="DD.MM.YYYY"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter your date of birth</div>
       </div>
@@ -219,6 +230,7 @@
           maxlength="1000"
           v-model="userPayload.claimsHistory"
           required
+          :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please enter your claims history.</div>
       </div>
@@ -235,6 +247,7 @@
             aria-describedby="inputGroupPrepend"
             v-model="userPayload.email"
             required
+            :disabled="isFormDisabled"
           />
           <div class="invalid-feedback">Please enter email</div>
         </div>
@@ -277,6 +290,7 @@
             v-model="userPayload.password"
             minlength="8"
             required
+            :disabled="isFormDisabled"
             @input="checkPassword"
           />
 
@@ -286,7 +300,13 @@
         </div>
       </div>
       <div class="col-12 mt-3">
-        <button class="btn btn-outline-danger" type="submit">Create</button>
+        <button
+          class="btn btn-outline-danger"
+          type="submit"
+          :disabled="isFormDisabled"
+        >
+          Create
+        </button>
       </div>
     </form>
   </section>
@@ -307,6 +327,7 @@ export default {
       },
       passwordStrengthMsg: ``,
       isModal: false,
+      isFormDisabled: false,
       modalMsg: ``,
       isUserCreated: false,
       birth: ``,
@@ -395,6 +416,7 @@ export default {
     },
     closeModal() {
       this.isModal = false;
+      this.isFormDisabled = false;
       if (this.isUserCreated) {
         setTimeout(() => {
           this.isUserCreated = false;
@@ -471,14 +493,17 @@ export default {
             if (this.$store.state.new_user.accountId) {
               this.modalMsg = `Account created, please login with your email and password`;
               this.isModal = true;
+              this.isFormDisabled = true;
               this.resetForm();
               this.isUserCreated = true;
+              this.scrollToTop();
             } else {
               setTimeout(() => {
                 this.modalMsg =
                   this.$store.state.new_user.response.data.message ??
                   `Oops, something went wrong`;
                 this.isModal = true;
+                this.isFormDisabled = true;
                 this.isUserCreated = false;
               }, 1000);
             }
@@ -493,9 +518,10 @@ export default {
 <style lang="scss" scoped>
 .registration {
   padding-top: 9em;
-}
-.container {
-  min-height: calc(100vh - 7.3em);
+  background: url($bgMainCar);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .estimation-form {
   width: 100%;
@@ -508,7 +534,11 @@ export default {
   }
 }
 .msg-popup {
-  min-width: 60%;
+  width: 90%;
+  margin-top: 142px;
+  @include media-breakpoint-up(md) {
+    width: 60%;
+  }
 }
 .btn {
   min-width: 10em;
@@ -524,5 +554,8 @@ export default {
 }
 .visible {
   background-image: url("../../assets/img/icon-eye.png");
+}
+.form-faded {
+  background-color: rgba(0, 0, 0, 0.4) !important;
 }
 </style>
