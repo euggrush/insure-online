@@ -65,15 +65,25 @@
           <div class="input-group mt-3">
             <button
               type="submit"
-              class="btn btn-outline-danger btn-lg"
+              class="btn btn-outline-danger rounded-pill login-btn"
               :class="{ shake: disabled }"
               :disabled="isFormDisabled"
             >
               Login
             </button>
-            <span v-if="disabled" class="ms-3 text-danger fw-bold">{{
-              errorMsg
-            }}</span>
+            <span
+              v-if="disabled"
+              class="
+                mt-3 mt-md-0
+                ms-md-3
+                text-danger
+                d-block
+                fw-bold
+                login-err-msg
+                text-break
+              "
+              >{{ errorMsg }}</span
+            >
           </div>
           <OtpInput
             v-if="requireValidation && isFormDisabled"
@@ -184,6 +194,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-btn {
+  width: 100%;
+  @include media-breakpoint-up(md) {
+    width: 25%;
+  }
+}
+.login-err-msg {
+  width: 100%;
+  @include media-breakpoint-up(md) {
+    width: 70%;
+  }
+}
 .login-wrap {
   min-height: 100vh;
   background: url($bgMainCar);
@@ -200,8 +222,7 @@ export default {
 .form-control:focus {
   background: #e2e2e2;
 }
-.form-control,
-.btn {
+.form-control {
   border-radius: 3px;
 }
 .login-form {
@@ -234,9 +255,6 @@ export default {
 .login-form .row div:last-child {
   padding-left: 10px;
 }
-.login-form .btn {
-  min-width: 140px;
-}
 .login-form a {
   color: #fff;
   text-decoration: underline;
@@ -254,9 +272,6 @@ export default {
 .login-form .hint-text {
   padding-bottom: 15px;
   text-align: center;
-}
-.btn {
-  border-radius: 50rem;
 }
 .shake {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
