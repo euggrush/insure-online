@@ -20,6 +20,7 @@ export default {
     Footer,
   },
   created() {
+    this.getUrlParams();
     axios.interceptors.response.use(undefined, function (err) {
       // eslint-disable-next-line no-unused-vars
       return new Promise(function (_resolve, _reject) {
@@ -29,6 +30,18 @@ export default {
         throw err;
       });
     });
+  },
+  methods: {
+    getUrlParams() {
+      let queryString = window.location.search;
+      let params = new URLSearchParams(queryString);
+      let act = params.get("act");
+      let token = params.get("token");
+      console.log(act, token);
+      if (act == `resetPassword`) {
+        this.$router.push(`/new-password`);
+      }
+    },
   },
 };
 </script>
@@ -6092,15 +6105,6 @@ textarea.form-control.is-invalid {
 .link-danger:focus {
   color: #b02a37;
 }
-
-.link-light {
-  color: #f8f9fa;
-}
-.link-light:hover,
-.link-light:focus {
-  color: #f9fafb;
-}
-
 .link-dark {
   color: #212529;
 }

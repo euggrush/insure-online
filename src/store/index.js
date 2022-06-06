@@ -67,7 +67,8 @@ export const store = new Vuex.Store({
         validation_code: {
             isSet: false,
             code: ``
-        }
+        },
+        reset_password: []
     },
     plugins: [
         createLogger(),
@@ -196,6 +197,9 @@ export const store = new Vuex.Store({
         },
         SET_VALIDATION_CODE(state, payload) {
             state.validation_code = payload;
+        },
+        SET_PASSWORD_RESET(state, payload) {
+            state.reset_password = payload;
         }
     },
     actions: {
@@ -436,6 +440,17 @@ export const store = new Vuex.Store({
                 resp => {
                     let data = resp.data;
                     context.commit(`SET_CURRENT_PAYMENT`, data);
+                }
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
+        },
+        RESET_PASSWORD: async (context, payload) => {
+            await Axios.post(`${BASE_URL}/resetPassword`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_PASSWORD_RESET`, data);
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);

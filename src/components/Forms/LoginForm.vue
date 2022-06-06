@@ -85,6 +85,9 @@
               >{{ errorMsg }}</span
             >
           </div>
+          <router-link to="/reset-password" class="d-block link-light mt-3"
+            >Forgot password?</router-link
+          >
           <OtpInput
             v-if="requireValidation && isFormDisabled"
             class="
@@ -114,7 +117,6 @@ export default {
   data() {
     return {
       passwordInputType: `password`,
-
       isFormDisabled: false,
       show: false,
       email: ``,
@@ -261,13 +263,6 @@ export default {
 }
 .login-form a:hover {
   text-decoration: none;
-}
-.login-form form a {
-  color: #3598dc;
-  text-decoration: none;
-}
-.login-form form a:hover {
-  text-decoration: underline;
 }
 .login-form .hint-text {
   padding-bottom: 15px;

@@ -16,6 +16,8 @@ import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 import PayPalPage from "../components/PaymentSystem/PayPalPage.vue";
 import YocoPayment from "../components/PaymentSystem/YocoPage.vue";
 import AboutUs from "../components/Partials/AboutUs";
+import ResetPasswordForm from "../components/Forms/ResetPasswordForm.vue";
+import NewPasswordGenerate from "../components/Partials/NewPasswordGenerate.vue";
 
 const isTokenExpired = (tokenExpiration) => {
   const dayjs = require("dayjs");
@@ -29,12 +31,18 @@ const isTokenExpired = (tokenExpiration) => {
 
 const routes = [{
     path: '/login',
-    name: 'Login',
     component: LoginForm
   },
   {
+    path: '/reset-password',
+    component: ResetPasswordForm
+  },
+  {
+    path: '/new-password',
+    component: NewPasswordGenerate
+  },
+  {
     path: '/',
-    name: 'Home',
     component: Home
   },
   {
