@@ -42,7 +42,10 @@ export const store = new Vuex.Store({
             msg: ``
         },
         uploaded_file: [],
-        general_errors: {},
+        general_errors: {
+            isError: false,
+            errorData: {}
+        },
         modals_toggle: {
             isEditVehicleOpen: false
         },
@@ -97,17 +100,20 @@ export const store = new Vuex.Store({
         },
         SET_GENERAL_ERRORS(state, payload) {
             if (payload.response) {
-                state.general_errors = {
+                state.general_errors.isError = true;
+                state.general_errors.errorData = {
                     data: payload.response.data,
                     status: payload.response.status,
                     headers: payload.response.headers
                 }
             } else if (payload.request) {
-                state.general_errors = {
+                state.general_errors.isError = true;
+                state.general_errors.errorData = {
                     request: payload.request
                 }
             } else {
-                state.general_errors = {
+                state.general_errors.isError = true;
+                state.general_errors.errorData = {
                     error: payload.message
                 }
             }
@@ -451,10 +457,14 @@ export const store = new Vuex.Store({
                 resp => {
                     let data = resp.data;
                     context.commit(`SET_PASSWORD_RESET`, data);
+                    context.commit(`SET_GENERAL_ERRORS`, {
+                        isError: false,
+                        errorData: {}
+                    });
+
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
-                alert(`Something went wrong. Please, try again later.`);
             })
         }
     },

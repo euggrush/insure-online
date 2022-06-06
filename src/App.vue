@@ -36,8 +36,6 @@ export default {
       let queryString = window.location.search;
       let params = new URLSearchParams(queryString);
       let act = params.get("act");
-      let token = params.get("token");
-      console.log(act, token);
       if (act == `resetPassword`) {
         this.$router.push(`/new-password`);
       }

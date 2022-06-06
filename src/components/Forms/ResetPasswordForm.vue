@@ -15,6 +15,9 @@
       <div v-if="isEmailed" class="alert alert-success" role="alert">
         We have emailed your password reset link. You can close this page now.
       </div>
+      <div v-else-if="isError" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
       <h3><i class="fa fa-lock fa-4x"></i></h3>
       <h2 class="text-center">Forgot Password?</h2>
       <p>You can reset your password here.</p>
@@ -52,8 +55,13 @@ export default {
   data() {
     return {
       isEmailed: false,
+      isError: false,
+      errorMessage: `Something went wrong please try again later.`,
       email: ``,
     };
+  },
+  mounted() {
+    this.scrollToTop();
   },
   methods: {
     getResetLink() {
@@ -62,8 +70,18 @@ export default {
           email: this.email,
         })
         .then(() => {
-          this.isEmailed = true;
-          this.email = ``;
+          this.scrollToTop();
+          setTimeout(() => {
+            if (this.$store.state.general_errors.isError) {
+              this.isError = true;
+              this.isEmailed = false;
+              this.errorMessage =
+                this.$store.state.general_errors.errorData.data.message;
+            } else {
+              this.isEmailed = true;
+              this.email = ``;
+            }
+          }, 1000);
         });
     },
   },
