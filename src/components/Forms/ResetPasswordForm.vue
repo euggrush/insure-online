@@ -72,12 +72,12 @@ export default {
 
 <style lang="scss" scoped>
 .container-fluid {
-  min-height: 100vh;
   background: url($bgMainCar);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 150px;
+  padding-bottom: 150px;
 }
 .reset-form {
   width: 100%;
