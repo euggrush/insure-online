@@ -209,11 +209,13 @@ export default {
   }
 }
 .login-wrap {
-  min-height: 100vh;
+  min-height: 80vh;
   background: url($bgMainCar);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  padding-top: 150px;
+  padding-bottom: 150px;
 }
 .form-control {
   height: 40px;
@@ -229,8 +231,6 @@ export default {
 }
 .login-form {
   width: 100%;
-  margin-top: 150px;
-  margin-bottom: 150px;
   @include media-breakpoint-up(md) {
     width: 500px;
   }
