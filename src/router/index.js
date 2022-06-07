@@ -11,13 +11,12 @@ import AdminPanel from '../views/AdminPanel/AdminPanel.vue';
 import InsurancePage from '../views/InsurancePage/InsurancePage.vue';
 import NotFound from '../components/Errors/404.vue';
 import RegistrationForm from '../components/Forms/RegistrationForm.vue';
-import MyAccount from '../views/ClientSide/MyAccount.vue';
-import MyOrdersPage from '../views/ClientSide/MyOrdersPage';
 import PayPalPage from "../components/PaymentSystem/PayPalPage.vue";
 import YocoPayment from "../components/PaymentSystem/YocoPage.vue";
 import AboutUs from "../components/Partials/AboutUs";
 import ResetPasswordForm from "../components/Forms/ResetPasswordForm.vue";
 import NewPasswordGenerate from "../components/Partials/NewPasswordGenerate.vue";
+import ClientPortal from "../views/ClientSide/ClientPortal.vue";
 
 const isTokenExpired = (tokenExpiration) => {
   const dayjs = require("dayjs");
@@ -54,17 +53,8 @@ const routes = [{
     component: InsurancePage
   },
   {
-    path: '/my-account',
-    component: MyAccount,
-    meta: {
-      requiresAuth: true,
-      adminAuth: false,
-      residentAuth: true
-    }
-  },
-  {
-    path: '/my-quotes',
-    component: MyOrdersPage,
+    path: '/my-portal',
+    component: ClientPortal,
     meta: {
       requiresAuth: true,
       adminAuth: false,

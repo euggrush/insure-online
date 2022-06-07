@@ -184,7 +184,7 @@ export default {
           if (myRole === `admin`) {
             this.$router.push(`/admin-panel`);
           } else {
-            this.$router.push(`/my-account`);
+            this.$router.push(`/my-portal`);
           }
         })
         .catch((err) => {

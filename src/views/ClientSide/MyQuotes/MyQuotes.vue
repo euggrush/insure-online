@@ -3,9 +3,6 @@
     class="container-fluid my-order position-relative bg-secondary bg-gradient"
   >
     <ModalMessage />
-    <router-link to="/my-account" class="btn btn-outline-dark"
-      >Back to my account</router-link
-    >
     <hr />
     <button
       class="btn btn-dark mt-1"
@@ -218,25 +215,18 @@
         v-if="showMyQuites"
       />
     </Transition>
-    <button class="btn btn-dark mt-3" @click="showMyOrders = !showMyOrders">
-      Show My Orders
-    </button>
-    <Transition>
-      <MyOrdersList class="mt-3" v-if="showMyOrders" />
-    </Transition>
+    
   </section>
 </template>
 
 <script>
-import { CAR_INSURANCE_CATEGORY } from "../../constants";
-import MyOrdersList from "./MyOrdersList.vue";
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
-import MyEstimationsList from "./MyEstimationsList.vue";
-import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
+import { CAR_INSURANCE_CATEGORY } from "../../../constants";
+import ModalMessage from "../../../components/Modals/ModalMessage.vue";
+import MyEstimationsList from "../MyEstimationsList.vue";
+import InceptionDateOfCoverForm from "../../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
   components: {
-    MyOrdersList,
     ModalMessage,
     MyEstimationsList,
     InceptionDateOfCoverForm,

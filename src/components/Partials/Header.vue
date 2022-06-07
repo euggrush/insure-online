@@ -49,7 +49,7 @@
             class="nav-item"
           >
             <button
-              class="logout-btn btn btn-outline-warning rounded-pill"
+              class="logout-btn btn btn-outline-danger rounded-pill"
               type="button"
               @click="logout"
             >
@@ -114,12 +114,12 @@ export default {
     margin: 0 2em 0 4em;
   }
 }
-.logout-btn {
-  background-image: url("../../assets/img/exit.svg");
-  background-size: 27px 27px;
-  background-repeat: no-repeat;
-  background-position: 95% center;
-}
+// .logout-btn {
+//   background-image: url("../../assets/img/exit.svg");
+//   background-size: 27px 27px;
+//   background-repeat: no-repeat;
+//   background-position: 95% center;
+// }
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;

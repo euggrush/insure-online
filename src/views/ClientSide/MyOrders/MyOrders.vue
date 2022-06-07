@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import MyOrderView from "../ClientSide/MyOrderView.vue";
+import MyOrderView from "../MyOrderView.vue";
 // import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
@@ -209,7 +209,7 @@ export default {
 .btn-pdf {
   min-width: 100%;
   border-radius: 0;
-  background-image: url("../../assets/img/icon-pdf.png");
+  // background-image: url("../../assets/img/icon-pdf.png");
   background-size: 27px 27px;
   background-repeat: no-repeat;
   background-position: 5% center;
@@ -219,9 +219,9 @@ export default {
     min-width: 11em;
   }
 }
-.btn-pdf:hover {
-  background-image: url("../../assets/img/icon-pdf.svg");
-}
+// .btn-pdf:hover {
+//   background-image: url("../../assets/img/icon-pdf.svg");
+// }
 .inception-date-wrap {
   width: 100%;
   height: 200px;

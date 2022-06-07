@@ -1,15 +1,9 @@
 <template>
-  <section
-    class="
-      container-fluid
-      my-account
-      position-relative
-      bg-secondary bg-gradient
-    "
-  >
-    <div class="m-5 my-account_info d-flex flex-wrap justify-content-lg-between">
+  <section class="my-account position-relative">
+    <div
+      class="m-5 my-account_info d-flex flex-wrap justify-content-lg-between"
+    >
       <div class="my-account_one d-flex flex-column align-items-center">
-        <router-link to="/my-quotes" class="btn btn-outline-dark w-100 mt-3">Quotes</router-link>
         <label for="formFile" class="form-label user-avatar-wrap">
           <img
             id="avatar"
@@ -78,180 +72,42 @@
         </table>
       </div>
     </div>
-    <p class="mt-3 pb-3 border-bottom">
-      <button
-        class="btn btn-dark text-capitalize"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        Edit my account details
-      </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-      <form
-        @submit.prevent="changeAccount()"
-        class="card card-body bg-dark bg-gradient shadow-lg text-white mb-3"
-        style="width: 300px"
-      >
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >First name:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.firstName"
-            v-model="changeUserObj.firstName"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Last name:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.lastName"
-            v-model="changeUserObj.lastName"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Date of birth:</span
-          >
-          <input class="form-control" type="date" v-model="dateOfBirth" />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg">Address:</span>
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.address"
-            v-model="changeUserObj.address"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Cellphone:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.cellphone"
-            v-model="changeUserObj.cellphone"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Home phone:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.phoneNumber"
-            v-model="changeUserObj.phoneNumber"
-          />
-        </label>
-        <select
-          class="form-select mt-3"
-          aria-label="Default select example"
-          v-model="changeUserObj.maritalStatus"
-        >
-          <option value="" selected>Select marital status</option>
-          <option value="Single">Single</option>
-          <option value="Married">Married</option>
-        </select>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Country Of Residence:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.countryOfResidence"
-            v-model="changeUserObj.countryOfResidence"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Previous Insurer:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.previousInsurer"
-            v-model="changeUserObj.previousInsurer"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Year of issue driver license:</span
-          >
-          <input
-            class="form-control"
-            type="number"
-            :placeholder="myAccountInfo.yearOfIssueDriverLicense"
-            v-model="changeUserObj.yearOfIssueDriverLicense"
-          />
-        </label>
-        <label>
-          <span class="fw-light text-decoration-underline lh-lg"
-            >Claims history:</span
-          >
-          <input
-            class="form-control"
-            type="text"
-            :placeholder="myAccountInfo.claimsHistory"
-            v-model="changeUserObj.claimsHistory"
-          />
-        </label>
-        <button type="submit" class="btn btn-outline-warning mt-3">
-          Submit
-        </button>
-      </form>
-    </div>
-    <MyVehicles />
+    <button
+      class="btn btn-dark"
+      type="button"
+      @click="showAccountEdit = !showAccountEdit"
+    >
+      Edit my account details
+    </button>
+    <Transition>
+      <EditAccountForm
+        v-if="showAccountEdit"
+        :myProps="{ myAccountInfo: myAccountInfo }"
+      />
+    </Transition>
+
     <ModalMessage />
   </section>
 </template>
 
 <script>
-import { FILE_URL, DEFAULT_AVATAR } from "../../constants";
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
-import MyVehicles from "./MyVehicles.vue";
+import { FILE_URL, DEFAULT_AVATAR } from "../../../constants";
+import ModalMessage from "../../../components/Modals/ModalMessage.vue";
+import EditAccountForm from "../../../components/Forms/EditForms/EditAccountForm.vue";
 
 export default {
   components: {
-    MyVehicles,
     ModalMessage,
+    EditAccountForm,
   },
   data() {
     return {
+      showAccountEdit: false,
       FILE_URL: FILE_URL,
       showInput: false,
       avatar: DEFAULT_AVATAR,
-      dateOfBirth: ``,
       accountId: ``,
-      changeUserObj: {
-        avatar: ``,
-        accountId: ``,
-        firstName: ``,
-        lastName: ``,
-        birthDate: ``,
-        address: ``,
-        cellphone: ``,
-        phoneNumber: ``,
-        maritalStatus: ``,
-        countryOfResidence: ``,
-        previousInsurer: ``,
-        yearOfIssueDriverLicense: ``,
-        overnightParkingVehicle: ``,
-        claimsHistory: ``,
-        myInfo: [],
-      },
+      
     };
   },
   computed: {
@@ -357,20 +213,7 @@ export default {
           });
         });
     },
-    changeAccount() {
-      this.changeUserObj.accountId = this.accountId;
-      this.changeUserObj.birthDate = this.getTimeStamp(this.dateOfBirth);
-      this.$store
-        .dispatch(`MODIFY_USER`, this.changeUserObj)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          this.scrollToTop()
-        )
-        .catch((err) => console.log(err))
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-        );
-    },
+  
   },
 };
 </script>
@@ -378,17 +221,6 @@ export default {
 <style lang="scss" scoped>
 .btn {
   min-width: 10em;
-}
-.my-account {
-  min-height: calc(100vh - 10em);
-  background-image: url($mainBg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding-top: 10.4em;
-  padding-bottom: 3em;
-  @include media-breakpoint-up(md) {
-    padding-top: 8em;
-  }
 }
 .my-account_info {
   outline: solid 6px red;
@@ -444,7 +276,7 @@ li {
 }
 .user-avatar-wrap:hover {
   outline: solid 1px #212529;
-  background-image: url("../../assets/img/icon-change-avatar.png");
+  background-image: url("../../../assets/img/icon-change-avatar.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100px 100px;
@@ -475,5 +307,15 @@ li {
   @include media-breakpoint-up(xxl) {
     min-height: 445px;
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

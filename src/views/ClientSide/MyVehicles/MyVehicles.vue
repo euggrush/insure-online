@@ -221,10 +221,10 @@
 </template>
 
 <script>
-import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
-import EditVehicleForm from "../../components/Forms/EditVehicleForm.vue";
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
-import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
+import CreateVehicleForm from "../../../components/Forms/CreateVehicleForm.vue";
+import EditVehicleForm from "../../../components/Forms/EditVehicleForm.vue";
+import ModalMessage from "../../../components/Modals/ModalMessage.vue";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
 
 export default {
   components: {
@@ -428,7 +428,7 @@ export default {
 }
 .car-photo-wrap:hover {
   outline: solid 1px #212529;
-  background-image: url("../../assets/img/icon-change-avatar.png");
+  // background-image: url("../../assets/img/icon-change-avatar.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100px 100px;
