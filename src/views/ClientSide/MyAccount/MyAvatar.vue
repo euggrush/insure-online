@@ -33,10 +33,14 @@ export default {
   computed: {
     getMyAvatarUrl() {
       let avatarUrl = ``;
-      if (this.$store.state.users_array.accounts[0].avatar == ``) {
+      if (
+        this.$store.state.users_array.accounts &&
+        this.$store.state.users_array.accounts[0].avatar !== ``
+      ) {
+        avatarUrl = this.$store.state.users_array.accounts[0].avatar;
+      } else {
         avatarUrl = DEFAULT_AVATAR;
       }
-      avatarUrl = this.$store.state.users_array.accounts[0].avatar;
       return avatarUrl;
     },
   },

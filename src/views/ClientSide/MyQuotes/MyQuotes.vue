@@ -1,6 +1,6 @@
 <template>
   <section
-    class="container-fluid my-order position-relative bg-secondary bg-gradient"
+    class="my-quotes position-relative"
   >
     <ModalMessage />
     <hr />
@@ -210,7 +210,7 @@
       Show My Quotes
     </button>
     <Transition>
-      <MyEstimationsList
+      <MyQuotesList
         @createdOrderConfirm="createOrder"
         v-if="showMyQuites"
       />
@@ -222,13 +222,13 @@
 <script>
 import { CAR_INSURANCE_CATEGORY } from "../../../constants";
 import ModalMessage from "../../../components/Modals/ModalMessage.vue";
-import MyEstimationsList from "../MyEstimationsList.vue";
+import MyQuotesList from "./MyQuotesList.vue";
 import InceptionDateOfCoverForm from "../../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
   components: {
     ModalMessage,
-    MyEstimationsList,
+    MyQuotesList,
     InceptionDateOfCoverForm,
   },
   data() {
@@ -373,17 +373,18 @@ export default {
 .btn {
   min-width: 10em;
 }
-.my-order {
+.my-quotes {
   min-height: calc(100vh - 10em);
+  outline: solid 5px orange;
   // background-color: grey;
-  background-image: url($mainBg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding-top: 10.4em;
-  padding-bottom: 3em;
-  @include media-breakpoint-up(md) {
-    padding-top: 8em;
-  }
+  // background-image: url($mainBg);
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
+  // padding-top: 10.4em;
+  // padding-bottom: 3em;
+  // @include media-breakpoint-up(md) {
+  //   padding-top: 8em;
+  // }
 }
 .order-create-popup {
   min-width: 300px;

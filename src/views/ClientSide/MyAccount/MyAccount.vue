@@ -4,7 +4,7 @@
       class="m-5 my-account_info d-flex flex-wrap justify-content-lg-between"
     >
       <div class="my-account_one d-flex flex-column align-items-center">
-        <MyAvatar/>
+        <MyAvatar />
         <h2 class="text-center">
           {{ myAccountInfo.firstName }} {{ myAccountInfo.lastName }}
         </h2>
@@ -81,7 +81,8 @@ import MyAvatar from "./MyAvatar.vue";
 export default {
   components: {
     ModalMessage,
-    EditAccountForm,MyAvatar
+    EditAccountForm,
+    MyAvatar,
   },
   data() {
     return {
@@ -91,7 +92,6 @@ export default {
   computed: {
     myAccountInfo() {
       if (this.$store.state.users_array.accounts) {
-        
         return this.$store.state.users_array.accounts[0];
       }
       return [];

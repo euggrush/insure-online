@@ -119,7 +119,7 @@
           </div>
         </div>
 
-        <MyOrderView
+        <MyOrderSingle
           v-if="isOrderModal == order.orderId"
           :myProps="{ order: order }"
           @closeOrderView="closeOrderModal"
@@ -130,12 +130,12 @@
 </template>
 
 <script>
-import MyOrderView from "../MyOrderView.vue";
+import MyOrderSingle from "./MyOrderSingle.vue";
 // import InceptionDateOfCoverForm from "../../components/Forms/InceptionDateOfCoverForm.vue";
 
 export default {
   components: {
-    MyOrderView,
+    MyOrderSingle,
     // InceptionDateOfCoverForm,
   },
   data() {

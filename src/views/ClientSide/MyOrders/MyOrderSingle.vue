@@ -269,8 +269,8 @@
 </template>
 
 <script>
-import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
-import ModalMessage from "../../components/Modals/ModalMessage.vue";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
+import ModalMessage from "../../../components/Modals/ModalMessage.vue";
 
 export default {
   components: { ModalMessage },
@@ -430,7 +430,7 @@ export default {
 <style lang="scss" scoped>
 .car-photo-wrap:hover {
   outline: solid 1px #212529;
-  background-image: url("../../assets/img/icon-change-avatar.png");
+  background-image: url("../../../assets/img/icon-change-avatar.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100px 100px;
