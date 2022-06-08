@@ -16,8 +16,16 @@
         </p>
         <hr />
       </div>
-      <div class="my-account_two p-5">
-        <table class="table">
+      <div class="my-account_two">
+        <button
+          class="btn btn-outline-dark w-100"
+          type="button"
+          @click="toggleAcountDetails"
+        >
+          Edit my account details
+        </button>
+        <hr />
+        <table v-if="showMyInfo" class="table w-75 mx-auto mt-5">
           <tbody>
             <tr>
               <th scope="row">Cell</th>
@@ -53,21 +61,14 @@
             </tr>
           </tbody>
         </table>
+        <Transition>
+          <EditAccountForm
+            v-if="showAccountEdit"
+            :myProps="{ myAccountInfo: myAccountInfo }"
+          />
+        </Transition>
       </div>
     </div>
-    <button
-      class="btn btn-dark"
-      type="button"
-      @click="showAccountEdit = !showAccountEdit"
-    >
-      Edit my account details
-    </button>
-    <Transition>
-      <EditAccountForm
-        v-if="showAccountEdit"
-        :myProps="{ myAccountInfo: myAccountInfo }"
-      />
-    </Transition>
 
     <ModalMessage />
   </section>
@@ -87,7 +88,13 @@ export default {
   data() {
     return {
       showAccountEdit: false,
+      showMyInfo: true,
     };
+  },
+  watch: {
+    isChangesNeeded() {
+      this.fetchAccountInfo();
+    },
   },
   computed: {
     myAccountInfo() {
@@ -96,9 +103,21 @@ export default {
       }
       return [];
     },
+    isChangesNeeded() {
+      return this.$store.state.is_changes_needed;
+    },
   },
   mounted() {
-    this.$store.dispatch(`GET_USERS`, ``);
+    this.fetchAccountInfo();
+  },
+  methods: {
+    fetchAccountInfo() {
+      this.$store.dispatch(`GET_USERS`, ``);
+    },
+    toggleAcountDetails() {
+      this.showAccountEdit = !this.showAccountEdit;
+      this.showMyInfo = !this.showMyInfo;
+    },
   },
 };
 </script>
@@ -107,20 +126,14 @@ export default {
 .btn {
   min-width: 10em;
 }
-.my-account_info {
-  outline: solid 6px red;
-}
 .my-account_one {
   width: 100%;
   @include media-breakpoint-up(lg) {
     width: 45%;
   }
-
-  outline: solid 6px blue;
 }
 .my-account_two {
   width: 100%;
-    outline: solid 6px green;
   @include media-breakpoint-up(lg) {
     width: 45%;
   }

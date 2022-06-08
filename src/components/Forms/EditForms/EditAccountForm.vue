@@ -1,8 +1,7 @@
 <template>
   <form
     @submit.prevent="changeAccount()"
-    class="card card-body bg-dark bg-gradient shadow-lg text-white mb-3"
-    style="width: 300px"
+    class="card card-body bg-secondary bg-gradient shadow-lg text-white"
   >
     <label>
       <span class="fw-light text-decoration-underline lh-lg">First name:</span>
@@ -108,7 +107,7 @@
         v-model="changeUserObj.claimsHistory"
       />
     </label>
-    <button type="submit" class="btn btn-outline-warning mt-3">Submit</button>
+    <button type="submit" class="btn btn-outline-danger btn-lg mt-3">Submit</button>
   </form>
 </template>
 
@@ -153,18 +152,20 @@ export default {
       this.changeUserObj.birthDate = this.getTimeStamp(this.dateOfBirth);
       this.$store
         .dispatch(`MODIFY_USER`, this.changeUserObj)
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`),
-          this.scrollToTop()
-        )
-        .catch((err) => console.log(err))
-        .then(
-          this.$store.dispatch(`GET_USERS`, `?accountId=${this.accountId}`)
-        );
+        .then(this.scrollToTop())
+        .catch((err) => console.log(err));
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.btn-outline-danger {
+  color: $colorBrick;
+  border-color: $colorBrick;
+}
+.btn-outline-danger:hover {
+  color: $colorWhite;
+  background-color: $colorBrick;
+}
 </style>

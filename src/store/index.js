@@ -71,7 +71,8 @@ export const store = new Vuex.Store({
             isSet: false,
             code: ``
         },
-        reset_password: []
+        reset_password: [],
+        is_changes_needed: false,
     },
     plugins: [
         createLogger(),
@@ -206,7 +207,10 @@ export const store = new Vuex.Store({
         },
         SET_PASSWORD_RESET(state, payload) {
             state.reset_password = payload;
-        }
+        },
+        SET_NEEDED_CHANGES(state, payload) {
+            state.is_changes_needed = !state.is_changes_needed;
+        },
     },
     actions: {
         LOGIN({
@@ -291,7 +295,12 @@ export const store = new Vuex.Store({
             context.commit('SET_USERS_ARRAY', data);
         },
         MODIFY_USER: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/accounts`, payload).catch((error) => {
+            await Axios.post(`${BASE_URL}/accounts`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_NEEDED_CHANGES`, data);
+                }
+            ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
                 alert(`Something went wrong. Please, try again later.`);
             })
