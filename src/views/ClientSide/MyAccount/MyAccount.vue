@@ -1,7 +1,7 @@
 <template>
   <section class="my-account position-relative">
     <div
-      class="m-5 my-account_info d-flex flex-wrap justify-content-lg-between"
+      class="mt-3 my-account_info d-flex flex-wrap justify-content-lg-between"
     >
       <div class="my-account_one d-flex flex-column align-items-center">
         <MyAvatar />
@@ -16,7 +16,7 @@
         </p>
         <hr />
       </div>
-      <div class="my-account_two">
+      <div class="my-account_two p-5">
         <table class="table">
           <tbody>
             <tr>
@@ -120,37 +120,16 @@ export default {
 }
 .my-account_two {
   width: 100%;
+    outline: solid 6px green;
   @include media-breakpoint-up(lg) {
     width: 45%;
   }
-
-  outline: solid 6px green;
 }
 .details li {
   list-style: none;
 }
 li {
   margin-bottom: 10px;
-}
-
-.table-dark {
-  min-height: 290px;
-  @include media-breakpoint-up(sm) {
-    min-height: 180px;
-  }
-  @include media-breakpoint-up(md) {
-    margin-top: 11px;
-    min-height: 230px;
-  }
-  @include media-breakpoint-up(lg) {
-    min-height: 308px;
-  }
-  @include media-breakpoint-up(xl) {
-    min-height: 375px;
-  }
-  @include media-breakpoint-up(xxl) {
-    min-height: 445px;
-  }
 }
 
 .v-enter-active,

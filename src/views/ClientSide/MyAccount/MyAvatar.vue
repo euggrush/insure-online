@@ -1,5 +1,5 @@
 <template>
-  <label for="formFile" class="form-label user-avatar-wrap">
+  <label for="formFile" class="form-label user-avatar-wrap text-center">
     <img
       id="avatar"
       :src="`${FILE_URL}${getMyAvatarUrl}`"
@@ -142,26 +142,6 @@ export default {
   cursor: pointer;
   object-fit: cover;
   margin-top: 10px;
-  @include media-breakpoint-up(sm) {
-    width: 180px;
-    height: 180px;
-  }
-  @include media-breakpoint-up(md) {
-    width: 230px;
-    height: 230px;
-  }
-  @include media-breakpoint-up(lg) {
-    width: 308px;
-    height: 308px;
-  }
-  @include media-breakpoint-up(xl) {
-    width: 375px;
-    height: 375px;
-  }
-  @include media-breakpoint-up(xxl) {
-    width: 445px;
-    height: 445px;
-  }
 }
 .user-avatar-wrap:hover {
   outline: solid 1px #212529;
@@ -171,9 +151,13 @@ export default {
   background-size: 100px 100px;
 }
 .user-avatar-photo {
-  width: 100%;
-  height: 100%;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
+  @include media-breakpoint-up(md) {
+    width: 400px;
+    height: 400px;
+  }
 }
 .user-avatar-photo:hover {
   opacity: 0.3;
