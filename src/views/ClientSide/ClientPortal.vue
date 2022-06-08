@@ -15,7 +15,7 @@
         type="button"
         @click="showQuotes"
       >
-        Quites
+        Quotes
       </button>
       <button
         class="flex-sm-fill text-sm-center nav-link rounded-pill"
