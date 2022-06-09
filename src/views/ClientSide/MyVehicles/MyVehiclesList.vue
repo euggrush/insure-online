@@ -9,6 +9,32 @@
     >
       <div class="row">
         <div class="col-lg-6">
+          <div class="mt-3 mb-3">
+            <button
+              type="button"
+              class="btn edit-car-btn"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Edit"
+              @click="openEditVehicle(vehicle)"
+            ></button>
+            <button
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove"
+              @click="removePopup(vehicle, index)"
+              type="button"
+              class="btn remove-car-btn ms-3"
+            ></button>
+          </div>
+
+          <!-- CAR IMAGE -->
+          <MyVehicleImage
+            class="mt-3"
+            :myProps="{ vehicle: { vehicle, index } }"
+          />
+        </div>
+        <div class="col-lg-6">
           <div
             v-if="
               vehicle.isTrackingDeviceRequired &&
@@ -86,32 +112,6 @@
             </tbody>
           </table>
         </div>
-        <div class="col-lg-6">
-          <div class="float-end mt-3 mb-3">
-            <button
-              type="button"
-              class="btn edit-car-btn"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="Edit"
-              @click="openEditVehicle(vehicle)"
-            ></button>
-            <button
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="Remove"
-              @click="removePopup(vehicle, index)"
-              type="button"
-              class="btn remove-car-btn ms-3"
-            ></button>
-          </div>
-
-          <!-- CAR IMAGE -->
-          <MyVehicleImage
-            class="mt-3"
-            :myProps="{ vehicle: { vehicle, index } }"
-          />
-        </div>
       </div>
 
       <EditVehicleForm
@@ -175,6 +175,16 @@
 import EditVehicleForm from "../../../components/Forms/EditVehicleForm.vue";
 import MyVehicleImage from "./MyVehicleImage.vue";
 
+const enableTooltips = () => {
+  let tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  // eslint-disable-next-line no-unused-vars
+  let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    // eslint-disable-next-line no-undef
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+};
 export default {
   components: {
     EditVehicleForm,
@@ -195,19 +205,9 @@ export default {
   mounted() {
     this.$store.dispatch(`GET_VEHICLES`, ``);
     this.accountId = this.$store.state.user.accountId;
-    this.enableTooltips();
+    enableTooltips();
   },
   methods: {
-    enableTooltips() {
-      var tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-      );
-      // eslint-disable-next-line no-unused-vars
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        // eslint-disable-next-line no-undef
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-      });
-    },
     openEditVehicle(vehicle) {
       this.$store.commit(`SET_MODALS_TOGGLE`, {
         isEditVehicleOpen: vehicle.vehicleId,

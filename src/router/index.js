@@ -17,6 +17,7 @@ import AboutUs from "../components/Partials/AboutUs";
 import ResetPasswordForm from "../components/Forms/ResetPasswordForm.vue";
 import NewPasswordGenerate from "../components/Partials/NewPasswordGenerate.vue";
 import ClientPortal from "../views/ClientSide/ClientPortal.vue";
+import MyOrderSingle from "../views/ClientSide/MyOrders/MyOrderSingle.vue";
 
 const isTokenExpired = (tokenExpiration) => {
   const dayjs = require("dayjs");
@@ -55,6 +56,15 @@ const routes = [{
   {
     path: '/my-portal',
     component: ClientPortal,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      residentAuth: true
+    }
+  },
+  {
+    path: '/my-orders',
+    component: MyOrderSingle,
     meta: {
       requiresAuth: true,
       adminAuth: false,
