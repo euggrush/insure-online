@@ -2,11 +2,11 @@
   <section class="my-vehicles position-relative">
     <ModalMessage />
     <button
-      class="btn btn-dark mt-1"
+      class="btn btn-outline-dark"
       type="button"
       @click="showAddCar = !showAddCar"
     >
-      <span class="text-capitalize">Add vehicle</span>
+      Add vehicle
     </button>
 
     <!-- CREATE VEHICLE FORN -->

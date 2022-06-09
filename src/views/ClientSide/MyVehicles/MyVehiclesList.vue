@@ -4,14 +4,7 @@
     <li
       v-for="(vehicle, index) in myVehicles"
       :key="vehicle.vehicleId"
-      class="
-        list-group-item
-        mt-3
-        overflow-auto
-        bg-secondary bg-gradient
-        rounded
-        text-light text-capitalize
-      "
+      class="list-group-item mt-3 text-secondary shadow-lg"
       v-show="vehicle.deleted == false"
     >
       <div class="row">
@@ -36,70 +29,88 @@
             this vehicle has been identified as a required tracking device.
             Please contact our office for further assistance.
           </div>
-          <span class="fw-bold">make and model:</span>
-          <span>&nbsp;{{ vehicle.details }}</span> <br />
-          <span class="fw-bold">year:</span>
-          <span>&nbsp;{{ vehicle.year }}</span> <br />
-          <span class="fw-bold">license plate:</span>
-          <span>&nbsp;{{ vehicle.regNumber }}</span> <br />
-          <span class="fw-bold"> VIN:</span>
-          <span>&nbsp;{{ vehicle.vin }}</span> <br />
-          <span class="fw-bold"> engine:</span>
-          <span>&nbsp;{{ vehicle.engine }}L</span> <br />
-          <span class="fw-bold"> retail value:</span>
-          <span
-            >&nbsp;<span class="fw-bold">R</span>{{ vehicle.retailValue }}</span
-          >
-          <br />
-          <span class="fw-bold">Tracking device:</span>
-          <span>&nbsp;{{ vehicle.trackingDevice }}</span> <br />
-          <span class="fw-bold">Use case:</span>
-          <span class="text-capitalize">&nbsp;{{ vehicle.useCase }}</span>
-          <br />
-          <span class="fw-bold">Accessories:</span>
-          <span
-            v-for="(accessory, index) in vehicle.accessories"
-            :key="accessory.accessoryId"
-            >&nbsp;<span>{{ accessory.name }}</span
-            >&nbsp;<strong
-              >R{{ accessory.cost
-              }}<span v-if="index !== vehicle.accessories.length - 1"
-                >,</span
-              ></strong
-            ></span
-          >
-          <br />
-          <span class="fw-bold">Explanation Of The Business Use:</span>
-          <span>&nbsp;{{ vehicle.businessDescription }}</span> <br />
+          <h4 class="text-center mt-3">
+            {{ vehicle.year }}&nbsp;{{ vehicle.details }},&nbsp;{{
+              vehicle.engine
+            }}L engine
+          </h4>
+          <h6 class="text-center">VIN:&nbsp;{{ vehicle.vin }}</h6>
+          <hr />
 
-          <span class="fw-bold">Financed vehicle:</span>
-          <span>&nbsp;{{ vehicle.financed }}</span> <br />
-          <span class="fw-bold">Name of the finance house:</span>
-          <span>&nbsp;{{ vehicle.financeHouse }}</span> <br />
-          <div class="row row-cols-auto">
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-outline-info mt-3"
-                @click="openEditVehicle(vehicle)"
-              >
-                Edit vehicle
-              </button>
-            </div>
-            <div class="col">
-              <button
-                @click="removePopup(vehicle, index)"
-                type="button"
-                class="btn btn-outline-danger mt-3"
-              >
-                Remove vehicle
-              </button>
-            </div>
-          </div>
+          <table class="table w-75 mx-auto">
+            <tbody>
+              <tr>
+                <th>License plate</th>
+                <td class="text-uppercase">{{ vehicle.regNumber }}</td>
+              </tr>
+              <tr>
+                <th>Retail value</th>
+                <td>R{{ vehicle.retailValue }}</td>
+              </tr>
+              <tr v-if="vehicle.trackingDevice == 'Yes'">
+                <th>Tracking device</th>
+                <td class="text-uppercase">{{ vehicle.trackingDevice }}</td>
+              </tr>
+              <tr>
+                <th>Car used for</th>
+                <td class="text-uppercase">{{ vehicle.useCase }}</td>
+              </tr>
+
+              <tr v-if="vehicle.businessDescription">
+                <th>Explanation Of The Business Use</th>
+                <td class="text-uppercase">
+                  {{ vehicle.businessDescription }}
+                </td>
+              </tr>
+              <tr v-if="vehicle.financed">
+                <th>Vehicle Financed at</th>
+                <td class="text-uppercase">{{ vehicle.financeHouse }}</td>
+              </tr>
+              <tr v-if="vehicle.accessories.length > 0">
+                <th>Accessories</th>
+                <td>
+                  <span
+                    v-for="(accessory, index) in vehicle.accessories"
+                    :key="accessory.accessoryId"
+                    ><span v-if="index !== 0">&nbsp;</span
+                    ><span class="text-uppercase">{{ accessory.name }}</span
+                    >&nbsp;<strong
+                      >R{{ accessory.cost
+                      }}<span v-if="index !== vehicle.accessories.length - 1"
+                        >,</span
+                      ></strong
+                    ></span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="col-sm-4">
+          <div class="float-end mt-3 mb-3">
+            <button
+              type="button"
+              class="btn edit-car-btn"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Edit"
+              @click="openEditVehicle(vehicle)"
+            ></button>
+            <button
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove"
+              @click="removePopup(vehicle, index)"
+              type="button"
+              class="btn remove-car-btn ms-3"
+            ></button>
+          </div>
+
           <!-- CAR IMAGE -->
-          <MyVehicleImage :myProps="{ vehicle: { vehicle, index } }" />
+          <MyVehicleImage
+            class="mt-3"
+            :myProps="{ vehicle: { vehicle, index } }"
+          />
         </div>
       </div>
 
@@ -184,8 +195,19 @@ export default {
   mounted() {
     this.$store.dispatch(`GET_VEHICLES`, ``);
     this.accountId = this.$store.state.user.accountId;
+    this.enableTooltips();
   },
   methods: {
+    enableTooltips() {
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      // eslint-disable-next-line no-unused-vars
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        // eslint-disable-next-line no-undef
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    },
     openEditVehicle(vehicle) {
       this.$store.commit(`SET_MODALS_TOGGLE`, {
         isEditVehicleOpen: vehicle.vehicleId,
@@ -236,7 +258,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  min-width: 12em;
+.edit-car-btn,
+.remove-car-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.edit-car-btn {
+  background-color: $colorDark;
+  background-image: url("../../../assets/img/icon-edit-car.svg");
+}
+.remove-car-btn {
+  background-color: $colorBrick;
+  background-image: url("../../../assets/img/icon-remove-car.svg");
 }
 </style>

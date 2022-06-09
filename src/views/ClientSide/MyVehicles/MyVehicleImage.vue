@@ -9,7 +9,7 @@
       alt="image"
       width="100"
       height="100"
-      class="car-photo img-thumbnail"
+      class="car-photo img-thumbnail p-0"
     />
     <img
       v-else
@@ -144,32 +144,8 @@ export default {
 
 <style lang="scss" scoped>
 .car-photo-wrap {
-  width: 255px;
-  height: 222px;
-  margin-top: 20px;
+  width: 100%;
   cursor: pointer;
-  @include media-breakpoint-up(sm) {
-    width: 155px;
-    height: 130px;
-
-    margin-top: 10px;
-  }
-  @include media-breakpoint-up(md) {
-    width: 220px;
-    height: 190px;
-  }
-  @include media-breakpoint-up(lg) {
-    width: 295px;
-    height: 245px;
-  }
-  @include media-breakpoint-up(xl) {
-    width: 360px;
-    height: 285px;
-  }
-  @include media-breakpoint-up(xxl) {
-    width: 420px;
-    height: 300px;
-  }
 }
 .car-photo-wrap:hover {
   outline: solid 1px #212529;

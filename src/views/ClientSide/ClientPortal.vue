@@ -87,7 +87,7 @@ export default {
 <style lang="scss" scoped>
 .container-fluid {
   padding-top: 150px;
-  padding-bottom: 150px;
+  // padding-bottom: 150px;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
