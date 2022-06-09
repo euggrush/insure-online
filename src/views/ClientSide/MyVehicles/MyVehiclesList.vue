@@ -8,7 +8,7 @@
       v-show="vehicle.deleted == false"
     >
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-lg-6">
           <div
             v-if="
               vehicle.isTrackingDeviceRequired &&
@@ -86,7 +86,7 @@
             </tbody>
           </table>
         </div>
-        <div class="col-sm-4">
+        <div class="col-lg-6">
           <div class="float-end mt-3 mb-3">
             <button
               type="button"
