@@ -1,5 +1,5 @@
 <template>
-  <section class="order-modal container position-relative">
+  <section class="order-modal container position-relative pb-3">
     <h4>Order Details</h4>
     <ModalMessage />
     <button
@@ -9,7 +9,7 @@
       @click="goToMyPortal"
     ></button>
 
-    <div>
+    <div class="mt-3">
       Placed on {{ getDate(order.orderCreated) }} &#124; Order #{{
         order.referenceNumber
       }}
@@ -25,92 +25,67 @@
       </span>
       &#124; Total R{{ order.allEstimationsTotalCostCalculated }}
     </div>
-
-    <div class="row border mt-3 p-3">
-      <!-- <strong class="d-inline"
-        >Inception date of cover
-        {{ getDate(order.estimation[0].startFromFormatted) }}</strong
-      >
-
-      <div class="col">
-        <strong>{{ order.estimation[0].vehicleDetails }}</strong>
-        <span>
-          <strong>, R</strong>{{ order.estimation[0].vehicleRetailValue }}</span
-        >
-        <label class="car-photo-wrap">
-          <img
-            v-if="order.estimation[0].vehicleAssets.length > 0"
-            :src="`${FILE_URL}${order.estimation[0].vehicleAssets[0].path}`"
-            :id="`car-photo-input${index}`"
-            class="d-block vehicle-image"
-            alt="image"
-            width="200"
-            height="200"
-          />
-          <img
-            v-else
-            :id="`car-photo-input${index}`"
-            :src="CAR_DEFAULT_IMAGE"
-            class="d-block vehicle-image"
-            alt="image"
-            width="200"
-            height="200"
-          />
-        </label>
-      </div> -->
-      <!-- <div v-if="estimation.estimationName" class="col">
-        <strong class="d-inline-block text-uppercase mt-3 border-bottom"
-          >{{ estimation.estimationName }}&nbsp;R{{
-            estimation.estimationCost
+    <hr/>
+    <p class="mt-3">
+      Inception date of cover is
+      {{ getDate(order.startFromFormatted) }}
+    </p>
+    <strong class="text-uppercase"
+          >{{ order.estimations[0].vehicleDetails }}, R{{
+            order.estimations[0].vehicleRetailValue
           }}</strong
         >
-        <div
-          class="form-check form-switch mt-1 ms-1"
-          v-for="(sub, index) in estimation.subProducts"
-          :key="index"
-        >
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            :id="`flexSwitchCheckCheckedDisabled${index}`"
-            checked
-            disabled
-          />
-          <label
-            class="form-check-label"
-            :for="`flexSwitchCheckCheckedDisabled${index}`"
-            >{{ sub.subProductName }}&nbsp;<strong>R</strong>
-            {{ sub.subProductCost }}</label
-          >
+    <div class="row mt-3">
+      <div class="col-12 col-lg-6">
+        
+        <img
+          v-if="order.estimations[0].vehicleAssets.length > 0"
+          :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
+          class="d-block vehicle-image"
+          alt="image"
+          width="200"
+          height="200"
+        />
+        <img
+          v-else
+          :src="CAR_DEFAULT_IMAGE"
+          class="d-block vehicle-image"
+          alt="image"
+          width="200"
+          height="200"
+        />
+      </div>
+      <div class="col-12 col-lg-2 mt-3 mt-lg-0">
+        <div v-for="item in order.estimations" :key="item">
+          <div v-if="item.estimationType == 'estimation'">
+            <strong class="text-dark text-uppercase">{{ item.mainProductName }}</strong>
+            <p class="mt-1 mb-0 text-secondary" v-for="sub in item.subProducts" :key="sub">
+              -{{ sub.subProductName }};
+            </p>
+            <p class="mt-1 mb-0 text-danger fw-bold">Total R{{ item.totalCost }}</p>
+          </div>
+          <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
+            <strong class="text-uppercase">Accessories</strong>
+            <p
+              class="mb-0"
+              v-for="accessory in item.accessories"
+              :key="accessory"
+            >
+              -{{ accessory.accessoryName }};
+            </p>
+            <p class="mt-1 mb-0 text-danger fw-bold">Total R{{ item.totalCost }}</p>
+          </div>
         </div>
       </div>
+      <div class="col-12 col-lg-4 mt-3">
+        <button type="button" class="btn btn-outline-secondary w-100">
+          Pay online
+        </button>
 
-      <div v-else class="col">
-        <strong class="d-inline-block text-uppercase mt-3 border-bottom"
-          >Accessories, total:&nbsp;R{{ estimation.totalCost }}</strong
-        >
-        <div
-          class="form-check form-switch mt-1 ms-1"
-          v-for="(sub, index) in estimation.accessories"
-          :key="index"
-        >
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            :id="`flexSwitchCheckCheckedDisabled${index}`"
-            checked
-            disabled
-          />
-          <label
-            class="form-check-label"
-            :for="`flexSwitchCheckCheckedDisabled${index}`"
-            >{{ sub.accessoryName }}&nbsp;<strong>R</strong>
-            {{ sub.accessoryCost }}</label
-          >
-        </div>
-      </div> -->
+        <button type="button" class="btn btn-outline-secondary w-100 mt-3">
+          Rquest a call
+        </button>
+      </div>
     </div>
   </section>
 </template>
