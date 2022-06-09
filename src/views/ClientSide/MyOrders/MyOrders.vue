@@ -1,81 +1,116 @@
 <template>
-  <section
-    class="my-orders-list bg-dark bg-gradient p-3 rounded position-relative"
-  >
-    <ul class="list-group">
-      <li
-        v-for="(order, index) in ordersList"
-        :key="index"
-        class="list-group-item list-group-item-dark"
-      >
-        <div class="container">
-          <div class="row border p-1 order-item">
-            <div class="col border-bottom border-start">
-              <span>{{ getDate(order.orderCreated) }}</span>
-            </div>
-            <div class="col border-bottom border-start">
-              <span class="fw-bold">#</span>
-              <span>{{ order.referenceNumber }}</span>
-            </div>
+  <section class="container">
+    <div
+      v-for="(order, index) in ordersList"
+      :key="index"
+      class="order-item border rounded shadow-sm mt-3"
+    >
+      <div class="row row-cols-4 h-25 bg-light border-bottom m-0 p-1">
+        <div class="col">
+          <p>ORDER PLACED</p>
+          <p>{{ getDate(order.orderCreated) }}</p>
+        </div>
+        <div class="col">
+          <p>TOTAL</p>
+          <p class="text-danger fw-bold">
+            R{{ order.allEstimationsTotalCostCalculated }}
+          </p>
+        </div>
+        <div class="col">
+          <p
+            class="fw-bold text-uppercase"
+            :class="{
+              'text-primary': order.orderStatus == `approved`,
+              'text-danger': order.orderStatus == `rejected`,
+            }"
+          >
+            {{ order.orderStatus }}
+          </p>
+          <p class="text-secondary">
+            Covered from {{ getDate(order.inceptionDateOfCover) }}
+          </p>
+        </div>
+        <div class="col">
+          <p>ORDER #{{ order.referenceNumber }}</p>
 
-            <div class="col border-bottom border-start">
-              <!-- <span class="d-block fw-bold">Order status:</span> -->
+          <button
+            type="button"
+            class="btn link-secondary p-0"
+            @click="getOrder(order.orderId)"
+          >
+            View order details
+          </button>
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col">
+          <p class="text-uppercase fw-bold">
+            {{ order.estimations[0].vehicleDetails }}
+          </p>
+          <img
+            v-if="order.estimations[0].vehicleAssets.length > 0"
+            :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
+            class="d-block img-fluid"
+            alt="image"
+            width="200"
+            height="200"
+          />
+          <img
+            v-else
+            :src="CAR_DEFAULT_IMAGE"
+            class="d-block"
+            alt="image"
+            width="200"
+            height="200"
+          />
+        </div>
+        <div class="col-8">
+          <div v-for="item in order.estimations" :key="item">
+            <div v-if="item.estimationType == 'estimation'">
+              <strong class="text-dark text-uppercase">{{
+                item.mainProductName
+              }}</strong>
+              <hr>
               <span
-                class="fw-bold text-uppercase"
-                :class="{
-                  'text-primary': order.orderStatus == `approved`,
-                  'text-danger': order.orderStatus == `rejected`,
-                }"
-                >{{ order.orderStatus }}</span
+                class="mt-1 mb-0 text-secondary"
+                v-for="sub in item.subProducts"
+                :key="sub"
               >
+                -{{ sub.subProductName }};
+              </span>
+              <p class="mt-1 mb-0 text-danger fw-bold">
+                Total R{{ item.totalCost }}
+              </p>
             </div>
-
-            <div class="col border-bottom border-start">
-              <strong>Total Due: R</strong>
-              <span> {{ order.allEstimationsTotalCostCalculated }}</span>
-            </div>
-            <div class="col border-bottom border-start">
-              <span class="d-block fw-bold fst-italic">Adjusted:</span>
-              <span v-if="order.adjustedCost > 0"
-                ><strong>R</strong> {{ order.adjustedCost }}</span
+            <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
+              <strong class="text-uppercase">Accessories</strong>
+              <hr>
+              <span
+                class="mb-0"
+                v-for="accessory in item.accessories"
+                :key="accessory"
               >
-              <span v-else>Not Adjusted</span>
-            </div>
-            <div class="col-12 col-lg-3 col-xl-2">
-              <button
-                type="button"
-                class="btn btn-outline-success float-end mt-1 mt-lg-0"
-                @click="getOrder(order.orderId)"
-              >
-                View order
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-info mt-1"
-                @click="goToPaymentPage(order.orderId)"
-              >
-                Pay Online
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-dark mt-1"
-                @click="getCallRequest(order.orderId)"
-              >
-                Request Call
-              </button>
+                -{{ accessory.accessoryName }};
+              </span>
+              <p class="mt-1 mb-0 text-danger fw-bold">
+                Total R{{ item.totalCost }}
+              </p>
             </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
+
 export default {
   data() {
     return {
-      orderIdToPass: ``,
+      FILE_URL: FILE_URL,
+      CAR_DEFAULT_IMAGE,
     };
   },
   computed: {
@@ -90,64 +125,12 @@ export default {
     getOrder(id) {
       this.$router.push({ path: `/my-orders`, query: { id: id } });
     },
-
-    getCallRequest(id) {
-      this.$store
-        .dispatch(`CREATE_ORDER`, {
-          orderId: id,
-          paidBy: `offline`,
-        })
-        .then(() => {
-          this.scrollToTop();
-          this.$store.dispatch(`GET_ORDERS`, ``);
-          this.$store.commit(`SET_MODAL`, {
-            isModal: true,
-            msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
-          });
-        });
-    },
-    goToPaymentPage(id) {
-      this.$store
-        .dispatch(`CREATE_ORDER`, {
-          orderId: id,
-          paidBy: `online`,
-        })
-        .then(() => {
-          this.scrollToTop();
-          this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
-          setTimeout(() => {
-            this.$router.push(`/yoco-payment`);
-          }, 1000);
-        });
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  width: 100%;
-}
-.btn-pdf {
-  min-width: 100%;
-  border-radius: 0;
-  background-size: 27px 27px;
-  background-repeat: no-repeat;
-  background-position: 5% center;
-  margin-bottom: 10px;
-  padding-left: 40px;
-  @include media-breakpoint-up(md) {
-    min-width: 11em;
-  }
-}
-
-.inception-date-wrap {
-  width: 100%;
-  height: 200px;
-  z-index: 2;
-  @include media-breakpoint-up(md) {
-    width: 500px;
-    height: 200px;
-  }
+.order-item {
+  height: 400px;
 }
 </style>

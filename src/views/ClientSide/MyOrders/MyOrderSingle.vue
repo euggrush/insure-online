@@ -25,19 +25,18 @@
       </span>
       &#124; Total R{{ order.allEstimationsTotalCostCalculated }}
     </div>
-    <hr/>
+    <hr />
     <p class="mt-3">
       Inception date of cover is
       {{ getDate(order.startFromFormatted) }}
     </p>
     <strong class="text-uppercase"
-          >{{ order.estimations[0].vehicleDetails }}, R{{
-            order.estimations[0].vehicleRetailValue
-          }}</strong
-        >
+      >{{ order.estimations[0].vehicleDetails }}, R{{
+        order.estimations[0].vehicleRetailValue
+      }}</strong
+    >
     <div class="row mt-3">
       <div class="col-12 col-lg-6">
-        
         <img
           v-if="order.estimations[0].vehicleAssets.length > 0"
           :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
@@ -58,11 +57,19 @@
       <div class="col-12 col-lg-2 mt-3 mt-lg-0">
         <div v-for="item in order.estimations" :key="item">
           <div v-if="item.estimationType == 'estimation'">
-            <strong class="text-dark text-uppercase">{{ item.mainProductName }}</strong>
-            <p class="mt-1 mb-0 text-secondary" v-for="sub in item.subProducts" :key="sub">
+            <strong class="text-dark text-uppercase">{{
+              item.mainProductName
+            }}</strong>
+            <p
+              class="mt-1 mb-0 text-secondary"
+              v-for="sub in item.subProducts"
+              :key="sub"
+            >
               -{{ sub.subProductName }};
             </p>
-            <p class="mt-1 mb-0 text-danger fw-bold">Total R{{ item.totalCost }}</p>
+            <p class="mt-1 mb-0 text-danger fw-bold">
+              Total R{{ item.totalCost }}
+            </p>
           </div>
           <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
             <strong class="text-uppercase">Accessories</strong>
@@ -73,16 +80,26 @@
             >
               -{{ accessory.accessoryName }};
             </p>
-            <p class="mt-1 mb-0 text-danger fw-bold">Total R{{ item.totalCost }}</p>
+            <p class="mt-1 mb-0 text-danger fw-bold">
+              Total R{{ item.totalCost }}
+            </p>
           </div>
         </div>
       </div>
       <div class="col-12 col-lg-4 mt-3">
-        <button type="button" class="btn btn-outline-secondary w-100">
+        <button
+          type="button"
+          class="btn btn-outline-secondary w-100"
+          @click="goToPaymentPage(order.orderId)"
+        >
           Pay online
         </button>
 
-        <button type="button" class="btn btn-outline-secondary w-100 mt-3">
+        <button
+          type="button"
+          class="btn btn-outline-secondary w-100 mt-3"
+          @click="getCallRequest(order.orderId)"
+        >
           Rquest a call
         </button>
       </div>
@@ -98,8 +115,6 @@ export default {
   components: { ModalMessage },
   data() {
     return {
-      showCarPhotoInput: false,
-      isUploadError: false,
       FILE_URL: FILE_URL,
       CAR_DEFAULT_IMAGE,
     };
@@ -124,6 +139,37 @@ export default {
     },
     goToMyPortal() {
       this.$router.push(`/my-portal`);
+    },
+    getCallRequest(id) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: id,
+          paidBy: `offline`,
+        })
+        .then(() => {
+          this.scrollToTop();
+          this.$store.dispatch(`GET_ORDERS`, ``);
+          this.$store.commit(`SET_MODAL`, {
+            isModal: true,
+            msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
+          });
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    goToPaymentPage(id) {
+      this.$router.push(`/yoco-payment`);
+      // this.$store
+      //   .dispatch(`CREATE_ORDER`, {
+      //     orderId: id,
+      //     paidBy: `online`,
+      //   })
+      //   .then(() => {
+      //     this.scrollToTop();
+      //     this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
+      //     setTimeout(() => {
+      //       this.$router.push(`/yoco-payment`);
+      //     }, 1000);
+      //   });
     },
   },
 };
