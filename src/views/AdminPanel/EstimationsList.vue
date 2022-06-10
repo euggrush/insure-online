@@ -30,7 +30,7 @@
             <span class="fst-italic">{{ getDate(estimation.created) }}</span>
           </div>
           <div
-            v-if="estimation.estimationType == 'estimation'"
+            v-if="estimation.estimationType == 'tuffstuff'"
             class="col border-bottom border-start"
           >
             <span class="d-block fw-bold text-decoration-underline"
@@ -40,10 +40,9 @@
           </div>
           <div v-else class="col border-bottom border-start">
             <span class="d-block fw-bold">Quote for the accessories</span>
-            <!-- <span>{{ estimation.estimationType }}</span> -->
           </div>
           <div
-            v-if="estimation.estimationType == 'estimation'"
+            v-if="estimation.estimationType == 'tuffstuff'"
             class="col border-bottom border-start"
           >
             <span class="d-block fw-bold text-decoration-underline"

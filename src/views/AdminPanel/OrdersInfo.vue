@@ -93,7 +93,7 @@
                 class="d-block"
                 v-for="(estimation, index) in order.estimations"
                 :key="index"
-                ><span v-if="estimation.estimationType == 'estimation'">{{
+                ><span v-if="estimation.estimationType == 'tuffstuff'">{{
                   estimation.mainProductName
                 }}</span>
                 <span v-else>Accessories,</span>

@@ -66,11 +66,11 @@
         </div>
         <div class="col-8">
           <div v-for="item in order.estimations" :key="item">
-            <div v-if="item.estimationType == 'estimation'">
+            <div v-if="item.estimationType == 'tuffstuff'">
               <strong class="text-dark text-uppercase">{{
                 item.mainProductName
               }}</strong>
-              <hr>
+              <hr />
               <span
                 class="mt-1 mb-0 text-secondary"
                 v-for="sub in item.subProducts"
@@ -84,7 +84,7 @@
             </div>
             <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
               <strong class="text-uppercase">Accessories</strong>
-              <hr>
+              <hr />
               <span
                 class="mb-0"
                 v-for="accessory in item.accessories"

@@ -41,10 +41,8 @@
           height="200"
         />
       </div>
-      <div v-if="quote.estimationType == 'estimation'" class="col">
-        <strong
-          >{{ quote.mainProductName }}</strong
-        >
+      <div v-if="quote.estimationType == 'tuffstuff'" class="col">
+        <strong>{{ quote.mainProductName }}</strong>
         <div
           v-for="(sub, index) in quote.subProducts"
           :key="index"
@@ -66,9 +64,7 @@
         </div>
       </div>
       <div v-else class="col">
-        <strong
-          >Insuranse for the {{ quote.estimationType }}</strong
-        >
+        <strong>Insuranse for the {{ quote.estimationType }}</strong>
         <div
           v-for="(accessory, index) in quote.accessories"
           :key="index"
@@ -85,7 +81,8 @@
           <label
             class="form-check-label"
             :for="`flexSwitchCheckCheckedDisabled${index}`"
-            >{{ accessory.accessoryName }}, <strong>R{{ accessory.accessoryCost }}</strong></label
+            >{{ accessory.accessoryName }},
+            <strong>R{{ accessory.accessoryCost }}</strong></label
           >
         </div>
       </div>

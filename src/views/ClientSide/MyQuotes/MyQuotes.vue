@@ -210,7 +210,7 @@ export default {
           mainProductId: this.selectedMainProduct.mainProductId,
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCar.vehicleId,
-          estimationType: `estimation`,
+          estimationType: `tuffstuff`,
           startFrom: this.getInseptionDateOfCover.date,
         })
         .then(() => {
