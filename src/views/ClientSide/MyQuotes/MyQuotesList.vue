@@ -8,9 +8,7 @@
         class="list-group-item list-group-item-dark"
       >
         <div class="row">
-          <div class="col">
-            <strong>#</strong> {{ item.referenceNumber }}
-          </div>
+          <div class="col"><strong>#</strong> {{ item.referenceNumber }}</div>
 
           <div class="col"><strong>Car:</strong> {{ item.vehicleDetails }}</div>
 

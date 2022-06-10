@@ -1,221 +1,157 @@
 <template>
-  <section
-    class="my-quotes position-relative"
-  >
+  <section class="my-quotes position-relative">
     <ModalMessage />
-    <hr />
-    <button
-      class="btn btn-dark mt-1"
-      type="button"
-      @click="showGetQuoteMenu = !showGetQuoteMenu"
-    >
-      Get Quote</button
-    ><br />
-    <Transition>
-      <div
-        v-if="showGetQuoteMenu"
-        class="bg-dark bg-gradient shadow-lg text-white mt-3 p-3 rounded"
-      >
-        <form>
-          <p class="fw-bold">Category</p>
-          <select
-            @change="selectCategory()"
-            class="form-select"
-            aria-label="Default select example"
-            required
-            v-model="selectedCategory"
+
+    <div class="border rounded m-3 p-3 shadow">
+      <form>
+        <InceptionDateOfCoverForm />
+
+        <p class="fw-bold mt-3">Select car</p>
+
+        <select
+          class="form-select mt-3"
+          aria-label="Default select example"
+          v-model="selectedCar"
+          @change="selectCar(selectedCar.vehicleId)"
+          required
+        >
+          <option value="" selected>Select customer's car...</option>
+          <option
+            v-for="(vehicle, index) in vehiclesList"
+            :key="index"
+            :value="vehicle"
+            :disabled="vehicle.isTrackingDeviceRequired"
           >
-            <option selected>Select category...</option>
-            <option
-              v-for="(category, index) in categoriesList"
-              :key="index"
-              :value="category.categoryId"
-              :disabled="category.categoryId !== carInsuranceCategory"
-            >
-              {{ category.categoryName }}
-            </option>
-            ]
-          </select>
-          <p v-if="isCarCategorySelected" class="fw-bold mt-3">Select car</p>
-          <select
-            v-if="isCarCategorySelected"
-            class="form-select mt-3"
-            aria-label="Default select example"
-            v-model="selectedCar"
-            @change="selectCar(selectedCar.vehicleId)"
-            required
+            {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
+          </option>
+        </select>
+
+        <!-- <div v-if="isCarSelected">
+          <p class="mt-3">select accessories:</p>
+          <div
+            v-for="(accessory, index) in selectedCar.accessories"
+            :key="accessory.accessoryId"
+            class="form-check form-switch"
           >
-            <option value="" selected>Select customer's car...</option>
-            <option
-              v-for="(vehicle, index) in vehiclesList"
-              :key="index"
-              :value="vehicle"
-              :disabled="vehicle.isTrackingDeviceRequired"
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              :value="accessory.accessoryId"
+              :id="`flexSwitchCheckDefault${index}`"
+              v-model="checkedAccessoriesIds"
+            />
+            <label
+              class="form-check-label"
+              :for="`flexSwitchCheckDefault${index}`"
+              ><span class="text-capitalize">{{ accessory.name }}</span
+              >, <strong>R{{ accessory.cost }}</strong></label
             >
-              {{ vehicle.details }},&nbsp;VIN:&nbsp;{{ vehicle.vin }}
-            </option>
-          </select>
-          <Transition>
-            <div v-if="isCarSelected">
-              <p class="mt-3">select accessories:</p>
-              <div
-                v-for="(accessory, index) in selectedCar.accessories"
-                :key="accessory.accessoryId"
-                class="form-check form-switch"
-              >
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  :value="accessory.accessoryId"
-                  :id="`flexSwitchCheckDefault${index}`"
-                  v-model="checkedAccessoriesIds"
-                />
-                <label
-                  class="form-check-label"
-                  :for="`flexSwitchCheckDefault${index}`"
-                  ><span class="text-capitalize">{{ accessory.name }}</span
-                  >, <strong>R{{ accessory.cost }}</strong></label
-                >
-              </div>
-            </div>
-          </Transition>
-          <p class="fw-bold mt-3">Product</p>
-          <select
-            @change="selectMainProduct()"
-            class="form-select mt-3"
-            aria-label="Default select example"
-            :disabled="!isCategorySelected"
-            v-model="selectedMainProduct"
-            required
-          >
-            <option value="" selected>Select product...</option>
-            <option
-              v-for="(product, index) in productsList"
-              :key="index"
-              :value="product"
-            >
-              {{ product.mainProductName }}
-            </option>
-          </select>
-          <div class="options-wrapper mt-3 mb-3">
-            <div
-              v-for="(subProduct, index) in selectedMainProduct.subProducts"
-              :key="index"
-              class="form-check form-switch"
-            >
-              <input
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckCheckedDisabled"
-                :value="subProduct.subProductId"
-                v-model="checkedSubProducts"
-                :required="selectedMainProduct.isRequiredCoverages"
-              />
-              <label
-                class="form-check-label"
-                for="flexSwitchCheckCheckedDisabled"
-              >
-                <span>{{ subProduct.subProductName }}</span>
-                <span class="fw-bold"
-                  >&nbsp;R{{ subProduct.subProductCost }}</span
-                >
-              </label>
-            </div>
           </div>
-          <Transition>
-            <InceptionDateOfCoverForm v-if="isCarCategorySelected" />
-          </Transition>
-          <button
-            type="button"
-            class="btn btn-outline-warning mt-3"
-            :disabled="
-              !isCategorySelected ||
-              !isMainProductSelected ||
-              !getInseptionDateOfCover.isSet
-            "
-            @click="createEstimation"
+        </div> -->
+
+        <p class="fw-bold mt-3">Select product</p>
+        <select
+          @change="selectMainProduct()"
+          class="form-select mt-3"
+          aria-label="Default select example"
+          v-model="selectedMainProduct"
+          required
+        >
+          <option value="" selected>Select product...</option>
+          <option
+            v-for="(product, index) in productsList"
+            :key="index"
+            :value="product"
           >
-            Calculate
+            {{ product.mainProductName }}
+          </option>
+        </select>
+        <div class="options-wrapper mt-3 mb-3 ms-3">
+          <div
+            v-for="(subProduct, index) in selectedMainProduct.subProducts"
+            :key="index"
+            class="form-check form-switch"
+          >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :id="`flexCheckDefault${index}`"
+              :value="subProduct.subProductId"
+              v-model="checkedSubProducts"
+              :required="selectedMainProduct.isRequiredCoverages"
+            />
+            <label class="form-check-label" :for="`flexCheckDefault${index}`">
+              <span>{{ subProduct.subProductName }}</span>
+              <span class="fw-bold"
+                >&nbsp;R{{ subProduct.subProductCost }}</span
+              >
+            </label>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger mt-3"
+          :disabled="!isMainProductSelected || !getInseptionDateOfCover.isSet"
+          @click="createEstimation"
+        >
+          Calculate
+        </button>
+        <hr />
+
+        <div v-if="showEstimate" class="d-block mt-1">
+          <p class="text-uppercase">Monthly</p>
+          <p class="text-danger fw-bold">
+            R{{ getEstimationsData.totalCost ?? 0 }}
+          </p>
+          <p class="text-uppercase">You will pay from the inception date</p>
+          <p class="text-danger fw-bold">
+            R{{ getEstimationsData.totalCostCalculated }}
+          </p>
+
+          <hr v-if="checkedAccessoriesIds.length > 0" />
+          <button
+            v-if="checkedAccessoriesIds.length > 0"
+            type="button"
+            class="btn btn-outline-danger"
+            @click="createAccessoryEstimation"
+          >
+            Accessories Quote
           </button>
           <hr />
-
-          <div v-if="showEstimate" class="d-block mt-1">
-            <span>Quote for vehicle</span>,
-            <span> Monthly payment: R{{ estimationsData.totalCost ?? 0 }}</span>
-            <span class="d-block mt-1">
-              You will pay from the inception date: R{{
-                estimationsData.totalCostCalculated ?? 0
-              }}</span
-            >
-
-            <hr v-if="checkedAccessoriesIds.length > 0" />
-            <button
-              v-if="checkedAccessoriesIds.length > 0"
-              type="button"
-              class="btn btn-outline-danger"
-              @click="createAccessoryEstimation"
-            >
-              Accessories Quote
-            </button>
-            <hr />
-            <span
-              v-if="
-                checkedAccessoriesIds.length > 0 &&
-                estimationAccessoriesData != ``
-              "
-              >Quote for accessories,</span
-            >
-            <span
-              v-if="
-                checkedAccessoriesIds.length > 0 &&
-                estimationAccessoriesData != ``
-              "
-            >
-              Monthly payment: R{{
-                estimationAccessoriesData.totalCost ?? 0
-              }}</span
-            >
-            <span
-              v-if="
-                checkedAccessoriesIds.length > 0 &&
-                estimationAccessoriesData != ``
-              "
-              class="d-block mt-1"
-            >
-              You will pay from the inception date: R{{
-                estimationAccessoriesData.totalCostCalculated ?? 0
-              }}</span
-            >
-          </div>
-        </form>
-        <div>
-          <button
-            v-if="showEstimate"
-            type="button"
-            class="btn btn-outline-success mt-5"
-            :disabled="!isCategorySelected || !isMainProductSelected"
-            @click="quoteToOrder"
+          <span
+            v-if="
+              checkedAccessoriesIds.length > 0 &&
+              getEstimationAccessoriesData != ``
+            "
+            >Quote for accessories,</span
           >
-            Go To Orders
-          </button>
+          <span
+            v-if="
+              checkedAccessoriesIds.length > 0 &&
+              getEstimationAccessoriesData != ``
+            "
+          >
+            Monthly payment: R{{
+              getEstimationAccessoriesData.totalCost ?? 0
+            }}</span
+          >
+          <span
+            v-if="
+              checkedAccessoriesIds.length > 0 &&
+              getEstimationAccessoriesData != ``
+            "
+            class="d-block mt-1"
+          >
+            You will pay from the inception date: R{{
+              getEstimationAccessoriesData.totalCostCalculated ?? 0
+            }}</span
+          >
         </div>
-      </div>
-    </Transition>
-    <button
-      class="d-block btn btn-dark mt-3"
-      @click="showMyQuites = !showMyQuites"
-    >
-      Show My Quotes
-    </button>
-    <Transition>
-      <MyQuotesList
-        @createdOrderConfirm="createOrder"
-        v-if="showMyQuites"
-      />
-    </Transition>
-    
+      </form>
+    </div>
+    <MyQuotesList @createdOrderConfirm="createOrder" />
   </section>
 </template>
 
@@ -233,30 +169,20 @@ export default {
   },
   data() {
     return {
-      showMyOrders: false,
-      showGetQuoteMenu: false,
-      showMyQuites: false,
-      isCategorySelected: false,
       isMainProductSelected: false,
       isCarSelected: false,
-      selectedCategory: `Select category...`,
       selectedMainProduct: ``,
       checkedSubProducts: [],
       selectedCar: ``,
       showEstimate: false,
-      isCarCategorySelected: false,
-      carInsuranceCategory: ``,
       checkedAccessoriesIds: [],
-      estimationsData: ``,
-      estimationAccessoriesData: ``,
+      // estimationsData: ``,
+      // estimationAccessoriesData: ``,
     };
   },
   computed: {
     getInseptionDateOfCover() {
       return this.$store.state.inseption_date_of_cover;
-    },
-    categoriesList() {
-      return this.$store.state.product_categories.categories || [];
     },
     productsList() {
       return this.$store.state.main_products.mainProducts || [];
@@ -264,30 +190,21 @@ export default {
     vehiclesList() {
       return this.$store.state.vehicles.vehicles || [];
     },
+    getEstimationsData() {
+      return this.$store.state.current_estimation;
+    },
+    getEstimationAccessoriesData() {
+      return this.$store.state.current_estimation_accessories;
+    },
   },
   mounted() {
-    this.carInsuranceCategory = CAR_INSURANCE_CATEGORY;
-    this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
+    this.$store.dispatch(
+      `GET_MAIN_PRODUCTS`,
+      `?categoryId=${CAR_INSURANCE_CATEGORY}`
+    );
     this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
-    selectCategory() {
-      this.checkedSubProducts = [];
-      this.selectedMainProduct = ``;
-      this.isCarCategorySelected = false;
-      if (this.selectedCategory === `Select category...`) {
-        this.isCategorySelected = false;
-      } else {
-        this.isCategorySelected = true;
-      }
-      if (this.selectedCategory == CAR_INSURANCE_CATEGORY) {
-        this.isCarCategorySelected = true;
-      }
-      this.$store.dispatch(
-        `GET_MAIN_PRODUCTS`,
-        `?categoryId=${this.selectedCategory}`
-      );
-    },
     selectMainProduct() {
       this.isMainProductSelected = true;
       this.checkedSubProducts = [];
@@ -300,7 +217,7 @@ export default {
       }
     },
     createEstimation() {
-      this.estimationsData = ``;
+      // this.estimationsData = ``;
       this.$store
         .dispatch(`CREATE_ESTIMATION`, {
           accountId: this.$store.state.user.accountId,
@@ -312,15 +229,15 @@ export default {
         })
         .then(() => {
           this.showEstimate = true;
-          setTimeout(() => {
-            this.estimationsData = this.$store.state.current_estimation;
-          }, 1000);
+          // setTimeout(() => {
+          //   this.estimationsData = this.$store.state.current_estimation;
+          // }, 1000);
         });
     },
     createAccessoryEstimation() {
-      this.estimationAccessoriesData = ``;
+      // this.estimationAccessoriesData = ``;
       this.$store
-        .dispatch(`CREATE_ESTIMATION`, {
+        .dispatch(`CREATE_ESTIMATION_ACCESSORIES`, {
           accountId: this.$store.state.user.accountId,
           accessoriesIds: Object.values(this.checkedAccessoriesIds),
           vehicleId: this.selectedCar.vehicleId,
@@ -328,28 +245,16 @@ export default {
           startFrom: this.getInseptionDateOfCover.date,
         })
         .then(() => {
-          setTimeout(() => {
-            this.estimationAccessoriesData =
-              this.$store.state.current_estimation;
-          }, 1000);
+          // setTimeout(() => {
+          //   this.estimationAccessoriesData =
+          //     this.$store.state.current_estimation_accessories;
+          // }, 1000);
         });
     },
-
-    quoteToOrder() {
-      this.showGetQuoteMenu = false;
-      this.showMyQuites = true;
-      this.resetForm();
-    },
-
     createOrder(payload) {
       if (payload.isOrderCreated) {
         this.$store.dispatch(`GET_ORDERS`, ``);
         this.resetForm();
-        this.isCategorySelected = false;
-        this.isMainProductSelected = false;
-        this.showMyQuites = !this.showMyQuites;
-        this.showMyOrders = !this.showMyOrders;
-        this.scrollToTop();
         this.$store.commit(`SET_MODAL`, {
           isModal: true,
           msg: `Your order is under review now, we will contact you for further
@@ -358,9 +263,9 @@ export default {
       }
     },
     resetForm() {
-      this.isCategorySelected = false;
+      this.scrollToTop();
+
       this.isMainProductSelected = false;
-      this.selectedCategory = `Select category...`;
       this.selectedMainProduct = ``;
       this.showEstimate = false;
       this.selectedCar = ``;
@@ -375,16 +280,17 @@ export default {
 }
 .my-quotes {
   min-height: calc(100vh - 10em);
-  outline: solid 5px orange;
-  // background-color: grey;
-  // background-image: url($mainBg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
-  // padding-top: 10.4em;
-  // padding-bottom: 3em;
-  // @include media-breakpoint-up(md) {
-  //   padding-top: 8em;
-  // }
+}
+.btn-outline-danger {
+  color: $colorBrick;
+  border-color: $colorBrick;
+}
+.btn-outline-danger:hover {
+  color: $colorWhite;
+  background-color: $colorBrick;
+}
+.quote-form {
+  outline: solid 3px red;
 }
 .order-create-popup {
   min-width: 300px;

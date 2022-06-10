@@ -32,6 +32,7 @@ export const store = new Vuex.Store({
         sub_products: [],
         estimations: [],
         current_estimation: [],
+        current_estimation_accessories: [],
         new_estimations: [],
         orders: [],
         current_order: [],
@@ -161,6 +162,9 @@ export const store = new Vuex.Store({
         },
         SET_CURRENT_ESTIMATION(state, payload) {
             state.current_estimation = payload;
+        },
+        SET_CURRENT_ESTIMATION_ACCESSORIES(state, payload) {
+            state.current_estimation_accessories = payload;
         },
         SET_NEW_ESTIMATIONS(state, payload) {
             state.new_estimations.push(payload);
@@ -356,6 +360,17 @@ export const store = new Vuex.Store({
                     let data = resp.data;
                     context.commit(`SET_CURRENT_ESTIMATION`, data);
                     context.commit(`SET_NEW_ESTIMATIONS`, data);
+                }
+            ).catch((error) => {
+                context.commit(`SET_GENERAL_ERRORS`, error);
+                alert(`Something went wrong. Please, try again later.`);
+            })
+        },
+        CREATE_ESTIMATION_ACCESSORIES: async (context, payload) => {
+            Axios.post(`${BASE_URL}/estimations`, payload).then(
+                resp => {
+                    let data = resp.data;
+                    context.commit(`SET_CURRENT_ESTIMATION_ACCESSORIES`, data);
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
