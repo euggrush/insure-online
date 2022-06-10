@@ -2,7 +2,10 @@
   <section class="my-quotes position-relative">
     <ModalMessage />
 
-    <form class="border rounded m-3 p-3 shadow">
+    <form
+      class="border rounded m-3 p-3 shadow"
+      @submit.prevent="createEstimation"
+    >
       <InceptionDateOfCoverForm />
 
       <p class="fw-bold mt-3">Select car</p>
@@ -12,6 +15,7 @@
         aria-label="Default select example"
         v-model="selectedCar"
         required
+        @change="resetPickedFields"
       >
         <option value="" selected>Select customer's car...</option>
         <option
@@ -43,7 +47,7 @@
             class="form-check-label"
             :for="`flexSwitchCheckDefault${index}`"
             ><span class="text-capitalize">{{ accessory.name }}</span
-            >, <strong>R{{ accessory.cost }}</strong></label
+            > <strong class="text-danger">R{{ accessory.cost }}</strong></label
           >
         </div>
       </div>
@@ -72,26 +76,25 @@
           class="form-check form-switch"
         >
           <input
-            v-if="!selectedMainProduct.isRequiredCoverages"
             class="form-check-input"
             type="checkbox"
             role="switch"
             :id="`flexCheckDefault${index}`"
             :value="subProduct.subProductId"
             v-model="checkedSubProducts"
+            :required="selectedMainProduct.isRequiredCoverages"
           />
           <label class="form-check-label" :for="`flexCheckDefault${index}`">
             <span>{{ subProduct.subProductName }}</span>
-            <span class="fw-bold">&nbsp;R{{ subProduct.subProductCost }}</span>
+            <span class="fw-bold text-danger">&nbsp;R{{ subProduct.subProductCost }}</span>
           </label>
         </div>
       </div>
 
       <button
-        type="button"
+        type="submit"
         class="btn btn-outline-danger mt-3"
         :disabled="!isMainProductSelected || !getInseptionDateOfCover.isSet"
-        @click="createEstimation"
       >
         Calculate
       </button>
@@ -194,7 +197,7 @@ export default {
   methods: {
     selectMainProduct() {
       this.isMainProductSelected = true;
-      this.checkedSubProducts = [];
+      this.resetPickedFields();
     },
     createEstimation() {
       this.$store
@@ -234,6 +237,12 @@ export default {
     //     });
     //   }
     // },
+    resetPickedFields() {
+      this.checkedSubProducts = [];
+      this.checkedAccessoriesIds = [];
+      this.showEstimate = false;
+      this.showEstimateAccessories = false;
+    },
     resetForm() {
       this.scrollToTop();
       this.isMainProductSelected = false;
