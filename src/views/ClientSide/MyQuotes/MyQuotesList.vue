@@ -1,46 +1,59 @@
 <template>
-  <section class="container-fluid">
+  <section class="container-fluid pb-3">
     <div
       v-for="(item, index) in estimationsList"
       :key="item.estimationId"
-      class=""
+      class="quote-item mt-3 border rounded shadow"
     >
-      <div class="row">
-        <div class="col"><strong>#</strong> {{ item.referenceNumber }}</div>
-
-        <div class="col"><strong>Car:</strong> {{ item.vehicleDetails }}</div>
-
-        <div v-if="item.mainProductName" class="col">
-          <strong>Product:</strong> {{ item.mainProductName }}
-        </div>
-        <div v-else class="col">
-          <strong>Accessories:</strong>&nbsp;
-          <span
-            class="text-capitalize"
-            v-for="(accessory, index) in item.accessories"
-            :key="accessory.accessoryId"
-            >{{ accessory.accessoryName
-            }}<span v-if="index != item.accessories.length - 1">,&nbsp;</span>
-          </span>
-        </div>
-        <div class="col"><strong>Monthly:</strong> R{{ item.totalCost }}</div>
+      <div class="row row-cols- h-25 bg-light border-bottom m-0 p-1">
         <div class="col">
-          <strong>Start from:</strong> {{ getDate(item.startFromFormatted) }}
+          <p class="text-uppercase">Created</p>
+          <p>{{ getDate(item.created) }}</p>
         </div>
         <div class="col">
-          <strong>Total Due:</strong> R{{ item.totalCostCalculated }}
+          <p class="text-uppercase">total</p>
+          <p class="text-danger fw-bold">R{{ item.totalCostCalculated }}</p>
         </div>
-        <div class="form-check col col-12 col-md-2 mt-3 mt-md-0">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            :value="item.estimationId"
-            :id="`flexCheckDefault${index}`"
-            v-model="estimationIdsArray"
-          />
-          <label class="form-check-label" :for="`flexCheckDefault${index}`">
-            Add To Order
-          </label>
+        <div class="col">
+          <p class="text-uppercase">inception date of cover</p>
+          <p>{{ getDate(item.startFromFormatted) }}</p>
+        </div>
+        <div class="col">
+          <p class="text-uppercase">Quote #{{ item.referenceNumber }}</p>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :value="item.estimationId"
+              :id="`flexCheckDefault${index}`"
+              v-model="estimationIdsArray"
+            />
+            <label class="form-check-label" :for="`flexCheckDefault${index}`">
+              Add To Order
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-cols-2 p-3">
+        <div class="col">
+          <h5 class="text-uppercase">{{ item.vehicleDetails }}</h5>
+          <p class="fw-bold">R{{ item.vehicleRetailValue }}</p>
+        </div>
+        <div class="col">
+          <div
+            v-if="
+              item.estimationType == 'tuffstuff' ||
+              item.estimationType == 'topmarq'
+            "
+          >
+            <p class="text-uppercase fw-bold">{{ item.mainProductName }}</p>
+            <hr />
+            <p class="text-uppercase fw-bold">coverages</p>
+            <span v-for="sub in item.subProducts" :key="sub">
+              -{{ sub.subProductName }};
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -61,10 +74,7 @@
           v-model="termsAndConditionsChecked"
           required
         />
-        <label
-          class="form-check-label text-white text-capitalize"
-          for="flexCheckDefault"
-        >
+        <label class="form-check-label text-capitalize" for="flexCheckDefault">
           terms and conditions
         </label>
       </div>
@@ -72,7 +82,7 @@
 
     <button
       type="button"
-      class="btn btn-outline-warning mt-3"
+      class="btn btn-outline-secondary mt-3"
       @click="createOrder"
       :disabled="estimationIdsArray.length == 0 || !termsAndConditionsChecked"
     >
@@ -98,10 +108,16 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_ESTIMATIONS`, `?limit=10`);
+    this.fetchEstimations();
     this.$store.dispatch(`GET_RATING`, ``);
   },
   methods: {
+    fetchEstimations() {
+      this.$store.dispatch(
+        `GET_ESTIMATIONS`,
+        `?limit=2&createdFrom=1654758000000`
+      );
+    },
     getTermsAndConditions() {
       let termsAndConditions = ``;
       this.$store.state.rating.resources.map((item) => {
@@ -117,6 +133,8 @@ export default {
           estimationIds: this.estimationIdsArray,
         })
         .then(() => {
+          this.scrollToTop();
+          this.fetchEstimations();
           this.$store.commit(`SET_MODAL`, {
             isModal: true,
             msg: `Your order is under review now, we will contact you for further
@@ -129,4 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.quote-item {
+  height: 300px;
+}
 </style>

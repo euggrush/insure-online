@@ -130,7 +130,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.order-item {
-  height: 400px;
-}
+// .order-item {
+//   height: 550px;
+//   @include media-breakpoint-up(md) {
+//     height: 400px;
+//   }
+// }
 </style>
