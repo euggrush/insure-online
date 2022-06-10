@@ -46,8 +46,10 @@
           <label
             class="form-check-label"
             :for="`flexSwitchCheckDefault${index}`"
-            ><span class="text-capitalize">{{ accessory.name }}</span
-            > <strong class="text-danger">R{{ accessory.cost }}</strong></label
+            ><span class="text-capitalize">{{ accessory.name }}</span>
+            <strong class="text-danger"
+              >&nbsp;R{{ accessory.cost }}</strong
+            ></label
           >
         </div>
       </div>
@@ -86,7 +88,9 @@
           />
           <label class="form-check-label" :for="`flexCheckDefault${index}`">
             <span>{{ subProduct.subProductName }}</span>
-            <span class="fw-bold text-danger">&nbsp;R{{ subProduct.subProductCost }}</span>
+            <span class="fw-bold text-danger"
+              >&nbsp;R{{ subProduct.subProductCost }}</span
+            >
           </label>
         </div>
       </div>
@@ -226,17 +230,6 @@ export default {
           this.showEstimateAccessories = true;
         });
     },
-    // createOrder(payload) {
-    //   if (payload.isOrderCreated) {
-    //     this.$store.dispatch(`GET_ORDERS`, ``);
-    //     this.resetForm();
-    //     this.$store.commit(`SET_MODAL`, {
-    //       isModal: true,
-    //       msg: `Your order is under review now, we will contact you for further
-    //           information.`,
-    //     });
-    //   }
-    // },
     resetPickedFields() {
       this.checkedSubProducts = [];
       this.checkedAccessoriesIds = [];
@@ -252,6 +245,10 @@ export default {
       this.showEstimateAccessories = false;
       this.selectedMainProduct = ``;
       this.showEstimate = false;
+      this.$store.commit(`SET_INSEPTION_DATE_OF_COVER`, {
+        date: 0,
+        isSet: false,
+      });
     },
   },
 };

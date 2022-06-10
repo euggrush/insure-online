@@ -120,6 +120,17 @@ export default {
           this.$emit(`createdOrderConfirm`, { isOrderCreated: true });
         });
     },
+    // createOrder(payload) {
+    //   if (payload.isOrderCreated) {
+    //     this.$store.dispatch(`GET_ORDERS`, ``);
+    //     this.resetForm();
+    //     this.$store.commit(`SET_MODAL`, {
+    //       isModal: true,
+    //       msg: `Your order is under review now, we will contact you for further
+    //           information.`,
+    //     });
+    //   }
+    // },
   },
 };
 </script>
