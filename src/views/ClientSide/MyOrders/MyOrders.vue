@@ -28,9 +28,6 @@
           >
             {{ order.orderStatus }}
           </p>
-          <!-- <p class="text-secondary">
-            Covered from {{ getDate(order.inceptionDateOfCover) }}
-          </p> -->
           <p
             v-if="order.paidBy == ''"
             class="text-danger fw-bold text-uppercase"
@@ -101,29 +98,39 @@
               <hr />
               <span
                 class="mt-1 mb-0 text-secondary"
-                v-for="sub in orderInfo.subProducts"
+                v-for="(sub, i) in orderInfo.subProducts"
                 :key="sub"
               >
-                -{{ sub.subProductName }};
+                {{ sub.subProductName }}
+                <span v-if="i !== orderInfo.subProducts.length - 1"
+                  >&nbsp;&#124;&nbsp;</span
+                >
               </span>
               <p class="mt-1 mb-0 text-danger fw-bold">
-                Total R{{ orderInfo.totalCost }}
+                Total R{{ orderInfo.totalCostCalculated }}
               </p>
             </div>
             <div
               class="mt-3"
               v-else-if="orderInfo.estimationType == 'accessory'"
             >
-              <strong class="d-block mb-1 text-uppercase">Accessories</strong>
+              <strong class="text-uppercase">Accessories</strong>
+               <span class="text-secondary d-block float-lg-end">
+                Covered from {{ getDate(orderInfo.startFromFormatted) }}</span
+              >
+              <hr>
               <span
                 class="mb-0"
-                v-for="accessory in orderInfo.accessories"
+                v-for="(accessory, j) in orderInfo.accessories"
                 :key="accessory"
               >
-                -{{ accessory.accessoryName }};
+                {{ accessory.accessoryName
+                }}<span v-if="j !== orderInfo.accessories.length - 1"
+                  >&nbsp;&#124;&nbsp;</span
+                >
               </span>
               <p class="mt-1 mb-0 text-danger fw-bold">
-                Total R{{ orderInfo.totalCost }}
+                Total R{{ orderInfo.totalCostCalculated }}
               </p>
             </div>
           </div>

@@ -50,8 +50,23 @@
             <p class="text-uppercase fw-bold">{{ item.mainProductName }}</p>
             <hr />
             <p class="text-uppercase fw-bold">coverages</p>
-            <span v-for="sub in item.subProducts" :key="sub">
-              -{{ sub.subProductName }};
+            <span v-for="(sub, j) in item.subProducts" :key="sub">
+              {{ sub.subProductName }}
+              <span v-if="j !== item.subProducts.length - 1"
+                >&nbsp;&#124;&nbsp;</span
+              >
+            </span>
+          </div>
+          <div v-else-if="item.estimationType == 'accessory'">
+            <p class="text-uppercase fw-bold">accessories</p>
+            <span
+              v-for="(accessory, count) in item.accessories"
+              :key="accessory.accessoryId"
+            >
+              {{ accessory.accessoryName
+              }}<span v-if="count !== item.accessories.length - 1"
+                >&nbsp;&#124;&nbsp;</span
+              >
             </span>
           </div>
         </div>
@@ -81,7 +96,7 @@
     </div>
 
     <button
-    v-if="estimationsList.length>0"
+      v-if="estimationsList.length > 0"
       type="button"
       class="btn btn-outline-secondary mt-3"
       @click="createOrder"
