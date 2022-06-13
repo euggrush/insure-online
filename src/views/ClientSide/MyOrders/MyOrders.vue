@@ -1,11 +1,13 @@
 <template>
-  <section class="container">
+  <section class="container pb-3">
     <div
       v-for="(order, index) in ordersList"
       :key="index"
       class="order-item border rounded shadow-sm mt-3"
     >
-      <div class="row row-cols-4 h-25 bg-light border-bottom m-0 p-1">
+      <!-- ORDER TOP ROW -->
+
+      <div class="row row-cols-md-4 h-25 bg-light border-bottom m-0 p-1">
         <div class="col">
           <p>ORDER PLACED</p>
           <p>{{ getDate(order.orderCreated) }}</p>
@@ -20,14 +22,32 @@
           <p
             class="fw-bold text-uppercase"
             :class="{
-              'text-primary': order.orderStatus == `approved`,
+              'text-success': order.orderStatus == `approved`,
               'text-danger': order.orderStatus == `rejected`,
             }"
           >
             {{ order.orderStatus }}
           </p>
-          <p class="text-secondary">
+          <!-- <p class="text-secondary">
             Covered from {{ getDate(order.inceptionDateOfCover) }}
+          </p> -->
+          <p
+            v-if="order.paidBy == ''"
+            class="text-danger fw-bold text-uppercase"
+          >
+            unpaid
+          </p>
+          <p
+            v-else-if="order.paidBy == 'offline'"
+            class="text-success fw-bold text-uppercase"
+          >
+            paid offline
+          </p>
+          <p
+            v-else-if="order.paidBy == 'online'"
+            class="text-success fw-bold text-uppercase"
+          >
+            paid online
           </p>
         </div>
         <div class="col">
@@ -42,63 +62,74 @@
           </button>
         </div>
       </div>
-      <div class="row p-3">
+
+      <!-- ORDER MAIN ROW -->
+
+      <div
+        v-for="orderInfo in order.estimations"
+        :key="orderInfo.vehicleId"
+        class="row p-3"
+      >
         <div class="col">
-          <p class="text-uppercase fw-bold">
-            {{ order.estimations[0].vehicleDetails }}
+          <p class="text-uppercase fw-bold text-secondary">
+            {{ orderInfo.vehicleDetails }}
           </p>
           <img
-            v-if="order.estimations[0].vehicleAssets.length > 0"
-            :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
+            v-if="orderInfo.vehicleAssets.length > 0"
+            :src="`${FILE_URL}${orderInfo.vehicleAssets[0].path}`"
             class="d-block img-fluid"
             alt="image"
-            width="200"
-            height="200"
+            width="100"
           />
           <img
             v-else
             :src="CAR_DEFAULT_IMAGE"
             class="d-block"
             alt="image"
-            width="200"
-            height="200"
+            width="100"
           />
         </div>
-        <div class="col-8">
-          <div v-for="item in order.estimations" :key="item">
-            <div v-if="item.estimationType == 'tuffstuff'">
-              <strong class="text-dark text-uppercase">{{
-                item.mainProductName
+        <div class="col col-lg-10">
+          <div>
+            <div v-if="orderInfo.estimationType == 'tuffstuff'">
+              <strong class="text-dark text-uppercase fs-6">{{
+                orderInfo.mainProductName
               }}</strong>
+              <span class="text-secondary d-block float-lg-end">
+                Covered from {{ getDate(orderInfo.startFromFormatted) }}</span
+              >
               <hr />
               <span
                 class="mt-1 mb-0 text-secondary"
-                v-for="sub in item.subProducts"
+                v-for="sub in orderInfo.subProducts"
                 :key="sub"
               >
                 -{{ sub.subProductName }};
               </span>
               <p class="mt-1 mb-0 text-danger fw-bold">
-                Total R{{ item.totalCost }}
+                Total R{{ orderInfo.totalCost }}
               </p>
             </div>
-            <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
-              <strong class="text-uppercase">Accessories</strong>
-              <hr />
+            <div
+              class="mt-3"
+              v-else-if="orderInfo.estimationType == 'accessory'"
+            >
+              <strong class="d-block mb-1 text-uppercase">Accessories</strong>
               <span
                 class="mb-0"
-                v-for="accessory in item.accessories"
+                v-for="accessory in orderInfo.accessories"
                 :key="accessory"
               >
                 -{{ accessory.accessoryName }};
               </span>
               <p class="mt-1 mb-0 text-danger fw-bold">
-                Total R{{ item.totalCost }}
+                Total R{{ orderInfo.totalCost }}
               </p>
             </div>
           </div>
         </div>
       </div>
+      <!-- ORDER MAIN ROW END -->
     </div>
   </section>
 </template>
@@ -130,10 +161,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .order-item {
-//   height: 550px;
-//   @include media-breakpoint-up(md) {
-//     height: 400px;
-//   }
-// }
+.order-item {
+  min-height: 550px;
+  @include media-breakpoint-up(md) {
+    min-height: 400px;
+  }
+}
 </style>

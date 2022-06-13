@@ -24,72 +24,10 @@
         {{ order.orderStatus }}
       </span>
       &#124; Total R{{ order.allEstimationsTotalCostCalculated }}
-    </div>
-    <hr />
-    <p class="mt-3">
-      Inception date of cover is
-      {{ getDate(order.startFromFormatted) }}
-    </p>
-    <strong class="text-uppercase"
-      >{{ order.estimations[0].vehicleDetails }}, R{{
-        order.estimations[0].vehicleRetailValue
-      }}</strong
-    >
-    <div class="row mt-3">
-      <div class="col-12 col-lg-6">
-        <img
-          v-if="order.estimations[0].vehicleAssets.length > 0"
-          :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
-          class="d-block vehicle-image"
-          alt="image"
-          width="200"
-          height="200"
-        />
-        <img
-          v-else
-          :src="CAR_DEFAULT_IMAGE"
-          class="d-block vehicle-image"
-          alt="image"
-          width="200"
-          height="200"
-        />
-      </div>
-      <div class="col-12 col-lg-2 mt-3 mt-lg-0">
-        <div v-for="item in order.estimations" :key="item">
-          <div v-if="item.estimationType == 'estimation'">
-            <strong class="text-dark text-uppercase">{{
-              item.mainProductName
-            }}</strong>
-            <p
-              class="mt-1 mb-0 text-secondary"
-              v-for="sub in item.subProducts"
-              :key="sub"
-            >
-              -{{ sub.subProductName }};
-            </p>
-            <p class="mt-1 mb-0 text-danger fw-bold">
-              Total R{{ item.totalCost }}
-            </p>
-          </div>
-          <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
-            <strong class="text-uppercase">Accessories</strong>
-            <p
-              class="mb-0"
-              v-for="accessory in item.accessories"
-              :key="accessory"
-            >
-              -{{ accessory.accessoryName }};
-            </p>
-            <p class="mt-1 mb-0 text-danger fw-bold">
-              Total R{{ item.totalCost }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-lg-4 mt-3">
+      <div v-if="order.orderStatus == 'pending'" class="mt-3">
         <button
           type="button"
-          class="btn btn-outline-secondary w-100"
+          class="btn link-secondary p-0"
           @click="goToPaymentPage(order.orderId)"
         >
           Pay online
@@ -97,13 +35,85 @@
 
         <button
           type="button"
-          class="btn btn-outline-secondary w-100 mt-3"
+          class="btn link-secondary ms-3 p-0"
           @click="getCallRequest(order.orderId)"
         >
           Rquest a call
         </button>
       </div>
     </div>
+
+    <hr />
+    <!-- ORDER INCLUDES -->
+    <section class="order-includes-wrap">
+      <p class="mt-3">
+        Inception date of cover is
+        {{ getDate(order.startFromFormatted) }}
+      </p>
+      <strong class="text-uppercase"
+        >{{ order.estimations[0].vehicleDetails }}, R{{
+          order.estimations[0].vehicleRetailValue
+        }}</strong
+      >
+      <div class="row mt-3">
+        <!-- CAR IMAGE -->
+        <div class="col-12 col-lg-6">
+          <img
+            v-if="order.estimations[0].vehicleAssets.length > 0"
+            :src="`${FILE_URL}${order.estimations[0].vehicleAssets[0].path}`"
+            class="d-block vehicle-image"
+            alt="image"
+            width="200"
+            height="200"
+          />
+          <img
+            v-else
+            :src="CAR_DEFAULT_IMAGE"
+            class="d-block vehicle-image"
+            alt="image"
+            width="200"
+            height="200"
+          />
+        </div>
+        <!-- CAR IMAGE END -->
+        <!-- ORDER DETAILS -->
+        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+          <div v-for="item in order.estimations" :key="item">
+            <div v-if="item.estimationType == 'estimation'">
+              <strong class="text-dark text-uppercase">{{
+                item.mainProductName
+              }}</strong>
+              <p
+                class="mt-1 mb-0 text-secondary"
+                v-for="sub in item.subProducts"
+                :key="sub"
+              >
+                -{{ sub.subProductName }};
+              </p>
+              <p class="mt-1 mb-0 text-danger fw-bold">
+                Total R{{ item.totalCost }}
+              </p>
+            </div>
+            <div class="mt-3" v-else-if="item.estimationType == 'accessory'">
+              <strong class="text-uppercase">Accessories</strong>
+              <p
+                class="mb-0"
+                v-for="accessory in item.accessories"
+                :key="accessory"
+              >
+                -{{ accessory.accessoryName }};
+              </p>
+              <p class="mt-1 mb-0 text-danger fw-bold">
+                Total R{{ item.totalCost }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- ORDER DETAILS END -->
+      </div>
+    </section>
+
+    <!-- ORDER INCLUDES END -->
   </section>
 </template>
 
@@ -118,12 +128,6 @@ export default {
       FILE_URL: FILE_URL,
       CAR_DEFAULT_IMAGE,
     };
-  },
-  props: {
-    myProps: {
-      type: Object,
-      default: () => {},
-    },
   },
   computed: {
     order() {

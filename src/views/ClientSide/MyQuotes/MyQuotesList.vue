@@ -81,6 +81,7 @@
     </div>
 
     <button
+    v-if="estimationsList.length>0"
       type="button"
       class="btn btn-outline-secondary mt-3"
       @click="createOrder"
@@ -113,9 +114,12 @@ export default {
   },
   methods: {
     fetchEstimations() {
+      let today = Date.now();
+      const THREE_HOURS_AGO = 10800000;
+      let threeHoursAgoCalculated = today - THREE_HOURS_AGO;
       this.$store.dispatch(
         `GET_ESTIMATIONS`,
-        `?limit=2&createdFrom=1654758000000`
+        `?limit=2&createdFrom=${threeHoursAgoCalculated}`
       );
     },
     getTermsAndConditions() {
@@ -148,6 +152,6 @@ export default {
 
 <style lang="scss" scoped>
 .quote-item {
-  height: 300px;
+  min-height: 300px;
 }
 </style>

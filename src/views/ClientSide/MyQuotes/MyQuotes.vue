@@ -147,7 +147,7 @@
         Reset
       </button>
     </form>
-    <MyQuotesList />
+    <Transition> <MyQuotesList /></Transition>
   </section>
 </template>
 
@@ -199,6 +199,15 @@ export default {
     this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
+    fetchEstimations() {
+      let today = Date.now();
+      const THREE_HOURS_AGO = 10800000;
+      let threeHoursAgoCalculated = today - THREE_HOURS_AGO;
+      this.$store.dispatch(
+        `GET_ESTIMATIONS`,
+        `?limit=4&createdFrom=${threeHoursAgoCalculated}`
+      );
+    },
     selectMainProduct() {
       this.isMainProductSelected = true;
       this.resetPickedFields();
@@ -215,6 +224,7 @@ export default {
         })
         .then(() => {
           this.showEstimate = true;
+          this.fetchEstimations();
         });
     },
     createAccessoryEstimation() {
@@ -228,6 +238,7 @@ export default {
         })
         .then(() => {
           this.showEstimateAccessories = true;
+          this.fetchEstimations();
         });
     },
     resetPickedFields() {
@@ -245,6 +256,7 @@ export default {
       this.showEstimateAccessories = false;
       this.selectedMainProduct = ``;
       this.showEstimate = false;
+      this.fetchEstimations();
       this.$store.commit(`SET_INSEPTION_DATE_OF_COVER`, {
         date: 0,
         isSet: false,
