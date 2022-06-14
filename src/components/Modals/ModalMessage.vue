@@ -1,5 +1,9 @@
 <template>
-  <div class="msg-popup position-absolute top-0 start-50 translate-middle-x" tabindex="-1" v-if="modalInfo.isModal">
+  <div
+    class="msg-popup position-absolute top-0 start-50 translate-middle-x"
+    tabindex="-1"
+    v-if="modalInfo.isModal"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -16,7 +20,11 @@
           <p class="text-black text-capitalize">{{ modalInfo.msg }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-danger" @click="closeModal">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            @click="closeModal"
+          >
             Ok
           </button>
         </div>
@@ -42,7 +50,11 @@ export default {
 
 <style lang="scss" scoped>
 .msg-popup {
+  width: 100%;
   z-index: 3;
+  @include media-breakpoint-up(lg) {
+    width: 500px;
+  }
 }
 .btn {
   min-width: 10em;

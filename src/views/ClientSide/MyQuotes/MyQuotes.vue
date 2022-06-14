@@ -282,14 +282,6 @@ export default {
 .my-quotes {
   min-height: calc(100vh - 10em);
 }
-// .btn-outline-danger {
-//   color: $colorBrick;
-//   border-color: $colorBrick;
-// }
-// .btn-outline-danger:hover {
-//   color: $colorWhite;
-//   background-color: $colorBrick;
-// }
 .order-create-popup {
   min-width: 300px;
   @include media-breakpoint-up(sm) {

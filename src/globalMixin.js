@@ -100,7 +100,18 @@ export default {
             return Date.parse(date) > anHourAgo
         },
         hideUnpaidOrder(order) {
-            return Date.parse(order.orderCreated);
+            let show;
+            const TWENTY_FOUR_HOURS = 86400000;
+            let today = Date.now();
+            let dayAgo = today - TWENTY_FOUR_HOURS * 2;
+            let orderDate = Date.parse(order.orderCreated);
+            let orderStatus = order.orderStatus;
+            if (orderDate<dayAgo && orderStatus ==`pending`) {
+                show = false
+            } else {
+                show = true;
+            }
+            return show;
         },
         isTokenExpired(tokenExpiration) {
             let tokenTime = dayjs(tokenExpiration).valueOf();

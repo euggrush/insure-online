@@ -1,10 +1,7 @@
 <template>
-  <form
-    @submit.prevent="changeAccount()"
-    class="card card-body bg-secondary bg-gradient shadow-lg text-white"
-  >
+  <form @submit.prevent="changeAccount()" class="card card-body shadow-lg mb-3">
     <label>
-      <span class="fw-light text-decoration-underline lh-lg">First name:</span>
+      <span class="fw-light lh-lg">First name</span>
       <input
         class="form-control"
         type="text"
@@ -13,7 +10,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg">Last name:</span>
+      <span class="fw-light lh-lg">Last name</span>
       <input
         class="form-control"
         type="text"
@@ -22,13 +19,11 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg"
-        >Date of birth:</span
-      >
+      <span class="fw-light lh-lg">Date of birth</span>
       <input class="form-control" type="date" v-model="dateOfBirth" />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg">Address:</span>
+      <span class="fw-light lh-lg">Address:</span>
       <input
         class="form-control"
         type="text"
@@ -37,7 +32,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg">Cellphone:</span>
+      <span class="fw-light lh-lg">Cellphone</span>
       <input
         class="form-control"
         type="text"
@@ -46,7 +41,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg">Home phone:</span>
+      <span class="fw-light lh-lg">Home phone</span>
       <input
         class="form-control"
         type="text"
@@ -64,9 +59,7 @@
       <option value="Married">Married</option>
     </select>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg"
-        >Country Of Residence:</span
-      >
+      <span class="fw-light lh-lg">Country Of Residence</span>
       <input
         class="form-control"
         type="text"
@@ -75,9 +68,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg"
-        >Previous Insurer:</span
-      >
+      <span class="fw-light lh-lg">Previous Insurer</span>
       <input
         class="form-control"
         type="text"
@@ -86,9 +77,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg"
-        >Year of issue driver license:</span
-      >
+      <span class="fw-light lh-lg">Year of issue driver license</span>
       <input
         class="form-control"
         type="number"
@@ -97,9 +86,7 @@
       />
     </label>
     <label>
-      <span class="fw-light text-decoration-underline lh-lg"
-        >Claims history:</span
-      >
+      <span class="fw-light lh-lg">Claims history</span>
       <input
         class="form-control"
         type="text"
@@ -107,7 +94,9 @@
         v-model="changeUserObj.claimsHistory"
       />
     </label>
-    <button type="submit" class="btn btn-outline-danger btn-lg mt-3">Submit</button>
+    <button type="submit" class="btn btn-outline-danger btn-lg mt-3">
+      Submit
+    </button>
   </form>
 </template>
 

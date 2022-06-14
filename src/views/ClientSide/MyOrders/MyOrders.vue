@@ -4,6 +4,7 @@
       v-for="(order, index) in ordersList"
       :key="index"
       class="order-item border rounded shadow-sm mt-3"
+      v-show="hideUnpaidOrder(order)"
     >
       <!-- ORDER TOP ROW -->
 
