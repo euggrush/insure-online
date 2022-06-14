@@ -19,7 +19,7 @@
         id="exampleInputEmail0"
         v-model="vehicleInfo.make"
         placeholder="make"
-        minlength="5"
+        minlength="2"
         maxlength="30"
         required
       />
@@ -32,7 +32,7 @@
         id="exampleInputEmail1"
         v-model="vehicleInfo.model"
         placeholder="model"
-        minlength="5"
+        minlength="1"
         maxlength="30"
         required
       />
@@ -159,7 +159,7 @@
         />
         Business
       </label>
-      <label class="ms-3">
+      <label class="mt-3 mt-md-0 ms-1 ms-md-3">
         <input
           type="radio"
           name="use"
@@ -168,28 +168,25 @@
         />
         Private And Business
       </label>
-    </div>
-    <div
-      v-if="
-        vehicleInfo.useCase == 'Business' ||
-        vehicleInfo.useCase == 'Private And Business'
-      "
-      class="mb-3"
-    >
-      <label for="floatingTextarea" class="form-label"
-        >Explanation Of the Business Use
-      </label>
-      <textarea
-        class="form-control"
-        placeholder="Explanation Of the Business Use"
-        id="floatingTextarea"
-        v-model="vehicleInfo.businessDescription"
-        :required="
+      <div
+        v-if="
           vehicleInfo.useCase == 'Business' ||
           vehicleInfo.useCase == 'Private And Business'
         "
-      ></textarea>
+        class="mt-3 mb-3"
+      >
+        <textarea
+          class="form-control"
+          placeholder="Explanation Of the Business Use"
+          v-model="vehicleInfo.businessDescription"
+          :required="
+            vehicleInfo.useCase == 'Business' ||
+            vehicleInfo.useCase == 'Private And Business'
+          "
+        ></textarea>
+      </div>
     </div>
+
     <div class="mb-3">
       <span>Financed vehicle</span>
       <br />
@@ -212,10 +209,10 @@
         />
         No
       </label>
-      <div v-if="vehicleInfo.financed == '1'">
+      <div class="mt-3" v-if="vehicleInfo.financed == '1'">
         <textarea
           class="form-control"
-          placeholder="Name f the finance house"
+          placeholder="Name of the finance house"
           :required="vehicleInfo.financed == '1'"
           v-model="vehicleInfo.financeHouse"
         ></textarea>
@@ -284,6 +281,7 @@ export default {
       this.vehicleInfo.accountId = this.myProps.accountId;
       this.vehicleInfo.details = `${this.vehicleInfo.make} ${this.vehicleInfo.model}`;
       this.getVehicleInsuranceType();
+      this.checkVehiclesData();
       setTimeout(() => {
         this.$store
           .dispatch(`CREATE_VEHICLE`, this.vehicleInfo)
@@ -293,7 +291,7 @@ export default {
             this.$emit(`closeForm`, {});
           })
           .catch((error) => alert(error));
-      }, 1000);
+      }, 2000);
     },
     fetchData() {
       this.$store.dispatch(`GET_VEHICLES_DATA`, ``).then(() => {
