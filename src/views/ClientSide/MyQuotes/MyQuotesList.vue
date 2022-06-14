@@ -49,7 +49,7 @@
           >
             <p class="text-uppercase fw-bold">{{ item.mainProductName }}</p>
             <hr />
-            <p class="text-uppercase fw-bold">coverages</p>
+            <p v-if="item.subProducts.length>0" class="text-uppercase fw-bold">coverages</p>
             <span v-for="(sub, j) in item.subProducts" :key="sub">
               {{ sub.subProductName }}
               <span v-if="j !== item.subProducts.length - 1"

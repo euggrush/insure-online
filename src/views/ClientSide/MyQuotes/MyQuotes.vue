@@ -199,6 +199,9 @@ export default {
     this.$store.dispatch(`GET_VEHICLES`, ``);
   },
   methods: {
+    fetchProductsByType(arg) {
+      this.$store.dispatch(`GET_MAIN_PRODUCTS`, `?productType=${arg}`);
+    },
     fetchEstimations() {
       let today = Date.now();
       const THREE_HOURS_AGO = 10800000;
@@ -219,7 +222,7 @@ export default {
           mainProductId: this.selectedMainProduct.mainProductId,
           subProductsIds: Object.values(this.checkedSubProducts),
           vehicleId: this.selectedCar.vehicleId,
-          estimationType: `tuffstuff`,
+          estimationType: this.selectedMainProduct.productType.toLowerCase(),
           startFrom: this.getInseptionDateOfCover.date,
         })
         .then(() => {

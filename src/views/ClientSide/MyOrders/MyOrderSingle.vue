@@ -81,7 +81,12 @@
         <!-- CAR IMAGE END -->
         <!-- ORDER DETAILS -->
         <div class="col-12 col-lg-9 mt-3 mt-lg-0">
-          <div v-if="orderIncludedEstimation.estimationType == 'tuffstuff'">
+          <div
+            v-if="
+              orderIncludedEstimation.estimationType == 'tuffstuff' ||
+              orderIncludedEstimation.estimationType == 'topmarq'
+            "
+          >
             <strong class="text-dark text-uppercase fs-6">{{
               orderIncludedEstimation.mainProductName
             }}</strong>
@@ -114,7 +119,7 @@
               Inception date of cover is
               {{ getDate(orderIncludedEstimation.startFromFormatted) }}
             </span>
-            <br />
+            <hr />
             <span
               class="mb-0 text-uppercase"
               v-for="(accessory, index) in orderIncludedEstimation.accessories"

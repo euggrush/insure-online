@@ -88,7 +88,12 @@
         </div>
         <div class="col col-lg-10">
           <div>
-            <div v-if="orderInfo.estimationType == 'tuffstuff'">
+            <div
+              v-if="
+                orderInfo.estimationType == 'tuffstuff' ||
+                orderInfo.estimationType == 'topmarq'
+              "
+            >
               <strong class="text-dark text-uppercase fs-6">{{
                 orderInfo.mainProductName
               }}</strong>
@@ -115,10 +120,10 @@
               v-else-if="orderInfo.estimationType == 'accessory'"
             >
               <strong class="text-uppercase">Accessories</strong>
-               <span class="text-secondary d-block float-lg-end">
+              <span class="text-secondary d-block float-lg-end">
                 Covered from {{ getDate(orderInfo.startFromFormatted) }}</span
               >
-              <hr>
+              <hr />
               <span
                 class="mb-0"
                 v-for="(accessory, j) in orderInfo.accessories"
