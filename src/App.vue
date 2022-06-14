@@ -203,6 +203,14 @@ h6 {
   border-radius: 50rem;
   font-size: inherit;
 }
+.btn-outline-danger {
+  color: $colorBrick;
+  border-color: $colorBrick;
+}
+.btn-outline-danger:hover {
+  color: $colorWhite;
+  background-color: $colorBrick;
+}
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;

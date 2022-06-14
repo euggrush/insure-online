@@ -99,6 +99,9 @@ export default {
             const anHourAgo = Date.now() - HOUR;
             return Date.parse(date) > anHourAgo
         },
+        hideUnpaidOrder(order) {
+            return Date.parse(order.orderCreated);
+        },
         isTokenExpired(tokenExpiration) {
             let tokenTime = dayjs(tokenExpiration).valueOf();
             let currentTime = Date.now();

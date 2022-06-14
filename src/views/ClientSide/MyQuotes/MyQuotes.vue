@@ -67,6 +67,12 @@
           v-for="(product, index) in productsList"
           :key="index"
           :value="product"
+          :disabled="
+            (selectedCar.insuranceTypeRecommended == 'tuffstuff' &&
+              product.productType == 'TOPMARQ') ||
+            (selectedCar.insuranceTypeRecommended == 'topmarq' &&
+              product.productType == 'tuffstuff')
+          "
         >
           {{ product.mainProductName }}
         </option>
@@ -276,14 +282,14 @@ export default {
 .my-quotes {
   min-height: calc(100vh - 10em);
 }
-.btn-outline-danger {
-  color: $colorBrick;
-  border-color: $colorBrick;
-}
-.btn-outline-danger:hover {
-  color: $colorWhite;
-  background-color: $colorBrick;
-}
+// .btn-outline-danger {
+//   color: $colorBrick;
+//   border-color: $colorBrick;
+// }
+// .btn-outline-danger:hover {
+//   color: $colorWhite;
+//   background-color: $colorBrick;
+// }
 .order-create-popup {
   min-width: 300px;
   @include media-breakpoint-up(sm) {
