@@ -172,7 +172,7 @@
 </template>
 
 <script>
-import EditVehicleForm from "../../../components/Forms/EditVehicleForm.vue";
+import EditVehicleForm from "../../../components/Forms/EditForms/EditVehicleForm.vue";
 import MyVehicleImage from "./MyVehicleImage.vue";
 
 const enableTooltips = () => {

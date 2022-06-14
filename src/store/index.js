@@ -443,6 +443,7 @@ export const store = new Vuex.Store({
                 resp => {
                     let data = resp.data;
                     context.commit(`SET_NEW_ACCESSORY`, data);
+                    context.commit(`SET_NEEDED_CHANGES`);
                 }
             ).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
