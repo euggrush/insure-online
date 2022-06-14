@@ -86,10 +86,14 @@
       </label>
       <label class="col mt-3">
         <span class="fw-bold lh-lg"> Accessories </span><br />
-        <span v-for="accessory in accessoriesList" :key="accessory.accessoryId"
+        <span
+          v-for="(accessory, i) in accessoriesList"
+          :key="accessory.accessoryId"
           ><span
             >{{ accessory.name }}&nbsp;<strong>R{{ accessory.cost }}</strong
-            >,
+            ><span v-if="i !== accessoriesList.length - 1"
+              >&nbsp;&#124;&nbsp;</span
+            >
           </span></span
         >
         <form @submit.prevent="createAccessory" class="input-group mt-1">
