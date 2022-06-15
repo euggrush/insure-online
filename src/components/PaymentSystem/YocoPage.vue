@@ -8,12 +8,16 @@ export default {
   data() {
     return {
       currentOrderId: ``,
+      orderReferenceNumber: ``,
     };
   },
   computed: {
     amountCharge() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.currentOrderId = this.$store.state.orders.orders[0].orderId;
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.orderReferenceNumber =
+        this.$store.state.orders.orders[0].referenceNumber;
       return (
         this.$store.state.orders.orders[0].allEstimationsTotalCostCalculated *
         100
@@ -31,8 +35,8 @@ export default {
       yoco.showPopup({
         amountInCents: this.amountCharge,
         currency: "ZAR",
-        name: "Your Store or Product",
-        description: "Awesome description",
+        name: `_Order #${this.orderReferenceNumber}`,
+        description: "description",
         orderId: this.currentOrderId,
         callback: function (result) {
           if (result.error) {
@@ -57,8 +61,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-fluid {
-  min-height: 100vh;
-  padding-top: 10em;
-}
 </style>

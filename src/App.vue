@@ -12,7 +12,6 @@ import axios from "axios";
 window.onbeforeunload = () => {
   localStorage.removeItem("vuex");
 };
-
 export default {
   name: "Home",
   components: {

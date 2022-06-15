@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-1" id="mainNav">
     <div class="container-fluid px-4 px-lg-5">
       <button
         class="navbar-brand border-0 bg-transparent"
@@ -9,7 +9,7 @@
           src="../../assets/tuffstuff_logo3.png"
           alt="logo"
           class="rounded-circle"
-          width="130"
+          width="110"
         />
       </button>
       <button
@@ -114,12 +114,6 @@ export default {
     margin: 0 2em 0 4em;
   }
 }
-// .logout-btn {
-//   background-image: url("../../assets/img/exit.svg");
-//   background-size: 27px 27px;
-//   background-repeat: no-repeat;
-//   background-position: 95% center;
-// }
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;

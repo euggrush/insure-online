@@ -60,6 +60,12 @@ export default {
       },
     };
   },
+  mounted() {
+    this.unfixHeader();
+  },
+  unmounted() {
+    this.fixHeader();
+  },
   methods: {
     toggleTabs(arg1, arg2, arg3, arg4) {
       this.tabsNavigation.isProfile = arg1;
@@ -85,10 +91,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-fluid {
-  padding-top: 150px;
-  // padding-bottom: 150px;
-}
+// .container-fluid {
+//   padding-top: 150px;
+// }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;

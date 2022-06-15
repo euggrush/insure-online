@@ -2,10 +2,7 @@
   <section class="order-modal container position-relative">
     <h4>Order Details</h4>
     <ModalMessage />
-    <YocoPage
-      v-if="showPaymentSystem"
-      class="position-absolute top-0 start-50 translate-middle-x w-100 h-100 bg-light opacity-50"
-    />
+    <YocoPage v-if="showPaymentSystem" />
     <button
       type="button"
       class="btn-close float-end"
@@ -168,6 +165,7 @@ export default {
   },
   mounted() {
     this.getOrder(this.$route.query.id);
+    this.unfixHeader();
   },
   methods: {
     getOrder(id) {
@@ -194,19 +192,9 @@ export default {
     // eslint-disable-next-line no-unused-vars
     goToPaymentPage(id) {
       this.showPaymentSystem = true;
-      // this.$router.push(`/yoco-payment`);
-      // this.$store
-      //   .dispatch(`CREATE_ORDER`, {
-      //     orderId: id,
-      //     paidBy: `online`,
-      //   })
-      //   .then(() => {
-      //     this.scrollToTop();
-      //     this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
-      //     setTimeout(() => {
-      //       this.$router.push(`/yoco-payment`);
-      //     }, 1000);
-      //   });
+      setTimeout(() => {
+        this.showPaymentSystem = false;
+      }, 1000);
     },
   },
 };
