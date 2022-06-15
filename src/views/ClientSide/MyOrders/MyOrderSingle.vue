@@ -28,7 +28,10 @@
         &#124; Total R{{ order.allEstimationsTotalCostCalculated }}</strong
       >
 
-      <div v-if="order.orderStatus == 'pending'" class="mt-3">
+      <div
+        v-if="order.orderStatus == 'pending' && order.paidBy === ''"
+        class="mt-3"
+      >
         <button
           type="button"
           class="btn link-secondary p-0"
@@ -164,8 +167,12 @@ export default {
     },
   },
   mounted() {
+    this.scrollToTop();
     this.getOrder(this.$route.query.id);
     this.unfixHeader();
+  },
+  unmounted() {
+    this.fixHeader();
   },
   methods: {
     getOrder(id) {
@@ -208,5 +215,7 @@ export default {
 .vehicle-image {
   width: 100%;
   height: auto;
+  max-height: 430px;
+  object-fit: contain;
 }
 </style>

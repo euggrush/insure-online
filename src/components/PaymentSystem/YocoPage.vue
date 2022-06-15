@@ -50,6 +50,10 @@ export default {
               orderId: this.orderId,
             };
             store.dispatch(`CREATE_PAYMENT`, payload).then(() => {
+              store.dispatch(`CREATE_ORDER`, {
+                orderId: this.orderId,
+                paidBy: `online`,
+              });
               history.back();
             });
           }

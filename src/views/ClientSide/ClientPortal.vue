@@ -62,38 +62,52 @@ export default {
   },
   mounted() {
     this.unfixHeader();
+    this.fetchTabsValue();
   },
   unmounted() {
     this.fixHeader();
   },
   methods: {
-    toggleTabs(arg1, arg2, arg3, arg4) {
-      this.tabsNavigation.isProfile = arg1;
-      this.tabsNavigation.isQuotes = arg2;
-      this.tabsNavigation.isOrders = arg3;
-      this.tabsNavigation.isVehicles = arg4;
+    saveTabValue(arg1, arg2, arg3, arg4) {
+      sessionStorage.setItem("isProfile", arg1);
+      sessionStorage.setItem("isQuotes", arg2);
+      sessionStorage.setItem("isOrders", arg3);
+      sessionStorage.setItem("isVehicles", arg4);
     },
-
+    fetchTabsValue() {
+      this.tabsNavigation.isProfile =
+        JSON.parse(sessionStorage.getItem("isProfile")) ?? true;
+      this.tabsNavigation.isQuotes = JSON.parse(
+        sessionStorage.getItem("isQuotes")
+      );
+      this.tabsNavigation.isOrders = JSON.parse(
+        sessionStorage.getItem("isOrders")
+      );
+      this.tabsNavigation.isVehicles = JSON.parse(
+        sessionStorage.getItem("isVehicles")
+      );
+    },
     showProfile() {
-      this.toggleTabs(true, false, false, false);
+      this.saveTabValue(true, false, false, false);
+      this.fetchTabsValue();
     },
     showQuotes() {
-      this.toggleTabs(false, true, false, false);
+      this.saveTabValue(false, true, false, false);
+      this.fetchTabsValue();
     },
     showOrders() {
-      this.toggleTabs(false, false, true, false);
+      this.saveTabValue(false, false, true, false);
+      this.fetchTabsValue();
     },
     showVehicles() {
-      this.toggleTabs(false, false, false, true);
+      this.saveTabValue(false, false, false, true);
+      this.fetchTabsValue();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// .container-fluid {
-//   padding-top: 150px;
-// }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;

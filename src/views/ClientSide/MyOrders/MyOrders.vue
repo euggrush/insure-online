@@ -1,8 +1,8 @@
 <template>
   <section class="container pb-3">
     <div
-      v-for="(order, index) in ordersList"
-      :key="index"
+      v-for="order in ordersList"
+      :key="order.orderId"
       class="order-item border rounded shadow-sm mt-3"
       v-show="hideUnpaidOrder(order)"
     >
