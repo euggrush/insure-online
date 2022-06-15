@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid"></section>
+  <section></section>
 </template>
 
 <script>

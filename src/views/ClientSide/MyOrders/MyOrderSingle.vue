@@ -2,6 +2,10 @@
   <section class="order-modal container position-relative">
     <h4>Order Details</h4>
     <ModalMessage />
+    <YocoPage
+      v-if="showPaymentSystem"
+      class="position-absolute top-0 start-50 translate-middle-x w-100 h-100 bg-light opacity-50"
+    />
     <button
       type="button"
       class="btn-close float-end"
@@ -147,13 +151,14 @@
 <script>
 import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
 import ModalMessage from "../../../components/Modals/ModalMessage.vue";
-
+import YocoPage from "../../../components/PaymentSystem/YocoPage.vue";
 export default {
-  components: { ModalMessage },
+  components: { ModalMessage, YocoPage },
   data() {
     return {
       FILE_URL: FILE_URL,
       CAR_DEFAULT_IMAGE,
+      showPaymentSystem: false,
     };
   },
   computed: {
@@ -188,7 +193,8 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     goToPaymentPage(id) {
-      this.$router.push(`/yoco-payment`);
+      this.showPaymentSystem = true;
+      // this.$router.push(`/yoco-payment`);
       // this.$store
       //   .dispatch(`CREATE_ORDER`, {
       //     orderId: id,

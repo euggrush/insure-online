@@ -103,10 +103,10 @@ export default {
             let show;
             const TWENTY_FOUR_HOURS = 86400000;
             let today = Date.now();
-            let dayAgo = today - TWENTY_FOUR_HOURS * 2;
+            let dayAgo = today - TWENTY_FOUR_HOURS;
             let orderDate = Date.parse(order.orderCreated);
-            let orderStatus = order.orderStatus;
-            if (orderDate<dayAgo && orderStatus ==`pending`) {
+            let orderStatus = order.paidBy;
+            if (orderDate < dayAgo && orderStatus === ``) {
                 show = false
             } else {
                 show = true;

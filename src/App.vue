@@ -143,7 +143,6 @@ body {
     font-size: $font-size-xxl;
   }
 }
-
 #nav {
   padding: 30px;
 
