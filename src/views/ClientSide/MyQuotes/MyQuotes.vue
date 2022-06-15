@@ -153,7 +153,7 @@
         Reset
       </button>
     </form>
-    <Transition> <MyQuotesList /></Transition>
+    <Transition> <MyQuotesList @resetFormAfterOrder="resetForm" /></Transition>
   </section>
 </template>
 

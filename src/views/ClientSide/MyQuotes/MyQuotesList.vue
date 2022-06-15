@@ -167,6 +167,7 @@ export default {
         .then(() => {
           this.scrollToTop();
           this.fetchEstimations();
+          this.$emit(`resetFormAfterOrder`);
           this.$store.commit(`SET_MODAL`, {
             isModal: true,
             msg: `Your order is under review now, we will contact you for further
