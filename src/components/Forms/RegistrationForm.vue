@@ -1,12 +1,5 @@
 <template>
-  <section
-    class="
-      container-fluid
-      position-relative
-      registration
-      pb-5
-    "
-  >
+  <section class="container-fluid position-relative registration pb-5">
     <div
       class="msg-popup position-absolute top-0 start-50 translate-middle-x"
       tabindex="-1"
@@ -85,9 +78,9 @@
         />
         <div class="invalid-feedback">Please enter last name</div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-9">
         <label for="validationCustom03" class="form-label mt-1 text-white"
-          >Area & Postal Code</label
+          >Address and postal code</label
         >
         <input
           type="text"
@@ -117,7 +110,7 @@
         </select>
         <div class="invalid-feedback">Please select a valid state.</div>
       </div>
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
         <label for="validationCustom05" class="form-label mt-1 text-white"
           >Telephone number</label
         >
@@ -130,7 +123,7 @@
           :disabled="isFormDisabled"
         />
         <div class="invalid-feedback">Please provide a valid number.</div>
-      </div>
+      </div> -->
       <div class="col-md-4">
         <label for="validationCustom06" class="form-label mt-1 text-white"
           >Cell number</label
@@ -343,7 +336,7 @@ export default {
         address: ``,
         countryOfResidence: ``,
         cellphone: ``,
-        phoneNumber: ``,
+        // phoneNumber: ``,
         clientIdNumber: ``,
         maritalStatus: ``,
         yearOfIssueDriverLicense: ``,
@@ -434,7 +427,7 @@ export default {
       this.userPayload.address = ``;
       this.userPayload.countryOfResidence = ``;
       this.userPayload.cellphone = ``;
-      this.userPayload.phoneNumber = ``;
+      // this.userPayload.phoneNumber = ``;
       this.userPayload.clientIdNumber = ``;
       this.userPayload.maritalStatus = ``;
       this.userPayload.yearOfIssueDriverLicense = ``;
@@ -472,7 +465,7 @@ export default {
         this.userPayload.address !== `` &&
         this.userPayload.countryOfResidence !== `` &&
         this.userPayload.cellphone !== `` &&
-        this.userPayload.phoneNumber !== `` &&
+        // this.userPayload.phoneNumber !== `` &&
         this.userPayload.clientIdNumber !== `` &&
         this.userPayload.maritalStatus !== `` &&
         this.userPayload.yearOfIssueDriverLicense !== `` &&

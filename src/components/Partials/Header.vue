@@ -26,6 +26,12 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
+            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn"> </a>
+          </li>
+          <li class="nav-item">
+            <a :href="`mailto:${CORPORATE_EMAIL}`" class="email-us-btn"> </a>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item">
@@ -70,8 +76,20 @@
 </template>
 
 <script>
+import {
+  CORPORATE_CELLPHONE,
+  CORPORATE_PHONE,
+  CORPORATE_EMAIL,
+} from "../../constants";
 export default {
   name: "Header",
+  data() {
+    return {
+      CORPORATE_CELLPHONE,
+      CORPORATE_PHONE,
+      CORPORATE_EMAIL,
+    };
+  },
   computed: {
     tokenExpirationTime() {
       return this.isTokenExpired(this.$store.state.toke_expiration_time);
@@ -154,5 +172,20 @@ export default {
   #mainNav.navbar-shrink .navbar-brand {
     color: #212529;
   }
+}
+.call-us-btn,
+.email-us-btn {
+  display: block;
+  width: 90px;
+  height: 50px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 46px !important;
+}
+.call-us-btn {
+  background: url($iconCallUs);
+}
+.email-us-btn {
+  background: url($iconEmailUs);
 }
 </style>
