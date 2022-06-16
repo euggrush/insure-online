@@ -12,7 +12,7 @@
 
     <nav class="nav nav-pills nav-justified mt-5 ps-5 pe-5">
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isAccounts }"
         aria-current="page"
         @click="showAccounts"
@@ -20,35 +20,35 @@
         {{ tabs.accountsTab ?? `Accounts` }}
       </button>
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isCategories }"
         @click="showCategories"
       >
         {{ tabs.categoriesTab ?? `Categories` }}
       </button>
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isProducts }"
         @click="showProducts"
       >
         {{ tabs.productsTab ?? `Products` }}
       </button>
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isEstimations }"
         @click="showEstimations"
       >
         {{ tabs.quotesTab ?? `Quotes` }}
       </button>
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isOrders }"
         @click="showOrders"
       >
         {{ tabs.ordersTab ?? `Orders` }}
       </button>
       <button
-        class="nav-link fw-bold"
+        class="nav-link rounded-pill"
         :class="{ active: isResources }"
         @click="showResources"
       >
@@ -111,10 +111,15 @@ export default {
     },
   },
   mounted() {
+    this.unfixHeader();
+
     this.fetchTabs();
     this.$nextTick(() => {
       this.fillTabs();
     });
+  },
+  unmounted() {
+    this.fixHeader();
   },
   methods: {
     fetchTabs() {
@@ -205,20 +210,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.admin-panel {
-  min-height: calc(100vh - 6.2em);
-  background-color: $bgOrange;
-  background-image: url($mainBg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding-top: 7em;
+// .admin-panel {
+//   min-height: calc(100vh - 6.2em);
+//   padding-top: 7em;
+// }
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: $colorDark;
 }
 .nav-link {
-  color: $colorWhite;
-}
-.nav-link.active {
-  color: $colorWhite;
-  background-color: $colorDark;
-  border-radius: 50px;
+  color: $colorBrick;
 }
 </style>
