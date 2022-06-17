@@ -6,16 +6,29 @@
       class="order-item border rounded shadow-sm mt-3"
     >
       <!-- ORDER HEADER -->
-      <div class="row row-cols-md-3 row-cols-lg-5 h-25 bg-light border-bottom m-0 p-1">
+      <div
+        class="
+          row row-cols-md-3 row-cols-lg-5
+          h-25
+          bg-light
+          border-bottom
+          m-0
+          p-1
+        "
+      >
         <div class="col">
           <p>ORDER PLACED</p>
           <p>{{ getDate(order.orderCreated) }}</p>
         </div>
-        <div class="col">
+        <div v-if="order.adjustedCost == 0" class="col">
           <p>TOTAL</p>
           <p class="text-danger fw-bold">
             R{{ order.allEstimationsTotalCostCalculated }}
           </p>
+        </div>
+        <div v-else class="col">
+          <p class="text-uppercase">TOTAL adjusted</p>
+          <p class="text-danger fw-bold">R{{ order.adjustedCost }}</p>
         </div>
         <div class="col">
           <p
@@ -34,7 +47,9 @@
             unpaid
           </p>
           <div
-            v-else-if="order.paidBy == 'offline'"
+            v-else-if="
+              order.paidBy == 'offline' && order.orderStatus == `pending`
+            "
             class="
               border border-danger border-3
               text-danger text-uppercase text-center
@@ -61,20 +76,26 @@
             type="button"
             class="btn link-secondary p-0"
             @click="getOrder(order.orderId)"
+            :disabled="isOrderModal"
           >
             View order details
           </button>
         </div>
         <div class="col">
-          <p>
+          <p class="m-0 p-0">
             {{ order.estimations[0].firstName }}
             {{ order.estimations[0].lastName }}
           </p>
 
           <a
-            class="text-dark fw-light text-lowercase"
-            :href="`mailto:${order.estimations[0].username}`"
-            >{{ order.estimations[0].username }}</a
+            class="text-dark fw-light text-lowercase d-block"
+            :href="`mailto:${order.estimations[0].email}`"
+            >{{ order.estimations[0].email }}</a
+          >
+          <a
+            class="text-dark fw-light text-lowercase d-block mt-1"
+            :href="`tel:${order.estimations[0].cellphone}`"
+            >{{ order.estimations[0].cellphone }}</a
           >
         </div>
       </div>
@@ -88,22 +109,6 @@
           <p class="text-uppercase fw-bold text-secondary">
             {{ orderInfo.vehicleDetails }}
           </p>
-          <!-- <p class="text-danger">R{{ orderInfo.vehicleRetailValue }}</p> -->
-
-          <!-- <img
-            v-if="orderInfo.vehicleAssets.length > 0"
-            :src="`${FILE_URL}${orderInfo.vehicleAssets[0].path}`"
-            class="d-block img-fluid"
-            alt="image"
-            width="100"
-          />
-          <img
-            v-else
-            :src="CAR_DEFAULT_IMAGE"
-            class="d-block"
-            alt="image"
-            width="100"
-          /> -->
         </div>
         <div class="col col-lg-10">
           <div>
@@ -160,116 +165,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline">Ref #</span>
-          <span>{{ order.referenceNumber }}</span>
-        </div>
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline">Created:</span
-          ><span class="fst-italic">{{ getDate(order.orderCreated) }}</span>
-        </div>
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline"
-            >Order status:</span
-          >
-          <span
-            class="fw-bold text-uppercase"
-            :class="{
-              'text-primary': order.orderStatus == `approved`,
-              'text-danger': order.orderStatus == `rejected`,
-            }"
-            >{{ order.orderStatus }}</span
-          >
-        </div>
-
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline"
-            >Customer:</span
-          >
-          <span>{{ order.estimations[0].firstName }}</span>
-          <span>&nbsp;{{ order.estimations[0].lastName }}</span>
-          <div
-            v-if="order.paidBy == 'offline'"
-            class="
-              border border-danger border-3
-              text-danger text-uppercase text-center
-              fw-bold
-              pt-1
-              ps-3
-              pb-1
-              pe-3
-            "
-          >
-            Paid offline.
-            <hr />
-            Contact client ASAP
-            <a
-              class="link-email text-dark fw-light text-lowercase"
-              :href="`mailto:${order.estimations[0].username}`"
-              >{{ order.estimations[0].username }}</a
-            >
-          </div>
-        </div>
-
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline">Cars:</span>
-          <span
-            class="d-block"
-            v-for="(car, index) in order.estimations"
-            :key="index"
-            >{{ car.vehicleDetails }},
-          </span>
-        </div>
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline"
-            >Cars value:</span
-          >
-          <span
-            class="d-block"
-            v-for="(car, index) in order.estimations"
-            :key="index"
-            >{{ car.vehicleRetailValue }},
-          </span>
-        </div>
-
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline"
-            >Products:</span
-          >
-          <span
-            class="d-block"
-            v-for="(estimation, index) in order.estimations"
-            :key="index"
-            ><span v-if="estimation.estimationType == 'tuffstuff'">{{
-              estimation.mainProductName
-            }}</span>
-            <span v-else>Accessories,</span>
-          </span>
-        </div>
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline">Total:</span>
-          <span>R{{ order.allEstimationsTotalCost }}</span>
-        </div>
-        <div class="col">
-          <span class="d-block fw-bold text-decoration-underline fst-italic"
-            >Adjusted:</span
-          >
-          <span v-if="order.adjustedCost > 0" class="fst-italic"
-            >R{{ order.adjustedCost }}</span
-          >
-          <span v-else class="text-nowrap">Not Adjusted</span>
-        </div>
-        <div class="col">
-          <button
-            type="button"
-            class="btn btn-primary float-end mt-3"
-            @click="getOrder(order.orderId)"
-          >
-            More
-          </button>
-        </div>
-      </div> -->
     </div>
     <OrderCard
       v-if="isOrderModal"
@@ -280,15 +175,11 @@
 </template>
 
 <script>
-// import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
-
 import OrderCard from "./OrderCard.vue";
 export default {
   components: { OrderCard },
   data() {
     return {
-      // FILE_URL: FILE_URL,
-      // CAR_DEFAULT_IMAGE,
       adjustedCost: ``,
       isOrderModal: false,
       orderToPass: {},
@@ -301,6 +192,9 @@ export default {
     },
   },
   watch: {
+    isChangesNeeded() {
+      this.$store.dispatch(`GET_ORDERS`, ``);
+    },
     toggleStatus() {
       this.$store.dispatch(
         `GET_ORDERS`,
@@ -309,6 +203,9 @@ export default {
     },
   },
   computed: {
+    isChangesNeeded() {
+      return this.$store.state.is_changes_needed;
+    },
     ordersList() {
       return this.$store.state.orders.orders || [];
     },
