@@ -11,7 +11,7 @@
     </div>
 
     <nav class="nav nav-pills nav-justified mt-5 ps-5 pe-5">
-      <button
+      <!-- <button
         class="nav-link rounded-pill"
         :class="{ active: isAccounts }"
         aria-current="page"
@@ -25,7 +25,7 @@
         @click="showCategories"
       >
         {{ tabs.categoriesTab ?? `Categories` }}
-      </button>
+      </button> -->
       <button
         class="nav-link rounded-pill"
         :class="{ active: isProducts }"
@@ -57,45 +57,45 @@
     </nav>
 
     <section class="mt-1">
-      <AccountsList v-if="isAccounts" />
-      <CategoriesList v-if="isCategories" />
+      <!-- <AccountsList v-if="isAccounts" /> -->
+      <!-- <CategoriesList v-if="isCategories" /> -->
       <ProductsList v-if="isProducts" />
       <SubProducts v-if="isSubProducts" />
       <EstimationsList v-if="isEstimations" />
-      <OrdersList v-if="isOrders" />
+      <Orders v-if="isOrders" />
       <Resources v-if="isResources" />
     </section>
   </section>
 </template>
 
 <script>
-import AccountsList from "../AdminPanel/AccountsList.vue";
-import CategoriesList from "../AdminPanel/CategoriesList.vue";
+// import AccountsList from "../AdminPanel/AccountsList.vue";
+// import CategoriesList from "../AdminPanel/CategoriesList.vue";
 import ProductsList from "../AdminPanel/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
 import EstimationsList from "../AdminPanel/EstimationsList.vue";
-import OrdersList from "../AdminPanel/OrdersList.vue";
+import Orders from "../AdminPanel/Orders/Orders.vue";
 import Resources from "../AdminPanel/Resources.vue";
 export default {
   name: `AdminPanel`,
   components: {
-    AccountsList,
-    CategoriesList,
+    // AccountsList,
+    // CategoriesList,
     ProductsList,
     SubProducts,
     EstimationsList,
-    OrdersList,
+    Orders,
     Resources,
   },
   data() {
     return {
       tabs: {},
-      isAccounts: true,
-      isCategories: false,
+      // isAccounts: true,
+      // isCategories: false,
       isProducts: false,
       isSubProducts: false,
       isEstimations: false,
-      isOrders: false,
+      isOrders: true,
       isResources: false,
       loggedUser: `John Doe`,
     };
@@ -142,27 +142,27 @@ export default {
       }
       return this.tabs;
     },
-    showAccounts() {
-      this.isAccounts = true;
-      this.isCategories = false;
-      this.isProducts = false;
-      this.isSubProducts = false;
-      this.isEstimations = false;
-      this.isOrders = false;
-      this.isResources = false;
-    },
-    showCategories() {
-      this.isAccounts = false;
-      this.isCategories = true;
-      this.isProducts = false;
-      this.isSubProducts = false;
-      this.isEstimations = false;
-      this.isOrders = false;
-      this.isResources = false;
-    },
+    // showAccounts() {
+    //   this.isAccounts = true;
+    //   this.isCategories = false;
+    //   this.isProducts = false;
+    //   this.isSubProducts = false;
+    //   this.isEstimations = false;
+    //   this.isOrders = false;
+    //   this.isResources = false;
+    // },
+    // showCategories() {
+    //   this.isAccounts = false;
+    //   this.isCategories = true;
+    //   this.isProducts = false;
+    //   this.isSubProducts = false;
+    //   this.isEstimations = false;
+    //   this.isOrders = false;
+    //   this.isResources = false;
+    // },
     showProducts() {
-      this.isAccounts = false;
-      this.isCategories = false;
+      // this.isAccounts = false;
+      // this.isCategories = false;
       this.isProducts = true;
       this.isSubProducts = false;
       this.isEstimations = false;
@@ -170,8 +170,8 @@ export default {
       this.isResources = false;
     },
     showSubProducts() {
-      this.isAccounts = false;
-      this.isCategories = false;
+      // this.isAccounts = false;
+      // this.isCategories = false;
       this.isProducts = false;
       this.isSubProducts = true;
       this.isEstimations = false;
@@ -179,8 +179,8 @@ export default {
       this.isResources = false;
     },
     showEstimations() {
-      this.isAccounts = false;
-      this.isCategories = false;
+      // this.isAccounts = false;
+      // this.isCategories = false;
       this.isProducts = false;
       this.isSubProducts = false;
       this.isEstimations = true;
@@ -188,8 +188,8 @@ export default {
       this.isResources = false;
     },
     showOrders() {
-      this.isAccounts = false;
-      this.isCategories = false;
+      // this.isAccounts = false;
+      // this.isCategories = false;
       this.isProducts = false;
       this.isSubProducts = false;
       this.isEstimations = false;
@@ -197,8 +197,8 @@ export default {
       this.isResources = false;
     },
     showResources() {
-      this.isAccounts = false;
-      this.isCategories = false;
+      // this.isAccounts = false;
+      // this.isCategories = false;
       this.isProducts = false;
       this.isSubProducts = false;
       this.isEstimations = false;

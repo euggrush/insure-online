@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../constants";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
 
 export default {
   data() {
@@ -262,22 +262,22 @@ br {
   content: "";
   margin-top: 0;
 }
-.btn-pdf {
-  min-width: 100%;
-  border-radius: 0;
-  background-image: url("../../assets/img/icon-pdf.png");
-  background-size: 27px 27px;
-  background-repeat: no-repeat;
-  background-position: 5% center;
-  margin-bottom: 10px;
-  padding-left: 40px;
-  @include media-breakpoint-up(md) {
-    min-width: 11em;
-  }
-}
-.btn-pdf:hover {
-  background-image: url("../../assets/img/icon-pdf.svg");
-}
+// .btn-pdf {
+//   min-width: 100%;
+//   border-radius: 0;
+//   background-image: url("../../assets/img/icon-pdf.png");
+//   background-size: 27px 27px;
+//   background-repeat: no-repeat;
+//   background-position: 5% center;
+//   margin-bottom: 10px;
+//   padding-left: 40px;
+//   @include media-breakpoint-up(md) {
+//     min-width: 11em;
+//   }
+// }
+// .btn-pdf:hover {
+//   background-image: url("../../assets/img/icon-pdf.svg");
+// }
 .vehicle-image {
   width: 100%;
   height: auto;
