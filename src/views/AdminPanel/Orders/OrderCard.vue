@@ -171,9 +171,9 @@ export default {
     scrollToTop() {
       window.scrollTo(0, 0);
     },
-    closeOrderModal() {
+    closeOrderModal(arg) {
       // eslint-disable-next-line vue/custom-event-name-casing
-      this.$emit("closeOrder", {});
+      this.$emit("closeOrder", { orderStatus: arg });
     },
     getOrder(id) {
       this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
@@ -185,7 +185,7 @@ export default {
           orderStatus: `approved`,
         })
         .then(() => {
-          this.closeOrderModal();
+          this.closeOrderModal(`approved`);
           this.scrollToTop();
         })
         .catch((err) => alert(err));
@@ -197,7 +197,7 @@ export default {
           orderStatus: `rejected`,
         })
         .then(() => {
-          this.closeOrderModal();
+          this.closeOrderModal(`rejected`);
           this.scrollToTop();
         })
         .catch((err) => alert(err));
@@ -213,12 +213,7 @@ export default {
           this.isAdjust = false;
           this.adjustedCost = ``;
         })
-        .catch((err) => console.log(err))
-        .then(() => {
-          this.getOrder(order.orderId);
-          this.isAdjust = false;
-          this.adjustedCost = ``;
-        });
+        .catch((err) => console.log(err));
     },
   },
 };

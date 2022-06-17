@@ -1,8 +1,8 @@
 <template>
   <section class="orders-list mt-3">
     <div
-      v-for="(order, index) in ordersList"
-      :key="index"
+      v-for="order in ordersList"
+      :key="order.orderId"
       class="order-item border rounded shadow-sm mt-3"
     >
       <!-- ORDER HEADER -->
@@ -183,6 +183,7 @@ export default {
       adjustedCost: ``,
       isOrderModal: false,
       orderToPass: {},
+      orderStatus: ``,
     };
   },
   props: {
@@ -193,13 +194,10 @@ export default {
   },
   watch: {
     isChangesNeeded() {
-      this.$store.dispatch(`GET_ORDERS`, ``);
+      this.fetchOrders(this.myProps.orderStatus);
     },
     toggleStatus() {
-      this.$store.dispatch(
-        `GET_ORDERS`,
-        `?order=desc&${this.myProps.orderStatus}`
-      );
+      this.fetchOrders(this.myProps.orderStatus);
     },
   },
   computed: {
@@ -215,9 +213,16 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_ORDERS`, ``);
+    this.fetchOrders();
   },
   methods: {
+    fetchOrders(arg) {
+      if (arg) {
+        this.$store.dispatch(`GET_ORDERS`, `?orderStatus=${arg}`);
+      } else {
+        this.$store.dispatch(`GET_ORDERS`, ``);
+      }
+    },
     getOrder(id) {
       this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`).then(() => {
         setTimeout(() => {
@@ -228,7 +233,6 @@ export default {
     },
     closeOrderModal() {
       this.isOrderModal = false;
-      this.$store.dispatch(`GET_ORDERS`, ``);
     },
   },
 };

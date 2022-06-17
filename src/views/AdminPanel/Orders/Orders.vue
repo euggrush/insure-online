@@ -17,7 +17,12 @@
           v-model="orderStatus"
           checked
         />
-        <label class="btn btn-outline-dark" for="btnradio0">All</label>
+        <label
+          class="btn btn-outline-dark"
+          :class="{ active: orderStatus == '' }"
+          for="btnradio0"
+          >All</label
+        >
         <input
           type="radio"
           class="btn-check"
@@ -27,7 +32,12 @@
           value="pending"
           v-model="orderStatus"
         />
-        <label class="btn btn-outline-dark" for="btnradio1">Pending</label>
+        <label
+          class="btn btn-outline-dark"
+          for="btnradio1"
+          :class="{ active: orderStatus == 'pending' }"
+          >Pending</label
+        >
 
         <input
           type="radio"
@@ -38,7 +48,12 @@
           v-model="orderStatus"
           autocomplete="off"
         />
-        <label class="btn btn-outline-dark" for="btnradio2">Approved</label>
+        <label
+          class="btn btn-outline-dark"
+          for="btnradio2"
+          :class="{ active: orderStatus == 'approved' }"
+          >Approved</label
+        >
 
         <input
           type="radio"
@@ -49,13 +64,18 @@
           v-model="orderStatus"
           autocomplete="off"
         />
-        <label class="btn btn-outline-dark" for="btnradio3">Rejected</label>
+        <label
+          class="btn btn-outline-dark"
+          for="btnradio3"
+          :class="{ active: orderStatus == 'rejected' }"
+          >Rejected</label
+        >
       </div>
     </div>
 
     <OrdersList
       :myProps="{
-        orderStatus: `orderStatus=${orderStatus}`,
+        orderStatus,
       }"
     />
   </section>
