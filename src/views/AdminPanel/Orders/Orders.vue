@@ -100,6 +100,7 @@
     <OrdersList
       :myProps="{
         orderStatus,
+        referenceNumberToPass,
       }"
     />
   </section>
@@ -116,23 +117,18 @@ export default {
     return {
       orderStatus: ``,
       orderReferenceNumber: ``,
+      referenceNumberToPass: ``,
     };
   },
   methods: {
     fetchAllOrders() {
-      this.orderStatus = ``;
-      if (this.orderStatus) {
-        this.$store.dispatch(`GET_ORDERS`, `?orderStatus=${this.orderStatus}`);
-      } else {
-        this.$store.dispatch(`GET_ORDERS`, ``);
-      }
+      this.referenceNumberToPass = ``;
     },
     searchOrder() {
-      this.$store
-        .dispatch(`GET_ORDERS`, `?referenceNumber=${this.orderReferenceNumber}`)
-        .then(() => {
-          this.orderReferenceNumber = ``;
-        });
+      this.referenceNumberToPass = this.orderReferenceNumber;
+      this.$nextTick(() => {
+        this.orderReferenceNumber = ``;
+      });
     },
   },
 };

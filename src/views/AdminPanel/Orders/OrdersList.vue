@@ -75,7 +75,7 @@
           <button
             type="button"
             class="btn link-secondary p-0"
-            @click="getOrder(order.orderId)"
+            @click="getOrder(`?orderId=${order.orderId}`)"
             :disabled="isOrderModal"
           >
             View order details
@@ -184,6 +184,7 @@ export default {
       isOrderModal: false,
       orderToPass: {},
       orderStatus: ``,
+      singleOrderId: ``,
     };
   },
   props: {
@@ -194,10 +195,16 @@ export default {
   },
   watch: {
     isChangesNeeded() {
-      this.fetchOrders(this.myProps.orderStatus);
+      this.fetchOrders(`?orderStatus=${this.myProps.orderStatus}&orderId=${this.singleOrderId}`);
     },
     toggleStatus() {
-      this.fetchOrders(this.myProps.orderStatus);
+      this.fetchOrders(`?orderStatus=${this.myProps.orderStatus}`);
+    },
+    getSearchQuery() {
+      this.isOrderModal = false;
+      this.fetchOrders(
+        `?referenceNumber=${this.myProps.referenceNumberToPass}`
+      );
     },
   },
   computed: {
@@ -211,6 +218,9 @@ export default {
     toggleStatus() {
       return this.myProps.orderStatus;
     },
+    getSearchQuery() {
+      return this.myProps.referenceNumberToPass;
+    },
   },
   mounted() {
     this.fetchOrders();
@@ -218,21 +228,22 @@ export default {
   methods: {
     fetchOrders(arg) {
       if (arg) {
-        this.$store.dispatch(`GET_ORDERS`, `?orderStatus=${arg}`);
+        this.$store.dispatch(`GET_ORDERS`, arg);
       } else {
         this.$store.dispatch(`GET_ORDERS`, ``);
       }
     },
-    getOrder(id) {
-      this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`).then(() => {
+    getOrder(query) {
+      this.$store.dispatch(`GET_ORDERS`, query).then(() => {
         setTimeout(() => {
           this.orderToPass = this.$store.state.orders.orders[0];
           this.isOrderModal = true;
         });
       });
     },
-    closeOrderModal() {
+    closeOrderModal(payload) {
       this.isOrderModal = false;
+      this.singleOrderId = payload.orderId;
     },
   },
 };
