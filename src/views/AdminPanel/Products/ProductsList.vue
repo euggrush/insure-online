@@ -17,23 +17,15 @@
     <div v-show="showListItem" class="collapse mt-3" id="collapseExample1">
       <div class="card card-body">
         <!-- CATEGORIES LIST -->
-
         <select
           class="form-select"
           aria-label="Default select example"
-          @change="selectCategory($event)"
+          v-model="selectedProductType"
           required
         >
-          <option disabled :selected="!isCategorySelected">
-            Choose category
-          </option>
-          <option
-            v-for="(category, index) in categoriesList"
-            :key="index"
-            :value="category.categoryId"
-          >
-            {{ category.categoryName }}
-          </option>
+          <option disabled selected value="">Select product type</option>
+          <option value="TOPMARQ">Topmarq</option>
+          <option value="tuffstuff">Tuffstuff</option>
         </select>
 
         <form class="mt-1" @submit.prevent="createProduct">
@@ -46,7 +38,6 @@
               class="form-control"
               v-model="mainProductName"
               required
-              :disabled="isBtnDisabled"
             />
           </div>
           <div class="mb-3">
@@ -57,7 +48,6 @@
               type="text"
               class="form-control"
               v-model="mainProductDescription"
-              :disabled="isBtnDisabled"
               required
             />
           </div>
@@ -65,13 +55,7 @@
             <label for="exampleInputEmail1" class="form-label"
               >Product cost</label
             >
-            <input
-              type="number"
-              class="form-control"
-              v-model="cost"
-              required
-              :disabled="isBtnDisabled"
-            />
+            <input type="number" class="form-control" v-model="cost" required />
           </div>
           <div class="form-check">
             <input
@@ -87,7 +71,7 @@
           <button
             type="submit"
             class="btn btn-primary mt-3"
-            :disabled="isBtnDisabled"
+            :disabled="selectedProductType !== ''"
           >
             Submit
           </button>
@@ -168,27 +152,27 @@
 
 <script>
 import EditProduct from "./EditProduct.vue";
+import { CAR_INSURANCE_CATEGORY } from "../../../constants";
+
 export default {
   components: {
     EditProduct,
   },
   data() {
     return {
+      selectedProductType: ``,
       showListItem: true,
-      productName: ``,
+      // productName: ``,
       pickedProductIndex: ``,
       pickedProductInfo: [],
-      pickedProductId: ``,
-      productCategoryId: ``,
-      productNewName: ``,
-      isBtnDisabled: true,
-      isChangeBtnDisabled: true,
+      // pickedProductId: ``,
+      // productNewName: ``,
+      // isChangeBtnDisabled: true,
       mainProductName: ``,
       mainProductDescription: ``,
       cost: ``,
       isRequiredCoverages: ``,
-      isCategorySelected: false,
-      isProductToChangeSelected: false,
+      // isProductToChangeSelected: false,
       mainProductId: ``,
       isEditProductModal: false,
     };
@@ -197,13 +181,9 @@ export default {
     productsList() {
       return this.$store.state.main_products.mainProducts;
     },
-    categoriesList() {
-      return this.$store.state.product_categories.categories;
-    },
   },
   mounted() {
     this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
-    this.$store.dispatch(`GET_PRODUCT_CATEGORIES`);
   },
   methods: {
     scrollToTop() {
@@ -231,7 +211,7 @@ export default {
     createProduct() {
       this.$store
         .dispatch(`CREATE_MAIN_PRODUCT`, {
-          categoryId: this.productCategoryId,
+          categoryId: CAR_INSURANCE_CATEGORY,
           mainProductName: this.mainProductName,
           mainProductDescription: this.mainProductDescription,
           isRequiredCoverages: this.isRequiredCoverages,
@@ -242,17 +222,11 @@ export default {
           this.mainProductName = ``;
           this.mainProductDescription = ``;
           this.cost = ``;
-          this.isBtnDisabled = true;
-          this.isCategorySelected = false;
+          this.selectedProductType = ``;
         })
         .catch((error) => {
           alert(error);
         });
-    },
-    selectCategory(event) {
-      this.productCategoryId = event.target.value;
-      this.isBtnDisabled = false;
-      this.isCategorySelected = true;
     },
   },
 };

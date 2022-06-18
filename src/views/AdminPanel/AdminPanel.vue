@@ -71,7 +71,7 @@
 <script>
 // import AccountsList from "../AdminPanel/AccountsList.vue";
 // import CategoriesList from "../AdminPanel/CategoriesList.vue";
-import ProductsList from "../AdminPanel/ProductsList.vue";
+import ProductsList from "./Products/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
 import EstimationsList from "./Estimations/EstimationsList.vue";
 import Orders from "../AdminPanel/Orders/Orders.vue";
