@@ -73,7 +73,7 @@
 // import CategoriesList from "../AdminPanel/CategoriesList.vue";
 import ProductsList from "../AdminPanel/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
-import EstimationsList from "../AdminPanel/EstimationsList.vue";
+import EstimationsList from "./Estimations/EstimationsList.vue";
 import Orders from "../AdminPanel/Orders/Orders.vue";
 import Resources from "../AdminPanel/Resources.vue";
 export default {
