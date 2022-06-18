@@ -28,26 +28,36 @@
           <li class="nav-item">
             <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn">
               <img
-                src="../../assets/img/icon-call-us.png"
+                src="../../assets/img/icon-call-us2.png"
                 width="46"
                 alt="Call us"
               />
             </a>
           </li>
           <li class="nav-item">
-            <a :href="`mailto:${CORPORATE_EMAIL}`" class="email-us-btn">
+            <a
+              :href="`mailto:${CORPORATE_EMAIL}`"
+              class="email-us-btn mt-3 mt-lg-0"
+            >
               <img
-                src="../../assets/img/icon-email-us.png"
-                width="42"
+                src="../../assets/img/icon-email-us2.png"
+                width="48"
                 alt="Email us"
               />
             </a>
           </li>
+
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/about-us">About Us</router-link>
+            <router-link
+              class="nav-link about-us-btn p-0 mt-3 mt-lg-0"
+              to="/about-us"
+            >
+              <img
+                src="../../assets/img/icon-about-us.png"
+                width="48"
+                alt="About us"
+              />
+            </router-link>
           </li>
           <li
             v-if="
@@ -56,9 +66,13 @@
             "
             class="nav-item"
           >
-            <router-link class="nav-link" to="/registration"
-              >Sign Up</router-link
-            >
+            <router-link class="nav-link reg-btn mt-3 mt-lg-0 p-0" to="/registration">
+              <img
+                src="../../assets/img/icon-signin.png"
+                width="48"
+                alt="Sign Up"
+              />
+            </router-link>
           </li>
           <li
             v-if="
@@ -67,19 +81,25 @@
             class="nav-item"
           >
             <button
-              class="logout-btn btn btn-outline-danger rounded-pill"
+              class="logout-btn btn text-start p-0 mt-3 mt-lg-0"
               type="button"
               @click="logout"
             >
-              Logout
+              <img
+                src="../../assets/img/icon-lock.png"
+                width="48"
+                alt="logout"
+              />
             </button>
           </li>
           <li v-else class="nav-item">
-            <router-link
-              to="/login"
-              class="btn btn-outline-danger login-btn rounded-pill"
-              >Login</router-link
-            >
+            <router-link to="/login" class="login-btn mt-3 mt-lg-0">
+              <img
+                src="../../assets/img/icon-unlock.png"
+                width="48"
+                alt="login"
+              />
+            </router-link>
           </li>
         </ul>
       </div>
@@ -137,13 +157,6 @@ export default {
 .btn {
   min-width: 8em;
 }
-.login-btn,
-.logout-btn {
-  min-width: 10em;
-  @include media-breakpoint-up(lg) {
-    margin: 0 2em 0 4em;
-  }
-}
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;
@@ -186,7 +199,11 @@ export default {
   }
 }
 .call-us-btn,
-.email-us-btn {
+.email-us-btn,
+.about-us-btn,
+.logout-btn,
+.login-btn,
+.reg-btn {
   display: block;
   width: 90px;
 }
