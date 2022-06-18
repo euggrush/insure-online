@@ -15,8 +15,7 @@
       Create product
     </button>
     <div v-show="showListItem" class="collapse mt-3" id="collapseExample1">
-      <div class="card card-body">
-        <!-- CATEGORIES LIST -->
+      <form class="card card-body mt-1" @submit.prevent="createProduct">
         <select
           class="form-select"
           aria-label="Default select example"
@@ -27,56 +26,53 @@
           <option value="TOPMARQ">Topmarq</option>
           <option value="tuffstuff">Tuffstuff</option>
         </select>
-
-        <form class="mt-1" @submit.prevent="createProduct">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product name</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductName"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product description</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="mainProductDescription"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Product cost</label
-            >
-            <input type="number" class="form-control" v-model="cost" required />
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="isRequiredCoverages"
-              id="flexCheckDefault"
-            />
-            <label class="form-check-label" for="flexCheckDefault">
-              Coverages in this product are required (Recommended)
-            </label>
-          </div>
-          <button
-            type="submit"
-            class="btn btn-primary mt-3"
-            :disabled="selectedProductType !== ''"
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Product name</label
           >
-            Submit
-          </button>
-        </form>
-      </div>
+          <input
+            type="text"
+            class="form-control"
+            v-model="mainProductName"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Product description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            v-model="mainProductDescription"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Product cost</label
+          >
+          <input type="number" class="form-control" v-model="cost" required />
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="isRequiredCoverages"
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Coverages in this product are required (Recommended)
+          </label>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          :disabled="selectedProductType == ''"
+        >
+          Submit
+        </button>
+      </form>
     </div>
     <ul class="list-group mt-3">
       <li
@@ -84,7 +80,6 @@
         v-show="showListItem"
         :key="index"
         class="list-group-item"
-        @click="pickProduct(product, index)"
       >
         <div class="container">
           <div class="row product-item">
@@ -133,6 +128,15 @@
                 >
               </p>
             </div>
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                @click="removeProduct(product.mainProductId)"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         </div>
       </li>
@@ -177,22 +181,33 @@ export default {
       isEditProductModal: false,
     };
   },
+  watch: {
+    isChangesNeeded() {
+      this.fetchMainProducts();
+    },
+  },
   computed: {
+    isChangesNeeded() {
+      return this.$store.state.is_changes_needed;
+    },
     productsList() {
       return this.$store.state.main_products.mainProducts;
     },
   },
   mounted() {
-    this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+    this.fetchMainProducts();
   },
   methods: {
+    fetchMainProducts() {
+      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+    },
     scrollToTop() {
       window.scrollTo(0, 0);
     },
     closeModal() {
       this.isEditProductModal = false;
       this.showListItem = true;
-      this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);
+      this.fetchMainProducts();
     },
     pickProduct(product, index) {
       this.pickedProductIndex = index;
@@ -227,6 +242,15 @@ export default {
         .catch((error) => {
           alert(error);
         });
+    },
+    removeProduct(id) {
+      let isExecuted = confirm("Remove product?");
+      if (isExecuted) {
+        this.$store.dispatch(`CREATE_MAIN_PRODUCT`, {
+          mainProductId: id,
+          deleted: true,
+        });
+      }
     },
   },
 };

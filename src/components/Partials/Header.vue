@@ -26,10 +26,22 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
-            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn"> </a>
+            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn">
+              <img
+                src="../../assets/img/icon-call-us.png"
+                width="46"
+                alt="Call us"
+              />
+            </a>
           </li>
           <li class="nav-item">
-            <a :href="`mailto:${CORPORATE_EMAIL}`" class="email-us-btn"> </a>
+            <a :href="`mailto:${CORPORATE_EMAIL}`" class="email-us-btn">
+              <img
+                src="../../assets/img/icon-email-us.png"
+                width="42"
+                alt="Email us"
+              />
+            </a>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/">Home</router-link>
@@ -177,15 +189,5 @@ export default {
 .email-us-btn {
   display: block;
   width: 90px;
-  height: 50px;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: 46px !important;
-}
-.call-us-btn {
-  background: url($iconCallUs);
-}
-.email-us-btn {
-  background: url($iconEmailUs);
 }
 </style>

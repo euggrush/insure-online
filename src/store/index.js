@@ -316,7 +316,9 @@ export const store = new Vuex.Store({
             context.commit('SET_MAIN_PRODUCTS', data);
         },
         CREATE_MAIN_PRODUCT: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/mainProducts`, payload).catch((error) => {
+            await Axios.post(`${BASE_URL}/mainProducts`, payload).then(() => {
+                context.commit(`SET_NEEDED_CHANGES`);
+            }).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
                 alert(`Something went wrong. Please, try again later.`);
             })
