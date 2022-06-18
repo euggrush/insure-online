@@ -74,73 +74,53 @@
         </button>
       </form>
     </div>
-    <ul class="list-group mt-3">
-      <li
-        v-for="(product, index) in productsList"
-        v-show="showListItem"
-        :key="index"
-        class="list-group-item"
-      >
-        <div class="container">
-          <div class="row product-item">
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Name:</span
-              >
-              <span class="d-block">
-                {{ product.mainProductName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Description:</span
-              >
-              <span class="d-block">
-                {{ product.mainProductDescription }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Cost:</span
-              >
-              <span class="d-block"> R{{ product.mainProductCost }} </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Category:</span
-              >
-              <span class="d-block">
-                {{ product.categoryName }}
-              </span>
-            </div>
-            <div class="col border">
-              <span class="d-block fw-bold text-decoration-underline"
-                >Coverages:</span
-              >
-              <p
-                v-for="(subProduct, index) in product.subProducts"
-                :key="index"
-                class="m-0"
-              >
-                <span class="">{{ subProduct.subProductName }}</span>
-                <span class="fw-bold"
-                  >&nbsp;R{{ subProduct.subProductCost }}</span
-                >
-              </p>
-            </div>
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                @click="removeProduct(product.mainProductId)"
-              >
-                Remove
-              </button>
-            </div>
-          </div>
+    <!-- FORM END -->
+    <div
+      v-for="(product, index) in productsList"
+      v-show="showListItem"
+      :key="index"
+      class="product-item mt-3 border rounded shadow"
+    >
+      <div class="row bg-light border-bottom m-0 p-1">
+        <div class="col">
+          <p class="text-secondary">Product</p>
+          <p>{{ product.mainProductName }}</p>
         </div>
-      </li>
-    </ul>
+        <div class="col">
+          <p class="text-secondary">Description</p>
+          <p>{{ product.mainProductDescription }}</p>
+        </div>
+        <div class="col">
+          <p class="text-secondary">Cost</p>
+          <p class="text-danger fw-bold">R{{ product.mainProductCost }}</p>
+        </div>
+        <div class="col">
+          <button
+            type="button"
+            class="btn btn-outline-secondary w-100"
+            @click="pickProduct(product, index)"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary w-100 mt-3"
+            @click="removeProduct(product.mainProductId)"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+      <div v-if="product.subProducts.length > 0" class="p-5">
+        <p class="fw-bold">Coverages</p>
+        <span v-for="(sub, j) in product.subProducts" :key="sub">
+          {{ sub.subProductName }}
+          <span v-if="j !== product.subProducts.length - 1"
+            >&nbsp;&#124;&nbsp;</span
+          >
+        </span>
+      </div>
+    </div>
 
     <div class="edit-wrap p-3" v-if="isEditProductModal">
       <button
@@ -257,24 +237,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li {
-  cursor: pointer;
-}
 .active {
   color: $bgColorMain;
-}
-.product-item {
-  transition: all 0.5s ease;
-
-  min-height: 7em;
-  background-color: $mainGreen;
-  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
-  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
-  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
-}
-.product-item:hover {
-  background-color: $mainGreen;
-  opacity: 0.8;
 }
 .edit-wrap {
   width: 100%;
