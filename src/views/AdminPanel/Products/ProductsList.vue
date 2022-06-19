@@ -1,7 +1,7 @@
 <template>
   <section class="container products-list-wrapper position-relative">
     <!-- PRODUCTS RENDER -->
-    <h3 v-show="showListItem" class="mt-3">Products:</h3>
+    <h3 v-show="showListItem" class="text-center mt-3">Products</h3>
     <!-- CREATE NEW PRODUCT -->
     <button
       v-show="showListItem"

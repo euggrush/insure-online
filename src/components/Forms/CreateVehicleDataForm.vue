@@ -44,17 +44,19 @@
       />
     </div>
     <div class="mb-3">
-      <label for="exampleInputEmail6" class="form-label">Type:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="exampleInputEmail6"
+      <label for="carType" class="form-label">Vehicle Type:</label>
+      <select
+        id="carType"
+        class="form-select"
+        aria-label="Default select example"
         v-model="type"
-        placeholder="Type..."
-        minlength="2"
-        maxlength="30"
         required
-      />
+      >
+        <option selected disabled value="">Select vehicle type</option>
+        <option v-for="carType in carTypes" :key="carType" :value="carType">
+          {{ carType }}
+        </option>
+      </select>
     </div>
     <p>Is tracking Device Required</p>
     <div class="form-check">
@@ -104,6 +106,19 @@ export default {
       type: ``,
       trackingDeviceIsRequired: false,
       vehicleInsuranceType: ``,
+      carTypes: [
+        `PICKUP TRUCK`,
+        `AWD`,
+        `SUV`,
+        `4WD`,
+        `SEDAN`,
+        `COUPE`,
+        `SPORTS CAR`,
+        `STATION WAGON`,
+        `HATCHBACK`,
+        `CONVERTIBLE`,
+        `MINIVAN`,
+      ],
     };
   },
   methods: {

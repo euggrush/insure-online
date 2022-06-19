@@ -75,7 +75,7 @@ import ProductsList from "./Products/ProductsList.vue";
 import SubProducts from "../AdminPanel/SubProductsList.vue";
 import EstimationsList from "./Estimations/EstimationsList.vue";
 import Orders from "../AdminPanel/Orders/Orders.vue";
-import Resources from "../AdminPanel/Resources.vue";
+import Resources from "./Resourses/Resources.vue";
 export default {
   name: `AdminPanel`,
   components: {

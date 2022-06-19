@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-dark">
+  <table class="table table-dark mb-0">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -14,7 +14,7 @@
     </tbody>
   </table>
 
-  <form class="mt-3 p-3 bg-dark" @submit.prevent="changeAccessoriesRating">
+  <form class="p-3 bg-dark" @submit.prevent="changeAccessoriesRating">
     <label for="exampleFormControlInput1" class="form-label text-white"
       >Change Rate</label
     >

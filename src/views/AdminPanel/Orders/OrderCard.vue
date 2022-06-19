@@ -41,7 +41,7 @@
           id="button-addon2"
           @click="adjustOrderCost(order)"
         >
-          Ok
+          Adjust, R
         </button>
       </div>
     </div>

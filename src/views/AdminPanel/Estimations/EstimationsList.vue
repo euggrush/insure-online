@@ -1,6 +1,6 @@
 <template>
   <section class="container estimations-list-wrapper mt-3">
-    <h3>Quotes:</h3>
+    <h3 class="text-center">Quotes</h3>
     <div class="d-flex flex-wrap justify-content-between">
       <div class="date-range-wrap">
         <DateRange class="mt-0" />
