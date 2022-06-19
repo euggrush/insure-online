@@ -75,105 +75,45 @@
       </li>
     </ul>
 
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showRatingTable = !showRatingTable"
-    >
-      Show TUFFSTUFF Rating
-    </button>
     <Transition>
-      <div v-if="showRatingTable">
-        <RatingTuffstuff />
-      </div>
+      <RatingTuffstuff v-if="showTuffstuffRaring" />
     </Transition>
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showTopmarqRating = !showTopmarqRating"
-    >
-      Show TOPMARQ Rating
-    </button>
+
     <Transition>
-      <div v-if="showTopmarqRating" class="mt-3"><RatingTopmarq /></div>
+      <RatingTopmarq v-if="showTopmarqRating" />
     </Transition>
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showAccessoriesRating = !showAccessoriesRating"
-    >
-      Accessiries Rating
-    </button>
+
     <Transition>
-      <div v-if="showAccessoriesRating" class="mt-3"><AccessoriesRating /></div>
+      <AccessoriesRating v-if="showAccessoriesRating" />
     </Transition>
-    <p class="mt-3 fs-5">Vehicles data</p>
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showVehicleData = !showVehicleData"
-    >
-      Vehicles Data
-    </button>
+
     <Transition>
       <VehiclesData v-if="showVehicleData" />
     </Transition>
 
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showCreateVehiclesData = !showCreateVehiclesData"
-    >
-      Add Vehicles Data
-    </button>
     <Transition>
+      <CreatePolicy v-if="showPolicyCreation" />
+    </Transition>
+
+    <Transition>
+      <CreateTermsAndConditions v-if="showTermsAndConditionCreation" />
+    </Transition>
+
+    <Transition>
+      <EditTabs v-if="showEditTabs" />
+    </Transition>
+
+    <!-- <Transition>
       <CreateVehicleDataForm v-if="showCreateVehiclesData" />
-    </Transition>
-
-    <p class="fs-5 mt-3">Other resourses</p>
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showPolicyCreation = !showPolicyCreation"
-    >
-      Privacy Policy
-    </button>
-    <Transition>
-      <CreatePolicy v-if="showPolicyCreation" class="mt-3" />
-    </Transition>
-
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showTermsAndConditionCreation = !showTermsAndConditionCreation"
-    >
-      Terms And Condition
-    </button>
-    <Transition>
-      <CreateTermsAndConditions
-        v-if="showTermsAndConditionCreation"
-        class="mt-3"
-      />
-    </Transition>
-
-    <button
-      type="button"
-      class="btn btn-outline-dark m-1"
-      @click="showEditTabs = !showEditTabs"
-    >
-      Edit Tabs
-    </button>
-    <Transition>
-      <div v-if="showEditTabs"><EditTabs /></div>
-    </Transition>
+    </Transition> -->
   </section>
 </template>
 
 <script>
 // import EditRating from "../../../components/Forms/EditForms/EditTuffstuffRating.vue";
-import EditTabs from "../../../components/Forms/EditTabs.vue";
+import EditTabs from "../../../components/Forms/EditForms/EditTabs.vue";
 import VehiclesData from "../../../components/Partials/VehiclesData.vue";
-import CreateVehicleDataForm from "../../../components/Forms/CreateVehicleDataForm.vue";
+// import CreateVehicleDataForm from "../../../components/Forms/CreateVehicleDataForm.vue";
 import CreatePolicy from "../../../components/Forms/CreatePolicy.vue";
 import CreateTermsAndConditions from "../../../components/Forms/CreateTermsAndConditions.vue";
 import AccessoriesRating from "../../../components/Partials/AccessoriesRating.vue";
@@ -184,7 +124,7 @@ export default {
     // EditRating,
     EditTabs,
     VehiclesData,
-    CreateVehicleDataForm,
+    // CreateVehicleDataForm,
     CreatePolicy,
     CreateTermsAndConditions,
     AccessoriesRating,
@@ -195,7 +135,7 @@ export default {
     return {
       showTuffstuffRaring: true,
       showTopmarqRating: false,
-      showRatingTable: false,
+      // showRatingTable: false,
       showEditTabs: false,
       showVehicleData: false,
       showCreateVehiclesData: false,

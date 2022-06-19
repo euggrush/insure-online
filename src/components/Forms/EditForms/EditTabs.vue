@@ -1,5 +1,5 @@
 <template>
-  <section class="container mt-3">
+  <section class="container">
     <div class="row bg-dark text-white ps-3 pe-3 pb-3 rounded">
       <div class="col">
         <span class="d-block mt-3">Accounts</span>

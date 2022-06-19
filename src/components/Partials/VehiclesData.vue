@@ -1,5 +1,5 @@
 <template>
-  <section class="container mt-3">
+  <section class="container">
     <table class="table table-dark table-striped">
       <thead>
         <tr>

@@ -1,42 +1,44 @@
 <template>
-  <table class="table table-dark mb-0">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Rate, %</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">Accessories</th>
-        <td>{{ fetchedAccessoriesRateValue * 100 }}%</td>
-      </tr>
-    </tbody>
-  </table>
+  <section>
+    <table class="table table-dark mb-0">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Rate, %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Accessories</th>
+          <td>{{ fetchedAccessoriesRateValue * 100 }}%</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <form class="p-3 bg-dark" @submit.prevent="changeAccessoriesRating">
-    <label for="exampleFormControlInput1" class="form-label text-white"
-      >Change Rate</label
-    >
-    <div class="input-group mt-1">
-      <input
-        type="number"
-        class="form-control"
-        :placeholder="fetchedAccessoriesRateValue*100"
-        aria-label="rate"
-        aria-describedby="button-addon2"
-        id="exampleFormControlInput1"
-        v-model="accessoriesRateValue"
-      />
-      <button
-        class="btn btn-outline-secondary"
-        type="submit"
-        id="button-addon2"
+    <form class="p-3 bg-dark" @submit.prevent="changeAccessoriesRating">
+      <label for="exampleFormControlInput1" class="form-label text-white"
+        >Change Rate</label
       >
-        Change
-      </button>
-    </div>
-  </form>
+      <div class="input-group mt-1">
+        <input
+          type="number"
+          class="form-control"
+          :placeholder="fetchedAccessoriesRateValue * 100"
+          aria-label="rate"
+          aria-describedby="button-addon2"
+          id="exampleFormControlInput1"
+          v-model="accessoriesRateValue"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="submit"
+          id="button-addon2"
+        >
+          Change
+        </button>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>

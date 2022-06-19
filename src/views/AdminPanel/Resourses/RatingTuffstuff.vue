@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-dark table-striped caption-top table-hover mt-3">
+  <table class="table table-dark table-striped caption-top table-hover">
     <thead>
       <tr>
         <th scope="col">Annual Rate</th>
