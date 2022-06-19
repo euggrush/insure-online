@@ -2,7 +2,7 @@
   <section class="container">
     <h3 class="text-center mt-3">Resourses</h3>
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs mb-3">
       <li class="nav-item">
         <button
           class="nav-link"
