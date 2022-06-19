@@ -16,6 +16,7 @@ $mainBlue: #5CC5DE;
 $bgOrange: #DE755C;
 $bgLight: #eef1f4;
 $mainGreen: #74CF99;
+$bgHeaderGrey: rgba(222, 227, 231, 0.9);
 
 $font-size-micro : 9px;
 $font-size-mobile : 10px;
@@ -50,12 +51,14 @@ $iconSearch: "~@/assets/img/icon-search.svg";
   font-style: normal;
   src: url("~@/assets/fonts/NEOMETRICALT-REGULAR.TTF") format("opentype");
 }
+
 @font-face {
   font-family: "Neometric Alt";
   font-weight: 500;
   font-style: normal;
   src: url("~@/assets/fonts/NEOMETRICALT-MEDIUM.TTF") format("opentype");
 }
+
 @font-face {
   font-family: "Neometric Alt";
   font-weight: 700;

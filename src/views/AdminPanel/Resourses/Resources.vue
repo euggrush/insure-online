@@ -1,19 +1,77 @@
 <template>
   <section class="container">
     <h3 class="text-center mt-3">Resourses</h3>
-    <p class="fs-5">Rate</p>
 
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <button class="nav-link active" type="button">
-          Show TUFFSTUFF Rating
+        <button
+          class="nav-link"
+          :class="{ active: showTuffstuffRaring }"
+          type="button"
+          @click="openTuffstuffRateTab"
+        >
+          TUFFSTUFF rate
         </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link" type="button">Show TOPMARQ Rating</button>
+        <button
+          class="nav-link"
+          :class="{ active: showTopmarqRating }"
+          type="button"
+          @click="openTopmarqRateTab"
+        >
+          TOPMARQ rate
+        </button>
       </li>
       <li class="nav-item">
-        <button class="nav-link" type="button">Show Accessiries Rating</button>
+        <button
+          class="nav-link"
+          :class="{ active: showAccessoriesRating }"
+          type="button"
+          @click="openAccessoriesRateTab"
+        >
+          Accessiries rate
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          :class="{ active: showVehicleData }"
+          type="button"
+          @click="openVehicleDataTab"
+        >
+          Vehicles data
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          :class="{ active: showPolicyCreation }"
+          type="button"
+          @click="openPrivacyTab"
+        >
+          Privacy policy
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          :class="{ active: showTermsAndConditionCreation }"
+          type="button"
+          @click="openTermsTab"
+        >
+          Terms & conditions
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          :class="{ active: showEditTabs }"
+          type="button"
+          @click="openEditRateTab"
+        >
+          Other resourses
+        </button>
       </li>
     </ul>
 
@@ -135,7 +193,7 @@ export default {
   },
   data() {
     return {
-      showTuffstuffRaring: false,
+      showTuffstuffRaring: true,
       showTopmarqRating: false,
       showRatingTable: false,
       showEditTabs: false,
@@ -196,33 +254,63 @@ export default {
   //   });
   //   this.fetchAllData();
   // },
-  // methods: {
-  //   closeRatingForm() {
-  //     this.showTuffstuffRaring = false;
-  //   },
-  //   fetchAllData() {
-  //     this.dataArray = [];
-  //     this.$nextTick(() => {
-  //       this.$store.dispatch(`GET_RATING`, ``);
-  //     });
-  //   },
-  //   fillDataArr() {
-  //     this.dataArray = [];
+  methods: {
+    toggleResoursesTabs(arg1, arg2, arg3, arg4, arg5, arg6, arg7) {
+      this.showTuffstuffRaring = arg1;
+      this.showTopmarqRating = arg2;
+      this.showAccessoriesRating = arg3;
+      this.showVehicleData = arg4;
+      this.showPolicyCreation = arg5;
+      this.showTermsAndConditionCreation = arg6;
+      this.showEditTabs = arg7;
+    },
+    openTuffstuffRateTab() {
+      this.toggleResoursesTabs(true, false, false, false, false, false, false);
+    },
+    openTopmarqRateTab() {
+      this.toggleResoursesTabs(false, true, false, false, false, false, false);
+    },
+    openAccessoriesRateTab() {
+      this.toggleResoursesTabs(false, false, true, false, false, false, false);
+    },
+    openVehicleDataTab() {
+      this.toggleResoursesTabs(false, false, false, true, false, false, false);
+    },
+    openPrivacyTab() {
+      this.toggleResoursesTabs(false, false, false, false, true, false, false);
+    },
+    openTermsTab() {
+      this.toggleResoursesTabs(false, false, false, false, false, true, false);
+    },
+    openEditRateTab() {
+      this.toggleResoursesTabs(false, false, false, false, false, false, true);
+    },
+    // closeRatingForm() {
+    //   this.showTuffstuffRaring = false;
+    // },
+    // fetchAllData() {
+    //   this.dataArray = [];
+    //   this.$nextTick(() => {
+    //     this.$store.dispatch(`GET_RATING`, ``);
+    //   });
+    // },
+    // fillDataArr() {
+    //   this.dataArray = [];
 
-  //     if (this.$store.state.rating.resources) {
-  //       this.$store.state.rating.resources.map((item) => {
-  //         if (this.resourcesKeysMap.get(item.resourceKey)) {
-  //           this.dataArray.push({
-  //             key: item.resourceKey,
-  //             value: item.resourceValue,
-  //             data: this.resourcesKeysMap.get(item.resourceKey),
-  //           });
-  //         }
-  //       });
-  //     }
-  //     return this.dataArray;
-  //   },
-  // },
+    //   if (this.$store.state.rating.resources) {
+    //     this.$store.state.rating.resources.map((item) => {
+    //       if (this.resourcesKeysMap.get(item.resourceKey)) {
+    //         this.dataArray.push({
+    //           key: item.resourceKey,
+    //           value: item.resourceValue,
+    //           data: this.resourcesKeysMap.get(item.resourceKey),
+    //         });
+    //       }
+    //     });
+    //   }
+    //   return this.dataArray;
+    // },
+  },
 };
 </script>
 

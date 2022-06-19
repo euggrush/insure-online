@@ -66,7 +66,10 @@
             "
             class="nav-item"
           >
-            <router-link class="nav-link reg-btn mt-3 mt-lg-0 p-0" to="/registration">
+            <router-link
+              class="nav-link reg-btn mt-3 mt-lg-0 p-0"
+              to="/registration"
+            >
               <img
                 src="../../assets/img/icon-signin.png"
                 width="48"
@@ -159,7 +162,7 @@ export default {
 }
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: $bgHeaderGrey !important;
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
