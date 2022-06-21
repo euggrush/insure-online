@@ -430,7 +430,9 @@ export const store = new Vuex.Store({
 
         },
         MODIFY_RATING: async (context, payload) => {
-            await Axios.post(`${BASE_URL}/resources`, payload).catch((error) => {
+            await Axios.post(`${BASE_URL}/resources`, payload).then(() => {
+                context.commit(`SET_NEEDED_CHANGES`);
+            }).catch((error) => {
                 context.commit(`SET_GENERAL_ERRORS`, error);
                 alert(`Something went wrong. Please, try again later.`);
             })
