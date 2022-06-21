@@ -39,7 +39,11 @@
         >
           Pay online
         </button>
-
+        <a
+          class="btn link-secondary ms-3 p-0"
+          :href="`mailto:${CORPORATE_SUPPORT_EMAIL}?subject=Offline payment request. Order #${order.referenceNumber}&body=Hi Tuffstuff Team. Please, assist with the payment. My order #${order.referenceNumber}`"
+          >Pay offline</a
+        >
         <button
           type="button"
           class="btn link-secondary ms-3 p-0"
@@ -149,7 +153,12 @@
 </template>
 
 <script>
-import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
+import {
+  FILE_URL,
+  CAR_DEFAULT_IMAGE,
+  CORPORATE_SUPPORT_EMAIL,
+  SUPPORT_EMAIL_DATA,
+} from "../../../constants";
 import ModalMessage from "../../../components/Modals/ModalMessage.vue";
 import YocoPage from "../../../components/PaymentSystem/YocoPage.vue";
 export default {
@@ -158,6 +167,8 @@ export default {
     return {
       FILE_URL: FILE_URL,
       CAR_DEFAULT_IMAGE,
+      CORPORATE_SUPPORT_EMAIL,
+      SUPPORT_EMAIL_DATA,
       showPaymentSystem: false,
     };
   },
@@ -196,12 +207,16 @@ export default {
           });
         });
     },
-    // eslint-disable-next-line no-unused-vars
-    goToPaymentPage(id) {
-      this.showPaymentSystem = true;
-      setTimeout(() => {
-        this.showPaymentSystem = false;
-      }, 1000);
+    goToPaymentPage() {
+      this.scrollToTop();
+      this.$store.commit(`SET_MODAL`, {
+        isModal: true,
+        msg: `Online payments haven't been implemented yet. Please, select offline payment or request a call. Apologize for the inconvenience.`,
+      });
+      // this.showPaymentSystem = true;
+      // setTimeout(() => {
+      //   this.showPaymentSystem = false;
+      // }, 1000);
     },
   },
 };
