@@ -211,6 +211,7 @@ export default {
           mainProductDescription: this.mainProductDescription,
           isRequiredCoverages: this.isRequiredCoverages,
           cost: this.cost,
+          productType: this.selectedProductType,
         })
         .then(() => {
           this.$store.dispatch(`GET_MAIN_PRODUCTS`, ``);

@@ -26,20 +26,28 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
-            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn link-danger text-center text-decoration-none">
+            <a
+              :href="`tel:${CORPORATE_PHONE}`"
+              class="call-us-btn link-danger text-center text-decoration-none"
+            >
               <img
                 class="d-block mx-auto"
                 src="../../assets/img/icon-call-us2.png"
                 width="46"
                 alt="Call us"
               />
-             Call us
+              Call us
             </a>
           </li>
           <li class="nav-item">
             <a
-              :href="`mailto:${CORPORATE_EMAIL}`"
-              class="email-us-btn mt-3 mt-lg-0 link-danger text-center text-decoration-none"
+              :href="`mailto:${CORPORATE_SUPPORT_EMAIL}?subject=${SUPPORT_EMAIL_DATA.supportEmailSubject}&body=${SUPPORT_EMAIL_DATA.supportEmailBody}`"
+              class="
+                email-us-btn
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
             >
               <img
                 class="d-block mx-auto"
@@ -53,11 +61,18 @@
 
           <li class="nav-item">
             <router-link
-              class="nav-link about-us-btn p-0 mt-3 mt-lg-0 link-danger text-center text-decoration-none"
+              class="
+                nav-link
+                about-us-btn
+                p-0
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
               to="/about-us"
             >
               <img
-               class="d-block mx-auto"
+                class="d-block mx-auto"
                 src="../../assets/img/icon-about-us.png"
                 width="48"
                 alt="About us"
@@ -73,11 +88,18 @@
             class="nav-item"
           >
             <router-link
-              class="nav-link reg-btn mt-3 mt-lg-0 p-0 link-danger text-center text-decoration-none"
+              class="
+                nav-link
+                reg-btn
+                mt-3 mt-lg-0
+                p-0
+                link-danger
+                text-center text-decoration-none
+              "
               to="/registration"
             >
               <img
-               class="d-block mx-auto"
+                class="d-block mx-auto"
                 src="../../assets/img/icon-signin.png"
                 width="48"
                 alt="Sign Up"
@@ -92,12 +114,20 @@
             class="nav-item"
           >
             <button
-              class="logout-btn btn text-start p-0 mt-3 mt-lg-0 link-danger text-center text-decoration-none"
+              class="
+                logout-btn
+                btn
+                text-start
+                p-0
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
               type="button"
               @click="logout"
             >
               <img
-              class="d-block mx-auto"
+                class="d-block mx-auto"
                 src="../../assets/img/icon-lock.png"
                 width="48"
                 alt="logout"
@@ -106,9 +136,17 @@
             </button>
           </li>
           <li v-else class="nav-item">
-            <router-link to="/login" class="login-btn mt-3 mt-lg-0 link-danger text-center text-decoration-none">
+            <router-link
+              to="/login"
+              class="
+                login-btn
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
+            >
               <img
-              class="d-block mx-auto"
+                class="d-block mx-auto"
                 src="../../assets/img/icon-unlock.png"
                 width="48"
                 alt="login"
@@ -126,7 +164,8 @@
 import {
   CORPORATE_CELLPHONE,
   CORPORATE_PHONE,
-  CORPORATE_EMAIL,
+  CORPORATE_SUPPORT_EMAIL,
+  SUPPORT_EMAIL_DATA,
 } from "../../constants";
 export default {
   name: "Header",
@@ -134,7 +173,8 @@ export default {
     return {
       CORPORATE_CELLPHONE,
       CORPORATE_PHONE,
-      CORPORATE_EMAIL,
+      CORPORATE_SUPPORT_EMAIL,
+      SUPPORT_EMAIL_DATA,
     };
   },
   computed: {

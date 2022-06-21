@@ -3,19 +3,19 @@
     <Masthead />
     <About />
     <Services />
-    <Contact />
+    <!-- <Contact /> -->
     <Portfolio />
   </body>
 </template>
 
 <script>
-import Contact from "../components/Partials/Contact.vue";
+// import Contact from "../components/Partials/Contact.vue";
 import Portfolio from "../components/Partials/Portfolio.vue";
 import Masthead from "../components/Partials/Masthead.vue";
 import About from "../components/Partials/About.vue";
 import Services from "../components/Partials/Services.vue";
 export default {
-  components: { Contact, Portfolio, Masthead, About, Services },
+  components: { Portfolio, Masthead, About, Services },
 };
 </script>
 

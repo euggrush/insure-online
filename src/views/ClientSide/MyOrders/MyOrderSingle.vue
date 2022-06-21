@@ -1,5 +1,5 @@
 <template>
-  <section class="order-modal container position-relative">
+  <section class="order-modal container position-relative mt-3">
     <h4>Order Details</h4>
     <ModalMessage />
     <YocoPage v-if="showPaymentSystem" />
@@ -208,10 +208,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.order-modal {
-  padding-top: 150px;
-}
-
 .vehicle-image {
   width: 100%;
   height: auto;
