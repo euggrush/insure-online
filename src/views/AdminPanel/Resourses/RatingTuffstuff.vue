@@ -1,112 +1,100 @@
 <template>
-  <table class="table table-dark table-striped caption-top table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Annual Rate</th>
-        <th scope="col">Age</th>
-        <th scope="col">Vehicle Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in ratingDataList" :key="item.value">
-        <th scope="row">{{ (item.value * 100).toFixed(2) }}%</th>
-        <td>{{ item.data.ageRange }}</td>
-        <td>{{ item.data.carValueRange }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <section class="container p-3 border">
+    <div class="mb-3" v-for="[key, value] in topmarqResourceMap" :key="key">
+      <span class="fw-bold">Age&nbsp;</span>
+      <span> {{ value.ageRange }};</span>
+      <span class="fw-bold">&nbsp;Vehicle value&nbsp;</span>
+      <span> {{ value.carValueRange }};</span>
+      <span class="fw-bold">&nbsp;Rate&nbsp; %</span>
+      <span>{{ (value.rate * 100).toFixed(2) }};</span>
+    </div>
+    <hr />
+    <p class="fs-5">Change TOPMARQ rate</p>
+    <EditRating class="mt-3" :myProps="{ ratingData: topmarqResourceMap }" />
+  </section>
 </template>
 
 <script>
+import EditRating from "../../../components/Forms/EditForms/EditRating.vue";
 export default {
+  components: { EditRating },
   data() {
     return {
-      showTuffstuffRaring: false,
-      showTopmarqRating: false,
-      showRatingTable: false,
-      showEditTabs: false,
-      showVehicleData: false,
-      showCreateVehiclesData: false,
-      showPolicyCreation: false,
-      showTermsAndConditionCreation: false,
-      showAccessoriesRating: false,
-      resourcesKeysMap: new Map(),
-      dataArray: [],
+      topmarqRatingArray: [],
+      topmarqResourceMap: new Map(),
     };
   },
   watch: {
-    ratingRawData() {
-      return this.fillDataArr();
+    isChangesNeeded() {
+      this.fetchTopmarqRate();
+      this.fillResoursesMap();
     },
   },
   computed: {
-    ratingRawData() {
-      return this.$store.state.rating.resources;
-    },
-    ratingDataList() {
-      return this.fillDataArr();
+    isChangesNeeded() {
+      return this.$store.state.is_changes_needed;
     },
   },
   mounted() {
-    this.resourcesKeysMap.set(`rating_age25-45_price100000`, {
-      ageRange: `25 to 45`,
-      carValueRange: `R0 to R100 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age25-45_price100000-350000`, {
-      ageRange: `25 to 45`,
-      carValueRange: `R100 001 to R350 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age25-45_price350000-700000`, {
-      ageRange: `25 to 45`,
-      carValueRange: `R350 001 to R700 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age25-45_price700000-1000000`, {
-      ageRange: `25 to 45`,
-      carValueRange: `R700 001 to R1 000 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age45-85_price100000`, {
-      ageRange: `46 to 85`,
-      carValueRange: `R0 to R100 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age45-85_price100000-350000`, {
-      ageRange: `46 to 85`,
-      carValueRange: `R100 001 to R350 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age45-85_price350000-700000`, {
-      ageRange: `46 to 85`,
-      carValueRange: `R350 001 to R700 000`,
-    });
-    this.resourcesKeysMap.set(`rating_age45-85_price700000-1000000`, {
-      ageRange: `46 to 85`,
-      carValueRange: `R700 001 to R1 000 000`,
-    });
-    this.fetchAllData();
+    this.fetchTopmarqRate();
+    this.fillResoursesMap();
   },
   methods: {
-    closeRatingForm() {
-      this.showTuffstuffRaring = false;
-    },
-    fetchAllData() {
-      this.dataArray = [];
-      this.$nextTick(() => {
-        this.$store.dispatch(`GET_RATING`, ``);
+    fillResoursesMap() {
+      // 25 to 45
+      this.topmarqResourceMap.set(`rating_age25-45_price100000`, {
+        ageRange: `25 to 45`,
+        carValueRange: `R0 to R100 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age25-45_price100000-350000`, {
+        ageRange: `25 to 45`,
+        carValueRange: `R100 000 to R350 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age25-45_price350000-700000`, {
+        ageRange: `25 to 45`,
+        carValueRange: `R350 000 to R700 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age25-45_price700000-1000000`, {
+        ageRange: `25 to 45`,
+        carValueRange: `R700 000 to R1 000 000`,
+        rate: 0,
+      });
+      // 45 to 85
+      this.topmarqResourceMap.set(`rating_age45-85_price100000`, {
+        ageRange: `45 to 85`,
+        carValueRange: `R0 to R100 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age45-85_price100000-350000`, {
+        ageRange: `45 to 85`,
+        carValueRange: `R100 000 to R350 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age45-85_price350000-700000`, {
+        ageRange: `45 to 85`,
+        carValueRange: `R350 000 to R700 000`,
+        rate: 0,
+      });
+      this.topmarqResourceMap.set(`rating_age45-85_price700000-1000000`, {
+        ageRange: `45 to 85`,
+        carValueRange: `R700 000 to R1 000 000`,
+        rate: 0,
       });
     },
-    fillDataArr() {
-      this.dataArray = [];
-
-      if (this.$store.state.rating.resources) {
-        this.$store.state.rating.resources.map((item) => {
-          if (this.resourcesKeysMap.get(item.resourceKey)) {
-            this.dataArray.push({
-              key: item.resourceKey,
-              value: item.resourceValue,
-              data: this.resourcesKeysMap.get(item.resourceKey),
-            });
-          }
-        });
-      }
-      return this.dataArray;
+    fetchTopmarqRate() {
+      this.$store.dispatch(`GET_RATING`, ``).then(() => {
+        setTimeout(() => {
+          this.$store.state.rating.resources.map((item) => {
+            if (this.topmarqResourceMap.get(item.resourceKey)) {
+              this.topmarqResourceMap.get(item.resourceKey).rate =
+                item.resourceValue;
+            }
+          });
+        }, 1000);
+      });
     },
   },
 };

@@ -6,7 +6,7 @@
       <span class="fw-bold">&nbsp;Vehicle value&nbsp;</span>
       <span> {{ value.carValueRange }};</span>
       <span class="fw-bold">&nbsp;Rate&nbsp; %</span>
-      <span>{{ value.rate * 100 }};</span>
+      <span>{{ (value.rate * 100).toFixed(2) }};</span>
     </div>
     <hr />
     <p class="fs-5">Change TOPMARQ rate</p>
