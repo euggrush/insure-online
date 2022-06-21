@@ -175,16 +175,6 @@
 import EditVehicleForm from "../../../components/Forms/EditForms/EditVehicleForm.vue";
 import MyVehicleImage from "./MyVehicleImage.vue";
 
-const enableTooltips = () => {
-  let tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  // eslint-disable-next-line no-unused-vars
-  let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    // eslint-disable-next-line no-undef
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-};
 export default {
   components: {
     EditVehicleForm,
@@ -205,7 +195,7 @@ export default {
   mounted() {
     this.$store.dispatch(`GET_VEHICLES`, ``);
     this.accountId = this.$store.state.user.accountId;
-    enableTooltips();
+    this.enableTooltips();
   },
   methods: {
     openEditVehicle(vehicle) {

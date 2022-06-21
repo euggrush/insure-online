@@ -26,37 +26,43 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
-            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn">
+            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn link-danger text-center text-decoration-none">
               <img
+                class="d-block mx-auto"
                 src="../../assets/img/icon-call-us2.png"
                 width="46"
                 alt="Call us"
               />
+             Call us
             </a>
           </li>
           <li class="nav-item">
             <a
               :href="`mailto:${CORPORATE_EMAIL}`"
-              class="email-us-btn mt-3 mt-lg-0"
+              class="email-us-btn mt-3 mt-lg-0 link-danger text-center text-decoration-none"
             >
               <img
+                class="d-block mx-auto"
                 src="../../assets/img/icon-email-us2.png"
                 width="48"
                 alt="Email us"
               />
+              Email us
             </a>
           </li>
 
           <li class="nav-item">
             <router-link
-              class="nav-link about-us-btn p-0 mt-3 mt-lg-0"
+              class="nav-link about-us-btn p-0 mt-3 mt-lg-0 link-danger text-center text-decoration-none"
               to="/about-us"
             >
               <img
+               class="d-block mx-auto"
                 src="../../assets/img/icon-about-us.png"
                 width="48"
                 alt="About us"
               />
+              About us
             </router-link>
           </li>
           <li
@@ -67,14 +73,16 @@
             class="nav-item"
           >
             <router-link
-              class="nav-link reg-btn mt-3 mt-lg-0 p-0"
+              class="nav-link reg-btn mt-3 mt-lg-0 p-0 link-danger text-center text-decoration-none"
               to="/registration"
             >
               <img
+               class="d-block mx-auto"
                 src="../../assets/img/icon-signin.png"
                 width="48"
                 alt="Sign Up"
               />
+              Sign Up
             </router-link>
           </li>
           <li
@@ -84,24 +92,28 @@
             class="nav-item"
           >
             <button
-              class="logout-btn btn text-start p-0 mt-3 mt-lg-0"
+              class="logout-btn btn text-start p-0 mt-3 mt-lg-0 link-danger text-center text-decoration-none"
               type="button"
               @click="logout"
             >
               <img
+              class="d-block mx-auto"
                 src="../../assets/img/icon-lock.png"
                 width="48"
                 alt="logout"
               />
+              Logout
             </button>
           </li>
           <li v-else class="nav-item">
-            <router-link to="/login" class="login-btn mt-3 mt-lg-0">
+            <router-link to="/login" class="login-btn mt-3 mt-lg-0 link-danger text-center text-decoration-none">
               <img
+              class="d-block mx-auto"
                 src="../../assets/img/icon-unlock.png"
                 width="48"
                 alt="login"
               />
+              Login
             </router-link>
           </li>
         </ul>
@@ -131,6 +143,7 @@ export default {
     },
   },
   mounted() {
+    this.enableTooltips();
     this.shrinkNavbar();
   },
   methods: {
@@ -190,9 +203,9 @@ export default {
   #mainNav .navbar-nav .nav-item .nav-link:hover {
     color: $colorDark;
   }
-  #mainNav .navbar-nav .nav-item:last-child .nav-link {
-    padding-right: 0;
-  }
+  // #mainNav .navbar-nav .nav-item:last-child .nav-link {
+  //   padding-right: 0;
+  // }
   #mainNav.navbar-shrink {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     background-color: $colorBlack;
@@ -208,6 +221,6 @@ export default {
 .login-btn,
 .reg-btn {
   display: block;
-  width: 90px;
+  width: 120px;
 }
 </style>
