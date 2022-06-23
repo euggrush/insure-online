@@ -63,7 +63,7 @@
           Terms & conditions
         </button>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <button
           class="nav-link"
           :class="{ active: showEditTabs }"
@@ -71,6 +71,16 @@
           @click="openEditRateTab"
         >
           Other resourses
+        </button>
+      </li> -->
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          :class="{ active: showInsurancePolicy }"
+          type="button"
+          @click="openInsurancePolicyTab"
+        >
+          Insurance policy
         </button>
       </li>
     </ul>
@@ -99,10 +109,12 @@
       <CreateTermsAndConditions v-if="showTermsAndConditionCreation" />
     </Transition>
 
-    <Transition>
+    <!-- <Transition>
       <EditTabs v-if="showEditTabs" />
+    </Transition> -->
+    <Transition>
+      <CreateOrderPolicy v-if="showInsurancePolicy" />
     </Transition>
-
     <!-- <Transition>
       <CreateVehicleDataForm v-if="showCreateVehiclesData" />
     </Transition> -->
@@ -111,7 +123,7 @@
 
 <script>
 // import EditRating from "../../../components/Forms/EditForms/EditTuffstuffRating.vue";
-import EditTabs from "../../../components/Forms/EditForms/EditTabs.vue";
+// import EditTabs from "../../../components/Forms/EditForms/EditTabs.vue";
 import VehiclesData from "../../../components/Partials/VehiclesData.vue";
 // import CreateVehicleDataForm from "../../../components/Forms/CreateVehicleDataForm.vue";
 import CreatePolicy from "../../../components/Forms/CreatePolicy.vue";
@@ -119,10 +131,11 @@ import CreateTermsAndConditions from "../../../components/Forms/CreateTermsAndCo
 import AccessoriesRating from "../../../components/Partials/AccessoriesRating.vue";
 import RatingTopmarq from "./RatingTopmarq.vue";
 import RatingTuffstuff from "./RatingTuffstuff.vue";
+import CreateOrderPolicy from "../../../components/Forms/CreateForm/CreateOrderPolicy.vue";
 export default {
   components: {
     // EditRating,
-    EditTabs,
+    // EditTabs,
     VehiclesData,
     // CreateVehicleDataForm,
     CreatePolicy,
@@ -130,6 +143,7 @@ export default {
     AccessoriesRating,
     RatingTopmarq,
     RatingTuffstuff,
+    CreateOrderPolicy,
   },
   data() {
     return {
@@ -144,58 +158,12 @@ export default {
       showAccessoriesRating: false,
       resourcesKeysMap: new Map(),
       dataArray: [],
+      showInsurancePolicy: false,
     };
   },
-  // watch: {
-  //   ratingRawData() {
-  //     return this.fillDataArr();
-  //   },
-  // },
-  // computed: {
-  //   ratingRawData() {
-  //     return this.$store.state.rating.resources;
-  //   },
-  //   ratingDataList() {
-  //     return this.fillDataArr();
-  //   },
-  // },
-  // mounted() {
-  //   this.resourcesKeysMap.set(`rating_age25-45_price100000`, {
-  //     ageRange: `25 to 45`,
-  //     carValueRange: `R0 to R100 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age25-45_price100000-350000`, {
-  //     ageRange: `25 to 45`,
-  //     carValueRange: `R100 001 to R350 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age25-45_price350000-700000`, {
-  //     ageRange: `25 to 45`,
-  //     carValueRange: `R350 001 to R700 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age25-45_price700000-1000000`, {
-  //     ageRange: `25 to 45`,
-  //     carValueRange: `R700 001 to R1 000 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age45-85_price100000`, {
-  //     ageRange: `46 to 85`,
-  //     carValueRange: `R0 to R100 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age45-85_price100000-350000`, {
-  //     ageRange: `46 to 85`,
-  //     carValueRange: `R100 001 to R350 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age45-85_price350000-700000`, {
-  //     ageRange: `46 to 85`,
-  //     carValueRange: `R350 001 to R700 000`,
-  //   });
-  //   this.resourcesKeysMap.set(`rating_age45-85_price700000-1000000`, {
-  //     ageRange: `46 to 85`,
-  //     carValueRange: `R700 001 to R1 000 000`,
-  //   });
-  //   this.fetchAllData();
-  // },
+
   methods: {
-    toggleResoursesTabs(arg1, arg2, arg3, arg4, arg5, arg6, arg7) {
+    toggleResoursesTabs(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) {
       this.showTuffstuffRaring = arg1;
       this.showTopmarqRating = arg2;
       this.showAccessoriesRating = arg3;
@@ -203,53 +171,104 @@ export default {
       this.showPolicyCreation = arg5;
       this.showTermsAndConditionCreation = arg6;
       this.showEditTabs = arg7;
+      this.showInsurancePolicy = arg8;
     },
     openTuffstuffRateTab() {
-      this.toggleResoursesTabs(true, false, false, false, false, false, false);
+      this.toggleResoursesTabs(
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      );
     },
     openTopmarqRateTab() {
-      this.toggleResoursesTabs(false, true, false, false, false, false, false);
+      this.toggleResoursesTabs(
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      );
     },
     openAccessoriesRateTab() {
-      this.toggleResoursesTabs(false, false, true, false, false, false, false);
+      this.toggleResoursesTabs(
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      );
     },
     openVehicleDataTab() {
-      this.toggleResoursesTabs(false, false, false, true, false, false, false);
+      this.toggleResoursesTabs(
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      );
     },
     openPrivacyTab() {
-      this.toggleResoursesTabs(false, false, false, false, true, false, false);
+      this.toggleResoursesTabs(
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      );
     },
     openTermsTab() {
-      this.toggleResoursesTabs(false, false, false, false, false, true, false);
+      this.toggleResoursesTabs(
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false
+      );
     },
     openEditRateTab() {
-      this.toggleResoursesTabs(false, false, false, false, false, false, true);
+      this.toggleResoursesTabs(
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false
+      );
     },
-    // closeRatingForm() {
-    //   this.showTuffstuffRaring = false;
-    // },
-    // fetchAllData() {
-    //   this.dataArray = [];
-    //   this.$nextTick(() => {
-    //     this.$store.dispatch(`GET_RATING`, ``);
-    //   });
-    // },
-    // fillDataArr() {
-    //   this.dataArray = [];
-
-    //   if (this.$store.state.rating.resources) {
-    //     this.$store.state.rating.resources.map((item) => {
-    //       if (this.resourcesKeysMap.get(item.resourceKey)) {
-    //         this.dataArray.push({
-    //           key: item.resourceKey,
-    //           value: item.resourceValue,
-    //           data: this.resourcesKeysMap.get(item.resourceKey),
-    //         });
-    //       }
-    //     });
-    //   }
-    //   return this.dataArray;
-    // },
+    openInsurancePolicyTab() {
+      this.toggleResoursesTabs(
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      );
+    },
   },
 };
 </script>
