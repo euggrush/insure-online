@@ -1,7 +1,7 @@
 
 <template>
   <footer
-    class="text-center text-lg-start text-white"
+    class="text-center text-lg-start text-white noPrint"
     style="background-color: #45526e"
   >
     <div class="container p-4 pb-0">
@@ -184,4 +184,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media print {
+  .noPrint {
+    display: none;
+  }
+}
 </style>

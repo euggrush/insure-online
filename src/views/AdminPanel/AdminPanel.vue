@@ -1,7 +1,7 @@
 <template>
   <section class="admin-panel container-fluid pb-5">
     <div
-      class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom"
+      class="d-flex justify-content-between mt-3 ps-5 pe-5 pb-3 border-bottom noPrint"
     >
       <h2 class="text-white fw-bold mt-1">Admin Panel</h2>
       <span class="text-white">
@@ -10,7 +10,7 @@
       </span>
     </div>
 
-    <nav class="nav nav-pills nav-justified mt-5 ps-5 pe-5">
+    <nav class="nav nav-pills nav-justified mt-5 ps-5 pe-5 noPrint">
       <!-- <button
         class="nav-link rounded-pill"
         :class="{ active: isAccounts }"
@@ -221,5 +221,10 @@ export default {
 }
 .nav-link {
   color: $colorBrick;
+}
+@media print {
+  .noPrint {
+    display: none;
+  }
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-1" id="mainNav">
+  <nav
+    class="navbar navbar-expand-lg navbar-light fixed-top py-1 noPrint"
+    id="mainNav"
+  >
     <div class="container-fluid px-4 px-lg-5">
       <button
         class="navbar-brand border-0 bg-transparent"
@@ -262,5 +265,10 @@ export default {
 .reg-btn {
   display: block;
   width: 120px;
+}
+@media print {
+  .noPrint {
+    display: none;
+  }
 }
 </style>

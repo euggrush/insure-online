@@ -1,5 +1,5 @@
 <template>
-  <section class="orders-list mt-3">
+  <section class="orders-list mt-3" id="printableArea">
     <div
       v-for="order in ordersList"
       :key="order.orderId"
@@ -78,7 +78,7 @@
             @click="getOrder(`?orderId=${order.orderId}`)"
             :disabled="isOrderModal"
           >
-            View order details
+            View details
           </button>
         </div>
         <div class="col">
@@ -171,6 +171,14 @@
       :myProps="{ order: orderToPass }"
       @closeOrder="closeOrderModal"
     />
+    <button
+      v-if="isOrderModal"
+      type="button"
+      class="btn btn-outline-dark"
+      @click="printOrder"
+    >
+      Print
+    </button>
   </section>
 </template>
 
@@ -195,7 +203,9 @@ export default {
   },
   watch: {
     isChangesNeeded() {
-      this.fetchOrders(`?orderStatus=${this.myProps.orderStatus}&orderId=${this.singleOrderId}`);
+      this.fetchOrders(
+        `?orderStatus=${this.myProps.orderStatus}&orderId=${this.singleOrderId}`
+      );
     },
     toggleStatus() {
       this.fetchOrders(`?orderStatus=${this.myProps.orderStatus}`);
@@ -244,6 +254,9 @@ export default {
     closeOrderModal(payload) {
       this.isOrderModal = false;
       this.singleOrderId = payload.orderId;
+    },
+    printOrder() {
+      window.print();
     },
   },
 };

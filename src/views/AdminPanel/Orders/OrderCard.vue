@@ -8,7 +8,7 @@
     ></button>
     <h4>Order Details</h4>
 
-    <div class="row gap-3">
+    <div class="row gap-3 noPrint">
       <button
         type="button"
         class="btn btn-outline-secondary col mt-3"
@@ -260,4 +260,9 @@ br {
 // .btn-close {
 //   margin: 0 auto 0 98%;
 // }
+@media print {
+  .noPrint {
+    display: none;
+  }
+}
 </style>
