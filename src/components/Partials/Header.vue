@@ -154,7 +154,7 @@
                 width="48"
                 alt="login"
               />
-              Login
+              Log in
             </router-link>
           </li>
         </ul>
