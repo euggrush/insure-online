@@ -1,55 +1,47 @@
 <template>
-  <section class="order-modal container position-relative mt-3">
-    <h4>Order Details</h4>
-    <ModalMessage />
-    <YocoPage v-if="showPaymentSystem" />
+  <section class="container position-relative pt-3">
     <button
       type="button"
       class="btn-close float-end"
       aria-label="Close"
-      @click="goToMyPortal"
+      @click="closeOrderModal"
     ></button>
+    <h4>Order Details</h4>
 
-    <div class="mt-3">
-      Placed on {{ getDate(order.orderCreated) }} &#124; Order #{{
-        order.referenceNumber
-      }}
-      &#124;
-      <span
-        class="fw-bold text-uppercase"
-        :class="{
-          'text-warning': order.orderStatus == `approved`,
-          'text-danger': order.orderStatus == `rejected`,
-        }"
+    <div class="row gap-3 noPrint">
+      <button
+        type="button"
+        class="btn btn-outline-secondary col mt-3"
+        :disabled="order.orderStatus == `approved`"
+        @click="approveOrder(order)"
       >
-        {{ order.orderStatus }}
-      </span>
-      <strong class="text-danger">
-        &#124; Total R{{ order.allEstimationsTotalCostCalculated }}</strong
+        Approve
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary col mt-3"
+        :disabled="order.orderStatus == `rejected`"
+        @click="rejectOrder(order)"
       >
-
-      <div
-        v-if="order.orderStatus == 'pending' && order.paidBy === ''"
-        class="mt-3"
-      >
+        Reject
+      </button>
+      <div class="input-group mt-3 p-0 col">
+        <input
+          type="number"
+          class="form-control"
+          aria-label="cost
+              "
+          aria-describedby="button-addon2"
+          :placeholder="order.adjustedCost"
+          v-model="adjustedCost"
+        />
         <button
+          class="btn btn-outline-secondary adjust-btn"
           type="button"
-          class="btn link-secondary p-0"
-          @click="goToPaymentPage(order.orderId)"
+          id="button-addon2"
+          @click="adjustOrderCost(order)"
         >
-          Pay online
-        </button>
-        <a
-          class="btn link-secondary ms-3 p-0"
-          :href="`mailto:${CORPORATE_SUPPORT_EMAIL}?subject=Offline payment request. Order #${order.referenceNumber}&body=Hi Tuffstuff Team. Please, assist with the payment. My order #${order.referenceNumber}`"
-          >Pay offline</a
-        >
-        <button
-          type="button"
-          class="btn link-secondary ms-3 p-0"
-          @click="getCallRequest(order.orderId)"
-        >
-          Rquest a call
+          Adjust, R
         </button>
       </div>
     </div>
@@ -61,7 +53,7 @@
       :key="orderIncludedEstimation.estimationId"
       class="border p-3 mb-3"
     >
-      <div class="row mt-3">
+      <div class="row">
         <!-- CAR IMAGE -->
         <div class="col-12 col-lg-3">
           <strong class="text-uppercase"
@@ -153,80 +145,124 @@
 </template>
 
 <script>
-import {
-  FILE_URL,
-  CAR_DEFAULT_IMAGE,
-  CORPORATE_SUPPORT_EMAIL,
-  SUPPORT_EMAIL_DATA,
-} from "../../../constants";
-import ModalMessage from "../../../components/Modals/ModalMessage.vue";
-import YocoPage from "../../../components/PaymentSystem/YocoPage.vue";
+import { FILE_URL, CAR_DEFAULT_IMAGE } from "../../../constants";
+
 export default {
-  components: { ModalMessage, YocoPage },
   data() {
     return {
+      isAdjust: false,
+      adjustedCost: ``,
       FILE_URL: FILE_URL,
-      CAR_DEFAULT_IMAGE,
-      CORPORATE_SUPPORT_EMAIL,
-      SUPPORT_EMAIL_DATA,
-      showPaymentSystem: false,
+      CAR_DEFAULT_IMAGE: CAR_DEFAULT_IMAGE,
     };
+  },
+  props: {
+    myProps: {
+      type: Object,
+      default: () => {},
+    },
   },
   computed: {
     order() {
-      return this.$store.state.orders.orders[0];
+      return this.myProps.order;
     },
-  },
-  mounted() {
-    this.scrollToTop();
-    this.getOrder(this.$route.query.id);
-    this.unfixHeader();
-  },
-  unmounted() {
-    this.fixHeader();
   },
   methods: {
-    getOrder(id) {
-      this.$store.dispatch(`GET_ORDERS`, `?orderId=${id}`);
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
-    goToMyPortal() {
-      this.$router.push(`/my-portal`);
+    closeOrderModal(arg1, arg2) {
+      // eslint-disable-next-line vue/custom-event-name-casing
+      this.$emit("closeOrder", { orderStatus: arg1, orderId: arg2 });
     },
-    getCallRequest(id) {
+    approveOrder(order) {
       this.$store
         .dispatch(`CREATE_ORDER`, {
-          orderId: id,
-          paidBy: `offline`,
+          orderId: order.orderId,
+          orderStatus: `approved`,
         })
         .then(() => {
+          this.closeOrderModal(`approved`, order.orderId);
           this.scrollToTop();
-          this.$store.dispatch(`GET_ORDERS`, ``);
-          this.$store.commit(`SET_MODAL`, {
-            isModal: true,
-            msg: `Your request has been submitted. Allow up to 24 hours for an update.`,
-          });
-        });
+        })
+        .catch((err) => alert(err));
     },
-    goToPaymentPage() {
-      this.scrollToTop();
-      this.$store.commit(`SET_MODAL`, {
-        isModal: true,
-        msg: `Online payments haven't been implemented yet. Please, select offline payment or request a call. Apologize for the inconvenience.`,
-      });
-      // this.showPaymentSystem = true;
-      // setTimeout(() => {
-      //   this.showPaymentSystem = false;
-      // }, 1000);
+    rejectOrder(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          orderStatus: `rejected`,
+        })
+        .then(() => {
+          this.closeOrderModal(`rejected`, order.orderId);
+          this.scrollToTop();
+        })
+        .catch((err) => alert(err));
+    },
+    adjustOrderCost(order) {
+      this.$store
+        .dispatch(`CREATE_ORDER`, {
+          orderId: order.orderId,
+          adjustedCost: this.adjustedCost,
+        })
+        .then(() => {
+          this.isAdjust = false;
+          this.adjustedCost = ``;
+          this.closeOrderModal(`rejected`, order.orderId);
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.btn {
+  min-width: 12em;
+}
+.order-item {
+  background-color: $mainGreen;
+  box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -webkit-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+  -moz-box-shadow: 6px 7px 7px 0px rgba(22, 104, 55, 0.75);
+}
+// .adjust-input {
+//   width: 11em;
+// }
+.adjust-btn {
+  min-width: auto;
+}
+br {
+  display: block;
+  content: "";
+  margin-top: 0;
+}
+// .btn-pdf {
+//   min-width: 100%;
+//   border-radius: 0;
+//   background-image: url("../../assets/img/icon-pdf.png");
+//   background-size: 27px 27px;
+//   background-repeat: no-repeat;
+//   background-position: 5% center;
+//   margin-bottom: 10px;
+//   padding-left: 40px;
+//   @include media-breakpoint-up(md) {
+//     min-width: 11em;
+//   }
+// }
+// .btn-pdf:hover {
+//   background-image: url("../../assets/img/icon-pdf.svg");
+// }
 .vehicle-image {
   width: 100%;
   height: auto;
-  max-height: 430px;
-  object-fit: contain;
+}
+// .btn-close {
+//   margin: 0 auto 0 98%;
+// }
+@media print {
+  .noPrint {
+    display: none;
+  }
 }
 </style>

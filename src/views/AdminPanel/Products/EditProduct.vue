@@ -463,8 +463,7 @@ br {
   margin-top: 0;
 }
 .btn-primary {
-  min-width: 13em;
-  max-width: 13em;
+  min-width: 18em;
 }
 .coverages-checkboxes {
   width: 100%;

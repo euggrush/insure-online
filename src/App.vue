@@ -80,7 +80,7 @@ export default {
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
   --bs-warning-rgb: 255, 193, 7;
-  --bs-danger-rgb: 220, 53, 69;
+  --bs-danger-rgb: $colorBrick;
   --bs-light-rgb: 248, 249, 250;
   --bs-dark-rgb: 33, 37, 41;
   --bs-white-rgb: 255, 255, 255;
@@ -6103,7 +6103,7 @@ textarea.form-control.is-invalid {
 }
 
 .link-danger {
-  color: #dc3545;
+  color: $colorBrick;
 }
 .link-danger:hover,
 .link-danger:focus {

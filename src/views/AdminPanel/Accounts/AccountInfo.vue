@@ -325,8 +325,8 @@
 </template>
 
 <script>
-import CreateVehicleForm from "../../components/Forms/CreateVehicleForm.vue";
-import EditVehicleForm from "../../components/Forms/EditForms/EditVehicleForm.vue";
+import CreateVehicleForm from "../../../components/Forms/CreateVehicleForm.vue";
+import EditVehicleForm from "../../../components/Forms/EditForms/EditVehicleForm.vue";
 
 export default {
   components: {

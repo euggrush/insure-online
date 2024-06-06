@@ -5,19 +5,19 @@
     <div class="container">
       <div class="card">
         <img src="../../assets/img/car-small1.jpg" />
-        <div class="card__head">Sport Utility Vehicles (SUVs)</div>
-      </div>
-      <div class="card">
-        <img src="../../assets/img/car-small2.jpg" />
         <div class="card__head">4x4's</div>
       </div>
       <div class="card">
+        <img src="../../assets/img/car-small2.jpg" />
+        <div class="card__head">Trucks</div>
+      </div>
+      <div class="card">
         <img src="../../assets/img/car-small3.jpg" />
-        <div class="card__head">Lifestyle Utility Vehicles (LUVs)</div>
+        <div class="card__head">LUVs</div>
       </div>
       <div class="card">
         <img src="../../assets/img/car-small5.jpg" />
-        <div class="card__head">Sport Utility Vehicles</div>
+        <div class="card__head">SUVs</div>
       </div>
     </div>
   </section>

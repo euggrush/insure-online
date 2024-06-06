@@ -65,7 +65,7 @@
           <div class="input-group mt-3">
             <button
               type="submit"
-              class="btn btn-outline-danger rounded-pill login-btn"
+              class="btn btn-outline-danger rounded-pill login-btn btn-lg"
               :class="{ shake: disabled }"
               :disabled="isFormDisabled"
             >

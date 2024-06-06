@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-1" id="mainNav">
+  <nav
+    class="navbar navbar-expand-lg navbar-light fixed-top py-1 noPrint"
+    id="mainNav"
+  >
     <div class="container-fluid px-4 px-lg-5">
       <button
         class="navbar-brand border-0 bg-transparent"
@@ -26,16 +29,59 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-center">
           <li class="nav-item">
-            <a :href="`tel:${CORPORATE_PHONE}`" class="call-us-btn"> </a>
+            <a
+              :href="`tel:${CORPORATE_PHONE}`"
+              class="call-us-btn link-danger text-center text-decoration-none"
+            >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-call-us2.png"
+                width="46"
+                alt="Call us"
+              />
+              Call us
+            </a>
           </li>
           <li class="nav-item">
-            <a :href="`mailto:${CORPORATE_EMAIL}`" class="email-us-btn"> </a>
+            <a
+              :href="`mailto:${CORPORATE_SUPPORT_EMAIL}?subject=${SUPPORT_EMAIL_DATA.supportEmailSubject}&body=${SUPPORT_EMAIL_DATA.supportEmailBody}`"
+              class="
+                email-us-btn
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
+            >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-email-us2.png"
+                width="48"
+                alt="Email us"
+              />
+              Email us
+            </a>
           </li>
+
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/about-us">About Us</router-link>
+            <router-link
+              class="
+                nav-link
+                about-us-btn
+                p-0
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
+              to="/about-us"
+            >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-about-us.png"
+                width="48"
+                alt="About us"
+              />
+              About us
+            </router-link>
           </li>
           <li
             v-if="
@@ -44,9 +90,25 @@
             "
             class="nav-item"
           >
-            <router-link class="nav-link" to="/registration"
-              >Sign Up</router-link
+            <router-link
+              class="
+                nav-link
+                reg-btn
+                mt-3 mt-lg-0
+                p-0
+                link-danger
+                text-center text-decoration-none
+              "
+              to="/registration"
             >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-signin.png"
+                width="48"
+                alt="Sign Up"
+              />
+              Sign Up
+            </router-link>
           </li>
           <li
             v-if="
@@ -55,19 +117,45 @@
             class="nav-item"
           >
             <button
-              class="logout-btn btn btn-outline-danger rounded-pill"
+              class="
+                logout-btn
+                btn
+                text-start
+                p-0
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
               type="button"
               @click="logout"
             >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-lock.png"
+                width="48"
+                alt="logout"
+              />
               Logout
             </button>
           </li>
           <li v-else class="nav-item">
             <router-link
               to="/login"
-              class="btn btn-outline-danger login-btn rounded-pill"
-              >Login</router-link
+              class="
+                login-btn
+                mt-3 mt-lg-0
+                link-danger
+                text-center text-decoration-none
+              "
             >
+              <img
+                class="d-block mx-auto"
+                src="../../assets/img/icon-unlock.png"
+                width="48"
+                alt="login"
+              />
+              Log in
+            </router-link>
           </li>
         </ul>
       </div>
@@ -79,7 +167,8 @@
 import {
   CORPORATE_CELLPHONE,
   CORPORATE_PHONE,
-  CORPORATE_EMAIL,
+  CORPORATE_SUPPORT_EMAIL,
+  SUPPORT_EMAIL_DATA,
 } from "../../constants";
 export default {
   name: "Header",
@@ -87,7 +176,8 @@ export default {
     return {
       CORPORATE_CELLPHONE,
       CORPORATE_PHONE,
-      CORPORATE_EMAIL,
+      CORPORATE_SUPPORT_EMAIL,
+      SUPPORT_EMAIL_DATA,
     };
   },
   computed: {
@@ -96,6 +186,7 @@ export default {
     },
   },
   mounted() {
+    this.enableTooltips();
     this.shrinkNavbar();
   },
   methods: {
@@ -125,16 +216,9 @@ export default {
 .btn {
   min-width: 8em;
 }
-.login-btn,
-.logout-btn {
-  min-width: 10em;
-  @include media-breakpoint-up(lg) {
-    margin: 0 2em 0 4em;
-  }
-}
 #mainNav {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: $bgHeaderGrey !important;
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
@@ -162,9 +246,9 @@ export default {
   #mainNav .navbar-nav .nav-item .nav-link:hover {
     color: $colorDark;
   }
-  #mainNav .navbar-nav .nav-item:last-child .nav-link {
-    padding-right: 0;
-  }
+  // #mainNav .navbar-nav .nav-item:last-child .nav-link {
+  //   padding-right: 0;
+  // }
   #mainNav.navbar-shrink {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     background-color: $colorBlack;
@@ -174,18 +258,17 @@ export default {
   }
 }
 .call-us-btn,
-.email-us-btn {
+.email-us-btn,
+.about-us-btn,
+.logout-btn,
+.login-btn,
+.reg-btn {
   display: block;
-  width: 90px;
-  height: 50px;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: 46px !important;
+  width: 120px;
 }
-.call-us-btn {
-  background: url($iconCallUs);
-}
-.email-us-btn {
-  background: url($iconEmailUs);
+@media print {
+  .noPrint {
+    display: none;
+  }
 }
 </style>
