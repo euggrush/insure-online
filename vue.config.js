@@ -1,5 +1,7 @@
 const path = require('path')
-module.exports = {
+module.exports = {chainWebpack: config => {
+  config.module.rules.delete('eslint');
+},
   // publicPath: '/insure-online/',
   pluginOptions: {
     'style-resources-loader': {
